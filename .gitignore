@@ -66,7 +66,7 @@ hs_err_pid*
 
 #----------------------------------------------------------------------------------
 # gitignore Maven!!!
-pom.xml
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
