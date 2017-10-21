@@ -1,7 +1,8 @@
 # CRM_Project
 Собрать проект:
 1) git clone
-2) ctrl+shift+alt+s -> Modules -> плюсик -> Web App
+2) ctrl+shift+alt+s -> Modules -> плюсик -> Web 
+(На этом этапе убедитесь, что в директроии указана папка Web, а не Web2 и т.п.)
 3) Apply
 
 Далее подключаем сервер и.. все работает.
