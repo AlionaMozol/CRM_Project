@@ -1,23 +1,17 @@
 package com.project.crm.services;
 
-public class UserService {
+import com.project.crm.model.User;
 
-    public void addProduct(){};
-    public void deleteProduct(){};
-    public void editProduct(){};
-    public void approveProduct(){};
-    public void disapproveProduct(){};
-    public void addToFavorites(){};
-    public void deleteFromFavorites(){};
-    public void addComment(){};
-    public void deleteComment(){};
-    public void editComment(){};
-    public void logIn(){};
-    public void logOut(){};
-    public void register(){};
-    public void findProduct(){};
-    public void addFilter(){};
-    public void showProductInfo(){};
-    public void blockUser(){};
-    public void unblockUser(){};
+/**
+ * Service class for {@link com.project.crm.model.User}
+ *
+ * @author Ivan Tkachev
+ * @version 1.0
+ */
+
+public interface UserService {
+
+    void save(User user);
+
+    User findByUsername(String username);
 }
