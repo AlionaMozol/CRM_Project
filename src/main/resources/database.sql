@@ -1,3 +1,5 @@
+CREATE SCHEMA `spring_security_app`;
+
 -- Table: users
 CREATE TABLE users (
   id       INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
