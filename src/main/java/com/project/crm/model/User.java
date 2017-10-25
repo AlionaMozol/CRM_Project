@@ -1,110 +1,101 @@
 package com.project.crm.model;
 
-import com.project.crm.model.enums.Role;
-import org.springframework.stereotype.Component;
-
-
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
-@Component
+/**
+ * Simple JavaBean domain object that represents a User.
+ *
+ * @author Ivan Tkachev
+ * @version 1.0
+ */
+
+@Entity
+@Table(name = "users")
 public class User {
 
-    private int id;
-    private Role role;
-    private String name;
-    private String email;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column (name = "password")
     private String password;
+
+    @Transient
+    private String confirmPassword;
+
+    //В данной таблице (для меппинга) лежат user_id и role_id
+    //Т.о. получаем быстрый доступ к ролям данного пользователя
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+    @Transient
+    private String email;
+    @Transient
     private List<Product> userProductList;
+    @Transient
     private List<Product> adminProductList;
+    @Transient
     private List<Product> favoriteProductList;
+    @Transient
     private List<Product> blockedUserList;
 
-    /**
-     * Default constructor of product
-     */
-    public User() {}
-
-    /**Information about object
-     * @return string value
-     */
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", role=" + role +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", userProductList=" + userProductList +
-                ", adminProductList=" + adminProductList +
-                ", favoriteProductList=" + favoriteProductList +
-                ", blockedUserList=" + blockedUserList +
-                '}';
+    public Long getId() {
+        return id;
     }
 
-    /**Equals of objects
-     * @param o object
-     * @return boolean
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (id != user.id) return false;
-        if (role != user.role) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (userProductList != null ? !userProductList.equals(user.userProductList) : user.userProductList != null)
-            return false;
-        if (adminProductList != null ? !adminProductList.equals(user.adminProductList) : user.adminProductList != null)
-            return false;
-        if (favoriteProductList != null ? !favoriteProductList.equals(user.favoriteProductList) : user.favoriteProductList != null)
-            return false;
-        return blockedUserList != null ? blockedUserList.equals(user.blockedUserList) : user.blockedUserList == null;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    /**HashCode of object
-     * @return hashcode
-     */
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + role.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (userProductList != null ? userProductList.hashCode() : 0);
-        result = 31 * result + (adminProductList != null ? adminProductList.hashCode() : 0);
-        result = 31 * result + (favoriteProductList != null ? favoriteProductList.hashCode() : 0);
-        result = 31 * result + (blockedUserList != null ? blockedUserList.hashCode() : 0);
-        return result;
+    public String getUsername() {
+        return username;
     }
 
-    public int getId() { return id; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public String getPassword() {
+        return password;
+    }
 
-    public Role getRole() { return role; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public void setRole(Role role) { this.role = role; }
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
 
-    public String getName() { return name; }
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-    public String getEmail() { return email; }
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getPassword() { return password; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public void setPassword(String password) { this.password = password; }
-
-    public List<Product> getUserProductList() { return userProductList; }
+    public List<Product> getUserProductList() {
+        return userProductList;
+    }
 
     public void setUserProductList(List<Product> userProductList) {
         this.userProductList = userProductList;
@@ -133,7 +124,4 @@ public class User {
     public void setBlockedUserList(List<Product> blockedUserList) {
         this.blockedUserList = blockedUserList;
     }
-
-
-
 }
