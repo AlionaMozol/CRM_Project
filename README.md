@@ -1,22 +1,18 @@
 # CRM_Project
 Собрать проект:
 1) git clone
-2) ctrl+shift+alt+s -> Modules -> плюсик -> Web 
-(На этом этапе убедитесь, что в директроии указана папка Web, а не Web2 и т.п.)
-3) Apply
-
-Далее подключаем сервер и.. все работает.
-На всякий случай:
-
-Добавление сервера(на примере tompcat):
-1) Качаем архив с офф сайта -> распаковываем
-2) Заходим в проект -> Edit Configurations... -> плюсик
-3) Выбираем Tompcat Server -> Local
-4) Вкладка Server -> Application Server -> указываем путь к папке с сервером
-
-Настройка сервеа(tompcat):
-1) ctrl+shift+alt+s -> Artifacts-> плюсик 
-2) WarApplication:Exploded -> From Modules...
-3) Apply
-4) Добавляем только что созданный артефакт в сервер (вкладка Deployment)
-Done
+2) ctrl+shift+alt+s -> Modules -> проверяем, есть ли модули spring и web. 
+Если их нет - добавляем (нажимаем на плюс вверху слева). 
+Убеждаемся, что в модуле Spring указаны конфигурационные файлы (которые начинаются на appconfig-...), обязательно их добавляем. 
+Теперь о модуле web. Опять же, если его нет - добавляем. Убеждаемся, что в нижнем окне указана директрия 
+папки web, а в верхнем указана директория файла web.xml.
+3) Дальше по БД. В workbench создаем схему (в моем случае spring_security_app). На этом все, можно закрыть Workbench.
+Далее подключае нашу бд к проекту: View -> Tool Windows -> Database ->плюсик->Data Source ->MySQL.
+Тепер вводим свои данные (в моем случае Database: spring_security_app, User: root, Password root).
+Проверяем соединение -> apply.
+4) Заходим в папку resources -> database.sql -> run (заполняется таблица)
+5) resources -> database.properties -> указываем свои данные
+6) Добавление сервера -> Edit Configurations->плюсик-> Tomcat Server-> дальше(если вы не добавляли сервер) нажимаем 
+Application-Server-> Configure (указываем путь к папке с сервером. 
+Далее заходим в Deployment -> плюсик -> Artifact..-> SpringSecurityApp: War exploded.
+Apply
