@@ -2,6 +2,7 @@ package com.project.crm.services;
 
 import com.project.crm.dao.RoleDao;
 import com.project.crm.dao.UserDao;
+import com.project.crm.dao.UserRepository;
 import com.project.crm.model.Role;
 import com.project.crm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userDao;
 
     @Autowired
     private RoleDao roleDao;

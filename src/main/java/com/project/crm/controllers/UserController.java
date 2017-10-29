@@ -57,6 +57,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
         if (error != null) {
+            System.out.print(error);
             model.addAttribute("error", "Username or password is incorrect.");
         }
 
