@@ -1,6 +1,6 @@
 package com.project.crm.controllers;
 
-import com.project.crm.dao.UserDao;
+import com.project.crm.dao.UserDaoImpl;
 import com.project.crm.model.User;
 
 import java.sql.SQLException;
@@ -11,11 +11,11 @@ import java.util.List;
  */
 public class testDaoClass {
     public static void main(String [] args) throws SQLException {
-        UserDao userDao=new UserDao();
+        UserDaoImpl userDao=new UserDaoImpl();
 
         User user = new User();
 
-        long id=8;
+        long id=10;
         user.setId(id);
         user.setUsername("usernumber5");
         user.setPassword("147852369");
