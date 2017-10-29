@@ -2,6 +2,7 @@ package com.project.crm.services;
 
 
 import com.project.crm.dao.UserDao;
+import com.project.crm.dao.UserRepository;
 import com.project.crm.model.Role;
 import com.project.crm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userDao;
 
     @Override
     @Transactional(readOnly = true)
