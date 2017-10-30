@@ -19,8 +19,7 @@ public class UserDaoImpl extends DAO implements UserDao {
         Connection connection = super.poolInst.getConnection();
 
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
-        } catch (SQLException e) {
+            connection = DriverManager.getConnection("${jdbc.url}", "${jdbc.username}", "${jdbc.password}");        } catch (SQLException e) {
             e.printStackTrace();
         }
         try {
@@ -89,8 +88,7 @@ public class UserDaoImpl extends DAO implements UserDao {
     public List<User> getAllUsers() {
         Connection connection = super.poolInst.getConnection();
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
-        } catch (SQLException e) {
+            connection = DriverManager.getConnection("${jdbc.url}", "${jdbc.username}", "${jdbc.password}");        } catch (SQLException e) {
             e.printStackTrace();
         }
         List<User> list = new ArrayList<User>();
