@@ -9,86 +9,85 @@ import java.util.List;
 /**
  * Created by 1 on 30.10.2017.
  */
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl extends DAO implements UserDao {
     public static final String SELECT_ALL_USERS = "SELECT * FROM spring_security_app.users";
-    public static final String SELECT_BY_USERNAME = "SELECT * FROM spring_security_app.users WHERE username = ?";
-    public static final String SELECT_BY_ID = "SELECT * FROM spring_security_app.users WHERE id = ?";
 
-    public static final String INSERT_USER = "INSERT INTO spring_security_app.users VALUES (?,?,?);";
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public void addUser(User user) {
-        Connection connection=null;
+        Connection connection = super.poolInst.getConnection();
+
         try {
             connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         try {
-            try (PreparedStatement stm = connection.prepareStatement(INSERT_USER)) {
-                stm.setLong(1, user.getId());
-                stm.setString(2, user.getUsername());
-                stm.setString(3, bCryptPasswordEncoder.encode(user.getPassword()));
-                stm.executeUpdate();
-            }
+            PreparedStatement statement = connection.prepareStatement(super.sql
+                    .getPropertie(sql.SQL_ADD_USER));
+            statement.setLong(1, user.getId());
+            statement.setString(2, user.getUsername());
+            statement.setString(3, bCryptPasswordEncoder.encode(user.getPassword()));
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
+        poolInst.footConnection(connection);
     }
 
+
+
     @Override
-    public User getUserById(Long userId) {
-        Connection connection=null;
+    public User getUserById(int id) {
+        Connection connection = super.poolInst.getConnection();
+        User user = null;
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        User user = new User();
-        try {
-            try (PreparedStatement stm = connection.prepareStatement(SELECT_BY_ID)) {
-                stm.setLong(1, userId);
-                ResultSet rs = stm.executeQuery();
-                if(rs.next()) {
-                    user.setId(rs.getLong("id"));
-                    user.setUsername(rs.getString("username"));
+            PreparedStatement statement = connection.prepareStatement(super.sql
+                    .getPropertie(sql.SQL_GET_USER_FROM_ID));
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs != null) {
+                user = new User();
+                while (rs.next()) {
+                    user.setId(Long.valueOf(rs.getInt(1)));
+                    user.setUsername(rs.getString(2));
+                    user.setPassword(rs.getString(3));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.poolInst.footConnection(connection);
         return user;
     }
 
     @Override
     public User getUserByUsername(String username) {
-        Connection connection=null;
+        Connection connection = super.poolInst.getConnection();
+        User user = null;
+
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        User user = new User();
-        try {
-            try (PreparedStatement stm = connection.prepareStatement(SELECT_BY_USERNAME)) {
-                stm.setString(1, username);
-                ResultSet rs = stm.executeQuery();
-                if(rs.next()){
-                    user.setId(rs.getLong("id"));
-                    user.setUsername(rs.getString("username"));
-                }
+            PreparedStatement statement = connection.prepareStatement(super.sql.getPropertie(sql.SQL_GET_USER_FROM_USERNAME));
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                user = new User();
+                user.setId(Long.valueOf(rs.getInt(1)));
+                user.setUsername(rs.getString(2));
+                user.setPassword(rs.getString(3));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        this.poolInst.footConnection(connection);
         return user;
     }
 
     @Override
     public List<User> getAllUsers() {
-        Connection connection=null;
+        Connection connection = super.poolInst.getConnection();
         try {
             connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
         } catch (SQLException e) {
@@ -112,13 +111,29 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public boolean isExist(User userNew) {
-        List<User>usersList = this.getAllUsers();
-        for(int i=0; i<usersList.size(); i++){
-            if(userNew.getUsername().equals(usersList.get(i).getUsername())){
+    public boolean isExist(User user) {
+        Connection connection = super.poolInst.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(super.sql
+                    .getPropertie(sql.SQL_CHECK_USER));
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
                 return true;
             }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
         }
         return false;
+    }
+    public static void main(String[] args) throws ClassNotFoundException {
+        long l = 1;
+        UserDaoImpl d = new UserDaoImpl();
+        User user = d.getUserById(1);
+        System.out.println(user.getUsername());
+
     }
 }
