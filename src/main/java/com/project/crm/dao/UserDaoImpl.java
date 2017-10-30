@@ -19,15 +19,11 @@ public class UserDaoImpl extends DAO implements UserDao {
         Connection connection = super.poolInst.getConnection();
 
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "${jdbc.username}", "${jdbc.password}");        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             PreparedStatement statement = connection.prepareStatement(super.sql
                     .getPropertie(sql.SQL_ADD_USER));
-            statement.setLong(1, user.getId());
-            statement.setString(2, user.getUsername());
-            statement.setString(3, bCryptPasswordEncoder.encode(user.getPassword()));
+
+            statement.setString(1, user.getUsername());
+            statement.setString(2, bCryptPasswordEncoder.encode(user.getPassword()));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,7 +45,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             if (rs != null) {
                 user = new User();
                 while (rs.next()) {
-                    user.setId(Long.valueOf(rs.getInt(1)));
+                    user.setId(rs.getInt(1));
                     user.setUsername(rs.getString(2));
                     user.setPassword(rs.getString(3));
                 }
@@ -72,7 +68,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
                 user = new User();
-                user.setId(Long.valueOf(rs.getInt(1)));
+                user.setId(rs.getInt(1));
                 user.setUsername(rs.getString(2));
                 user.setPassword(rs.getString(3));
             }
@@ -97,7 +93,7 @@ public class UserDaoImpl extends DAO implements UserDao {
                 ResultSet rs = stm.executeQuery();
                 while (rs.next()) {
                     User user = new User();
-                    user.setId(rs.getLong("id"));
+                    user.setId(rs.getInt("id"));
                     user.setUsername(rs.getString("username"));
                     list.add(user);
                 }

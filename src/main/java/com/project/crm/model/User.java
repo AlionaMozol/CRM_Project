@@ -17,7 +17,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private int id;
 
     @Column(name = "username")
     private String username;
@@ -45,11 +45,11 @@ public class User {
     @Transient
     private List<Product> blockedUserList;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -116,6 +116,8 @@ public class User {
     public void setFavoriteProductList(List<Product> favoriteProductList) {
         this.favoriteProductList = favoriteProductList;
     }
+
+
 
     public List<Product> getBlockedUserList() {
         return blockedUserList;
