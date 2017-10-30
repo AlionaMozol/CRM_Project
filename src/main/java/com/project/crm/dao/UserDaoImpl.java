@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao{
     public void addUser(User user) {
         Connection connection=null;
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
+            connection = DriverManager.getConnection("${jdbc.url}", "${jdbc.username}", "${jdbc.password}");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDao{
     public User getUserById(Long userId) {
         Connection connection=null;
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
+            connection = DriverManager.getConnection("${jdbc.url}", "${jdbc.username}", "${jdbc.password}");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao{
     public User getUserByUsername(String username) {
         Connection connection=null;
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
+            connection = DriverManager.getConnection("${jdbc.url}", "${jdbc.username}", "${jdbc.password}");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,7 +90,7 @@ public class UserDaoImpl implements UserDao{
     public List<User> getAllUsers() {
         Connection connection=null;
         try {
-            connection = DriverManager.getConnection("${jdbc.url}", "root", "root");
+            connection = DriverManager.getConnection("${jdbc.url}", "${jdbc.username}", "${jdbc.password}");
         } catch (SQLException e) {
             e.printStackTrace();
         }
