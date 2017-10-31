@@ -24,6 +24,7 @@
 
     <%@include file="../page_elements/login_layout.jsp"%>
     <%@include file="../page_elements/LeftMenu_layout.jsp"%>
+    <%@include file="../page_elements/product_list_layout.jsp"%>
 
 </body>
 </html>
