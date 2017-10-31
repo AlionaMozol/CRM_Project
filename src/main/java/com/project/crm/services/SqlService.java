@@ -9,13 +9,14 @@ public class SqlService {
     private static SqlService instance;
     private static ResourceBundle bundle;
 
-    public static final String SQL_FILE = "sql";
+    private static final String SQL_FILE = "sql";
 
     //user query
     public static final String SQL_GET_USER_FROM_ID = "SQL_GET_USER_FROM_ID";
     public static final String SQL_ADD_USER = "SQL_ADD_USER";
     public static final String SQL_GET_USER_FROM_USERNAME = "SQL_GET_USER_FROM_USERNAME";
     public static final String SQL_CHECK_USER = "SQL_CHECK_USER";
+    public static final String SELECT_ALL_USERS = "SELECT_ALL_USERS";
 
 
 

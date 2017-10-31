@@ -83,13 +83,11 @@ public class UserDaoImpl extends DAO implements UserDao {
     @Override
     public List<User> getAllUsers() {
         Connection connection = super.poolInst.getConnection();
-        try {
-            connection = DriverManager.getConnection("${jdbc.url}", "${jdbc.username}", "${jdbc.password}");        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         List<User> list = new ArrayList<User>();
-        try {
-            try (PreparedStatement stm = connection.prepareStatement(SELECT_ALL_USERS)) {
+
+            try  {
+                PreparedStatement stm = connection.prepareStatement(super.sql.getPropertie(sql.SELECT_ALL_USERS));
                 ResultSet rs = stm.executeQuery();
                 while (rs.next()) {
                     User user = new User();
@@ -98,7 +96,7 @@ public class UserDaoImpl extends DAO implements UserDao {
                     list.add(user);
                 }
             }
-        } catch (SQLException e) {
+         catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
