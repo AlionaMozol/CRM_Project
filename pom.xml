@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.project</groupId>
-    <artifactId>SpringSecurityApp</artifactId>
+    <artifactId>NetCufar</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
-    <name>SpringSecurityApp Maven Webapp</name>
+    <name>NetCufarApp</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -100,6 +100,6 @@
     </dependencies>
 
     <build>
-        <finalName>SpringSecurityApp</finalName>
+        <finalName>NetCufarApp</finalName>
     </build>
 </project>

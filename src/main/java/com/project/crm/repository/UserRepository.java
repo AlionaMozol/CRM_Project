@@ -1,4 +1,4 @@
-package com.project.crm.dao;
+package com.project.crm.repository;
 
 
 import com.project.crm.model.User;

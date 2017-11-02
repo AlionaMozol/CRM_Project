@@ -1,8 +1,7 @@
-package com.project.crm.services;
+package com.project.crm.services.impl;
 
 
-import com.project.crm.dao.UserDao;
-import com.project.crm.dao.UserRepository;
+import com.project.crm.repository.UserRepository;
 import com.project.crm.model.Role;
 import com.project.crm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +26,11 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userDao;
-
+    private UserRepository userRepository;
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //Проверяем создаваемого пользователя по бд
-        User user = userDao.findByUsername(username);
+        User user = userRepository.findByUsername(username);
         //Созаем множество разрешений
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         //Добавляем в разрешения для данного пользователя все роли, хранящиеся в бд

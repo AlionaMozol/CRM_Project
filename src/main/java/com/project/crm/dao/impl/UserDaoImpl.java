@@ -1,8 +1,16 @@
-package com.project.crm.dao;
+package com.project.crm.dao.impl;
 
+import com.project.crm.dao.DAO;
+import com.project.crm.dao.UserDao;
 import com.project.crm.model.User;
+import com.project.crm.services.SqlService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +24,11 @@ public class UserDaoImpl extends DAO implements UserDao {
 
     @Override
     public void addUser(User user) {
-        Connection connection = super.poolInst.getConnection();
+        Connection connection = poolInst.getConnection();
 
         try {
-            PreparedStatement statement = connection.prepareStatement(super.sql
-                    .getPropertie(sql.SQL_ADD_USER));
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_ADD_USER));
 
             statement.setString(1, user.getUsername());
             statement.setString(2, bCryptPasswordEncoder.encode(user.getPassword()));
@@ -35,11 +43,11 @@ public class UserDaoImpl extends DAO implements UserDao {
 
     @Override
     public User getUserById(int id) {
-        Connection connection = super.poolInst.getConnection();
+        Connection connection = poolInst.getConnection();
         User user = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(super.sql
-                    .getPropertie(sql.SQL_GET_USER_FROM_ID));
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_USER_FROM_ID));
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs != null) {
@@ -53,17 +61,17 @@ public class UserDaoImpl extends DAO implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.poolInst.footConnection(connection);
+        poolInst.footConnection(connection);
         return user;
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        Connection connection = super.poolInst.getConnection();
+    public User findByUsername(String username) {
+        Connection connection = poolInst.getConnection();
         User user = null;
 
         try {
-            PreparedStatement statement = connection.prepareStatement(super.sql.getPropertie(sql.SQL_GET_USER_FROM_USERNAME));
+            PreparedStatement statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_USER_FROM_USERNAME));
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
@@ -76,27 +84,27 @@ public class UserDaoImpl extends DAO implements UserDao {
             e.printStackTrace();
         }
 
-        this.poolInst.footConnection(connection);
+        poolInst.footConnection(connection);
         return user;
     }
 
     @Override
     public List<User> getAllUsers() {
-        Connection connection = super.poolInst.getConnection();
+        Connection connection = poolInst.getConnection();
 
         List<User> list = new ArrayList<User>();
 
-            try  {
-                PreparedStatement stm = connection.prepareStatement(super.sql.getPropertie(sql.SELECT_ALL_USERS));
-                ResultSet rs = stm.executeQuery();
-                while (rs.next()) {
-                    User user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setUsername(rs.getString("username"));
-                    list.add(user);
-                }
+        try  {
+            PreparedStatement stm = connection.prepareStatement(sql.getProperty(SqlService.SELECT_ALL_USERS));
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                list.add(user);
             }
-         catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -104,10 +112,10 @@ public class UserDaoImpl extends DAO implements UserDao {
 
     @Override
     public boolean isExist(User user) {
-        Connection connection = super.poolInst.getConnection();
+        Connection connection = poolInst.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement(super.sql
-                    .getPropertie(sql.SQL_CHECK_USER));
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_CHECK_USER));
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             ResultSet rs = statement.executeQuery();
@@ -121,11 +129,12 @@ public class UserDaoImpl extends DAO implements UserDao {
         }
         return false;
     }
-    public static void main(String[] args) throws ClassNotFoundException {
-        long l = 1;
-        UserDaoImpl d = new UserDaoImpl();
-        User user = d.getUserById(1);
-        System.out.println(user.getUsername());
 
-    }
+//    public static void main(String[] args) throws ClassNotFoundException {
+//        long l = 1;
+//        UserDaoImpl d = new UserDaoImpl();
+//        User user = d.getUserById(1);
+//        System.out.println(user.getUsername());
+//
+//    }
 }

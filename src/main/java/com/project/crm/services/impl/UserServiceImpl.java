@@ -1,10 +1,10 @@
-package com.project.crm.services;
+package com.project.crm.services.impl;
 
-import com.project.crm.dao.RoleDao;
-import com.project.crm.dao.UserDao;
-import com.project.crm.dao.UserRepository;
+import com.project.crm.repository.RoleRepository;
+import com.project.crm.repository.UserRepository;
 import com.project.crm.model.Role;
 import com.project.crm.model.User;
+import com.project.crm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,10 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userDao;
+    private UserRepository userRepository;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleRepository roleRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -37,14 +37,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
         //Добавляем роль 1: User
-        roles.add(roleDao.getOne(1L));
+        roles.add(roleRepository.getOne(1L));
         user.setRoles(roles);
         //Сохраняем
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     @Override
     public User findByUsername(String username) {
-        return userDao.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 }

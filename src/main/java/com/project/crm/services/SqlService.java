@@ -32,7 +32,7 @@ public class SqlService {
         return instance;
     }
 
-    public String getPropertie(String key){
+    public String getProperty(String key){
         return bundle.getString(key);
     }
 

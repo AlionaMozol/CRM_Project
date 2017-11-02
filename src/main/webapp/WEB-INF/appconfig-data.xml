@@ -38,5 +38,5 @@
 
     <tx:annotation-driven/>
 
-    <jpa:repositories base-package="com.project.crm.dao"/>
+    <jpa:repositories base-package="com.project.crm.repository"/>
 </beans>

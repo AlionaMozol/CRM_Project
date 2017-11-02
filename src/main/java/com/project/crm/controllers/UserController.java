@@ -2,7 +2,8 @@ package com.project.crm.controllers;
 
 
 import com.project.crm.model.User;
-import com.project.crm.services.SecurityService;
+import com.project.crm.services.security.SecurityService;
+
 import com.project.crm.services.UserService;
 import com.project.crm.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;

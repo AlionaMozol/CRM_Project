@@ -1,4 +1,4 @@
-package com.project.crm.services;
+package com.project.crm.services.security;
 
 /**
  * Service for Security.
