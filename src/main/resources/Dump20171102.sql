@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `Attributes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Attributes` (
-  `attr_id` int(11) NOT NULL,
+  `attr_id` int(11) NOT NULL AUTO_INCREMENT,
   `Value` varchar(45) NOT NULL,
   `Object_type_id` int(11) NOT NULL,
   PRIMARY KEY (`attr_id`,`Object_type_id`),
   KEY `fk_Attributes_Object_type1_idx` (`Object_type_id`),
   CONSTRAINT `fk_Attributes_Object_type1` FOREIGN KEY (`Object_type_id`) REFERENCES `Object_type` (`Object_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,13 +49,12 @@ DROP TABLE IF EXISTS `Object`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Object` (
-  `Object_id` int(11) NOT NULL,
+  `Object_id` int(11) NOT NULL AUTO_INCREMENT,
   `Object_type_id` int(11) NOT NULL,
-  `Value` varchar(45) NOT NULL,
   PRIMARY KEY (`Object_id`,`Object_type_id`),
   KEY `fk_Object_Object_type1_idx` (`Object_type_id`),
   CONSTRAINT `fk_Object_Object_type1` FOREIGN KEY (`Object_type_id`) REFERENCES `Object_type` (`Object_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,10 +74,11 @@ DROP TABLE IF EXISTS `Object_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Object_type` (
-  `Object_type_id` int(11) NOT NULL,
+  `Object_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `Value` varchar(45) NOT NULL,
+  `Supercategory` varchar(45),
   PRIMARY KEY (`Object_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ DROP TABLE IF EXISTS `Values`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Values` (
-  `value_id` int(11) NOT NULL,
+  `value_id` int(11) NOT NULL AUTO_INCREMENT,
   `Object_id` int(11) NOT NULL,
   `Attributes_attr_id` int(11) NOT NULL,
   `Value` varchar(45) NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE `Values` (
   KEY `fk_Values_Attributes1_idx` (`Attributes_attr_id`),
   CONSTRAINT `fk_Values_Attributes1` FOREIGN KEY (`Attributes_attr_id`) REFERENCES `Attributes` (`attr_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Values_Object` FOREIGN KEY (`Object_id`) REFERENCES `Object` (`Object_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `user_roles` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `user_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +182,7 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
