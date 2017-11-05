@@ -69,7 +69,7 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/","/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         return "welcome";
     }
@@ -78,4 +78,21 @@ public class UserController {
     public String admin(Model model) {
         return "admin";
     }
+
+
+    @RequestMapping(value = "/catalog", method = RequestMethod.GET)
+    public String catalog(Model model) {
+        return "catalog";
+    }
+
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String about(Model model) {
+        return "about";
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String profile(Model model) {
+        return "profile";
+    }
+
 }
