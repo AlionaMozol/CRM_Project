@@ -22,6 +22,7 @@
 
 <body>
 
+    <%@include file="../layouts/preloader.jsp"%>
     <!--%@include file="../layouts/high_menu_bar.jsp"%-->
     <%@include file="../layouts/login_layout.jsp"%>
     <!--%@include file="../layouts/LeftMenu_layout.jsp"%-->

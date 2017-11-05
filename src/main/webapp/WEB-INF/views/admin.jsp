@@ -18,6 +18,7 @@
 </head>
 
 <body>
+<%@include file="../layouts/preloader.jsp"%>
 <div class="container">
     <c:if test="${pageContext.request.userPrincipal.name != null}">
         <form id="logoutForm" method="post" action="${contextPath}/logout">

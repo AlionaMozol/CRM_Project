@@ -19,7 +19,7 @@
 
 </head>
 <body>
-
+<%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
 
 <div id="headewrap2">
