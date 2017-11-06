@@ -175,3 +175,7 @@ padding-bottom: 70px;
  background-color: #00A4E4;
  color: #FFFFFF;
 }
+
+.panel-heading{
+	margin-top: 60px;
+}

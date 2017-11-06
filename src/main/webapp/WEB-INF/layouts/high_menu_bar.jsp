@@ -18,8 +18,6 @@
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 
-
-
 </head>
 <body>
 
@@ -40,6 +38,18 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
+			<div class="col-sm-4 col-md-5">
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search" name="q">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 <li><a  href="${contextPath}/welcome">Start page</a></li>
                 <li><a href="${contextPath}/catalog">Catalog</a></li>
                 <li><a href="${contextPath}/about">About us</a></li>
