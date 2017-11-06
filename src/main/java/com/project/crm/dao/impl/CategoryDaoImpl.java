@@ -29,6 +29,9 @@ public class CategoryDaoImpl extends DAO implements CategoryDao {
             while (rs.next()) {
                 Category category = new Category();
                 category.setTitle(rs.getString("Value"));
+                Supercategory supercategoryOfCategory = new Supercategory();
+                supercategoryOfCategory.setTitle(rs.getString("Supercategory"));
+                category.setSupercategory(supercategoryOfCategory);
                 categotyList.add(category);
             }
         }
@@ -44,11 +47,14 @@ public class CategoryDaoImpl extends DAO implements CategoryDao {
         List<Category> categotyList = new ArrayList<Category>();
         try  {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT Value FROM spring_security_app.object_type");
+                    "SELECT * FROM spring_security_app.object_type");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Category category = new Category();
                 category.setTitle(rs.getString("Value"));
+                Supercategory supercategory = new Supercategory();
+                supercategory.setTitle(rs.getString("Supercategory"));
+                category.setSupercategory(supercategory);
                 categotyList.add(category);
             }
         }
