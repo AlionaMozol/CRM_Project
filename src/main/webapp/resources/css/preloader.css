@@ -1,8 +1,8 @@
-#hellopreloader>p{
+#preloader>p{
     display:none;
 }
 
-#hellopreloader_preload{
+#preloader_preload{
     display: block;
     position: fixed;
     z-index: 99999;

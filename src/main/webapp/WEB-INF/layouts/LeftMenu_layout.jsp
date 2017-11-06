@@ -13,8 +13,6 @@
 
 <!DOCTYPE html>
 
-
-
 <body>
 
 <div class="navbar navbar-left">
@@ -31,4 +29,3 @@
 </div>
 
 </body>
-</html>
