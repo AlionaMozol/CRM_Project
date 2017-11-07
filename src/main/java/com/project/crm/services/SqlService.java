@@ -18,6 +18,15 @@ public class SqlService {
     public static final String SQL_CHECK_USER = "SQL_CHECK_USER";
     public static final String SELECT_ALL_USERS = "SELECT_ALL_USERS";
 
+    public static final String SQL_GET_PRODUCTS_BY_CATEGORY = "SQL_GET_PRODUCTS_BY_CATEGORY";
+    public static final String SQL_GET_PRODUCTS_BETWEEN_2_PRICES = "SQL_GET_PRODUCTS_BETWEEN_2_PRICES";
+    public static final String SQL_GET_ALL_PRODUCTS = "SQL_GET_ALL_PRODUCTS";
+
+    public static final String SQL_GET_PRODUCT_BY_ID = "SQL_GET_PRODUCT_BY_ID";
+    public static final String SQL_GET_PRODUCT_TYPE_BY_ID = "SQL_GET_PRODUCT_TYPE_BY_ID";
+    public static final String SQL_GET_ATTRIBUTE_COST_BY_OBJECT_TYPE_ID = "SQL_GET_ATTRIBUTE_COST_BY_OBJECT_TYPE_ID";
+    public static final String SQL_GET_COST_BY_ATTRIBUTE_ID_AND_OBJECT_ID = "SQL_GET_COST_BY_ATTRIBUTE_ID_AND_OBJECT_ID";
+
 
 
     private SqlService(){}
