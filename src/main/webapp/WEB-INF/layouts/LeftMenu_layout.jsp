@@ -13,18 +13,23 @@
 
 <!DOCTYPE html>
 
+
 <body>
+
 
 <div class="navbar navbar-left">
     <!-- Обычное содержимое панели -->
-    <div class="panel-heading">Категории</div>
+
 
     <!-- Групповой список -->
     <div class="list-group">
-        <a href="#" class="list-group-item">Смартфоны </a>
-        <a href="#" class="list-group-item">Ноутбуки </a>
-        <a href="#" class="list-group-item">Планшеты </a>
-        <a href="#" class="list-group-item">Компьютеры </a>
+<c:forEach var="category" items="${sessionScope.categoryJSP}">
+        <a href="#" class="list-group-item"> ${category.title}  </a>
+    <%--<c:forEach var="subcategory" items="${sessionScope.categoryJSP.categoryList}">
+        <a href="#" class="list-group-item"> ${subcategory.title}  </a>
+    </c:forEach>--%>
+
+</c:forEach>
     </div>
 </div>
 

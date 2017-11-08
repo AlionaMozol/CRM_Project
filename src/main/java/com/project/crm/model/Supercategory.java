@@ -1,14 +1,25 @@
 package com.project.crm.model;
 
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
 /**
  * Created by 1 on 06.11.2017.
  */
+@Component
 public class Supercategory {
 
 
 
     private String title;
-    public Supercategory() {}
+
+    public Supercategory() {
+        super();
+    }
+
+
+
 
     public String getTitle() {
         return title;

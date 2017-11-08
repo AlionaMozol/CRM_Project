@@ -26,7 +26,7 @@ public class SupercategoryDaoImpl extends DAO implements SupercategoryDao {
 
         try  {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT DISTINCT supercategory FROM spring_security_app.object_type");
+                    "SELECT DISTINCT supercategory FROM spring_security_app.object_type WHERE supercategory IS NOT NULL");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Supercategory supercategory = new Supercategory();
