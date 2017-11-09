@@ -23,5 +23,9 @@
 <%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
 
+<div style="padding: 200px">
+
+    <%@include file="../layouts/account_layout.jsp"%>
+</div>
 
 </body>
