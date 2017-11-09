@@ -67,6 +67,9 @@
                             <li><a href="#"><i class="icon-cog"></i>Settings</a></li>
                             <li>
                                 <c:if test="${pageContext.request.userPrincipal.name != null}">
+                                    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    </form>
                                     <a class="btn btn-default" onclick="document.forms['logoutForm'].submit()">Log Out</a>
                                 </c:if>
                                 <c:if test="${pageContext.request.userPrincipal.name == null}">
