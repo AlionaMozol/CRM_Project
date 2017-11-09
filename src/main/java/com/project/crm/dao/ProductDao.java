@@ -15,5 +15,5 @@ public interface ProductDao {
     List<Product> getProductsBetween2Prices(int priceAfter, int priceBefore);
     List<Product> getProductByStatus(Status status);
     List<Product> getAllProducts();
-    boolean deleteProductById(int id);
+    void deleteProductById(int id);
 }

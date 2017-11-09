@@ -5,18 +5,17 @@ import com.project.crm.model.enums.Status;
 import java.awt.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Product {
 
-
     private int id;
     private Status status;
-    private String supercategory;
-    //private String category;
-    //private List<Pair<String, String>> attributesAndValues;
+    private String superCategory;
+    private String category;
+    private Map<String, String> attributesAndValues;
     private String title;
     private String description;
-    private int cost;
     private Image photo;
     private Date publicationDate;
     private String phone;
@@ -29,76 +28,6 @@ public class Product {
     public Product() {}
 
 
-    /**
-     * Information about object
-     *
-     * @return string value
-     */
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", status=" + status +
-                ", supercategory='" + supercategory + '\'' +
-                //", category='" + category + '\'' +
-                //", categoryListAdress'" + attributesAndValues + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", cost=" + cost +
-                ", photo=" + photo +
-                ", publicationDate=" + publicationDate +
-                ", phone='" + phone + '\'' +
-                ", commentList=" + commentList +
-                '}';
-    }
-
-    /**Equals of objects
-     * @param o object
-     * @return boolean
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Product product = (Product) o;
-
-        if (id != product.id) return false;
-        if (cost != product.cost) return false;
-        if (status != product.status) return false;
-        if (supercategory != null ? !supercategory.equals(product.supercategory) : product.supercategory != null) return false;
-        if (!title.equals(product.title)) return false;
-        if (description != null ? !description.equals(product.description) : product.description != null) return false;
-        if (photo != null ? !photo.equals(product.photo) : product.photo != null) return false;
-        if (!publicationDate.equals(product.publicationDate)) return false;
-        if (!phone.equals(product.phone)) return false;
-        if (!supercategory.equals(product.supercategory)) return false;
-        //if (!category.equals(product.category)) return false;
-        //добавить сравнение списков атрибутов значений
-        return commentList != null ? commentList.equals(product.commentList) : product.commentList == null;
-    }
-
-    /**HashCode of object
-     * @return hashcode
-     */
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + status.hashCode();
-        result = 31 * result + (supercategory != null ? supercategory.hashCode() : 0);
-        result = 31 * result + title.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + cost;
-        result = 31 * result + (photo != null ? photo.hashCode() : 0);
-        result = 31 * result + publicationDate.hashCode();
-        result = 31 * result + phone.hashCode();
-        result = 31 * result + (commentList != null ? commentList.hashCode() : 0);
-        //добавить списки атрибутов значений и категорию
-        return result;
-    }
-
-
-
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
@@ -107,9 +36,9 @@ public class Product {
 
     public void setStatus(Status status) { this.status = status; }
 
-    public String getSupercategory() { return supercategory; }
+    public String getSuperCategory() { return superCategory; }
 
-    public void setSupercategory(String supercategory) { this.supercategory = supercategory; }
+    public void setSuperCategory(String superCategory) { this.superCategory = superCategory; }
 
     public String getTitle() { return title; }
 
@@ -118,10 +47,6 @@ public class Product {
     public String getDescription() { return description; }
 
     public void setDescription(String description) { this.description = description; }
-
-    public int getCost() { return cost; }
-
-    public void setCost(int cost) { this.cost = cost; }
 
     public Image getPhoto() { return photo; }
 
@@ -139,11 +64,11 @@ public class Product {
 
     public void setCommentsList(List<String> commentsList) { this.commentList = commentsList; }
 
-    /*public List<Pair<String, String>> getAttributesAndValues() {
+    public Map<String, String> getAttributesAndValues() {
         return attributesAndValues;
     }
 
-    public void setAttributesAndValues(List<Pair<String, String>> attributesAndValues) {
+    public void setAttributesAndValues(Map<String, String> attributesAndValues) {
         this.attributesAndValues = attributesAndValues;
     }
 
@@ -153,6 +78,74 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
-    }*/
+    }
 
+    public List<String> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<String> commentList) {
+        this.commentList = commentList;
+    }
+
+    /**
+     * Information about object
+     *
+     * @return string value
+     */
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", status=" + status +
+                ", superCategory='" + superCategory + '\'' +
+                ", category='" + category + '\'' +
+                ", attributesAndValues=" + attributesAndValues +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", photo=" + photo +
+                ", publicationDate=" + publicationDate +
+                ", phone='" + phone + '\'' +
+                ", commentList=" + commentList +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (id != product.id) return false;
+        if (status != product.status) return false;
+        if (superCategory != null ? !superCategory.equals(product.superCategory) : product.superCategory != null)
+            return false;
+        if (category != null ? !category.equals(product.category) : product.category != null) return false;
+        if (attributesAndValues != null ? !attributesAndValues.equals(product.attributesAndValues) : product.attributesAndValues != null)
+            return false;
+        if (title != null ? !title.equals(product.title) : product.title != null) return false;
+        if (description != null ? !description.equals(product.description) : product.description != null) return false;
+        if (photo != null ? !photo.equals(product.photo) : product.photo != null) return false;
+        if (publicationDate != null ? !publicationDate.equals(product.publicationDate) : product.publicationDate != null)
+            return false;
+        if (phone != null ? !phone.equals(product.phone) : product.phone != null) return false;
+        return commentList != null ? commentList.equals(product.commentList) : product.commentList == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (superCategory != null ? superCategory.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (attributesAndValues != null ? attributesAndValues.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (commentList != null ? commentList.hashCode() : 0);
+        return result;
+    }
 }

@@ -17,9 +17,15 @@
     <title>Log in with your account</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/wrapper/font-awesome.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/wrapper/noJS.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/wrapper/style.css" rel="stylesheet">
+
+    <script src="../../resources/js/drop-down.js"></script>
 
 </head>
 <body>
+
 
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -50,23 +56,31 @@
                             </div>
                         </form>
                     </div>
-                <li><a  href="${contextPath}/welcome">Start page</a></li>
-                <li><a href="${contextPath}/catalog">Catalog</a></li>
+                <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome">Start page</a></li>
                 <li><a href="${contextPath}/about">About us</a></li>
-                <li><a href="${contextPath}/profile">Profile</a></li>
-
-
                 <li>
-                    <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
-                        <a class="btn btn-default" onclick="document.forms['logoutForm'].submit()">Log Out</a>
-                    </c:if>
+                    <div id="dd" class="wrapper-dropdown-5" tabindex="1">Account
+                        <ul class="dropdown">
+                            <li><a href="${contextPath}/profile"><i class="icon-user"></i>Profile</a></li>
+                            <li><a href="${contextPath}/catalog"><i class="icon-list"></i>Catalog</a></li>
+                            <li><a href="#"><i class="icon-inbox"></i>New Product</a></li>
+                            <li><a href="#"><i class="icon-cog"></i>Settings</a></li>
+                            <li>
+                                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                                    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    </form>
+                                    <a class="btn btn-default" onclick="document.forms['logoutForm'].submit()">Log Out</a>
+                                </c:if>
+                                <c:if test="${pageContext.request.userPrincipal.name == null}">
+                                    <a class="btn btn-default" href="${contextPath}/login">Log In</a>
+                                </c:if>
+                            </li>
 
-                    <c:if test="${pageContext.request.userPrincipal.name == null}">
-                        <a class="btn btn-default" href="${contextPath}/login">Log In</a>
-                    </c:if>
+                        </ul>
+                    </div>
+                    <!--a onmouseover="down()"href="${contextPath}/profile">Profile</a-->
+
                 </li>
 
             </ul>
