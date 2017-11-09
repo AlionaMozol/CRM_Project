@@ -87,6 +87,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             }
             e.printStackTrace();
         } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             poolInst.footConnection(connection);
         }
     }
@@ -141,6 +146,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             e.printStackTrace();
         }
         finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             poolInst.footConnection(connection);
         }
 
@@ -181,6 +191,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             e.printStackTrace();
         }
         finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             poolInst.footConnection(connection);
         }
         return productsOfTargetCategory;
@@ -224,6 +239,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             e.printStackTrace();
         }
         finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             poolInst.footConnection(connection);
         }
         return productsOfTargetCost;
@@ -263,6 +283,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             e.printStackTrace();
         }
         finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             poolInst.footConnection(connection);
         }
         return allProducts;
@@ -296,6 +321,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             e.printStackTrace();
         }
         finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             poolInst.footConnection(connection);
         }
     }
