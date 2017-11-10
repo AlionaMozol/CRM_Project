@@ -95,4 +95,8 @@ public class UserController {
         return "profile";
     }
 
+    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    public String account(Model model) {
+        return "account";
+    }
 }

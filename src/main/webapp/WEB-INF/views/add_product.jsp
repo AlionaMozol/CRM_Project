@@ -22,6 +22,8 @@
 
 <%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
-<%@include file="../layouts/profile_layout.jsp"%>
+
+
+
 
 </body>

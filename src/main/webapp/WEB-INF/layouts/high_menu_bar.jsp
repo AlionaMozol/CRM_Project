@@ -62,6 +62,7 @@
                     <div id="dd" class="wrapper-dropdown-5" tabindex="1">Account
                         <ul class="dropdown">
                             <li><a href="${contextPath}/profile"><i class="icon-user"></i>Profile</a></li>
+                            <li><a href="${contextPath}/account"><i class="icon-user"></i>Account</a></li>
                             <li><a href="${contextPath}/catalog"><i class="icon-list"></i>Catalog</a></li>
                             <li><a href="#"><i class="icon-inbox"></i>New Product</a></li>
                             <li><a href="#"><i class="icon-cog"></i>Settings</a></li>
