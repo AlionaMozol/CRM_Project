@@ -1,4 +1,3 @@
-//document.getElementById("dudu").innerHTML="AAAAAAAAAAAAAAAAAAAAAAAAa";
 $(document).ready(function () {
     $.getJSON('GetSupercategoriesServlet', {}, function (response) {
         let supercategory = document.createElement('a');

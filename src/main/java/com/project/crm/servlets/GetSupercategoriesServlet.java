@@ -13,9 +13,10 @@ import org.json.*;
 
 @WebServlet("/GetSupercategoriesServlet")
 public class GetSupercategoriesServlet extends HttpServlet {
+    private SupercategoryServiceImpl supercategoryService = new SupercategoryServiceImpl();
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
-            SupercategoryServiceImpl supercategoryService = new SupercategoryServiceImpl();
             List<Supercategory> supercategories = supercategoryService.getAllSypercategories();
             JSONArray jsonArray = new JSONArray();
             for (Supercategory item : supercategories) {

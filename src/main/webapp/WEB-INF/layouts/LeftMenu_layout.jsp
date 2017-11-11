@@ -26,11 +26,12 @@
     <script type="text/javascript">
         <%@include file="/resources/js/LeftMenu_layout_ajax.js"%>
     </script>
+
     <div class="list-group" id="supercategories">
-        <!--<a href="#" class="list-group-item">Смартфоны </a>
+        <a href="#" class="list-group-item">Смартфоны </a>
         <a href="#" class="list-group-item">Ноутбуки </a>
         <a href="#" class="list-group-item">Планшеты </a>
-        <a href="#" class="list-group-item">Компьютеры </a>-->
+        <a href="#" class="list-group-item">Компьютеры </a>
         <%--
     <div class="list-group">
 <c:forEach var="category" items="${productCategory}">
