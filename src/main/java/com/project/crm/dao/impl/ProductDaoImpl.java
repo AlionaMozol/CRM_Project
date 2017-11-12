@@ -6,6 +6,7 @@ import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.Status;
 import com.project.crm.services.SqlService;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-
+@Component
 public class ProductDaoImpl extends DAO implements ProductDao {
 
     @Override
@@ -331,20 +332,20 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
 
-          /*public static void main(String[] args) throws ClassNotFoundException {
-              ProductDaoImpl d = new ProductDaoImpl();
-              Product p = new Product();
-              p.setSuperCategory("Техника");
-              p.setCategory("Телефоны");
-              Map<String, String> map = new HashMap<>();
-              map.put("Состояние","ТЕСТ");
-              map.put("Тип","ТЕСТ");
-              map.put("Марка","ТЕСТ");
-              map.put("Диагональ экрана","ТЕСТ");
-              map.put("Цена","ТЕСТ");
-              map.put("Пользователь","ТЕСТ");
-              p.setAttributesAndValues(map);
-              d.addProduct(p);
-          }*/
+//          public static void main(String[] args) throws ClassNotFoundException {
+//              ProductDaoImpl d = new ProductDaoImpl();
+//              Product p = new Product();
+//              p.setSuperCategory("Техника");
+//              p.setCategory("Телефоны");
+//              Map<String, String> map = new HashMap<>();
+//              map.put("Состояние","ТЕСТ");
+//              map.put("Тип","ТЕСТ");
+//              map.put("Марка","ТЕСТ");
+//              map.put("Диагональ экрана","ТЕСТ");
+//              map.put("Цена","ТЕСТ");
+//              map.put("Пользователь","ТЕСТ");
+//              p.setAttributesAndValues(map);
+//              d.addProduct(p);
+//          }
 
 }

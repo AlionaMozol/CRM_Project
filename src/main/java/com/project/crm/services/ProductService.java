@@ -1,14 +1,15 @@
-package com.project.crm.dao;
+package com.project.crm.services;
 
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.Status;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
-@Component
-public interface ProductDao {
+@Service
+public interface ProductService {
+
     void addProduct(Product product);
     Product getProductById(int id);
     List<Product> getProductsByTitle(String title);

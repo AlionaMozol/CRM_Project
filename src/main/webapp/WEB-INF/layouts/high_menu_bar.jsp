@@ -63,8 +63,7 @@
                         <ul class="dropdown">
                             <li><a href="${contextPath}/profile"><i class="icon-user"></i>Profile</a></li>
                             <li><a href="${contextPath}/account"><i class="icon-user"></i>Account</a></li>
-                            <li><a href="${contextPath}/catalog"><i class="icon-list"></i>Catalog</a></li>
-                            <li><a href="#"><i class="icon-inbox"></i>New Product</a></li>
+                            <li><a href="${contextPath}/products"><i class="icon-list"></i>My products</a></li>
                             <li><a href="#"><i class="icon-cog"></i>Settings</a></li>
                             <li>
                                 <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -73,6 +72,7 @@
                                     </form>
                                     <a class="btn btn-default" onclick="document.forms['logoutForm'].submit()">Log Out</a>
                                 </c:if>
+
                                 <c:if test="${pageContext.request.userPrincipal.name == null}">
                                     <a class="btn btn-default" href="${contextPath}/login">Log In</a>
                                 </c:if>
