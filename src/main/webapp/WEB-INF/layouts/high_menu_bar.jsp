@@ -35,7 +35,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="">Shop</a>
+            <a class="navbar-brand" href=""><spring:message code="headerShop"/></a>
             <a href="<%=request.getContextPath()%>?languageVar=en">EN</a>
             <a href="<%=request.getContextPath()%>?languageVar=ru">RU</a>
             <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -58,25 +58,25 @@
                             </div>
                         </form>
                     </div>
-                <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome">Start page</a></li>
-                <li><a href="${contextPath}/about">About us</a></li>
+                <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome"><spring:message code="headerStartPage"/>. </a></li>
+                <li><a href="${contextPath}/about"><spring:message code="headerAbout"/></a></li>
                 <li>
                     <div id="dd" class="wrapper-dropdown-5" tabindex="1"><spring:message code="headerAccount"/>
                         <ul class="dropdown">
-                            <li><a href="${contextPath}/profile"><i class="icon-user"></i>Profile</a></li>
-                            <li><a href="${contextPath}/account"><i class="icon-user"></i>Account</a></li>
-                            <li><a href="${contextPath}/products"><i class="icon-list"></i>My products</a></li>
-                            <li><a href="#"><i class="icon-cog"></i>Settings</a></li>
+                            <li><a href="${contextPath}/profile"><i class="icon-user"></i><spring:message code="headerMenuProfile"/></a></li>
+                            <li><a href="${contextPath}/account"><i class="icon-user"></i><spring:message code="headerAccount"/></a></li>
+                            <li><a href="${contextPath}/products"><i class="icon-list"></i><spring:message code="headerMenuMyProducts"/></a></li>
+                            <li><a href="#"><i class="icon-cog"></i><spring:message code="headerMenuSettings"/></a></li>
                             <li>
                                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                                     <form id="logoutForm" method="POST" action="${contextPath}/logout">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     </form>
-                                    <a class="btn btn-default" onclick="document.forms['logoutForm'].submit()">Log Out</a>
+                                    <a class="btn btn-default" onclick="document.forms['logoutForm'].submit()"><spring:message code="headerMenuLogOut"/></a>
                                 </c:if>
 
                                 <c:if test="${pageContext.request.userPrincipal.name == null}">
-                                    <a class="btn btn-default" href="${contextPath}/login">Log In</a>
+                                    <a class="btn btn-default" href="${contextPath}/login"><spring:message code="headerMenuLogOut"/></a>
                                 </c:if>
                             </li>
 
