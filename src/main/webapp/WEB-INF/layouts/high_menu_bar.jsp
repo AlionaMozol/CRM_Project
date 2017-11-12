@@ -36,6 +36,8 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="">Shop</a>
+            <a href="<%=request.getContextPath()%>?languageVar=en">EN</a>
+            <a href="<%=request.getContextPath()%>?languageVar=ru">RU</a>
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <a class="navbar-text">
                     Welcome ${pageContext.request.userPrincipal.name}
@@ -59,7 +61,7 @@
                 <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome">Start page</a></li>
                 <li><a href="${contextPath}/about">About us</a></li>
                 <li>
-                    <div id="dd" class="wrapper-dropdown-5" tabindex="1">Account
+                    <div id="dd" class="wrapper-dropdown-5" tabindex="1"><spring:message code="headerAccount"/>
                         <ul class="dropdown">
                             <li><a href="${contextPath}/profile"><i class="icon-user"></i>Profile</a></li>
                             <li><a href="${contextPath}/account"><i class="icon-user"></i>Account</a></li>

@@ -1,23 +1,41 @@
 package com.project.crm.controllers;
 
+import com.project.crm.model.Category;
 import com.project.crm.model.Product;
+import com.project.crm.model.Supercategory;
 import com.project.crm.services.ProductService;
+import com.project.crm.services.impl.SupercategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
+@SessionAttributes(value="product")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String main(Model model) {
+
+        List<Supercategory> supercategoryList = null;
+        supercategoryList = SupercategoryServiceImpl.getInstance().getAllSypercategories();
+        model.addAttribute("product", supercategoryList);
+        return "/welcome";
+    }
+
+   /* @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String getProduct(@PathVariable int id, Model model) {
+        model.addAttribute(productService.getProductById(id));
+        return "products";
+    }*/
 
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
