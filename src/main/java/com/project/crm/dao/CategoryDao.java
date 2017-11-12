@@ -1,7 +1,6 @@
 package com.project.crm.dao;
 
 import com.project.crm.model.Category;
-import com.project.crm.model.Supercategory;
 
 import java.util.List;
 
@@ -10,6 +9,6 @@ import java.util.List;
  */
 public interface CategoryDao {
 
-    public List<Category> getCategoriesBySupercategory(Supercategory supercategory);
-    public List<Category> getALLCategories();
+    public List<Category> getCategoriesByTopCategory(Category category);
+    public List<Category> getAllTopCategories();
 }

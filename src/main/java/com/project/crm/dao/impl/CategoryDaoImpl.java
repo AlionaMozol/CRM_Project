@@ -2,7 +2,6 @@ package com.project.crm.dao.impl;
 
 import com.project.crm.dao.CategoryDao;
 import com.project.crm.model.Category;
-import com.project.crm.model.Supercategory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,20 +17,18 @@ import com.project.crm.dao.DAO;
  */
 public class CategoryDaoImpl extends DAO implements CategoryDao {
     @Override
-    public List<Category> getCategoriesBySupercategory(Supercategory supercategory) {
+    public List<Category> getCategoriesByTopCategory(Category topCategory) {
         Connection connection = poolInst.getConnection();
         List<Category> categotyList = new ArrayList<Category>();
         try  {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT Value FROM spring_security_app.object_type WHERE Supercategory = ?");
-            statement.setString(1,supercategory.getTitle());
+            statement.setString(1,topCategory.getTitle());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Category category = new Category();
                 category.setTitle(rs.getString("Value"));
-                Supercategory supercategoryOfCategory = new Supercategory();
-                supercategoryOfCategory.setTitle(rs.getString("Supercategory"));
-                category.setSupercategory(supercategoryOfCategory);
+                category.setSupercategory(topCategory);
                 categotyList.add(category);
             }
         }
@@ -41,26 +38,27 @@ public class CategoryDaoImpl extends DAO implements CategoryDao {
         return categotyList;
     }
 
+
     @Override
-    public List<Category> getALLCategories() {
+    public List<Category> getAllTopCategories() {
         Connection connection = poolInst.getConnection();
-        List<Category> categotyList = new ArrayList<Category>();
+        List<Category> topCategotiesList = new ArrayList<Category>();
         try  {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM spring_security_app.object_type");
+                    "SELECT DISTINCT supercategory FROM spring_security_app.object_type");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Category category = new Category();
-                category.setTitle(rs.getString("Value"));
-                Supercategory supercategory = new Supercategory();
-                supercategory.setTitle(rs.getString("Supercategory"));
-                category.setSupercategory(supercategory);
-                categotyList.add(category);
+                Category topCategory = new Category();
+                topCategory.setTitle(rs.getString("supercategory"));
+                topCategory.setTop(true);
+                topCategotiesList.add(topCategory);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-        return categotyList;
+        return topCategotiesList;
     }
+
+
 }

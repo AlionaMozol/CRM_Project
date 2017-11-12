@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class testDaoClass {
     public static void main(String [] args) throws SQLException {
-        Supercategory s=new Supercategory();
+        /*Supercategory s=new Supercategory();
         s.setTitle("Мода и стиль");
 
         CategoryDaoImpl c = new CategoryDaoImpl();
@@ -24,6 +24,6 @@ public class testDaoClass {
         for(int i=0; i<list.size(); i++){
             System.out.println(list.get(i).getTitle());
         }
-        c.getALLCategories();
+        c.getALLCategories();*/
     }
 }

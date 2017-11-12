@@ -7,49 +7,36 @@ public class Category {
 
 
     private String title;
-    private Supercategory supercategory;
+    private boolean isTop;
+    private Category supercategory;
 
-    public Category() {}
+
+    public Category() {
+        this.isTop=false;
+        this.supercategory=null;
+    }
 
     public String getTitle() {
         return title;
     }
-    public Supercategory getSupercategory() {
+
+    public boolean isTop() {
+        return isTop;
+    }
+
+    public Category getSupercategory() {
         return supercategory;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setSupercategory(Supercategory supercategory) {
+
+    public void setTop(boolean top) {
+        isTop = top;
+    }
+    public void setSupercategory(Category supercategory) {
         this.supercategory = supercategory;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Category category = (Category) o;
-
-        if (title != null ? !title.equals(category.title) : category.title != null) return false;
-        return supercategory != null ? supercategory.equals(category.supercategory) : category.supercategory == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (supercategory != null ? supercategory.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-                "title='" + title + '\'' +
-                ", supercategory=" + supercategory +
-                '}';
-    }
-
 
 }
