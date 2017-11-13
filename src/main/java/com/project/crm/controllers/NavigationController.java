@@ -1,12 +1,9 @@
 package com.project.crm.controllers;
 
 import com.project.crm.model.Category;
-import com.project.crm.model.Supercategory;
 import com.project.crm.services.CategoryService;
-import com.project.crm.services.impl.CategoryServiceImpl;
-import com.project.crm.services.impl.SupercategoryServiceImpl;
+import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +18,17 @@ public class NavigationController {
     @Autowired
     CategoryService categoryService;
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    @Autowired
+    ProductService productService;
+
+    @RequestMapping(value = {"/", "/welcome", "/catalog"}, method = RequestMethod.GET)
     public String main(Model model) {
 
         List<Category> supercategoryList = null;
         supercategoryList = categoryService.getAllTopCategories();
         model.addAttribute("productCategory", supercategoryList);
+        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("product_cost", productService.getAllProducts());
         return "/welcome";
 
     }
