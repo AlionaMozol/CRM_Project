@@ -42,6 +42,16 @@
 
 </c:forEach>--%>
     </div>
+
+        <%--
+    <div class="list-group">
+        <c:forEach var="category" items="${sessionScope.categoryJSP}">
+            <a href="#" class="list-group-item"> ${category.title}  </a>
+            <%--<c:forEach var="subcategory" items="${sessionScope.categoryJSP.categoryList}">
+                <a href="#" class="list-group-item"> ${subcategory.title}  </a>
+            </c:forEach>--%>
+       <%-- </c:forEach>
+    </div> --%>
 </div>
 
 </body>
