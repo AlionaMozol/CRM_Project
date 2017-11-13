@@ -13,7 +13,6 @@
 
 <!DOCTYPE html>
 
-
 <body>
 
 <div class="navbar navbar-left">
@@ -25,8 +24,7 @@
     </script>
 
     <!-- Групповой список -->
-
-    <div class="list-group" id="supercategories">
+    <div class="list-group">
         <a href="#" class="list-group-item">Смартфоны </a>
         <a href="#" class="list-group-item">Ноутбуки </a>
         <a href="#" class="list-group-item">Планшеты </a>
