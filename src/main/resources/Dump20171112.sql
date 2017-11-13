@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `object_type`
+--
+
+DROP TABLE IF EXISTS `object_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `object_type` (
+  `Object_type_id` VARCHAR(36) NOT NULL,
+  `Value` varchar(45) NOT NULL,
+  `Supercategory` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Object_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `object_type`
+--
+
+LOCK TABLES `object_type` WRITE;
+/*!40000 ALTER TABLE `object_type` DISABLE KEYS */;
+INSERT INTO `object_type` VALUES (1,'Мужская одежда','Fashion'),(2,'Женская одежда','Fashion'),(3,'Мужская обувь','Fashion'),(4,'Женская обувь','Fashion'),(5,'Косметика и парфюмерия','Fashion'),(6,'Аксессуары и часы','Fashion'),(7,'Мебель и интерьер','House'),(8,'Хозяйственные товары','House'),(9,'Посуда и кухонные принадлежности','House'),(10,'Комнатные растения','House'),(11,'Бытовая техника','House'),(12,'Квартиры','Realty'),(13,'Комнаты','Realty'),(14,'Дома, дачи, коттеджи','Realty'),(15,'Гаражи','Realty'),(16,'Участки','Realty'),(17,'Аудиотехника','Technics'),(18,'ТВ и видеотехника','Technics'),(19,'Компьютер и комплектующие','Technics'),(20,'Телефоны','Technics'),(21,'Игры и приставки','Technics'),(22,'Легковые авто','Auto'),(23,'Мотоциклы','Auto'),(24,'Тракторы и сельхозтехника','Auto'),(25,'Шины и диски','Auto'),(26,'Запчасти','Auto'),(27,'Теплицы','Garden'),(28,'Удобрения','Garden'),(29,'Семена','Garden'),(30,'Садовая техника и инвентарь','Garden'),(31,'Садовая мебель и мангалы','Garden'),(32,'Домашние питомцы','Animals'),(33,'Сельхоз животные','Animals'),(34,'Товары для животных','Animals'),(35,'Пользователь',NULL);
+/*!40000 ALTER TABLE `object_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `attributes`
 --
 
@@ -23,9 +48,9 @@ DROP TABLE IF EXISTS `attributes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `attributes` (
-  `attr_id` int(11) NOT NULL AUTO_INCREMENT,
+  `attr_id` VARCHAR(36) NOT NULL,
   `Value` varchar(45) NOT NULL,
-  `Object_type_id` int(11) NOT NULL,
+  `Object_type_id` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`attr_id`,`Object_type_id`),
   KEY `fk_Attributes_Object_type1_idx` (`Object_type_id`),
   CONSTRAINT `fk_Attributes_Object_type1` FOREIGN KEY (`Object_type_id`) REFERENCES `object_type` (`Object_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -50,8 +75,8 @@ DROP TABLE IF EXISTS `object`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `object` (
-  `Object_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Object_type_id` int(11) NOT NULL,
+  `Object_id` VARCHAR(36) NOT NULL,
+  `Object_type_id` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`Object_id`,`Object_type_id`),
   KEY `fk_Object_Object_type1_idx` (`Object_type_id`),
   CONSTRAINT `fk_Object_Object_type1` FOREIGN KEY (`Object_type_id`) REFERENCES `object_type` (`Object_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -69,29 +94,35 @@ INSERT INTO `object` VALUES (7,1),(8,1),(9,1),(10,2),(11,2),(12,2),(13,12),(14,1
 UNLOCK TABLES;
 
 --
--- Table structure for table `object_type`
+-- Table structure for table `values`
 --
 
-DROP TABLE IF EXISTS `object_type`;
+DROP TABLE IF EXISTS `values`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `object_type` (
-  `Object_type_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `values` (
+  `value_id` VARCHAR(36) NOT NULL,
+  `Object_id` VARCHAR(36) NOT NULL,
+  `Attributes_attr_id` VARCHAR(36) NOT NULL,
   `Value` varchar(45) NOT NULL,
-  `Supercategory` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Object_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`value_id`,`Object_id`,`Attributes_attr_id`),
+  KEY `fk_Values_Object_idx` (`Object_id`),
+  KEY `fk_Values_Attributes1_idx` (`Attributes_attr_id`),
+  CONSTRAINT `fk_Values_Attributes1` FOREIGN KEY (`Attributes_attr_id`) REFERENCES `attributes` (`attr_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Values_Object` FOREIGN KEY (`Object_id`) REFERENCES `object` (`Object_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `object_type`
+-- Dumping data for table `values`
 --
 
-LOCK TABLES `object_type` WRITE;
-/*!40000 ALTER TABLE `object_type` DISABLE KEYS */;
-INSERT INTO `object_type` VALUES (1,'Мужская одежда','Fashion'),(2,'Женская одежда','Fashion'),(3,'Мужская обувь','Fashion'),(4,'Женская обувь','Fashion'),(5,'Косметика и парфюмерия','Fashion'),(6,'Аксессуары и часы','Fashion'),(7,'Мебель и интерьер','House'),(8,'Хозяйственные товары','House'),(9,'Посуда и кухонные принадлежности','House'),(10,'Комнатные растения','House'),(11,'Бытовая техника','House'),(12,'Квартиры','Realty'),(13,'Комнаты','Realty'),(14,'Дома, дачи, коттеджи','Realty'),(15,'Гаражи','Realty'),(16,'Участки','Realty'),(17,'Аудиотехника','Technics'),(18,'ТВ и видеотехника','Technics'),(19,'Компьютер и комплектующие','Technics'),(20,'Телефоны','Technics'),(21,'Игры и приставки','Technics'),(22,'Легковые авто','Auto'),(23,'Мотоциклы','Auto'),(24,'Тракторы и сельхозтехника','Auto'),(25,'Шины и диски','Auto'),(26,'Запчасти','Auto'),(27,'Теплицы','Garden'),(28,'Удобрения','Garden'),(29,'Семена','Garden'),(30,'Садовая техника и инвентарь','Garden'),(31,'Садовая мебель и мангалы','Garden'),(32,'Домашние питомцы','Animals'),(33,'Сельхоз животные','Animals'),(34,'Товары для животных','Animals'),(35,'Пользователь',NULL);
-/*!40000 ALTER TABLE `object_type` ENABLE KEYS */;
+LOCK TABLES `values` WRITE;
+/*!40000 ALTER TABLE `values` DISABLE KEYS */;
+INSERT INTO `values` VALUES (1,1,178,'Еще нету'),(2,1,179,'Иванов Иван Иванович'),(3,1,180,'+375-29-199-91-19'),(4,1,181,'vanya@m.com'),(5,1,182,'23.09.2006'),(6,1,183,'г. Минск'),(7,1,184,'М'),(8,2,178,'Еще нету'),(9,2,179,'Петров Петр Петрович'),(10,2,180,'345-91-19'),(11,2,181,'tnya@mail.ru'),(12,2,182,'18.01.1990'),(13,2,183,'г. Борисов'),(14,2,184,'М'),(15,3,178,'Еще нету'),(16,3,179,'Навальная Надежда Надеждовна'),(17,3,180,'066-33-22'),(18,3,181,'nadya@gmail.by'),(19,3,182,'13.05.1994'),(20,3,183,'д. Старинки'),(21,3,184,'Ж'),(22,4,178,'Еще нету'),(23,4,179,'Сидоров Алекс'),(24,4,180,'333-666-0'),(25,4,181,'bmw@x.xxx'),(26,4,182,'01.01.1961'),(27,4,183,'г. Нью-Йорк'),(28,4,184,'М'),(29,5,178,'Еще нету'),(30,5,179,'Светланова Светлана'),(31,5,180,'Красненький'),(32,5,181,'220102'),(33,5,182,'28.02.1997'),(34,5,183,'г. Брест'),(35,5,184,'Ж'),(36,6,178,'Еще нету'),(37,6,179,'Старый Иван Федерович'),(38,6,180,'8 029 379 83 13'),(39,6,181,'Голубь Белый'),(40,6,182,'10.11.1834'),(41,6,183,'г. Менеск'),(42,6,184,'М'),(43,7,1,'Новове'),(44,7,2,'Лето'),(45,7,3,'Майка'),(46,7,4,'35'),(47,7,5,'35 BYN'),(48,7,6,'Еще нету'),(49,8,1,'Поношеное'),(50,8,2,'Весна-осень'),(51,8,3,'Куртка'),(52,8,4,'40'),(53,8,5,'60 BYN'),(54,8,6,'Еще нету'),(55,9,1,'Хорошее'),(56,9,2,'Круглый год'),(57,9,3,'Пуховик'),(58,9,4,'38'),(59,9,5,'5 BYN'),(60,9,6,'Еще нету'),(61,10,7,'Отличное'),(62,10,8,'Круглый год'),(63,10,9,'Блузка'),(64,10,10,'24'),(65,10,11,'500 BYN'),(66,10,12,'Еще нету'),(67,11,7,'Прекрасное'),(68,11,8,'Зима'),(69,11,9,'Юбка'),(70,11,10,'Маленький'),(71,11,11,'13 BYN'),(72,11,12,'Еще нету'),(73,12,7,'Замечательное'),(74,12,8,'Осень'),(75,12,9,'Колготки'),(76,12,10,'30'),(77,12,11,'8 $'),(78,12,12,'Еще нету'),(79,13,55,'1'),(80,13,56,'50 кв.м.'),(81,13,57,'5'),(82,13,58,'После ремонта'),(83,13,59,'2016'),(84,13,60,'50000 BYN'),(85,13,61,'Еще нету'),(86,14,55,'2'),(87,14,56,'43 кв.м.'),(88,14,57,'7'),(89,14,58,'Перед ремонтом'),(90,14,59,'1947'),(91,14,60,'25000 $'),(92,14,61,'Еще нету'),(93,15,103,'Побитый'),(94,15,104,'Слайдер'),(95,15,105,'BenQ-Siemens EL71'),(96,15,106,'2'),(97,15,107,'50 BYN'),(98,15,108,'Еще нету'),(99,16,103,'С царапинами'),(100,16,104,'Кирпич'),(101,16,105,'Nokia 3310'),(102,16,106,'2.4'),(103,16,107,'100500 BYN'),(104,16,108,'Еще нету'),(105,17,103,'Новый'),(106,17,104,'Лопата'),(107,17,105,'Huawei P8 max'),(108,17,106,'6.8'),(109,17,107,'3000 BYN'),(110,17,108,'Еще нету'),(111,18,103,'Отличное'),(112,18,104,'Бомба'),(113,18,105,'Samsung Galaxy Note7'),(114,18,106,'5.7'),(115,18,107,'750 BYN'),(116,18,108,'Еще нету'),(117,19,103,'Работает'),(118,19,104,'Обычный'),(119,19,105,'LG G2 mini'),(120,19,106,'4.7'),(121,19,107,'200 BYN'),(122,19,108,'Еще нету'),(123,20,84,'Хорошее'),(124,20,85,'Sven'),(125,20,86,'Акустика'),(126,20,87,'237 BYN'),(127,20,88,'Еще нету');
+/*!40000 ALTER TABLE `values` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 --
 -- Table structure for table `roles`
@@ -168,37 +199,6 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'IvanTkachev','$2a$11$uSXS6rLJ91WjgOHhEGDx..VGs7MkKZV68Lv5r1uwFu7HgtRn3dcXG'),(2,'nikak123','$2a$11$qWmKH9T0HbMGQu64hNnN/u.qkri75.mFLRqhgG9zOoEXKi6WA0kfe');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `values`
---
-
-DROP TABLE IF EXISTS `values`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `values` (
-  `value_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Object_id` int(11) NOT NULL,
-  `Attributes_attr_id` int(11) NOT NULL,
-  `Value` varchar(45) NOT NULL,
-  PRIMARY KEY (`value_id`,`Object_id`,`Attributes_attr_id`),
-  KEY `fk_Values_Object_idx` (`Object_id`),
-  KEY `fk_Values_Attributes1_idx` (`Attributes_attr_id`),
-  CONSTRAINT `fk_Values_Attributes1` FOREIGN KEY (`Attributes_attr_id`) REFERENCES `attributes` (`attr_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Values_Object` FOREIGN KEY (`Object_id`) REFERENCES `object` (`Object_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `values`
---
-
-LOCK TABLES `values` WRITE;
-/*!40000 ALTER TABLE `values` DISABLE KEYS */;
-INSERT INTO `values` VALUES (1,1,178,'Еще нету'),(2,1,179,'Иванов Иван Иванович'),(3,1,180,'+375-29-199-91-19'),(4,1,181,'vanya@m.com'),(5,1,182,'23.09.2006'),(6,1,183,'г. Минск'),(7,1,184,'М'),(8,2,178,'Еще нету'),(9,2,179,'Петров Петр Петрович'),(10,2,180,'345-91-19'),(11,2,181,'tnya@mail.ru'),(12,2,182,'18.01.1990'),(13,2,183,'г. Борисов'),(14,2,184,'М'),(15,3,178,'Еще нету'),(16,3,179,'Навальная Надежда Надеждовна'),(17,3,180,'066-33-22'),(18,3,181,'nadya@gmail.by'),(19,3,182,'13.05.1994'),(20,3,183,'д. Старинки'),(21,3,184,'Ж'),(22,4,178,'Еще нету'),(23,4,179,'Сидоров Алекс'),(24,4,180,'333-666-0'),(25,4,181,'bmw@x.xxx'),(26,4,182,'01.01.1961'),(27,4,183,'г. Нью-Йорк'),(28,4,184,'М'),(29,5,178,'Еще нету'),(30,5,179,'Светланова Светлана'),(31,5,180,'Красненький'),(32,5,181,'220102'),(33,5,182,'28.02.1997'),(34,5,183,'г. Брест'),(35,5,184,'Ж'),(36,6,178,'Еще нету'),(37,6,179,'Старый Иван Федерович'),(38,6,180,'8 029 379 83 13'),(39,6,181,'Голубь Белый'),(40,6,182,'10.11.1834'),(41,6,183,'г. Менеск'),(42,6,184,'М'),(43,7,1,'Новове'),(44,7,2,'Лето'),(45,7,3,'Майка'),(46,7,4,'35'),(47,7,5,'35 BYN'),(48,7,6,'Еще нету'),(49,8,1,'Поношеное'),(50,8,2,'Весна-осень'),(51,8,3,'Куртка'),(52,8,4,'40'),(53,8,5,'60 BYN'),(54,8,6,'Еще нету'),(55,9,1,'Хорошее'),(56,9,2,'Круглый год'),(57,9,3,'Пуховик'),(58,9,4,'38'),(59,9,5,'5 BYN'),(60,9,6,'Еще нету'),(61,10,7,'Отличное'),(62,10,8,'Круглый год'),(63,10,9,'Блузка'),(64,10,10,'24'),(65,10,11,'500 BYN'),(66,10,12,'Еще нету'),(67,11,7,'Прекрасное'),(68,11,8,'Зима'),(69,11,9,'Юбка'),(70,11,10,'Маленький'),(71,11,11,'13 BYN'),(72,11,12,'Еще нету'),(73,12,7,'Замечательное'),(74,12,8,'Осень'),(75,12,9,'Колготки'),(76,12,10,'30'),(77,12,11,'8 $'),(78,12,12,'Еще нету'),(79,13,55,'1'),(80,13,56,'50 кв.м.'),(81,13,57,'5'),(82,13,58,'После ремонта'),(83,13,59,'2016'),(84,13,60,'50000 BYN'),(85,13,61,'Еще нету'),(86,14,55,'2'),(87,14,56,'43 кв.м.'),(88,14,57,'7'),(89,14,58,'Перед ремонтом'),(90,14,59,'1947'),(91,14,60,'25000 $'),(92,14,61,'Еще нету'),(93,15,103,'Побитый'),(94,15,104,'Слайдер'),(95,15,105,'BenQ-Siemens EL71'),(96,15,106,'2'),(97,15,107,'50 BYN'),(98,15,108,'Еще нету'),(99,16,103,'С царапинами'),(100,16,104,'Кирпич'),(101,16,105,'Nokia 3310'),(102,16,106,'2.4'),(103,16,107,'100500 BYN'),(104,16,108,'Еще нету'),(105,17,103,'Новый'),(106,17,104,'Лопата'),(107,17,105,'Huawei P8 max'),(108,17,106,'6.8'),(109,17,107,'3000 BYN'),(110,17,108,'Еще нету'),(111,18,103,'Отличное'),(112,18,104,'Бомба'),(113,18,105,'Samsung Galaxy Note7'),(114,18,106,'5.7'),(115,18,107,'750 BYN'),(116,18,108,'Еще нету'),(117,19,103,'Работает'),(118,19,104,'Обычный'),(119,19,105,'LG G2 mini'),(120,19,106,'4.7'),(121,19,107,'200 BYN'),(122,19,108,'Еще нету'),(123,20,84,'Хорошее'),(124,20,85,'Sven'),(125,20,86,'Акустика'),(126,20,87,'237 BYN'),(127,20,88,'Еще нету');
-/*!40000 ALTER TABLE `values` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
