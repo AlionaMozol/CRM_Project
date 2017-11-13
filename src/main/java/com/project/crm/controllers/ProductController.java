@@ -46,9 +46,14 @@ public class ProductController {
     public Product newProduct() {
         Product product = new Product();
         Map<String,String> map = new HashMap<>();
-        map.put("Cost", "25");
+        map.put("Состояние","IvanTkachev");
+        map.put("Тип","IvanTkachev");
+        map.put("Марка","IvanTkachev");
+        map.put("Диагональ экрана","IvanTkachev");
+        map.put("Цена","IvanTkachev");
+        map.put("Пользователь","IvanTkachev");
         product.setAttributesAndValues(map);
-        product.setSuperCategory("Техника");
+        product.setSuperCategory("Technics");
         product.setCategory("Телефоны");
         return product;
     }

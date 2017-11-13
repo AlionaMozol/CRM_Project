@@ -333,23 +333,23 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
 
-  /*     public static void main(String[] args) throws ClassNotFoundException {
+       public static void main(String[] args) throws ClassNotFoundException {
             ProductDaoImpl d = new ProductDaoImpl();
               Product p = new Product();
-              List<Product> products;
-            products = d.getAllProducts();
-            System.out.println(products.get(10).getId());
-//              p.setSuperCategory("Техника");
-//              p.setCategory("Телефоны");
-//              Map<String, String> map = new HashMap<>();
-//              map.put("Состояние","ТЕСТ");
-//              map.put("Тип","ТЕСТ");
-//              map.put("Марка","ТЕСТ");
-//              map.put("Диагональ экрана","ТЕСТ");
-//              map.put("Цена","ТЕСТ");
-//              map.put("Пользователь","ТЕСТ");
-//              p.setAttributesAndValues(map);
-//              d.addProduct(p);
-          }*/
+              //List<Product> products;
+            //products = d.getAllProducts();
+           // System.out.println(products.get(10).getId());
+              p.setSuperCategory("Technics");
+              p.setCategory("Телефоны");
+              Map<String, String> map = new HashMap<>();
+              map.put("Состояние","ТЕСТ");
+              map.put("Тип","ТЕСТ");
+              map.put("Марка","ТЕСТ");
+              map.put("Диагональ экрана","ТЕСТ");
+              map.put("Цена","ТЕСТ");
+              map.put("Пользователь","ТЕСТ");
+              p.setAttributesAndValues(map);
+              d.addProduct(p);
+          }
 
 }
