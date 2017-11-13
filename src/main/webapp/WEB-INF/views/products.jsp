@@ -28,12 +28,14 @@
     <h1>Products</h1>
     <table style="border-style: solid">
         <tr>
-            <td>ТопКатегория</td>
-            <td>Категория</td>
+            <td>    Ид     </td>
+            <td>  ТопКатегория</td>
+            <td>    Категория   </td>
             <td>Другие атррибуты</td>
         </tr>
         <c:forEach var="product" items="${products}">
             <tr>
+                <td><a href="${contextPath}/product/${product.id}">${product.id}</a> </td>
                 <td>${product.superCategory}</td>
                 <td>${product.category}</td>
                     <c:forEach items="${product.attributesAndValues}" var="value">

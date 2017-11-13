@@ -101,6 +101,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     public Product getProductById(int id) {
         Connection connection = poolInst.getConnection();
         Product currentProduct = new Product();
+        currentProduct.setId(id);
         try {
             connection.setAutoCommit(false);
             int currentObjectTypeId = 0;
@@ -332,9 +333,12 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
 
-//          public static void main(String[] args) throws ClassNotFoundException {
-//              ProductDaoImpl d = new ProductDaoImpl();
-//              Product p = new Product();
+  /*     public static void main(String[] args) throws ClassNotFoundException {
+            ProductDaoImpl d = new ProductDaoImpl();
+              Product p = new Product();
+              List<Product> products;
+            products = d.getAllProducts();
+            System.out.println(products.get(10).getId());
 //              p.setSuperCategory("Техника");
 //              p.setCategory("Телефоны");
 //              Map<String, String> map = new HashMap<>();
@@ -346,6 +350,6 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //              map.put("Пользователь","ТЕСТ");
 //              p.setAttributesAndValues(map);
 //              d.addProduct(p);
-//          }
+          }*/
 
 }
