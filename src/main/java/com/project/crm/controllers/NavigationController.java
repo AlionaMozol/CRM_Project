@@ -1,6 +1,9 @@
 package com.project.crm.controllers;
 
+import com.project.crm.model.Category;
 import com.project.crm.model.Supercategory;
+import com.project.crm.services.CategoryService;
+import com.project.crm.services.impl.CategoryServiceImpl;
 import com.project.crm.services.impl.SupercategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -15,12 +18,14 @@ import java.util.List;
 @Controller
 public class NavigationController {
 
+    @Autowired
+    CategoryService categoryService;
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String main(Model model) {
 
-        List<Supercategory> supercategoryList = null;
-        supercategoryList = SupercategoryServiceImpl.getInstance().getAllSypercategories();
+        List<Category> supercategoryList = null;
+        supercategoryList = categoryService.getAllTopCategories();
         model.addAttribute("productCategory", supercategoryList);
         return "/welcome";
 

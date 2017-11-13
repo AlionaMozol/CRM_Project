@@ -11,11 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.crm.dao.DAO;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by 1 on 06.11.2017.
  */
+@Component
 public class CategoryDaoImpl extends DAO implements CategoryDao {
+
     @Override
     public List<Category> getCategoriesByTopCategory(Category topCategory) {
         Connection connection = poolInst.getConnection();
@@ -45,7 +48,7 @@ public class CategoryDaoImpl extends DAO implements CategoryDao {
         List<Category> topCategotiesList = new ArrayList<Category>();
         try  {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT DISTINCT supercategory FROM spring_security_app.object_type");
+                    "SELECT DISTINCT Supercategory FROM spring_security_app.object_type WHERE Supercategory IS NOT NULL");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Category topCategory = new Category();
