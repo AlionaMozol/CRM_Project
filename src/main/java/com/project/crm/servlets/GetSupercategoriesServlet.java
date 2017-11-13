@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
 import org.json.*;
 
 @WebServlet("/GetSupercategoriesServlet")
 public class GetSupercategoriesServlet extends HttpServlet {
-    private SupercategoryServiceImpl supercategoryService = new SupercategoryServiceImpl();
+
+    private SupercategoryServiceImpl supercategoryService = SupercategoryServiceImpl.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {

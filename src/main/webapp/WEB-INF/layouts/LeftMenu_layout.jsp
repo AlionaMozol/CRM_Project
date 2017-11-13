@@ -5,7 +5,7 @@
   Time: 17:52
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -21,11 +21,10 @@
     <div class="panel-heading">Категории</div>
     <script type="text/javascript">
         <%@include file="/resources/js/jquery-3.2.1.min.js"%>
-    </script>
-    <!-- Групповой список -->
-    <script type="text/javascript">
         <%@include file="/resources/js/LeftMenu_layout_ajax.js"%>
     </script>
+
+    <!-- Групповой список -->
 
     <div class="list-group" id="supercategories">
         <a href="#" class="list-group-item">Смартфоны </a>
@@ -42,16 +41,9 @@
 
 </c:forEach>--%>
     </div>
-
-        <%--
-    <div class="list-group">
-        <c:forEach var="category" items="${sessionScope.categoryJSP}">
-            <a href="#" class="list-group-item"> ${category.title}  </a>
-            <%--<c:forEach var="subcategory" items="${sessionScope.categoryJSP.categoryList}">
-                <a href="#" class="list-group-item"> ${subcategory.title}  </a>
-            </c:forEach>--%>
-       <%-- </c:forEach>
-    </div> --%>
+    <script>
+        $(document).ready(ajaxRequest());
+    </script>
 </div>
 
 </body>

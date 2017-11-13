@@ -7,14 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+//import com.mkyong.web.model.AjaxResponseBody;
 
 import java.util.List;
 
 @Controller
 public class CategoryController {
 
-    private SupercategoryServiceImpl supercategoryService = new SupercategoryServiceImpl();
+    private SupercategoryServiceImpl supercategoryService = SupercategoryServiceImpl.getInstance();
 
+    @ResponseBody
     @RequestMapping(value = "/leftmenu", method = RequestMethod.GET)
     public String getAllCategories(Model model){
         List<Supercategory> supercategories = supercategoryService.getAllSypercategories();
@@ -24,7 +27,7 @@ public class CategoryController {
         }
         //String forResponse = jsonArray.toString();
 
-        model.addAttribute(jsonArray);
+        //model.addAttribute("jsonArray", jsonArray.toString());
 
         return "LeftMenu_layout";
     }
