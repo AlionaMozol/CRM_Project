@@ -15,27 +15,19 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@SessionAttributes(value="product")
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String main(Model model) {
 
-        List<Supercategory> supercategoryList = null;
-        supercategoryList = SupercategoryServiceImpl.getInstance().getAllSypercategories();
-        model.addAttribute("product", supercategoryList);
-        return "/welcome";
-    }
-
-   /* @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value= "/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable int id, Model model) {
-        model.addAttribute(productService.getProductById(id));
-        return "products";
-    }*/
+        model.addAttribute("productid",productService.getProductById(id));
+        return "/productbyid";
+    }
 
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)

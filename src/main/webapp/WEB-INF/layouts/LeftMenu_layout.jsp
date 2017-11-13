@@ -23,7 +23,7 @@
 
     <!-- Групповой список -->
     <div class="list-group">
-<c:forEach var="category" items="${sessionScope.product}">
+<c:forEach var="category" items="${productCategory}">
         <a href="#" class="list-group-item"> <spring:message code="${category.title}"/></a>
     <%--<c:forEach var="subcategory" items="${sessionScope.categoryJSP.categoryList}">
         <a href="#" class="list-group-item"> ${subcategory.title}  </a>

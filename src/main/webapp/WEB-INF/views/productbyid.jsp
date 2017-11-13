@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Mikhail
+  Date: 13.11.17
+  Time: 13:52
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -32,19 +39,17 @@
             <td>Категория</td>
             <td>Другие атррибуты</td>
         </tr>
-        <c:forEach var="product" items="${products}">
+
             <tr>
-                <td>${product.superCategory}</td>
-                <td>${product.category}</td>
-                    <c:forEach items="${product.attributesAndValues}" var="value">
-                        <td style="padding: 10px">
-                        <option value="${product.attributesAndValues.key}">${product.attributesAndValues.value}</option>
-                        </td>
-                    </c:forEach>
-                <td>${product.attributesAndValues}</td>
+                <td>${productid.superCategory}</td>
+                <td>${productid.category}</td>
+
+
+
+                <td>${productid.attributesAndValues}</td>
             </tr>
-        </c:forEach>
+
     </table>
-    <a href="${contextPath}/product/new_product">New product</a>
+
 </div>
 </body>
