@@ -20,10 +20,13 @@ public class testDaoClass {
 
         CategoryDaoImpl c = new CategoryDaoImpl();
         List<Category> list= new ArrayList<Category>();
-        list=c.getALLCategories();
+        list=c.getAllTopCategories();
         for(int i=0; i<list.size(); i++){
             System.out.println(list.get(i).getTitle());
         }
-        c.getALLCategories();*/
+        c.getAllTopCategories();*/
+
+
+
     }
 }
