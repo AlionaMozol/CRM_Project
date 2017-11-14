@@ -60,7 +60,7 @@ public class ProductController {
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("product") Product product) {
         productService.addProduct(product);
-        return "products";
+        return "redirect:/product/products";
     }
 
 //    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
