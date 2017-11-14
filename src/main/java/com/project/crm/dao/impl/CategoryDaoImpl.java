@@ -3,16 +3,15 @@ package com.project.crm.dao.impl;
 import com.project.crm.dao.CategoryDao;
 import com.project.crm.model.Category;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.project.crm.dao.DAO;
 import org.springframework.stereotype.Component;
 
+import java.util.ResourceBundle;
+import java.util.UUID;
 /**
  * Created by 1 on 06.11.2017.
  */

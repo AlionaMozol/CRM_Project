@@ -58,7 +58,7 @@
                             </div>
                         </form>
                     </div>
-                <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome"><spring:message code="headerStartPage"/>. </a></li>
+                <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome"><spring:message code="headerStartPage"/></a></li>
                 <li><a href="${contextPath}/about"><spring:message code="headerAbout"/></a></li>
                 <li>
                     <div id="dd" class="wrapper-dropdown-5" tabindex="1"><spring:message code="headerAccount"/>

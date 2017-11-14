@@ -5,6 +5,10 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
+<html xmlns:th="http://www.thymeleaf.org">
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%@ page contentType="text/html; charset=UTF-8"%>
+
 <!DOCTYPE html>
 
 <head>
@@ -27,100 +31,34 @@
 <div class="container content">
     <div class="col-lg-10 products">
 
-        <% for(int i = 1; i <= 10; i += 1) { %>
-        <div class="col-sm-4">
-            <div class="product">
-                <div class="product-img">
-                    <a href="#"><img src="${contextPath}/resources/img/moda2.jpg" alt=""></a>
-                    <div class="product-icons">
-                        <div class="product-icons-item">
-                            <a href="#" class="button-heart">
-                                <span class="icon icon-heart">
-                                    <img src="${contextPath}/resources/img/heart.png">
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <p class="product-title">
-                    <a href="#"><strong>Чёрный женский костюм</strong></a>
-                </p>
-                <p class="product-desc">Модный костюм</p>
-                <p class="product-category">Женская одежда</p>
-                <p class="product-price">100$</p>
-            </div>
-        </div>
+        <c:forEach items="${products}" var="product">
 
-        <% } %>
-    </div>
-</div>
-
-<!--
-<header>
-    <div class="layout-buttons">
-        <span class="active icon icon-list">
-            list
-        </span>
-        <span class="icon icon-table">
-            table
-        </span>
-    </div>
-    <h1>"Список товаров"</h1>
-    <div class="category">"Все категории"</div>
-</header>
-
-<div class="container content">
-    <div class="col-lg-10 products">
-
-    <% for(int i = 1; i <= 10; i += 1) { %>
-        <div class="col-sm-4 product-wrapper">
-            <a href="" class="product">
-                <div class="product-main">
+            <div class="col-sm-4">
+                <div class="product">
                     <div class="product-img">
-                        <img src="${contextPath}/resources/img/moda2.jpg" alt="">
-                    </div>
-                    <div class="product-text">
-                        <h2 class="product-name">
-                            Куртка мужская чёрная
-                        </h2>
-                        <p class="product-desc">
-                            "Отличная куртка, каждому к лицу и на любую погоду."
-                        </p>
-                    </div>
-                    <div class="product-icons">
-                        <div class="product-icons-item">
-                            <span class="icon icon-heart">
-
-                            </span>
-                            <span class="product-icon-text">
-                                В избранное
-                            </span>
+                        <a href="#"><img src="${contextPath}/resources/img/placeholder-image.png" alt=""></a>
+                        <div class="product-icons">
+                            <div class="product-icons-item">
+                                <a href="#" class="icon">
+                                    <img src="${contextPath}/resources/img/heart.png">
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    <p class="product-title">
+                        <a href="#"><strong>${product.title}</strong></a>
+                    </p>
+                    <p class="product-desc">${product.description}</p>
+                    <p class="product-category">${product.category}</p>
+                    <p class="product-price">100$</p>
                 </div>
+            </div>
 
-                <div class="product-details">
-                    <div class="product-category">
-                        Мужская одежда
-                    </div>
-                    <div class="product-region">
-                        Минская область, Минск
-                    </div>
-                    <span class="product-price">
-                        <strong>10</strong>
-                        <small>BYN</small>
-                    </span>
-                </div>
-            </a>
-        </div>
-
-    <% } %>
+        </c:forEach>
 
     </div>
 </div>
- -->
 
-<!-- /container -->
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 
 </body>
