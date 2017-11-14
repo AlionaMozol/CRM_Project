@@ -39,10 +39,8 @@
                         <a href="#"><img src="${contextPath}/resources/img/placeholder-image.png" alt=""></a>
                         <div class="product-icons">
                             <div class="product-icons-item">
-                                <a href="#" class="button-heart">
-                                    <span class="icon icon-heart">
-                                        <img src="${contextPath}/resources/img/heart.png">
-                                    </span>
+                                <a href="#" class="icon">
+                                    <img src="${contextPath}/resources/img/heart.png">
                                 </a>
                             </div>
                         </div>
