@@ -11,7 +11,6 @@
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
 
     <title>Shop</title>
-    <link rel="stylesheet"  href="../../resources/css/main.css">
     <link rel="stylesheet"  href="../../resources/css/bootstrap.css">
     <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
 

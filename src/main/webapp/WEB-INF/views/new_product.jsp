@@ -29,7 +29,7 @@
     <table>
         <tr>
             <td>
-                <i>Amount:</i>
+                <i>Категория:</i>
             </td>
             <td>
                 <f:input path="superCategory"/>
@@ -37,12 +37,20 @@
         </tr>
         <tr>
             <td>
-                <i>Payer ID:</i>
+                <i>Тип:</i>
             </td>
             <td>
                 <f:input path="category"/>
             </td>
         </tr>
+
+            <c:forEach  items="${product.attributesAndValues}" var="attributesAndValues" varStatus="status">
+                <tr>
+                    <td>${attributesAndValues.key}</td>
+                    <td><input name="attributesAndValues['${attributesAndValues.key}']" value="${attributesAndValues.value}"></td>
+                </tr>
+            </c:forEach>
+
         <tr>
 
         </tr>
