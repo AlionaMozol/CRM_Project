@@ -11,12 +11,12 @@ import java.util.List;
 public interface ProductService {
 
     void addProduct(Product product);
-    Product getProductById(int id);
+    Product getProductById(String id);
     List<Product> getProductsByTitle(String title);
     List<Product> getProductsByCategory(String category);
     List<Product> getProductsAfterDate(Date date);
     List<Product> getProductsBetween2Prices(int priceAfter, int priceBefore);
     List<Product> getProductByStatus(Status status);
     List<Product> getAllProducts();
-    void deleteProductById(int id);
+    void deleteProductById(String id);
 }

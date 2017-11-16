@@ -24,7 +24,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
            connection.setAutoCommit(false);
            PreparedStatement statement;
            ResultSet resultSet;
-           int newObjectTypeId = 0;
+           String newObjectTypeId = null;
            Map<String, String> attributesAndValues;
 
            statement = connection.prepareStatement(sql.
@@ -37,15 +37,17 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                    getProperty(SqlService.SQL_INSERT_INTO_OBJECT));
 
            while(resultSet.next()) {
-              newObjectTypeId = resultSet.getInt(1);
+              newObjectTypeId = resultSet.getString(1);
            }
-           statement.setInt(1, newObjectTypeId);
+           String newObjectId = UUID.randomUUID().toString();
+           statement.setString(1, newObjectId);
+           statement.setString(2, newObjectTypeId);
            statement.execute();
 
            attributesAndValues = product.getAttributesAndValues();
 
-           int attributesAttrId = 0;
-           int objectId = 0;
+           String attributesAttrId = null;
+           String objectId = null;
            for (Map.Entry entry: attributesAndValues.entrySet()) {
                 //Получаем атрибуты и их значения
                 String currentAttribute = (String) entry.getKey();
@@ -53,26 +55,27 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 //Получаем подходящий attr_id
                 statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_SELECT_NECESSARY_ATTR_ID));
-                statement.setInt(1, newObjectTypeId);
+                statement.setString(1, newObjectTypeId);
                 statement.setString(2, currentAttribute);
                 ResultSet attributesAttrIdSet = statement.executeQuery();
                 while(attributesAttrIdSet.next()) {
-                    attributesAttrId = attributesAttrIdSet.getInt(1);
+                    attributesAttrId = attributesAttrIdSet.getString(1);
                 }
                 //добавляем запись с продуктом в таблицу
-                statement = connection.prepareStatement(sql.
-                        getProperty(SqlService.SQL_GET_OBJ_ID_BY_OBJ_TYPE_ID));
-                statement.setInt(1, newObjectTypeId);
-                resultSet = statement.executeQuery();
-                while(resultSet.next()) {
-                   objectId = resultSet.getInt(1);
-                }
+//                statement = connection.prepareStatement(sql.
+//                        getProperty(SqlService.SQL_GET_OBJ_ID_BY_OBJ_TYPE_ID));
+//                statement.setString(1, newObjectTypeId);
+//                resultSet = statement.executeQuery();
+//                while(resultSet.next()) {
+//                   objectId = resultSet.getString(1);
+//                }
 
                 statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_ADD_OBJECT));
-                statement.setInt(1, objectId);
-                statement.setInt(2, attributesAttrId);
-                statement.setString(3, currentAttributeValue);
+                statement.setString(1, UUID.randomUUID().toString());
+                statement.setString(2, newObjectId);
+                statement.setString(3, attributesAttrId);
+                statement.setString(4, currentAttributeValue);
                 statement.execute();
            }
 
@@ -98,27 +101,27 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
     @Override
-    public Product getProductById(int id) {
+    public Product getProductById(String id) {
         Connection connection = poolInst.getConnection();
         Product currentProduct = new Product();
         currentProduct.setId(id);
         try {
             connection.setAutoCommit(false);
-            int currentObjectTypeId = 0;
+            String  currentObjectTypeId = null;
             PreparedStatement statement;
             ResultSet resultSet;
             //---------- Получаем Object.Object_type_id
             statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_PRODUCT_BY_ID));
-            statement.setInt(1, id);
+            statement.setString(1, id);
             resultSet = statement.executeQuery();
             while(resultSet.next()) {
-                currentObjectTypeId = resultSet.getInt(2);                //Object.Object_type_id
+                currentObjectTypeId = resultSet.getString(2);                //Object.Object_type_id
             }
             //---------- По Object.Object_type_id получаем категорию и суперкатегорию
             statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_PRODUCT_TYPE_BY_ID));
-            statement.setInt(1, currentObjectTypeId);
+            statement.setString(1, currentObjectTypeId);
             resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 currentProduct.setCategory(resultSet.getString(2));       //Категория
@@ -127,7 +130,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             //----------
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_GET_CATEGORIES_N_ATTRIBUTES));
-            statement.setInt(1, id);
+            statement.setString(1, id);
             resultSet = statement.executeQuery();
             Map<String, String> attributesAndValues = new HashMap<>();
             while(resultSet.next()) {
@@ -178,7 +181,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.setString(1, category);
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
-                productsOfTargetCategory.add(getProductById(setOfTargetObjectIds.getInt(1)));
+                productsOfTargetCategory.add(getProductById(setOfTargetObjectIds.getString(1)));
             }
             setOfTargetObjectIds.close();
             statement.close();
@@ -226,7 +229,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.setInt(2, priceBefore);
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
-                productsOfTargetCost.add(getProductById(setOfTargetObjectIds.getInt(1)));
+                productsOfTargetCost.add(getProductById(setOfTargetObjectIds.getString(1)));
             }
             setOfTargetObjectIds.close();
             statement.close();
@@ -270,7 +273,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     .getProperty(SqlService.SQL_GET_ALL_PRODUCTS));
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
-                allProducts.add(getProductById(setOfTargetObjectIds.getInt(1)));
+                allProducts.add(getProductById(setOfTargetObjectIds.getString(1)));
             }
             setOfTargetObjectIds.close();
             statement.close();
@@ -296,19 +299,19 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
     @Override
-    public void deleteProductById(int id) {
+    public void deleteProductById(String id) {
         Connection connection = poolInst.getConnection();
         try {
             connection.setAutoCommit(false);
             PreparedStatement statement;
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_DELETE_VALUES_BY_OBJECT_ID));
-            statement.setInt(1, id);
+            statement.setString(1, id);
             statement.execute();
 
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_DELETE_OBJECT_BY_ID));
-            statement.setInt(1, id);
+            statement.setString(1, id);
             statement.execute();
 
             statement.close();

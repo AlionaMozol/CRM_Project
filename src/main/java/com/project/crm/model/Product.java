@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Product {
 
-    private int id;
+    private String id;
     private Status status;
     private String superCategory;
     private String category;
@@ -28,9 +28,9 @@ public class Product {
     public Product() {}
 
 
-    public int getId() { return id; }
+    public String getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
 
     public Status getStatus() { return status; }
 
@@ -117,10 +117,9 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (id != product.id) return false;
+        if (!id.equals(product.id)) return false;
         if (status != product.status) return false;
-        if (superCategory != null ? !superCategory.equals(product.superCategory) : product.superCategory != null)
-            return false;
+        if (!superCategory.equals(product.superCategory)) return false;
         if (category != null ? !category.equals(product.category) : product.category != null) return false;
         if (attributesAndValues != null ? !attributesAndValues.equals(product.attributesAndValues) : product.attributesAndValues != null)
             return false;
@@ -135,9 +134,9 @@ public class Product {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id.hashCode();
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (superCategory != null ? superCategory.hashCode() : 0);
+        result = 31 * result + superCategory.hashCode();
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (attributesAndValues != null ? attributesAndValues.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);

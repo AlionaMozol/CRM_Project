@@ -24,7 +24,7 @@ public class ProductController {
 
 
     @RequestMapping(value= "/{id}", method = RequestMethod.GET)
-    public String getProduct(@PathVariable int id, Model model) {
+    public String getProduct(@PathVariable String id, Model model) {
         model.addAttribute("productid",productService.getProductById(id));
         return "/productbyid";
     }
