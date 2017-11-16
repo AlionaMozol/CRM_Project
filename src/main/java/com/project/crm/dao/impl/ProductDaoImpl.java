@@ -83,19 +83,10 @@ public class ProductDaoImpl extends DAO implements ProductDao {
            resultSet.close();
            connection.commit();
         } catch (SQLException e) {
-            try {
-                System.err.print("Transaction is being rolled back");
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
             e.printStackTrace();
+            tryToRollbackConnection(connection);
         } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
     }
@@ -142,20 +133,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.close();
             connection.commit();
         } catch (SQLException e) {
-            try {
-                System.err.print("Transaction is being rolled back");
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
             e.printStackTrace();
+            tryToRollbackConnection(connection);
         }
         finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
 
@@ -187,20 +169,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.close();
             connection.commit();
         } catch (SQLException e) {
-            try {
-                System.err.print("Transaction is being rolled back");
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
             e.printStackTrace();
+            tryToRollbackConnection(connection);
         }
         finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return productsOfTargetCategory;
@@ -235,20 +208,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.close();
             connection.commit();
         } catch (SQLException e) {
-            try {
-                System.err.print("Transaction is being rolled back");
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
             e.printStackTrace();
+            tryToRollbackConnection(connection);
         }
         finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return productsOfTargetCost;
@@ -279,20 +243,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.close();
             connection.commit();
         } catch (SQLException e) {
-            try {
-                System.err.print("Transaction is being rolled back");
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
             e.printStackTrace();
+            tryToRollbackConnection(connection);
         }
         finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return allProducts;
@@ -317,42 +272,47 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.close();
             connection.commit();
         } catch (SQLException e) {
-            try {
-                System.err.print("Transaction is being rolled back");
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
             e.printStackTrace();
+            tryToRollbackConnection(connection);
         }
         finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
     }
 
+    void tryToRollbackConnection(Connection connection) {
+        try {
+            connection.rollback();
+            System.err.print("Transaction is being rolled back!");
+        } catch (SQLException e) {
+            System.err.print("Transaction is NOT being rolled back!");
+            e.printStackTrace();
+        }
+    }
 
-       public static void main(String[] args) throws ClassNotFoundException {
-            ProductDaoImpl d = new ProductDaoImpl();
-              Product p = new Product();
-              //List<Product> products;
-            //products = d.getAllProducts();
-           // System.out.println(products.get(10).getId());
-              p.setSuperCategory("Technics");
-              p.setCategory("Телефоны");
-              Map<String, String> map = new HashMap<>();
-              map.put("Состояние","ТЕСТ");
-              map.put("Тип","ТЕСТ");
-              map.put("Марка","ТЕСТ");
-              map.put("Диагональ экрана","ТЕСТ");
-              map.put("Цена","ТЕСТ");
-              map.put("Пользователь","ТЕСТ");
-              p.setAttributesAndValues(map);
-              d.addProduct(p);
-          }
+    void tryToSetAutoCommitTrueForConnection(Connection connection) {
+        try {
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        ProductDaoImpl d = new ProductDaoImpl();
+        Product p = new Product();
+        p.setSuperCategory("Technics");
+        p.setCategory("Телефоны");
+        Map<String, String> map = new HashMap<>();
+        map.put("Состояние","ТЕСТ");
+        map.put("Тип","ТЕСТ");
+        map.put("Марка","ТЕСТ");
+        map.put("Диагональ экрана","ТЕСТ");
+        map.put("Цена","ТЕСТ");
+        map.put("Пользователь","ТЕСТ");
+        p.setAttributesAndValues(map);
+        d.addProduct(p);
+    }
 
 }
