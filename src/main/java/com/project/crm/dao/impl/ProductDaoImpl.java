@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+
 @Component
 public class ProductDaoImpl extends DAO implements ProductDao {
 
@@ -69,7 +70,6 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //                while(resultSet.next()) {
 //                   objectId = resultSet.getString(1);
 //                }
-
                 statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_ADD_OBJECT));
                 statement.setString(1, UUID.randomUUID().toString());
@@ -301,18 +301,19 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
     public static void main(String[] args) throws ClassNotFoundException {
         ProductDaoImpl d = new ProductDaoImpl();
-        Product p = new Product();
-        p.setSuperCategory("Technics");
-        p.setCategory("Телефоны");
-        Map<String, String> map = new HashMap<>();
-        map.put("Состояние","ТЕСТ");
-        map.put("Тип","ТЕСТ");
-        map.put("Марка","ТЕСТ");
-        map.put("Диагональ экрана","ТЕСТ");
-        map.put("Цена","ТЕСТ");
-        map.put("Пользователь","ТЕСТ");
-        p.setAttributesAndValues(map);
-        d.addProduct(p);
+//        Product p = new Product();
+//        p.setSuperCategory("Technics");
+//        p.setCategory("Телефоны");
+//        Map<String, String> map = new HashMap<>();
+//        map.put("Состояние","ТЕСТ");
+//        map.put("Тип","ТЕСТ");
+//        map.put("Марка","ТЕСТ");
+//        map.put("Диагональ экрана","ТЕСТ");
+//        map.put("Цена","ТЕСТ");
+//        map.put("Пользователь","ТЕСТ");
+//        p.setAttributesAndValues(map);
+//        d.addProduct(p);
+        System.out.println(d.getAllProducts());
     }
 
 }
