@@ -8,11 +8,9 @@ import com.project.crm.model.enums.Status;
 import com.project.crm.services.SqlService;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 
 @Component
@@ -300,20 +298,40 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-        ProductDaoImpl d = new ProductDaoImpl();
-//        Product p = new Product();
-//        p.setSuperCategory("Technics");
-//        p.setCategory("Телефоны");
-//        Map<String, String> map = new HashMap<>();
-//        map.put("Состояние","ТЕСТ");
-//        map.put("Тип","ТЕСТ");
-//        map.put("Марка","ТЕСТ");
-//        map.put("Диагональ экрана","ТЕСТ");
-//        map.put("Цена","ТЕСТ");
-//        map.put("Пользователь","ТЕСТ");
-//        p.setAttributesAndValues(map);
-//        d.addProduct(p);
-        System.out.println(d.getAllProducts());
+        Connection connection = null;
+        try {
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
+            String driverName = resourceBundle.getString("jdbc.driverClassName");
+            String url = resourceBundle.getString("jdbc.url");
+            String user = resourceBundle.getString("jdbc.username");
+            String password = resourceBundle.getString("jdbc.password");
+            Driver driver =  (Driver)Class.forName(driverName).newInstance();
+            DriverManager.registerDriver(driver);
+            connection = DriverManager.getConnection(url, user, password);
+            connection.setAutoCommit(false);
+        }
+        catch(InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+
+        }
+
+
+        try {
+            String newObjID = UUID.randomUUID().toString();
+            PreparedStatement statement = connection.prepareStatement("Some query");
+            statement.setString(1, newObjID);
+            statement.execute();
+
+
+            statement.close();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+
+
     }
 
 }
