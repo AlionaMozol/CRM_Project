@@ -46,15 +46,15 @@ public class ProductController {
     public Product newProduct() {
         Product product = new Product();
         Map<String,String> map = new HashMap<>();
-        map.put("Состояние","IvanTkachev");
-        map.put("Тип","IvanTkachev");
-        map.put("Марка","IvanTkachev");
-        map.put("Диагональ экрана","IvanTkachev");
-        map.put("Цена","IvanTkachev");
-        map.put("Пользователь","IvanTkachev");
+        map.put("CONDITION","IvanTkachev");
+        map.put("TYPE_","IvanTkachev");
+        map.put("BRAND","IvanTkachev");
+        map.put("SCREEN_DIAGONAL","IvanTkachev");
+        map.put("COST","IvanTkachev");
+        map.put("OWNER","IvanTkachev");
         product.setAttributesAndValues(map);
         product.setSuperCategory("Technics");
-        product.setCategory("Телефоны");
+        product.setCategory("PHONES");
         return product;
     }
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)

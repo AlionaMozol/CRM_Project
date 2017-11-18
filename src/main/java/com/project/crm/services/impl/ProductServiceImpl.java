@@ -42,11 +42,6 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getProductsBetween2Prices(int priceAfter, int priceBefore) {
-        return productDao.getProductsBetween2Prices(priceAfter, priceBefore);
-    }
-
-    @Override
     public List<Product> getProductByStatus(Status status) {
         return productDao.getProductByStatus(status);
     }
