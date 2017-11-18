@@ -5,10 +5,6 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<html xmlns:th="http://www.thymeleaf.org">
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@ page contentType="text/html; charset=UTF-8"%>
-
 <!DOCTYPE html>
 
 <head>
@@ -21,44 +17,46 @@
 
     <title>Список товаров</title>
 
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/catalog.css" rel="stylesheet">
+
+    <link rel="stylesheet"  href="../../resources/css/main.css">
+    <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
 
 </head>
 
 <body>
 
-<div class="container content">
-    <div class="col-lg-10 products">
+    <div class="container content">
+        <div class="col-lg-10 products">
 
-        <c:forEach items="${products}" var="product">
+            <c:forEach items="${products}" var="product">
 
-            <div class="col-sm-4">
-                <div class="product">
-                    <div class="product-img">
-                        <a href="#"><img src="${contextPath}/resources/img/placeholder-image.png" alt=""></a>
-                        <div class="product-icons">
-                            <div class="product-icons-item">
-                                <a href="#" class="icon">
-                                    <img src="${contextPath}/resources/img/heart.png">
-                                </a>
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#"><img src="${contextPath}/resources/img/placeholder-image.png" alt=""></a>
+                            <div class="product-icons">
+                                <div class="product-icons-item">
+                                    <a href="#" class="icon">
+                                        <img src="${contextPath}/resources/img/heart.png">
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                        <p class="product-title">
+                            <a href="#"><strong>${product.title}</strong></a>
+                        </p>
+                        <p class="product-desc">${product.description}</p>
+                        <p class="product-category">${product.category}</p>
+                        <p class="product-price">100$</p>
                     </div>
-                    <p class="product-title">
-                        <a href="#"><strong>${product.title}</strong></a>
-                    </p>
-                    <p class="product-desc">${product.description}</p>
-                    <p class="product-category">${product.category}</p>
-                    <p class="product-price">100$</p>
                 </div>
-            </div>
 
-        </c:forEach>
+            </c:forEach>
 
+        </div>
     </div>
-</div>
 
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 
 </body>

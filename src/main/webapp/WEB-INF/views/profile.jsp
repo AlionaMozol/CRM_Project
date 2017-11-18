@@ -5,26 +5,23 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
+
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
 
-    <title>Shop</title>
-    <link rel="stylesheet"  href="../../resources/css/main.css">
-    <link rel="stylesheet"  href="../../resources/css/bootstrap.css">
-    <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
-
+    <title>Netcufar | Profile</title>
 
 </head>
 
-
 <body>
 
-<%@include file="../layouts/preloader.jsp"%>
-<%@include file="../layouts/high_menu_bar.jsp"%>
-<div style="padding: 200px">
-    <%@include file="../layouts/profile_layout.jsp"%>
-</div>
+    <%@include file="../layouts/preloader.jsp"%>
+    <%@include file="../layouts/high_menu_bar.jsp"%>
 
+    <div style="padding: 200px">
+        <%@include file="../layouts/profile_layout.jsp"%>
+    </div>
 
 </body>
