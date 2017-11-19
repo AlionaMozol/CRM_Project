@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/product")
+//@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class ProductController {
 
 
 
-    @RequestMapping(value= "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
         model.addAttribute("productid",productService.getProductById(id));
         return "/productbyid";
