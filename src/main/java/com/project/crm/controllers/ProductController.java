@@ -1,14 +1,15 @@
 package com.project.crm.controllers;
 
-import com.project.crm.model.Category;
 import com.project.crm.model.Product;
-import com.project.crm.model.Supercategory;
+import com.project.crm.services.AttributeService;
 import com.project.crm.services.ProductService;
-import com.project.crm.services.impl.SupercategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,9 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    AttributeService attributeService;
 
 
 
@@ -54,12 +58,11 @@ public class ProductController {
     public Product newProduct() {
         Product product = new Product();
         Map<String,String> map = new HashMap<>();
-        map.put("CONDITION","IvanTkachev");
-        map.put("TYPE_","IvanTkachev");
-        map.put("BRAND","IvanTkachev");
-        map.put("SCREEN_DIAGONAL","IvanTkachev");
-        map.put("COST","IvanTkachev");
+        List<String> attributes = attributeService.getAttributesByCategory("PHONES");
+        map.put("COST","10");
         map.put("OWNER","IvanTkachev");
+        for (String attribute : attributes) map.put(attribute, "");
+
         product.setAttributesAndValues(map);
         product.setSuperCategory("Technics");
         product.setCategory("PHONES");
