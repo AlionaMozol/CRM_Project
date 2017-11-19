@@ -68,7 +68,7 @@
                             <ul class="dropdown">
                                 <li><a href="${contextPath}/profile"><i class="icon-user"></i><spring:message code="headerMenuProfile"/></a></li>
                                 <li><a href="${contextPath}/account"><i class="icon-user"></i><spring:message code="headerAccount"/></a></li>
-                                <li><a href="${contextPath}/product/products"><i class="icon-list"></i><spring:message code="headerMenuMyProducts"/></a></li>
+                                <li><a href="${contextPath}/products"><i class="icon-list"></i><spring:message code="headerMenuMyProducts"/></a></li>
                                 <li><a href="#"><i class="icon-cog"></i><spring:message code="headerMenuSettings"/></a></li>
                                 <li>
                                     <c:if test="${pageContext.request.userPrincipal.name != null}">
