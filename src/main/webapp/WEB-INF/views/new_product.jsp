@@ -23,7 +23,7 @@
     <%@include file="../layouts/high_menu_bar.jsp"%>
 
     <div style="padding: 100px">
-        <f:form method="post" commandName="product" action="/product/new-product/add/" acceptCharset="utf-8">
+        <f:form method="post" commandName="product" action="/new-product/add/" acceptCharset="utf-8">
         <table>
             <tr>
                 <td>
