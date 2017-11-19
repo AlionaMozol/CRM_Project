@@ -31,6 +31,8 @@ public class SqlService {
     public static final String SQL_GET_CATEGORY_ATTR_ID =          "SQL_GET_CATEGORY_ATTR_ID";
     public static final String SQL_GET_SUPERCATEGORY_ATTR_ID =     "SQL_GET_SUPERCATEGORY_ATTR_ID";
 
+    public static final String SQL_GET_ATTRIBUTES_BY_CATEGORY =      "SQL_GET_ATTRIBUTES_BY_CATEGORY";
+
     private SqlService(){}
 
     public static SqlService getInstance(){
