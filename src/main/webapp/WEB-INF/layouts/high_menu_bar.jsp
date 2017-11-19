@@ -69,6 +69,7 @@
                                 <li><a href="${contextPath}/profile"><i class="icon-user"></i><spring:message code="headerMenuProfile"/></a></li>
                                 <li><a href="${contextPath}/account"><i class="icon-user"></i><spring:message code="headerAccount"/></a></li>
                                 <li><a href="${contextPath}/product/products"><i class="icon-list"></i><spring:message code="headerMenuMyProducts"/></a></li>
+                                <li><a href="${contextPath}/product/not_moderated"><i class="icon-list"></i><spring:message code="headerMenuProductModeration"/></a></li>
                                 <li><a href="#"><i class="icon-cog"></i><spring:message code="headerMenuSettings"/></a></li>
                                 <li>
                                     <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -85,7 +86,7 @@
 
                             </ul>
                         </div>
-                        <!--a onmouseover="down()"href="${contextPath}/profile">Profile</a-->
+                        <%--a onmouseover="down()"href="${contextPath}/profile">Profile</a--%>
 
                     </li>
 

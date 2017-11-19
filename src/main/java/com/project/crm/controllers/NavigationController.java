@@ -30,7 +30,6 @@ public class NavigationController {
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("product_cost", productService.getAllProducts());
         return "/welcome";
-
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -46,7 +45,7 @@ public class NavigationController {
 
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String about(Model model) {
-        return "about";
+        return "/about";
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)

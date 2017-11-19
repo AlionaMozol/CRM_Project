@@ -37,6 +37,14 @@ public class ProductController {
         return "/products";
     }
 
+    @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
+    public String notModeratedProducts(Model model){
+        //temporarily
+        model.addAttribute("products", productService.getAllProducts());
+
+        return "/product_moderation";
+    }
+
     @RequestMapping(value = "/new_product", method = RequestMethod.GET)
     public String addProduct() {
         return "new_product";
