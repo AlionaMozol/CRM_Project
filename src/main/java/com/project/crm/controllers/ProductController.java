@@ -29,12 +29,18 @@ public class ProductController {
         return "/productbyid";
     }
 
-
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String allProducts (Model model){
         model.addAttribute("products", productService.getAllProducts());
         //return new ModelAndView("product", "command", new Product());
         return "/products";
+    }
+
+    // Edition product
+    @RequestMapping(value= "/product/edit/{id}", method = RequestMethod.GET)
+    public String editProduct(@PathVariable String id, Model model) {
+        model.addAttribute("IDProduct",productService.getProductById(id));
+        return "/edit_product";
     }
 
     @RequestMapping(value = "/new_product", method = RequestMethod.GET)
