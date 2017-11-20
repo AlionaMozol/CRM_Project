@@ -10,4 +10,5 @@ import java.util.List;
 public interface CommentService {
 
     List<Comment> getCommnetByPostId(String id);
+    void addComment(Comment comment);
 }
