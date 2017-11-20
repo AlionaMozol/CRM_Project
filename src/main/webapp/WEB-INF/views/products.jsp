@@ -43,7 +43,7 @@
                 </tr>
             </c:forEach>
         </table>
-        <a href="${contextPath}/product/new_product">New product</a>
+        <a href="${contextPath}/new_product">New product</a>
     </div>
 
 </body>

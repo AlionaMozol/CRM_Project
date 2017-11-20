@@ -31,6 +31,16 @@ public class SqlService {
     public static final String SQL_GET_CATEGORY_ATTR_ID =          "SQL_GET_CATEGORY_ATTR_ID";
     public static final String SQL_GET_SUPERCATEGORY_ATTR_ID =     "SQL_GET_SUPERCATEGORY_ATTR_ID";
 
+    public static final String SQL_GET_ATTRIBUTES_BY_CATEGORY =      "SQL_GET_ATTRIBUTES_BY_CATEGORY";
+
+    public static final String SQL_EDIT_PRODUCT_BY_ID =             "SQL_EDIT_PRODUCT_BY_ID";
+    public static final String SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME =
+                                                                    "SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME";
+
+
+    public static final String SQL_GET_COMMENT_BY_POST_ID = "SQL_GET_COMMENT_BY_POST_ID";
+    public static final String SQL_GET_COMMENT_ATTR_ID = "SQL_GET_COMMENT_ATTR_ID";
+
     private SqlService(){}
 
     public static SqlService getInstance(){

@@ -20,33 +20,40 @@
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
 
-    <div class="container content">
-        <div class="col-lg-10 products">
+    <div style="padding: 100px">
+        <f:form method="post" action="/product/edit/${ID}" acceptCharset="utf-8">
+            <table>
 
-            <h1>Product</h1>
-            <c:forEach items="${IDProduct.attributesAndValues}" var="value">
-                <p><strong>${value.key}</strong></p>
-                <p><input maxlength="25" size="40" value="${value.value}"></p>
-            </c:forEach>
+                  <c:forEach  items="${IDProduct.attributesAndValues}" var="Values" varStatus="status">
+                    <tr>
+                        <td>${Values.key}</td>
+                        <td><label>
+                            <input name="attributesAndValues['${Values.key}']"
+                                   value="${Values.value}">
+                        </label></td>
+                    </tr>
+                </c:forEach>
 
-        </div>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Изменить"/></td>
+                </tr>
+            </table>
+        </f:form>
     </div>
 
 
     <%--<div class="container content">--%>
         <%--<div class="col-lg-10 products">--%>
-
-
+            <%--<f:form method="post" commandName="product" action="/new-product/add/" acceptCharset="utf-8">--%>
             <%--<h1>Product</h1>--%>
-            <%--<table style="border-style: solid">--%>
-                <%--<c:forEach items="${IDProduct.attributesAndValues}" var="value">--%>
-                <%--<tr>--%>
-                    <%--<td>${value.key}</td>--%>
-                    <%--<td>${value.value}</td>--%>
-                <%--</tr>--%>
-                <%--</c:forEach>--%>
-            <%--</table>--%>
-
+            <%--<c:forEach items="${IDProduct.attributesAndValues}" var="value">--%>
+                <%--<p><strong>${value.key}</strong></p>--%>
+                <%--<p><input maxlength="25" size="40" value="${value.value}"></p>--%>
+            <%--</c:forEach>--%>
+            <%--</f:form>--%>
         <%--</div>--%>
     <%--</div>--%>
 

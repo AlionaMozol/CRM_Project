@@ -11,6 +11,7 @@ import java.util.List;
 public interface ProductService {
 
     void addProduct(Product product);
+    void editProduct(String id, Product product);
     Product getProductById(String id);
     List<Product> getProductsByTitle(String title);
     List<Product> getProductsByCategory(String category);

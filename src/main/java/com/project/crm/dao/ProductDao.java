@@ -10,6 +10,7 @@ import java.util.List;
 @Component
 public interface ProductDao {
     void addProduct(Product product);
+    void editProduct(String id, Product product);
     Product getProductById(String id);
     List<Product> getProductsByTitle(String title);
     List<Product> getProductsByCategory(String category);

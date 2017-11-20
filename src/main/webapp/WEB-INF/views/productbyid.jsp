@@ -19,8 +19,10 @@
 
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
+    <div class="container content">
+        <div class="col-lg-10 products">
 
-    <div style="padding: 100px">
+
         <h1>Products</h1>
         <table style="border-style: solid">
             <tr>
@@ -39,6 +41,15 @@
                 </tr>
 
         </table>
+            <c:forEach var="comment" items="${comments}">
+                <tr>
+
+                    <td>${comment.id}</td>
+                    <td>${comment.userId}</td>
+                    <td>${comment.text}</td>
+                </tr>
+            </c:forEach>
+    </div>
     </div>
 
 </body>

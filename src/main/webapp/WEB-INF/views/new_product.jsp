@@ -23,29 +23,41 @@
     <%@include file="../layouts/high_menu_bar.jsp"%>
 
     <div style="padding: 100px">
-        <f:form method="post" commandName="product" action="/product/new-product/add/" acceptCharset="utf-8">
+        <f:form method="post" commandName="product" action="/new-product/add/" acceptCharset="utf-8">
         <table>
             <tr>
                 <td>
-                    <i>Категория:</i>
-                </td>
-                <td>
-                    <f:input path="superCategory"/>
+                    <p><f:select path="superCategory">
+                        <option disabled>Category</option>
+                        <option value="Fashion">Fashion</option>
+                        <option selected value="Animals">Animals</option>
+                        <option value="Technics">Technics</option>
+                        <option value="Realty">Realty</option>
+                        <option value="Realty">House</option>
+                        <option value="Auto">Auto</option>
+                        <option value="Garden">Garden</option>
+                    </f:select></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <i>Тип:</i>
-                </td>
-                <td>
-                    <f:input path="category"/>
+                    <p><f:select path="category">
+                        <option disabled>Type</option>
+                        <option value="PHONES">PHONES</option>
+                        <option selected value="TELEVISION">TELEVISION</option>
+                        <option value="COMPUTERS">COMPUTERS</option>
+                        <option value="OTHERS">OTHERS</option>
+                    </f:select></p>
                 </td>
             </tr>
 
                 <c:forEach  items="${product.attributesAndValues}" var="attributesAndValues" varStatus="status">
                     <tr>
                         <td>${attributesAndValues.key}</td>
-                        <td><input name="attributesAndValues['${attributesAndValues.key}']" value="${attributesAndValues.value}"></td>
+                        <td><label>
+                            <input name="attributesAndValues['${attributesAndValues.key}']"
+                                   value="${attributesAndValues.value}">
+                        </label></td>
                     </tr>
                 </c:forEach>
 

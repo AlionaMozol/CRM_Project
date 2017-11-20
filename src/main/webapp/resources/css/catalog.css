@@ -52,6 +52,12 @@ img {
     font-weight: 500;
 }
 
+.product-price-mod {
+    width: 100%;
+    color: #d51e08;
+    font-size: 18px;
+    font-weight: 500;
+}
 
 .product-icons {
     line-height: 35px;
@@ -83,6 +89,10 @@ img {
 .product-icons-item {
     margin-bottom: 10px;
     white-space: nowrap;
+}
+
+.btn-accept, .btn-deny {
+    margin: 10px;
 }
 
 

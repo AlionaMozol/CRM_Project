@@ -1,14 +1,16 @@
 package com.project.crm.controllers;
 
-import com.project.crm.model.Category;
 import com.project.crm.model.Product;
-import com.project.crm.model.Supercategory;
+import com.project.crm.services.AttributeService;
+import com.project.crm.services.CommentService;
 import com.project.crm.services.ProductService;
-import com.project.crm.services.impl.SupercategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,11 +23,17 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    AttributeService attributeService;
+
+    @Autowired
+    CommentService commentService;
 
 
     @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
         model.addAttribute("productid",productService.getProductById(id));
+        model.addAttribute("comments", commentService.getCommnetByPostId(id));
         return "/productbyid";
     }
 
@@ -36,11 +44,29 @@ public class ProductController {
         return "/products";
     }
 
+
     // Edition product
     @RequestMapping(value= "/product/edit/{id}", method = RequestMethod.GET)
     public String editProduct(@PathVariable String id, Model model) {
-        model.addAttribute("IDProduct",productService.getProductById(id));
+        model.addAttribute("IDProduct", productService.getProductById(id));
+        model.addAttribute("ID", id);
         return "/edit_product";
+    }
+
+    @RequestMapping(value = "/product/edit/{id}", method = RequestMethod.POST)
+    public String editProduct(@PathVariable String id, @ModelAttribute("EditProduct") Product product) {
+        productService.editProduct(id, product);
+        return "redirect:/products";
+    }
+    /////////////////////////////////
+
+    @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
+    public String notModeratedProducts(Model model){
+        //temporarily
+        model.addAttribute("products", productService.getAllProducts());
+
+        return "/product_moderation";
+
     }
 
     @RequestMapping(value = "/new_product", method = RequestMethod.GET)
@@ -52,21 +78,21 @@ public class ProductController {
     public Product newProduct() {
         Product product = new Product();
         Map<String,String> map = new HashMap<>();
-        map.put("CONDITION","IvanTkachev");
-        map.put("TYPE_","IvanTkachev");
-        map.put("BRAND","IvanTkachev");
-        map.put("SCREEN_DIAGONAL","IvanTkachev");
-        map.put("COST","IvanTkachev");
+        List<String> attributes = attributeService.getAttributesByCategory("PHONES");
+        map.put("COST","10");
         map.put("OWNER","IvanTkachev");
+        for (String attribute : attributes) map.put(attribute, "");
+
         product.setAttributesAndValues(map);
         product.setSuperCategory("Technics");
         product.setCategory("PHONES");
         return product;
     }
+
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("product") Product product) {
         productService.addProduct(product);
-        return "redirect:/product/products";
+        return "redirect:/products";
     }
 
 //    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
