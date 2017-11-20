@@ -56,15 +56,11 @@
         <f:form method="POST" commandName="comment" action="/comment_layout" acceptCharset="utf-8">
 
         <p>Комментарий<Br>
-            <textarea name="${comment.text}" cols="40" rows="3"></textarea></p>
-        <input type="hidden" name="${comment.userId}" value="idusernaprikole">
-        <input type="hidden" name="${comment.postId}" value="${productid.id}">
+                <f:textarea path="text" cols="40" rows="3"/>
+                <f:input type="hidden" name="username" path="username" value="${pageContext.request.userPrincipal.name}"/>
+                <f:input path="postId" type="hidden" name="postID" value="${productid.id}"/>
         <p><input type="submit" value="Отправить">
-
             </f:form>
-
-
-
     </div>
 
 

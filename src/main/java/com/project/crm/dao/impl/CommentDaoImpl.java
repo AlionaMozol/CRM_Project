@@ -72,7 +72,7 @@ public class CommentDaoImpl extends DAO implements CommentDao {
                         preparedStatement.setString(4, comment.getPostId());
                         break;
                     case "fdb4da4b-cbcf-11e7-97a3-94de807a9669":
-                        preparedStatement.setString(4, comment.getUserId());
+                        preparedStatement.setString(4, comment.getUsername());
                         break;
                     case "fdb0ebf0-cbcf-11e7-97a3-94de807a9669":
                         preparedStatement.setString(4, comment.getText());
@@ -122,7 +122,7 @@ public class CommentDaoImpl extends DAO implements CommentDao {
                 if(resultSet.getString(1).equals("PRODUCT_REC")) {
                     currentComment.setPostId(resultSet.getString(2));
                 } else if(resultSet.getString(1).equals("USER_MAKER")) {
-                    currentComment.setUserId(resultSet.getString(2));
+                    currentComment.setUsername(resultSet.getString(2));
                 } else if (resultSet.getString(1).equals("TEXT_")){
                     currentComment.setText(resultSet.getString(2));
                 }
