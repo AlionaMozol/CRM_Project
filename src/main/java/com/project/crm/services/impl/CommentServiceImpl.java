@@ -19,4 +19,9 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> getCommnetByPostId(String id) {
         return commentDao.getCommentsByProductId(id);
     }
+
+    @Override
+    public void addComment(Comment comment){
+        commentDao.addComment(comment);
+    }
 }

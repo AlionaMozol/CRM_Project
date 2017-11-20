@@ -1,5 +1,6 @@
 package com.project.crm.controllers;
 
+import com.project.crm.model.Comment;
 import com.project.crm.model.Product;
 import com.project.crm.services.AttributeService;
 import com.project.crm.services.CommentService;
@@ -36,6 +37,23 @@ public class ProductController {
         model.addAttribute("comments", commentService.getCommnetByPostId(id));
         return "/productbyid";
     }
+
+
+
+    @RequestMapping(value = "/comment_layout", method = RequestMethod.POST)
+    public String addComment(@ModelAttribute("comment") Comment comment){
+        commentService.addComment(comment);
+        return "redirect:/products";
+    }
+
+    @ModelAttribute("comment")
+    public Comment newComment(){
+        Comment comment = new Comment();
+        comment.setText("TEST");
+
+        return comment;
+    }
+
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String allProducts (Model model){
