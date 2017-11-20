@@ -103,6 +103,78 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
     @Override
+    public void editProduct(String id, Product product) {
+        Connection connection = poolInst.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement statement;
+            ResultSet resultSet = null;
+            Map<String, String> attributesAndValues = product.getAttributesAndValues();
+
+            //StringBuilder unionForUpdate = new StringBuilder("");
+
+            StringBuilder unionForUpdate = new StringBuilder("UPDATE spring_security_app.values JOIN ( ");
+
+            boolean first = true;
+            for (Map.Entry entry: attributesAndValues.entrySet()) {
+                if(first){
+
+                    unionForUpdate.append("select '");
+                    unionForUpdate.append((String) entry.getValue());
+                    unionForUpdate.append("' as v1, '");
+
+                    statement = connection.prepareStatement(sql.
+                            getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
+                    statement.setString(1, id);
+                    statement.setString(2, (String) entry.getKey());
+                    resultSet = statement.executeQuery();
+                    resultSet.next();
+
+                    unionForUpdate.append(resultSet.getString(1));
+                    unionForUpdate.append("' as v2");
+                }else {
+
+                    unionForUpdate.append(" union select '");
+                    unionForUpdate.append((String) entry.getValue());
+                    unionForUpdate.append("', '");
+
+                    statement = connection.prepareStatement(sql.
+                            getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
+                    statement.setString(1, id);
+                    statement.setString(2, (String) entry.getKey());
+                    resultSet = statement.executeQuery();
+                    resultSet.next();
+
+                    unionForUpdate.append(resultSet.getString(1));
+                    unionForUpdate.append("'");
+
+                }
+                first = false;
+            }
+
+            unionForUpdate.append(" ) A ON A.v2=spring_security_app.values.value_id SET spring_security_app.values.Value = A.v1");
+
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_EDIT_PRODUCT_BY_ID));
+//            statement.setString(1, unionForUpdate.toString());
+
+            statement = connection.prepareStatement(unionForUpdate.toString());
+            statement.execute();
+
+
+            statement.close();
+            resultSet.close();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            tryToRollbackConnection(connection);
+        } finally {
+            tryToSetAutoCommitTrueForConnection(connection);
+            poolInst.footConnection(connection);
+        }
+    }
+
+    @Override
     public Product getProductById(String id) {
         Connection connection = poolInst.getConnection();
         Product currentProduct = new Product();

@@ -26,6 +26,7 @@ public class ProductController {
 
     @Autowired
     AttributeService attributeService;
+
     @Autowired
     CommentService commentService;
 
@@ -36,6 +37,8 @@ public class ProductController {
         model.addAttribute("comments", commentService.getCommnetByPostId(id));
         return "/productbyid";
     }
+
+
 
     @RequestMapping(value = "/comment_layout", method = RequestMethod.POST)
     public String addComment(@ModelAttribute("comment") Comment comment){
@@ -51,6 +54,7 @@ public class ProductController {
         return comment;
     }
 
+
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String allProducts (Model model){
         model.addAttribute("products", productService.getAllProducts());
@@ -58,12 +62,29 @@ public class ProductController {
         return "/products";
     }
 
+
+    // Edition product
+    @RequestMapping(value= "/product/edit/{id}", method = RequestMethod.GET)
+    public String editProduct(@PathVariable String id, Model model) {
+        model.addAttribute("IDProduct", productService.getProductById(id));
+        model.addAttribute("ID", id);
+        return "/edit_product";
+    }
+
+    @RequestMapping(value = "/product/edit/{id}", method = RequestMethod.POST)
+    public String editProduct(@PathVariable String id, @ModelAttribute("EditProduct") Product product) {
+        productService.editProduct(id, product);
+        return "redirect:/products";
+    }
+    /////////////////////////////////
+
     @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
     public String notModeratedProducts(Model model){
         //temporarily
         model.addAttribute("products", productService.getAllProducts());
 
         return "/product_moderation";
+
     }
 
     @RequestMapping(value = "/new_product", method = RequestMethod.GET)
@@ -85,6 +106,7 @@ public class ProductController {
         product.setCategory("PHONES");
         return product;
     }
+
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("product") Product product) {
         productService.addProduct(product);
