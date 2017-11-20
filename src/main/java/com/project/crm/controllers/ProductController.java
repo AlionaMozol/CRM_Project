@@ -2,6 +2,7 @@ package com.project.crm.controllers;
 
 import com.project.crm.model.Product;
 import com.project.crm.services.AttributeService;
+import com.project.crm.services.CommentService;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,12 +25,14 @@ public class ProductController {
 
     @Autowired
     AttributeService attributeService;
-
+    @Autowired
+    CommentService commentService;
 
 
     @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
         model.addAttribute("productid",productService.getProductById(id));
+        model.addAttribute("comments", commentService.getCommnetByPostId(id));
         return "/productbyid";
     }
 
