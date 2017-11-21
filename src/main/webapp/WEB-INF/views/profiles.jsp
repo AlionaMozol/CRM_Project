@@ -64,7 +64,7 @@
                                     <f:input path="sex"/>
                                 </div>
 
-                                <input type="submit" value="Сохранить"></button>
+                                <input type="submit" value="Сохранить">
 
                             </f:form>
                         </div>

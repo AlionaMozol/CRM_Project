@@ -39,7 +39,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href=""><spring:message code="headerShop"/></a>
+                <a class="navbar-brand" href="${contextPath}/welcome"><spring:message code="headerShop"/></a>
                 <a href="<%=request.getContextPath()%>?languageVar=en">EN</a>
                 <a href="<%=request.getContextPath()%>?languageVar=ru">RU</a>
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -81,7 +81,7 @@
                                     </c:if>
 
                                     <c:if test="${pageContext.request.userPrincipal.name == null}">
-                                        <a class="btn btn-default" href="${contextPath}/login"><spring:message code="headerMenuLogOut"/></a>
+                                        <a class="btn btn-default" href="${contextPath}/login"><spring:message code="headerMenuLogIn"/></a>
                                     </c:if>
                                 </li>
 

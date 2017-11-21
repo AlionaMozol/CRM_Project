@@ -26,7 +26,7 @@
 <body>
 
 <div class="container content">
-    <div class="col-lg-10 products">
+    <div class="col-lg-9 products">
 
         <c:forEach items="${products}" var="product">
 
