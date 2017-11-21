@@ -23,6 +23,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAllTopCategories() {
-        return categoryDao.getAllTopCategories();
+        return categoryDao.getAllCategories();
     }
 }
