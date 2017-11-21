@@ -24,6 +24,7 @@
     <link rel="stylesheet"  href="../../resources/css/main.css">
     <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
 
+    <script src="../../resources/js/jquery-3.2.1.min.js"></script>
     <script src="../../resources/js/drop-down.js"></script>
 
 </head>

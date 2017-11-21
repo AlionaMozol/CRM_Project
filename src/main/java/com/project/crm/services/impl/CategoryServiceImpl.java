@@ -1,8 +1,6 @@
 package com.project.crm.services.impl;
 
 import com.project.crm.dao.CategoryDao;
-import com.project.crm.dao.impl.CategoryDaoImpl;
-import com.project.crm.dao.impl.SupercategoryDaoImpl;
 import com.project.crm.model.Category;
 import com.project.crm.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
