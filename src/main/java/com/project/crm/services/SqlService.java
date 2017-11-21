@@ -30,13 +30,27 @@ public class SqlService {
     public static final String SQL_GET_PRODUCT_OBJECT_TYPE_ID =    "SQL_GET_PRODUCT_OBJECT_TYPE_ID";
     public static final String SQL_GET_CATEGORY_ATTR_ID =          "SQL_GET_CATEGORY_ATTR_ID";
     public static final String SQL_GET_SUPERCATEGORY_ATTR_ID =     "SQL_GET_SUPERCATEGORY_ATTR_ID";
+    public static final String SQL_GET_ALL_CATEGORIES =            "SQL_GET_ALL_CATEGORIES";
+    public static final String SQL_SELECT_BY_OBJECT_TYPE =         "SQL_SELECT_BY_OBJECT_TYPE";
 
-    public static final String SQL_GET_ATTRIBUTES_BY_CATEGORY =      "SQL_GET_ATTRIBUTES_BY_CATEGORY";
+    public static final String SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE =
+                                                                   "SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE";
+    public static final String SQL_INSERT_OBJECT  =                "SQL_INSERT_OBJECT";
+    public static final String SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR =
+                                                                   "SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR";
+    public static final String SQL_INSERT_VALUE =                  "SQL_INSERT_VALUE";
+    public static final String SQL_SELECT_OBJECT_ID_BY_VALUE =     "SQL_SELECT_OBJECT_ID_BY_VALUE";
+    public static final String SQL_DELETE_VALUES =                 "SQL_DELETE_VALUES";
+    public static final String SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR =
+                                                                   "SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR";
+    public static final String SQL_SELECT_USER_ATTRIBUTES =        "SQL_SELECT_USER_ATTRIBUTES";
+
 
     public static final String SQL_EDIT_PRODUCT_BY_ID =             "SQL_EDIT_PRODUCT_BY_ID";
     public static final String SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME =
-                                                                    "SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME";
+            "SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME";
 
+    public static final String SQL_GET_ATTRIBUTES_BY_CATEGORY =      "SQL_GET_ATTRIBUTES_BY_CATEGORY";
 
     public static final String SQL_GET_COMMENT_BY_POST_ID = "SQL_GET_COMMENT_BY_POST_ID";
     public static final String SQL_GET_COMMENT_ATTR_ID = "SQL_GET_COMMENT_ATTR_ID";

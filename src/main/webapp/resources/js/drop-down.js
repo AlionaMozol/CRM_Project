@@ -1,13 +1,6 @@
-obj.dd.on('click', function(event){
-    $(this).toggleClass('active');
-    return false;
-});
-
-//...
-
 $(function() {
 
-    var dd = new DropDown( $('#dd') );
+    let dd = new DropDown( $('#dd') );
 
     $(document).click(function() {
         // all dropdowns
@@ -22,11 +15,11 @@ function DropDown(el) {
 }
 DropDown.prototype = {
     initEvents : function() {
-        var obj = this;
+        let obj = this;
 
         obj.dd.on('click', function(event){
             $(this).toggleClass('active');
             event.stopPropagation();
         });
     }
-}
+};

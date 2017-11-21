@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 //@RequestMapping("/product")
@@ -50,6 +51,8 @@ public class ProductController {
     public Comment newComment(){
         Comment comment = new Comment();
         comment.setText("TEST");
+        comment.setId(UUID.randomUUID().toString());
+        comment.setUsername("");
 
         return comment;
     }

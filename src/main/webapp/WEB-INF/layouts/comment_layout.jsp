@@ -31,7 +31,7 @@
                 <img src="${contextPath}/resources/img/placeholder-image.png">
             </div>
             <div class="text-in-user-comment">
-                <p class="username">${comment.userId}</p>
+                <p class="username">${comment.username}</p>
                 <p class="comment">${comment.text}</p>
             </div>
         </div>

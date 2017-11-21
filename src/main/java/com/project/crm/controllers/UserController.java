@@ -1,7 +1,9 @@
 package com.project.crm.controllers;
 
 
+
 import com.project.crm.model.User;
+import com.project.crm.services.ProfileService;
 import com.project.crm.services.security.SecurityService;
 
 import com.project.crm.services.UserService;
@@ -28,6 +30,9 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private ProfileService profileService;
+
+    @Autowired
     private SecurityService securityService;
 
     @Autowired
@@ -49,7 +54,15 @@ public class UserController {
         }
 
         userService.save(userForm);
-
+        User user = new User();
+        user.setId(userForm.getId());
+        user.setCity("");
+        user.setTelephone("");
+        user.setDateOfBirth("");
+        user.setEmail("");
+        user.setSex("");
+        user.setFio("");
+        profileService.addUser(user);
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
         return "redirect:/welcome";
