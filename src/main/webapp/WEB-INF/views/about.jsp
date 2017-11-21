@@ -41,12 +41,10 @@
     <div class="futter">
         <div class="row centered">
             <div class="col-lg-8 col-lg-offset-2"></div>
-            <h5>
-                It's easy to buy!
-            </h5>
+            <h5><strong><spring:message code="footerText"/></strong></h5>
         </div>
     </div>
-
+<!--
     <div class="modal login" id="loginModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -83,7 +81,7 @@
         });
     })
     </script>
-
+-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="resources/js/bootstrap.min.js"></script>
 

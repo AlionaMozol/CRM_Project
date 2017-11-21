@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -7,12 +7,12 @@
 
 <!DOCTYPE html>
 
-
 <html>
 <head>
     <title>Title</title>
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${contextPath}/resources/css/account.css" />
+    <link rel="stylesheet" href="${contextPath}/resources/css/account.css"/>
+    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -62,17 +62,24 @@
             <div class="col-xs-12 divider text-center">
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong> 72 </strong></h2>
-                    <p><small>Объявлеиний</small></p>
-                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Просмотреть</button>
+                    <p>
+                        <small>Объявлеиний</small>
+                    </p>
+                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Просмотреть
+                    </button>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>5</strong></h2>
-                    <p><small>В избранном</small></p>
+                    <p>
+                        <small>В избранном</small>
+                    </p>
                     <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Просмотреть</button>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>12</strong></h2>
-                    <p><small>Комментариев</small></p>
+                    <p>
+                        <small>Комментариев</small>
+                    </p>
                     <div class="btn-group dropup btn-block">
                         <button type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Опции</button>
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -92,7 +99,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

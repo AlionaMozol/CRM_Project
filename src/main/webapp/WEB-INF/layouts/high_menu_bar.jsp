@@ -43,7 +43,7 @@
                 <a href="<%=request.getContextPath()%>?languageVar=ru">RU</a>
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                     <a class="navbar-text">
-                        Welcome ${pageContext.request.userPrincipal.name}
+                        <spring:message code="headerWelcome"/>, ${pageContext.request.userPrincipal.name}
                     </a>
                 </c:if>
             </div>
@@ -52,7 +52,7 @@
                 <div class="col-sm-4 col-md-5">
                             <form class="navbar-form" role="search">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" name="q">
+                                    <input type="text" class="form-control" placeholder="<spring:message code="headerSearch"/>" name="q">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
                                             <i class="glyphicon glyphicon-search"></i>

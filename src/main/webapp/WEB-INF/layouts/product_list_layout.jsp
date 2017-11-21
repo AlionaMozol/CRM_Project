@@ -43,13 +43,9 @@
                         </div>
                     </div>
 
-                    <c:forEach items="${product.attributesAndValues}" var="title">
-                        <c:if test="${title.key=='COST'}">
-                            <p class="product-title">
-                                <a href="#"><strong>${title.value}</strong></a>
-                            </p>
-                        </c:if>
-                    </c:forEach>
+                    <p class="product-title">
+                        <a href="${contextPath}/product/${product.id}"><strong>${product.id}</strong></a>
+                    </p>
 
                     <p class="product-desc">${product.description}</p>
                     <p class="product-category">${product.category}</p>

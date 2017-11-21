@@ -1,7 +1,8 @@
 
 /*	product_list_layout 1 */
 body {
-    background: #ececec;
+    /*background: #ececec;*/
+    background: #ddd url('../img/bg.jpg');
 }
 img {
     height: auto;
