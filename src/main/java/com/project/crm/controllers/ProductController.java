@@ -44,7 +44,7 @@ public class ProductController {
     @RequestMapping(value = "/comment_layout", method = RequestMethod.POST)
     public String addComment(@ModelAttribute("comment") Comment comment){
         commentService.addComment(comment);
-        return "redirect:/products";
+        return "redirect:/product/" + comment.getPostId();
     }
 
     @ModelAttribute("comment")

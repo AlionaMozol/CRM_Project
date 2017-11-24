@@ -1,6 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@ page contentType="text/html; charset=UTF-8"%>
 
@@ -52,7 +54,7 @@
         <%@include file="../layouts/comment_layout.jsp"%>
 
 
-
+        <sec:authorize access="hasRole('ROLE_USER')">
         <f:form method="POST" commandName="comment" action="/comment_layout" acceptCharset="utf-8">
 
         <p>Комментарий<Br>
@@ -61,6 +63,8 @@
                 <f:input path="postId" type="hidden" name="postID" value="${productid.id}"/>
         <p><input type="submit" value="Отправить">
             </f:form>
+
+        </sec:authorize>
     </div>
 
 
