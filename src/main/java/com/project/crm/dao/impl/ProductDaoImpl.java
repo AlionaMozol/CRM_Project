@@ -4,6 +4,7 @@ package com.project.crm.dao.impl;
 import com.project.crm.dao.DAO;
 import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
+import com.project.crm.model.User;
 import com.project.crm.model.enums.Status;
 import com.project.crm.services.SqlService;
 import org.springframework.stereotype.Component;
@@ -100,6 +101,42 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
+    }
+
+    @Override
+    public List<Product> getProductsByUser(User user) {
+        Connection connection = poolInst.getConnection();
+        List<Product> productsOfUser = new ArrayList<>();
+        String objectIdOfUser = null;
+        try {
+            connection.setAutoCommit(false);
+
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_USER_OBJECT_ID_BY_ID));
+            statement.setString(1, Integer.toString(user.getId()));
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+               objectIdOfUser = resultSet.getString(1);
+            }
+            statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_PRODUCT_BY_USER_ID));
+            statement.setString(1, objectIdOfUser);
+            ResultSet setOfTargetObjectIds = statement.executeQuery();
+            while (setOfTargetObjectIds.next()) {
+                productsOfUser.add(getProductById(setOfTargetObjectIds.getString(1)));
+            }
+            setOfTargetObjectIds.close();
+            statement.close();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            tryToRollbackConnection(connection);
+        }
+        finally {
+            tryToSetAutoCommitTrueForConnection(connection);
+            poolInst.footConnection(connection);
+        }
+        return productsOfUser;
     }
 
     @Override

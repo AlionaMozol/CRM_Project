@@ -1,6 +1,7 @@
 package com.project.crm.services;
 
 import com.project.crm.model.Product;
+import com.project.crm.model.User;
 import com.project.crm.model.enums.Status;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public interface ProductService {
 
     void addProduct(Product product);
+    List<Product> getProductsByUser(User user);
     void editProduct(String id, Product product);
     Product getProductById(String id);
     List<Product> getProductsByTitle(String title);

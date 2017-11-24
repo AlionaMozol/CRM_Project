@@ -21,12 +21,13 @@
         <div class="well profile">
             <div class="col-sm-12">
                 <div class="col-xs-12 col-sm-8">
-                    <h2>Сергей Иванов</h2>
-                    <p><strong>Обо мне: </strong> Трудоголик. </p>
-                    <p><strong>Место проживания: </strong> Минск. </p>
-                    <p><strong>email: </strong> user@mail.com. </p>
-                    <p><strong>Телефон: </strong> +374546547654. </p>
-                    <p><strong>Хобби: </strong> NetCracker </p>
+                    <h2>${user.username}</h2>
+                    <p><strong>ФИО: </strong>${user.fio!=null ? user.fio : "Не установлено"}</p>
+                    <p><strong>Место проживания: </strong>${user.city!=null ? user.city : "Не установлено"}</p>
+                    <p><strong>email: </strong>${user.email!=null ? user.email : "Не установлено"}</p>
+                    <p><strong>Телефон: </strong>${user.telephone!=null ? user.telephone : "Не установлено"}</p>
+                    <p><strong>Пол: </strong>${user.sex!=null ? user.sex : "Не установлено"}</p>
+                    <p><strong>Дата рождения: </strong>${user.dateOfBirth!=null ? user.dateOfBirth : "Не установлено"}</p>
                     <p><strong>Темы объявлений: </strong>
                         <span class="tags">Техника</span>
                         <span class="tags">Стиль</span>
@@ -61,7 +62,7 @@
             </div>
             <div class="col-xs-12 divider text-center">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 72 </strong></h2>
+                    <h2><strong>${user.userProductList.size()}</strong></h2>
                     <p>
                         <small>Объявлеиний</small>
                     </p>
@@ -69,14 +70,14 @@
                     </button>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>5</strong></h2>
+                    <h2><strong>-1</strong></h2>
                     <p>
                         <small>В избранном</small>
                     </p>
                     <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Просмотреть</button>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>12</strong></h2>
+                    <h2><strong>-1</strong></h2>
                     <p>
                         <small>Комментариев</small>
                     </p>

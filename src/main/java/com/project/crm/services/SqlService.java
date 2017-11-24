@@ -44,6 +44,8 @@ public class SqlService {
     public static final String SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR =
                                                                    "SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR";
     public static final String SQL_SELECT_USER_ATTRIBUTES =        "SQL_SELECT_USER_ATTRIBUTES";
+    public static final String SQL_GET_PRODUCT_BY_USER_ID =        "SQL_GET_PRODUCT_BY_USER_ID";
+    public static final String SQL_GET_USER_OBJECT_ID_BY_ID =      "SQL_GET_USER_OBJECT_ID_BY_ID";
 
 
     public static final String SQL_EDIT_PRODUCT_BY_ID =             "SQL_EDIT_PRODUCT_BY_ID";

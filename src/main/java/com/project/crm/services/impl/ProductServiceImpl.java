@@ -2,6 +2,7 @@ package com.project.crm.services.impl;
 
 import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
+import com.project.crm.model.User;
 import com.project.crm.model.enums.Status;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void addProduct(Product product) {
          productDao.addProduct(product);
+    }
+
+    @Override
+    public List<Product> getProductsByUser(User user) {
+        return productDao.getProductsByUser(user);
     }
 
     @Override

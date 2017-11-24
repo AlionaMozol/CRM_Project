@@ -1,15 +1,24 @@
 package com.project.crm.controllers;
 
+import com.project.crm.dao.UserDao;
+import com.project.crm.dao.impl.UserDaoImpl;
 import com.project.crm.model.Category;
+import com.project.crm.model.User;
+import com.project.crm.repository.UserRepository;
 import com.project.crm.services.CategoryService;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sun.plugin.liveconnect.SecurityContextHelper;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -55,7 +64,7 @@ public class NavigationController {
 
     @RequestMapping(value = "/account", method = RequestMethod.GET)
     public String account(Model model) {
-        return "account";
+        return "redirect:/account/" + SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
 }
