@@ -18,59 +18,113 @@
 
     <title>Log in with your account</title>
 
-    <link rel="stylesheet" media="screen" href="../../resources/css/profile.css">
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/main.css" rel="stylesheet">
+    <link rel="stylesheet"  href="../../resources/css/main.css">
+    <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
+    <link href="${contextPath}/resources/css/profile.css" rel="stylesheet">
 
 </head>
 
-
 <body>
-
-<%@include file="../layouts/preloader.jsp"%>
-<%@include file="../layouts/high_menu_bar.jsp"%>
-
-<div style="padding: 100px">
-    <table style="border-style: solid">
-            <div class = "container content">
-                <div class="container">
-
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-3">
-                            <f:form method="post" commandName="User" acceptCharset="utf-8">
-
-                                <h3>ФИО</h3>
-                                <div class="form-group">
-                                        <f:input path="fio"/>
-                                </div>
-                                <h3>Город</h3>
-                                <div class="form-group">
-                                    <f:input path="city"/>
-                                </div>
-                                <h3>Телефон</h3>
-                                <div class="form-group">
-                                    <f:input path="telephone"/>
-                                </div>
-                                <h3>Почта</h3>
-                                <div class="form-group">
-                                    <f:input path="email"/>
-                                </div>
-                                <h3>Дата рождения</h3>
-                                <div class="form-group">
-                                    <f:input path="dateOfBirth"/>
-                                </div>
-                                <h3>Пол</h3>
-                                <div class="form-group">
-                                    <f:input path="sex"/>
-                                </div>
-
-                                <input type="submit" value="Сохранить">
-
-                            </f:form>
-                        </div>
-                    </div>
+    <%@include file="../layouts/preloader.jsp"%>
+    <%@include file="../layouts/high_menu_bar.jsp"%>
+    <f:form class="content" method="post" commandName="User" acceptCharset="utf-8">
+        <div class="col-md-6 col-md-offset-5">
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label">ФИО</label>
+                <div class="col-10">
+                    <f:input class="form-control" type="text" name="fio" path="fio" pattern="[а-яА-ЯёЁa-zA-Z\s-]{0,15}$"/>
+                    <form:errors path="fio"/>
                 </div>
             </div>
-    </table>
-</div>
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label">Email</label>
+                <div class="col-10">
+                    <f:input class="form-control" type="email" name="email" path="email"/>
+                    <form:errors path="email"/>
+                </div>
+            </div>
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label">Телефон</label>
+                <div class="col-10">
+                    <f:input class="form-control" type="text" name="telephone" path="telephone" pattern="\+?([0-9]{2})?\(?[0-9]{3}\)?[0-9]{3}\-?[0-9]{2}\-?[0-9]{2}"/>
+                    <form:errors path="telephone"/>
+                </div>
+            </div>
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label">Город</label>
+                <div class="col-10">
+                    <f:input class="form-control" type="text" name="city" path="city" pattern="[а-яА-ЯёЁa-zA-Z]{0,20}"/>
+                    <form:errors path="city"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">Дата рождения</label>
+                <div class="col-10">
+                    <f:input class="form-control" type="date" name="dateOfBirth" path="dateOfBirth"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label">Пол</label>
+                <div class="col-10">
+                    <form:radiobutton path="sex" value="М"/>Мужчина
+                    <form:radiobutton path="sex" value="Ж"/>Женщина
+                </div>
+            </div>
+            <button type="submit" class="btn">Cохранить</button>
+        </div>
+    </f:form>
+
+    <script type="text/javascript">$(document).ready(function() {
+
+        $('#email').blur(function() {
+            if($(this).val() != '') {
+                var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+                if(pattern.test($(this).val())){
+                    $(this).css({'border' : '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border' : '1px solid #ff0000'});
+                }
+            }
+        });
+        $('#city').blur(function() {
+            if($(this).val() != '') {
+                var pattern = /^[а-яА-ЯёЁa-zA-Z]{0,20}$/i;
+                if(pattern.test($(this).val())){
+                    $(this).css({'border' : '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border' : '1px solid #ff0000'});
+                }
+            }
+        });
+        $('#fio').blur(function() {
+            if($(this).val() != '') {
+                var pattern = /^[а-яА-ЯёЁa-zA-Z\s-]{0,15}$/i;
+                if(pattern.test($(this).val())){
+                    $(this).css({'border' : '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border' : '1px solid #ff0000'});
+                }
+            }
+        });
+        $('#telephone').blur(function() {
+            if($(this).val() != '') {
+                var pattern = /^\+?([0-9]{2})?\(?[0-9]{3}\)?[0-9]{3}\-?[0-9]{2}\-?[0-9]{2}$/i;
+                if(pattern.test($(this).val())){
+                    $(this).css({'border' : '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border' : '1px solid #ff0000'});
+                }
+            }
+        });
+    })
+    </script>
+
 </body>
+
+
+
+
+
+
+

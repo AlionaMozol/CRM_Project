@@ -12,6 +12,7 @@
         <intercept-url pattern="/products" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/new_product" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/new_product/add" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/profiles" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 
         <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
