@@ -61,7 +61,7 @@
                 <f:textarea path="text" cols="40" rows="3"/>
                 <f:input type="hidden" name="username" path="username" value="${pageContext.request.userPrincipal.name}"/>
                 <f:input path="postId" type="hidden" name="postID" value="${productid.id}"/>
-        <p><input type="submit" value="Отправить">
+        </p><input type="submit" value="Отправить">
             </f:form>
 
         </sec:authorize>

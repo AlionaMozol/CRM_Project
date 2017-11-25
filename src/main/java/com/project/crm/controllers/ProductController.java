@@ -35,7 +35,6 @@ public class ProductController {
     @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
         model.addAttribute("productid",productService.getProductById(id));
-        model.addAttribute("comments", commentService.getCommnetByPostId(id));
         return "/productbyid";
     }
 
