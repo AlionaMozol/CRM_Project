@@ -37,7 +37,6 @@
             type: 'GET',
             dataType: 'json',
             contentType: 'application/json',
-            mimeType: 'application/json',
             data : ({
                 id: inputText
             }),
