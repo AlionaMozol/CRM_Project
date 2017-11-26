@@ -4,6 +4,7 @@ import com.project.crm.model.Product;
 import com.project.crm.model.User;
 import com.project.crm.model.enums.Status;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;

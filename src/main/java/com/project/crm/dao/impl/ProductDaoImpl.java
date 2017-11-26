@@ -8,6 +8,9 @@ import com.project.crm.model.User;
 import com.project.crm.model.enums.Status;
 import com.project.crm.services.SqlService;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.sql.*;
 import java.util.*;
@@ -17,11 +20,12 @@ import java.util.Date;
 @Component
 public class ProductDaoImpl extends DAO implements ProductDao {
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public void addProduct(Product product) {
         Connection connection = poolInst.getConnection();
         try {
-           connection.setAutoCommit(false);
            PreparedStatement statement;
            ResultSet resultSet;
            String newObjectTypeId = null;
@@ -93,24 +97,21 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             }
            statement.close();
            resultSet.close();
-           connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         } finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public List<Product> getProductsByUser(User user) {
         Connection connection = poolInst.getConnection();
         List<Product> productsOfUser = new ArrayList<>();
         String objectIdOfUser = null;
         try {
-            connection.setAutoCommit(false);
-
             PreparedStatement statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_USER_OBJECT_ID_BY_ID));
             statement.setString(1, Integer.toString(user.getId()));
@@ -127,23 +128,21 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             }
             setOfTargetObjectIds.close();
             statement.close();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         }
         finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return productsOfUser;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public void editProduct(String id, Product product) {
         Connection connection = poolInst.getConnection();
         try {
-            connection.setAutoCommit(false);
             PreparedStatement statement;
             ResultSet resultSet = null;
             Map<String, String> attributesAndValues = product.getAttributesAndValues();
@@ -191,33 +190,26 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
             unionForUpdate.append(" ) A ON A.v2=spring_security_app.values.value_id SET spring_security_app.values.Value = A.v1");
 
-//            statement = connection.prepareStatement(sql.
-//                    getProperty(SqlService.SQL_EDIT_PRODUCT_BY_ID));
-//            statement.setString(1, unionForUpdate.toString());
-
             statement = connection.prepareStatement(unionForUpdate.toString());
             statement.execute();
 
-
             statement.close();
             resultSet.close();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         } finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public Product getProductById(String id) {
         Connection connection = poolInst.getConnection();
         Product currentProduct = new Product();
         currentProduct.setId(id);
         try {
-            connection.setAutoCommit(false);
             PreparedStatement statement;
             ResultSet resultSet;
             Map<String, String> attributesAndValues = new HashMap<>();
@@ -238,18 +230,17 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             currentProduct.setAttributesAndValues(attributesAndValues);
             resultSet.close();
             statement.close();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         }
         finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return currentProduct;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public List<Product> getProductsByTitle(String title) {  //Пока нет в базе
         Connection connection = poolInst.getConnection();
@@ -258,12 +249,13 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         return null;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public List<Product> getProductsByCategory(String category) {
         Connection connection = poolInst.getConnection();
         List<Product> productsOfTargetCategory = new ArrayList<>();
         try {
-            connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_PRODUCTS_BY_CATEGORY));
             statement.setString(1, category);
@@ -273,18 +265,17 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             }
             setOfTargetObjectIds.close();
             statement.close();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         }
         finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return productsOfTargetCategory;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public List<Product> getProductsAfterDate(Date date) {   //Пока нет в базе
         Connection connection = poolInst.getConnection();
@@ -294,6 +285,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         return null;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
     @Override
     public List<Product> getProductByStatus(Status status) {  // Пока нет в базе
         Connection connection = poolInst.getConnection();
@@ -303,12 +295,13 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         return null;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public List<Product> getAllProducts() {
         Connection connection = poolInst.getConnection();
         List<Product> allProducts = new ArrayList<>();
         try {
-            connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_ALL_PRODUCTS));
             ResultSet setOfTargetObjectIds = statement.executeQuery();
@@ -317,23 +310,21 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             }
             setOfTargetObjectIds.close();
             statement.close();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         }
         finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return allProducts;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public void deleteProductById(String id) {
         Connection connection = poolInst.getConnection();
         try {
-            connection.setAutoCommit(false);
             PreparedStatement statement;
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_DELETE_VALUES_BY_OBJECT_ID));
@@ -346,32 +337,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.execute();
 
             statement.close();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         }
         finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
-        }
-    }
-
-    void tryToRollbackConnection(Connection connection) {
-        try {
-            connection.rollback();
-            System.err.print("Transaction is being rolled back!");
-        } catch (SQLException e) {
-            System.err.print("Transaction is NOT being rolled back!");
-            e.printStackTrace();
-        }
-    }
-
-    void tryToSetAutoCommitTrueForConnection(Connection connection) {
-        try {
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -408,7 +378,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //
 //        }
         ProductDaoImpl pDaoImpl = new ProductDaoImpl();
-        List<Product> lst = new ArrayList<>();
+        List<Product> lst;
         lst = pDaoImpl.getAllProducts();
         int i = 0;
         for(Product x : lst ) {

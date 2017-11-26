@@ -1,6 +1,11 @@
 package com.project.crm.connectionPool;
 
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -42,8 +47,9 @@ public class DbConnectionPool {
         }
     }
 
-
     public synchronized Connection getConnection() {
+        //System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+        //System.out.println("FROM GET CONNECTION: " + TransactionSynchronizationManager.getCurrentTransactionName());
         if (!deque.isEmpty()) {
             while (!deque.isEmpty()) {
                 Connection connection;
@@ -70,6 +76,7 @@ public class DbConnectionPool {
             e.printStackTrace();
         }
     }
+
     public static DbConnectionPool getInstance() {
         if (instance == null) {
             synchronized (DbConnectionPool.class) {
