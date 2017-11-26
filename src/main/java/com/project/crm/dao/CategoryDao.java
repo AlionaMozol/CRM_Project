@@ -13,4 +13,5 @@ public interface CategoryDao {
 
     List<Category> getCategoriesByTopCategory(Category category);
     List<Category> getAllCategories();
+    List<Category> getAllTopCategories();
 }

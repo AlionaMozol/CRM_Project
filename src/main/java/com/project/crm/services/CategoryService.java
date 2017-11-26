@@ -9,5 +9,6 @@ import java.util.List;
 public interface CategoryService {
 
     List<Category> getCategoriesByTopCategory(Category category);
+    List<Category> getAllCategories();
     List<Category> getAllTopCategories();
 }

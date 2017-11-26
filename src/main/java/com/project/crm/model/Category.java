@@ -39,4 +39,23 @@ public class Category {
         this.supercategory = supercategory;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (isTop != category.isTop) return false;
+        if (title != null ? !title.equals(category.title) : category.title != null) return false;
+        return supercategory != null ? supercategory.equals(category.supercategory) : category.supercategory == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (isTop ? 1 : 0);
+        result = 31 * result + (supercategory != null ? supercategory.hashCode() : 0);
+        return result;
+    }
 }

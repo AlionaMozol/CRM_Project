@@ -4,15 +4,12 @@ import com.project.crm.dao.CategoryDao;
 import com.project.crm.model.Category;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.project.crm.dao.DAO;
 import com.project.crm.services.SqlService;
 import org.springframework.stereotype.Component;
 
-import java.util.ResourceBundle;
-import java.util.UUID;
 /**
  * Created by 1 on 06.11.2017.
  */
@@ -71,6 +68,23 @@ public class CategoryDaoImpl extends DAO implements CategoryDao {
             e.printStackTrace();
         }
         return topCategotiesList;
+    }
+
+    @Override
+    public List<Category> getAllTopCategories() {
+        CategoryDaoImpl categoryDao = new CategoryDaoImpl();
+        List<Category> allCategotyList = new ArrayList<Category>();
+        List<Category> allTopCategotyList = new ArrayList<Category>();
+        LinkedHashSet <Category> categoryLinkedHashSet = new LinkedHashSet<>();
+        allCategotyList=categoryDao.getAllCategories();
+        for(Category category : allCategotyList){
+            if(category.isTop()){
+                if(categoryLinkedHashSet.add(category)){
+                    allTopCategotyList.add(category);
+                }
+            }
+        }
+        return allTopCategotyList;
     }
 
     /*public static void main(String [] args) throws SQLException {
