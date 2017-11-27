@@ -67,8 +67,6 @@ public class Product {
     }
 
 
-
-
     /**
      * Default constructor of product
      */

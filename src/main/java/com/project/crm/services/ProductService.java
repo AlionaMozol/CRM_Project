@@ -13,10 +13,10 @@ import java.util.List;
 public interface ProductService {
 
     void addProduct(Product product);
-    List<Product> getProductsByUser(User user);
     void editProduct(String id, Product product);
     Product getProductById(String id);
     List<Product> getProductsByTitle(String title);
+    List<Product> getProductsByUsername(String username);
     List<Product> getProductsByCategory(String category);
     List<Product> getProductsAfterDate(Date date);
     List<Product> getProductByStatus(Status status);
