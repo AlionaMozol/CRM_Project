@@ -2,6 +2,7 @@ package com.project.crm.controllers;
 
 import com.project.crm.model.Comment;
 import com.project.crm.model.Product;
+import com.project.crm.model.enums.Status;
 import com.project.crm.services.AttributeService;
 import com.project.crm.services.CommentService;
 import com.project.crm.services.ProductService;
@@ -82,9 +83,9 @@ public class ProductController {
 
     @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
     public String notModeratedProducts(Model model){
-        //temporarily
+        //is expected
+        //model.addAttribute("products", productService.getProductByStatus(Status.MODERATION));
         model.addAttribute("products", productService.getAllProducts());
-
         return "/product_moderation";
 
     }

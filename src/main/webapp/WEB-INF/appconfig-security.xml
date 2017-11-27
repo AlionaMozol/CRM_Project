@@ -10,6 +10,7 @@
     <http auto-config="true">
         <intercept-url pattern="/profile" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/products" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/not_moderated" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/new_product" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/new_product/add" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/profiles" access="hasRole('ROLE_USER')"/>
