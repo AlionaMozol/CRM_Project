@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="col-lg-6 description-of-the-product">
-                <p class="name-of-product">Haracteristiki</p>
+                <p class="name-of-product"><spring:message code="product.characteristics"/></p>
                 <div class="wrapper-for-ul">
                     <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">
@@ -46,7 +46,7 @@
                 </ul>
 
                 </div>
-                <p class="description"> Description: ${productid.description}</p>
+                <p class="description"> <spring:message code="product.description"/>: ${productid.description}</p>
 
             </div>
         </div>
@@ -54,17 +54,6 @@
         <%@include file="../layouts/comment_layout.jsp"%>
 
 
-        <sec:authorize access="hasRole('ROLE_USER')">
-        <f:form method="POST" commandName="comment" action="/comment_layout" acceptCharset="utf-8">
-
-        <p>Комментарий<Br>
-                <f:textarea path="text" cols="40" rows="3"/>
-                <f:input type="hidden" name="username" path="username" value="${pageContext.request.userPrincipal.name}"/>
-                <f:input path="postId" type="hidden" name="postID" value="${productid.id}"/>
-        </p><input type="submit" value="Отправить">
-            </f:form>
-
-        </sec:authorize>
     </div>
 
 

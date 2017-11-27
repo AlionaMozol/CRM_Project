@@ -6,6 +6,8 @@ import com.project.crm.model.Comment;
 import com.project.crm.model.Product;
 import com.project.crm.services.SqlService;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,11 +19,12 @@ import java.util.*;
 public class CommentDaoImpl extends DAO implements CommentDao {
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     public List<Comment> getCommentsByProductId(String id) {
         Connection connection = poolInst.getConnection();
         List<Comment> commentList = new ArrayList<>();
         try {
-            connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_COMMENT_BY_POST_ID));
             statement.setString(1, id);
@@ -31,13 +34,10 @@ public class CommentDaoImpl extends DAO implements CommentDao {
             }
             commentIds.close();
             statement.close();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         }
         finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return commentList;
@@ -45,15 +45,15 @@ public class CommentDaoImpl extends DAO implements CommentDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     public void addComment(Comment comment) {
         Connection connection = poolInst.getConnection();
         String commentId = UUID.randomUUID().toString();
         String commentObjectTypeId = "6bc34fa0-cbce-11e7-97a3-94de807a9669";
         try {
-            connection.setAutoCommit(false);
             PreparedStatement preparedStatement;
             ResultSet resultSet;
-
             preparedStatement = connection.prepareStatement(sql.getProperty(SqlService.SQL_INSERT_INTO_OBJECT));
             preparedStatement.setString(1, commentId);
             preparedStatement.setString(2, commentObjectTypeId);
@@ -88,28 +88,25 @@ public class CommentDaoImpl extends DAO implements CommentDao {
             }
             preparedStatement.close();
             resultSet.close();
-            connection.commit();
-
 
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
 
         } finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
 
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     public Comment getCommentById(String id){
 
         Connection connection = poolInst.getConnection();
         Comment currentComment = new Comment();
         currentComment.setId(id);
         try {
-            connection.setAutoCommit(false);
             PreparedStatement statement;
             ResultSet resultSet;
             Map<String, String> attributesAndValues = new HashMap<>();
@@ -130,36 +127,15 @@ public class CommentDaoImpl extends DAO implements CommentDao {
 
             resultSet.close();
             statement.close();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            tryToRollbackConnection(connection);
         }
         finally {
-            tryToSetAutoCommitTrueForConnection(connection);
             poolInst.footConnection(connection);
         }
         return currentComment;
-
-    }
-
+    }}
 
 
-    void tryToRollbackConnection(Connection connection) {
-        try {
-            connection.rollback();
-            System.err.print("Transaction is being rolled back!");
-        } catch (SQLException e) {
-            System.err.print("Transaction is NOT being rolled back!");
-            e.printStackTrace();
-        }
-    }
 
-    void tryToSetAutoCommitTrueForConnection(Connection connection) {
-        try {
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-}
+

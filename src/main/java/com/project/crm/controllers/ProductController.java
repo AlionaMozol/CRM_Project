@@ -41,22 +41,6 @@ public class ProductController {
 
 
 
-    @RequestMapping(value = "/comment_layout", method = RequestMethod.POST)
-    public String addComment(@ModelAttribute("comment") Comment comment){
-        commentService.addComment(comment);
-        return "redirect:/product/" + comment.getPostId();
-    }
-
-    @ModelAttribute("comment")
-    public Comment newComment(){
-        Comment comment = new Comment();
-        comment.setText("TEST");
-        comment.setId(UUID.randomUUID().toString());
-        comment.setUsername("");
-
-        return comment;
-    }
-
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String allProducts (Model model){
