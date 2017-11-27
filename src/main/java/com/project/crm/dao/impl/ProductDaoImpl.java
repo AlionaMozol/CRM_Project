@@ -138,24 +138,24 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         List<Product> productsOfUser = new ArrayList<>();
         String objectIdOfUser = null;
         try {
+//            PreparedStatement statement = connection.prepareStatement(sql
+//            .getProperty(SqlService.SQL_GET_USER_ID_BY_USERNAME));
+//            statement.setString(1, username);
+//            ResultSet resultSet = statement.executeQuery();
+//            String userId = null;
+//            while (resultSet.next()) {
+//                userId = resultSet.getString(1);
+//            }
+//            statement = connection.prepareStatement(sql
+//                    .getProperty(SqlService.SQL_GET_USER_OBJECT_ID_BY_ID));
+//            statement.setString(1, userId);
+//            resultSet = statement.executeQuery();
+//            while(resultSet.next()) {
+//               objectIdOfUser = resultSet.getString(1);
+//            }
             PreparedStatement statement = connection.prepareStatement(sql
-            .getProperty(SqlService.SQL_GET_USER_ID_BY_USERNAME));
-            statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
-            String userId = null;
-            while (resultSet.next()) {
-                userId = resultSet.getString(1);
-            }
-            statement = connection.prepareStatement(sql
-                    .getProperty(SqlService.SQL_GET_USER_OBJECT_ID_BY_ID));
-            statement.setString(1, userId);
-            resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-               objectIdOfUser = resultSet.getString(1);
-            }
-            statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_PRODUCT_BY_USER_ID));
-            statement.setString(1, objectIdOfUser);
+            statement.setString(1, username);
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
                 productsOfUser.add(getProductById(setOfTargetObjectIds.getString(1)));
@@ -417,7 +417,25 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //        }
         ProductDaoImpl pDaoImpl = new ProductDaoImpl();
         List<Product> lst;
+        //System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+        //System.out.println("FROM GET CONNECTION: " + TransactionSynchronizationManager.getCurrentTransactionName());
+        Product p = new Product();
+        Map<String, String> att = new HashMap<>();
+        p.setCost("10");
+        p.setOwner("IvanStariy");
+        p.setCategory("MEN_SHOES");
+        p.setSuperCategory("Fashion");
+        p.setAttributesAndValues(att);
+        pDaoImpl.addProduct(p);
         lst = pDaoImpl.getProductsByUsername("IvanStariy");
+        Product p111 = new Product();
+        p111.setCost("999999");
+        p111.setOwner("123456789");
+        p111.setCategory("MEN_SHOES");
+        p111.setSuperCategory("Fashion");
+        p111.setAttributesAndValues(att);
+        pDaoImpl.addProduct(p111);
+        lst = pDaoImpl.getProductsByUsername("123456789");
         //lst = pDaoImpl.getAllProducts();
         int i = 0;
         for(Product x : lst ) {
