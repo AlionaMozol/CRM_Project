@@ -57,6 +57,9 @@ public class SqlService {
     public static final String SQL_GET_COMMENT_BY_POST_ID = "SQL_GET_COMMENT_BY_POST_ID";
     public static final String SQL_GET_COMMENT_ATTR_ID = "SQL_GET_COMMENT_ATTR_ID";
 
+    public static final String SQL_GET_OWNER_ATTR_ID = "SQL_GET_OWNER_ATTR_ID";
+    public static final String SQL_GET_COST_ATTR_ID = "SQL_GET_COST_ATTR_ID";
+
     private SqlService(){}
 
     public static SqlService getInstance(){

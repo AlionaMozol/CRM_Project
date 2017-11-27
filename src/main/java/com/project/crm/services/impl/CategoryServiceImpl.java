@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> topCatigoriesList = categoryDao.getAllTopCategories();
         for(Category category:topCatigoriesList) {
             List<Category>subcategories=categoryDao.getCategoriesByTopCategory(category.getTitle());
-            category.setSubcategory(subcategories);
+            //category.setSubcategory(subcategories);
             categoryMap.put(category,subcategories);
         }
         return categoryMap;

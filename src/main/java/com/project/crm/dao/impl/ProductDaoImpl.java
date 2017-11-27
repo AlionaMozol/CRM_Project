@@ -95,6 +95,32 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 statement.setString(4, product.getSuperCategory());
                 statement.execute();
             }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_OWNER_ATTR_ID));
+            resultSet = statement.executeQuery();
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_ADD_OBJECT));
+            while(resultSet.next()) {
+                statement.setString(1, UUID.randomUUID().toString());
+                statement.setString(2, newObjectId);
+                statement.setString(3, resultSet.getString(1));
+                statement.setString(4, product.getOwner());
+                statement.execute();
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_COST_ATTR_ID));
+            resultSet = statement.executeQuery();
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_ADD_OBJECT));
+            while(resultSet.next()) {
+                statement.setString(1, UUID.randomUUID().toString());
+                statement.setString(2, newObjectId);
+                statement.setString(3, resultSet.getString(1));
+                statement.setString(4, product.getCost());
+                statement.execute();
+            }
            statement.close();
            resultSet.close();
         } catch (SQLException e) {
@@ -223,6 +249,10 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     currentProduct.setCategory(resultSet.getString(2));
                 } else if(resultSet.getString(1).equals("SUPERCATEGORY")) {
                     currentProduct.setSuperCategory(resultSet.getString(2));
+                } else if(resultSet.getString(1).equals("OWNER")) {
+                    currentProduct.setOwner(resultSet.getString(2));
+                } else if(resultSet.getString(1).equals("COST")) {
+                    currentProduct.setCost(resultSet.getString(2));
                 } else attributesAndValues.put(
                         resultSet.getString(1),
                         resultSet.getString(2));
@@ -388,13 +418,13 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         Product p = new Product();
         p.setCategory("WOMEN_CLOTHING");
         p.setSuperCategory("Fashion");
+        p.setOwner("SASHA");
+        p.setCost("SASHA NUMBER 1");
         Map<String, String> map = new HashMap<>();
         map.put("SIZE_", "TEST");
         map.put("CONDITION", "TEST");
         map.put("SEASONS", "TEST");
-        map.put("COST", "TEST");
         map.put("KIND_OF_CLOTHES", "TEST");
-        map.put("OWNER", "TEST");
         p.setAttributesAndValues(map);
         pDaoImpl.addProduct(p);
         lst = pDaoImpl.getAllProducts();
