@@ -6,13 +6,14 @@ import com.project.crm.model.enums.Status;
 import com.project.crm.services.AttributeService;
 import com.project.crm.services.CommentService;
 import com.project.crm.services.ProductService;
+import com.project.crm.services.*;
+import com.project.crm.services.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,9 @@ public class ProductController {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    CategoryService categoryService;
+
 
     @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
@@ -41,27 +45,12 @@ public class ProductController {
 
 
 
-    @RequestMapping(value = "/comment_layout", method = RequestMethod.POST)
-    public String addComment(@ModelAttribute("comment") Comment comment){
-        commentService.addComment(comment);
-        return "redirect:/product/" + comment.getPostId();
-    }
-
-    @ModelAttribute("comment")
-    public Comment newComment(){
-        Comment comment = new Comment();
-        comment.setText("TEST");
-        comment.setId(UUID.randomUUID().toString());
-        comment.setUsername("");
-
-        return comment;
-    }
-
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String allProducts (Model model){
-        model.addAttribute("products", productService.getAllProducts());
-        //return new ModelAndView("product", "command", new Product());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("products", productService.getProductsByUsername(name));
         return "/products";
     }
 
@@ -91,7 +80,8 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/new_product", method = RequestMethod.GET)
-    public String addProduct() {
+    public String addProduct(Model model) {
+        model.addAttribute("topCategories", categoryService.getAllTopCategories());
         return "new_product";
     }
 
@@ -99,14 +89,12 @@ public class ProductController {
     public Product newProduct() {
         Product product = new Product();
         Map<String,String> map = new HashMap<>();
-        List<String> attributes = attributeService.getAttributesByCategory("PHONES");
-        map.put("COST","10");
-        map.put("OWNER","IvanTkachev");
-        for (String attribute : attributes) map.put(attribute, "");
+        map.put("COST","");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        product.setOwner(name);
 
         product.setAttributesAndValues(map);
-        product.setSuperCategory("Technics");
-        product.setCategory("PHONES");
         return product;
     }
 
@@ -114,6 +102,12 @@ public class ProductController {
     public String addProduct(@ModelAttribute("product") Product product) {
         productService.addProduct(product);
         return "redirect:/products";
+    }
+
+    @RequestMapping(value = "/attributes", method = RequestMethod.GET)
+    @ResponseBody
+    public List getAttributes(@RequestParam String subCategory){
+        return attributeService.getAttributesByCategory(subCategory);
     }
 
 //    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
