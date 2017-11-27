@@ -6,6 +6,8 @@ import com.project.crm.model.User;
 import com.project.crm.services.SqlService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +23,8 @@ import java.util.UUID;
 @Component
 public class UserDaoImpl extends DAO implements UserDao {
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public void addUser(User user) {
         ArrayList<String> attribute_type = new ArrayList<String>();
@@ -86,6 +90,9 @@ public class UserDaoImpl extends DAO implements UserDao {
                 index+=4;
             }
             result_statement.execute();
+            statement.close();
+            result_statement.close();
+            resultSet.close();
         } catch (SQLException e) {
             System.out.println(objectTypeId);
             e.printStackTrace();
@@ -96,6 +103,8 @@ public class UserDaoImpl extends DAO implements UserDao {
 
 
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public User getUserById(int id) {
         Connection connection = poolInst.getConnection();
@@ -151,7 +160,8 @@ public class UserDaoImpl extends DAO implements UserDao {
                         break;
                 }
             }
-
+            statement.close();
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -160,6 +170,8 @@ public class UserDaoImpl extends DAO implements UserDao {
     }
 
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
 
     @Override
     public void deleteUser(User user) {
@@ -176,12 +188,17 @@ public class UserDaoImpl extends DAO implements UserDao {
                 statement.setString(1,resultSet.getString(1));
                 statement.execute();
             }
+            statement.close();
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         poolInst.footConnection(connection);
 
     }
+
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
 
     @Override
     public User findByUsername(String username) {
@@ -199,6 +216,8 @@ public class UserDaoImpl extends DAO implements UserDao {
                 user.setUsername(rs.getString(2));
                 user.setPassword(rs.getString(3));
             }
+            statement.close();
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
