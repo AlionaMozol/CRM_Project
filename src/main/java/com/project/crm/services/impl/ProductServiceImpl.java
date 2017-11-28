@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
-    public List<Product> getProductsByUser(User user) {
-        return productDao.getProductsByUser(user);
+    public List<Product> getProductsByUsername(String username) {
+        return productDao.getProductsByUsername(username);
     }
 
     @Transactional

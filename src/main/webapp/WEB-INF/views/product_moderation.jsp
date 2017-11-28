@@ -27,7 +27,9 @@
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="${contextPath}/resources/css/catalog.css" rel="stylesheet">
-    <%--<link rel="stylesheet"  href="../../resources/css/main.css">--%>
+    <%--
+    <link rel="stylesheet"  href="../../resources/css/main.css">
+    --%>
 </head>
 
 <body>
@@ -35,7 +37,7 @@
     <%@include file="../layouts/high_menu_bar.jsp"%>
     <%@include file="../layouts/left_menu_layout.jsp"%>
     <div class="container content">
-        <div class="col-lg-10 products">
+        <div class="col-lg-9 products">
 
             <c:forEach items="${products}" var="product">
 
@@ -51,12 +53,14 @@
                                 </div>
                             </div>--%>
                         </div>
-                        <p class="product-title">
-                            <a href="#"><strong>${product.title}</strong></a>
+                        <p class="product-title-mod">
+                            <a href="${contextPath}/product/${product.id}"><strong>${product.id}</strong></a>
                         </p>
+
                         <p class="product-desc">${product.description}</p>
                         <p class="product-category">${product.category}</p>
-                        <p class="product-price-mod">100$</p>
+                        <p class="product-price-mod">${product.cost}</p>
+
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary btn-accept"><spring:message code="moderationButtonAccept"/></button>
                             <button type="button" class="btn btn-primary btn-deny"><spring:message code="moderationButtonDeny"/></button>

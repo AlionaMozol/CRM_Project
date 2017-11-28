@@ -26,14 +26,10 @@ public class AccountController {
     @Autowired
     ProfileService profileService; //im use it for account!
 
-    @Autowired
-    ProductService productService; //Only for illustration of work :)
-
     @RequestMapping(value = "/account/{name}", method = RequestMethod.GET)
     public String account(@PathVariable String name, Model model) {
         int idOfCurrentUser = userService.findByUsername(name).getId();
         User currentUser = profileService.getUserByID(idOfCurrentUser);
-        currentUser.setUserProductList(productService.getProductsByUser(currentUser)); // Only for illustration of work :)
         model.addAttribute("user", currentUser);
         return "account";
     }

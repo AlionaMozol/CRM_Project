@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
 public class CategoryDaoImpl extends DAO implements CategoryDao {
 
     @Override
-    public List<Category> getCategoriesByTopCategory(Category topCategory) {
+    public List<Category> getCategoriesByTopCategory(String topCategory) {
         CategoryDaoImpl categoryDao = new CategoryDaoImpl();
         List<Category> allCategotyList = new ArrayList<Category>();
         List<Category> resultCategotyList = new ArrayList<Category>();
         allCategotyList=categoryDao.getAllCategories();
         for(Category category : allCategotyList){
-            if(category.getSupercategory()!=null && category.getSupercategory().getTitle().equals(topCategory.getTitle())){
+            if(category.getSupercategory()!=null && category.getSupercategory().getTitle().equals(topCategory)){
                 resultCategotyList.add(category);
             }
         }
@@ -87,31 +87,31 @@ public class CategoryDaoImpl extends DAO implements CategoryDao {
         return allTopCategotyList;
     }
 
-    /*public static void main(String [] args) throws SQLException {
+    public static void main(String [] args) throws SQLException {
         CategoryDaoImpl categoryDao = new CategoryDaoImpl();
         List<Category> topCategotiesList = new ArrayList<Category>();
         topCategotiesList=categoryDao.getAllCategories();
         Category category = new Category();
         category.setTitle("Fashion");
-        topCategotiesList=categoryDao.getCategoriesByTopCategory(category);
+        topCategotiesList=categoryDao.getCategoriesByTopCategory("Fashion");
        for (int i=0; i<topCategotiesList.size(); i++){
 
                 System.out.println(topCategotiesList.get(i).getTitle());
 
         }
 
-        for (int i=0; i<topCategotiesList.size(); i++){
+        /*for (int i=0; i<topCategotiesList.size(); i++){
             if (topCategotiesList.get(i).getSupercategory()!=null)
                 System.out.println(topCategotiesList.get(i).getTitle()+" "+topCategotiesList.get(i).getSupercategory().getTitle()+ " "+ topCategotiesList.get(i).isTop());
             else{
                 System.out.println(topCategotiesList.get(i).getTitle()+topCategotiesList.get(i).isTop());
 
             }
-        }
+        }*/
 
 
 
-    }*/
+    }
 
 
 }

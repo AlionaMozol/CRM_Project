@@ -95,6 +95,32 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 statement.setString(4, product.getSuperCategory());
                 statement.execute();
             }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_OWNER_ATTR_ID));
+            resultSet = statement.executeQuery();
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_ADD_OBJECT));
+            while(resultSet.next()) {
+                statement.setString(1, UUID.randomUUID().toString());
+                statement.setString(2, newObjectId);
+                statement.setString(3, resultSet.getString(1));
+                statement.setString(4, product.getOwner());
+                statement.execute();
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_COST_ATTR_ID));
+            resultSet = statement.executeQuery();
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_ADD_OBJECT));
+            while(resultSet.next()) {
+                statement.setString(1, UUID.randomUUID().toString());
+                statement.setString(2, newObjectId);
+                statement.setString(3, resultSet.getString(1));
+                statement.setString(4, product.getCost());
+                statement.execute();
+            }
            statement.close();
            resultSet.close();
         } catch (SQLException e) {
@@ -107,21 +133,14 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
     @Override
-    public List<Product> getProductsByUser(User user) {
+    public List<Product> getProductsByUsername(String username) {
         Connection connection = poolInst.getConnection();
         List<Product> productsOfUser = new ArrayList<>();
         String objectIdOfUser = null;
         try {
             PreparedStatement statement = connection.prepareStatement(sql
-                    .getProperty(SqlService.SQL_GET_USER_OBJECT_ID_BY_ID));
-            statement.setString(1, Integer.toString(user.getId()));
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-               objectIdOfUser = resultSet.getString(1);
-            }
-            statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_PRODUCT_BY_USER_ID));
-            statement.setString(1, objectIdOfUser);
+            statement.setString(1, username);
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
                 productsOfUser.add(getProductById(setOfTargetObjectIds.getString(1)));
@@ -223,6 +242,10 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     currentProduct.setCategory(resultSet.getString(2));
                 } else if(resultSet.getString(1).equals("SUPERCATEGORY")) {
                     currentProduct.setSuperCategory(resultSet.getString(2));
+                } else if(resultSet.getString(1).equals("OWNER")) {
+                    currentProduct.setOwner(resultSet.getString(2));
+                } else if(resultSet.getString(1).equals("COST")) {
+                    currentProduct.setCost(resultSet.getString(2));
                 } else attributesAndValues.put(
                         resultSet.getString(1),
                         resultSet.getString(2));
@@ -379,30 +402,49 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //        }
         ProductDaoImpl pDaoImpl = new ProductDaoImpl();
         List<Product> lst;
-        lst = pDaoImpl.getAllProducts();
+        //System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+        //System.out.println("FROM GET CONNECTION: " + TransactionSynchronizationManager.getCurrentTransactionName());
+        Product p = new Product();
+        Map<String, String> att = new HashMap<>();
+        p.setCost("10");
+        p.setOwner("IvanStariy");
+        p.setCategory("MEN_SHOES");
+        p.setSuperCategory("Fashion");
+        p.setAttributesAndValues(att);
+        pDaoImpl.addProduct(p);
+        lst = pDaoImpl.getProductsByUsername("IvanStariy");
+        Product p111 = new Product();
+        p111.setCost("999999");
+        p111.setOwner("123456789");
+        p111.setCategory("MEN_SHOES");
+        p111.setSuperCategory("Fashion");
+        p111.setAttributesAndValues(att);
+        pDaoImpl.addProduct(p111);
+        lst = pDaoImpl.getProductsByUsername("UserUser");
+        //lst = pDaoImpl.getAllProducts();
         int i = 0;
         for(Product x : lst ) {
             System.out.println(i++ +". "+ x.toString());
         }
-        System.out.println("------------------------------");
-        Product p = new Product();
-        p.setCategory("WOMEN_CLOTHING");
-        p.setSuperCategory("Fashion");
-        Map<String, String> map = new HashMap<>();
-        map.put("SIZE_", "TEST");
-        map.put("CONDITION", "TEST");
-        map.put("SEASONS", "TEST");
-        map.put("COST", "TEST");
-        map.put("KIND_OF_CLOTHES", "TEST");
-        map.put("OWNER", "TEST");
-        p.setAttributesAndValues(map);
-        pDaoImpl.addProduct(p);
-        lst = pDaoImpl.getAllProducts();
-        //------------------------
-        i = 0;
-        for(Product x : lst ) {
-            System.out.println(i++ +". "+ x.toString());
-        }
+//        System.out.println("------------------------------");
+//        Product p = new Product();
+//        p.setCategory("WOMEN_CLOTHING");
+//        p.setSuperCategory("Fashion");
+//        p.setOwner("SASHA");
+//        p.setCost("SASHA NUMBER 1");
+//        Map<String, String> map = new HashMap<>();
+//        map.put("SIZE_", "TEST");
+//        map.put("CONDITION", "TEST");
+//        map.put("SEASONS", "TEST");
+//        map.put("KIND_OF_CLOTHES", "TEST");
+//        p.setAttributesAndValues(map);
+//        pDaoImpl.addProduct(p);
+//        lst = pDaoImpl.getAllProducts();
+//        //------------------------
+//        i = 0;
+//        for(Product x : lst ) {
+//            System.out.println(i++ +". "+ x.toString());
+//        }
 
     }
 

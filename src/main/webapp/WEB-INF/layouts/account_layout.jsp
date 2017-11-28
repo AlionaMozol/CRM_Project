@@ -62,7 +62,7 @@
             </div>
             <div class="col-xs-12 divider text-center">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>${user.userProductList.size()}</strong></h2>
+                    <h2><strong>-1</strong></h2>
                     <p>
                         <small>Объявлеиний</small>
                     </p>

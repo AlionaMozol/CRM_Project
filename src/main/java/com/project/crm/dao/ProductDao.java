@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public interface ProductDao {
     void addProduct(Product product);
-    List<Product> getProductsByUser(User user);
+    List<Product> getProductsByUsername(String username);
     void editProduct(String id, Product product);
     Product getProductById(String id);
     List<Product> getProductsByTitle(String title);

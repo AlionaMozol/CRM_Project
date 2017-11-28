@@ -27,6 +27,8 @@
                 <td>    Ид     </td>
                 <td>  ТопКатегория</td>
                 <td>    Категория   </td>
+                <td>      Цена      </td>
+                <td>   Пользователь  </td>
                 <td>Другие атррибуты</td>
             </tr>
             <c:forEach var="product" items="${products}">
@@ -34,6 +36,8 @@
                     <td><a href="${contextPath}/product/${product.id}">${product.id}</a> </td>
                     <td>${product.superCategory}</td>
                     <td>${product.category}</td>
+                    <td>${product.cost}</td>
+                    <td>${product.owner}</td>
                         <c:forEach items="${product.attributesAndValues}" var="value">
                             <td style="padding: 10px">
                             <option value="${product.attributesAndValues.key}">${product.attributesAndValues.value}</option>

@@ -49,11 +49,12 @@
 
                     <p class="product-desc">${product.description}</p>
                     <p class="product-category">${product.category}</p>
-                    <c:forEach items="${product.attributesAndValues}" var="cost">
-                        <c:if test="${cost.key=='COST'}">
-                            <p class="product-price">${cost.value}</p>
-                        </c:if>
-                    </c:forEach>
+                    <p class="product-price">${product.cost}</p>
+                    <%--<c:forEach items="${product.attributesAndValues}" var="cost">
+                                                <c:if test="${cost.key=='COST'}">
+                                                    <p class="product-price">${cost.value}</p>
+                                                </c:if>
+                                            </c:forEach>--%>
                 </div>
             </div>
 

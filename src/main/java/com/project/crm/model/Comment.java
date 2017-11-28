@@ -9,8 +9,6 @@ public class Comment {
     private String date;
 
 
-    public Comment(){}
-
     public String getDate() {
         return date;
     }
