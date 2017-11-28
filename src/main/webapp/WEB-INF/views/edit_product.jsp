@@ -20,43 +20,36 @@
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
 
-    <div style="padding: 100px">
-        <f:form method="post" action="/product/edit/${ID}" acceptCharset="utf-8">
-            <table>
+    <div class="container content">
+        <div class="row wrapper-for-product">
+            <div class="col-lg-4 product-img-1">
+                <h2>Nazvanie</h2>
+                <div class="wrapper-for-img">
+                    <img src="${contextPath}/resources/img/placeholder-image.png">
+                </div>
+            </div>
+            <div class="col-lg-6 description-of-the-product">
+                <p class="name-of-product">Haracteristiki</p>
+                <table>
 
-                  <c:forEach  items="${IDProduct.attributesAndValues}" var="Values" varStatus="status">
+                    <c:forEach  items="${IDProduct.attributesAndValues}" var="Values" varStatus="status">
+                        <tr>
+                            <td><spring:message code="${Values.key}"/></td>
+                            <td><label>
+                                <input name="attributesAndValues['${Values.key}']"
+                                value="${Values.value}">
+                            </label></td>
+                        </tr>
+                    </c:forEach>
+
                     <tr>
-                        <td>${Values.key}</td>
-                        <td><label>
-                            <input name="attributesAndValues['${Values.key}']"
-                                   value="${Values.value}">
-                        </label></td>
+                        <td><input type="submit" value="Изменить"/></td>
                     </tr>
-                </c:forEach>
+                </table>
+            </div>
+        </div>
 
-                <tr>
-
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Изменить"/></td>
-                </tr>
-            </table>
-        </f:form>
     </div>
-
-
-    <%--<div class="container content">--%>
-        <%--<div class="col-lg-10 products">--%>
-            <%--<f:form method="post" commandName="product" action="/new-product/add/" acceptCharset="utf-8">--%>
-            <%--<h1>Product</h1>--%>
-            <%--<c:forEach items="${IDProduct.attributesAndValues}" var="value">--%>
-                <%--<p><strong>${value.key}</strong></p>--%>
-                <%--<p><input maxlength="25" size="40" value="${value.value}"></p>--%>
-            <%--</c:forEach>--%>
-            <%--</f:form>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-
 
 </body>
 </html>
