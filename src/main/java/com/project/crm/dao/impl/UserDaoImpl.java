@@ -36,6 +36,9 @@ public class UserDaoImpl extends DAO implements UserDao {
         attribute_type.add("BIRTHDAY");
         attribute_type.add("MAIL");
         attribute_type.add("USER_LOCATION");
+        attribute_type.add("ACC_DATE_TIME");
+        attribute_type.add("RATING");
+        attribute_type.add("STATUS");
         userInformation.add(Integer.toString(user.getId()));
         userInformation.add(user.getFio());
         userInformation.add(user.getSex());
@@ -43,6 +46,10 @@ public class UserDaoImpl extends DAO implements UserDao {
         userInformation.add(user.getDateOfBirth());
         userInformation.add(user.getEmail());
         userInformation.add(user.getCity());
+        userInformation.add(user.getAccountCreationDate());
+        userInformation.add(user.getRating());
+        userInformation.add(user.getStatus());
+
 
         String objectTypeId="";
         Connection connection = poolInst.getConnection();
@@ -63,19 +70,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             }
             statement.execute();
             int index=1;
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR));
-            statement.setString(1,objectTypeId);
-            statement.setString(2,attribute_type.get(0));
-            resultSet = statement.executeQuery();
-            if(resultSet.next()){
-                result_statement.setString(index, UUID.randomUUID().toString());
-                result_statement.setString(index+1, objectId);
-                result_statement.setString(index+2, resultSet.getString(1));
-                result_statement.setInt(index+3, user.getId());
-            }
-            index+=4;
-            for(int i= 1; i<attribute_type.size(); i++){
+            for(int i= 0; i<attribute_type.size(); i++){
                 statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR));
                 statement.setString(1,objectTypeId);
@@ -158,6 +153,16 @@ public class UserDaoImpl extends DAO implements UserDao {
                     case "USER_LOCATION":
                         user.setCity(resultSet.getString("value"));
                         break;
+                    case "ACC_DATE_TIME":
+                        user.setAccountCreationDate(resultSet.getString("value"));
+                        break;
+                    case "RATING":
+                        user.setRating(resultSet.getString("value"));
+                        break;
+                    case "STATUS":
+                        user.setStatus(resultSet.getString("value"));
+                        break;
+
                 }
             }
             statement.close();
@@ -207,7 +212,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_USER_FROM_USERNAME));
+                    getProperty(SqlService.SQL_GET_USER_BY_USERNAME));
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
@@ -227,7 +232,7 @@ public class UserDaoImpl extends DAO implements UserDao {
     }
 
 
-   /* public static void main(String [] args) throws SQLException {
+    public static void main(String [] args) throws SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
         User user = new User();
         user.setId(1452);
@@ -237,10 +242,13 @@ public class UserDaoImpl extends DAO implements UserDao {
         user.setTelephone("8285183");
         user.setSex("women");
         user.setFio("anna tochilo");
+        user.setRating("1");
+        user.setStatus("1");
+        user.setAccountCreationDate("1");
         userDao.addUser(user);
         //userDao.deleteRegisteredUserDao(registeredUser);
-        user=userDao.getUserById(1452);
-        System.out.println(user.getFio()+ " "+ user.getTelephone());
+        //user=userDao.getUserById(1452);
+        //System.out.println(user.getStatus()+ " "+ user.getAccountCreationDate());
         /*List<Category> topCategotiesList = new ArrayList<Category>();
         topCategotiesList=categoryDao.getAllCategories();
         Category category = new Category();
@@ -263,7 +271,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
 
 
-   // }
+    }
 
 
 //    public static void main(String[] args) throws ClassNotFoundException {

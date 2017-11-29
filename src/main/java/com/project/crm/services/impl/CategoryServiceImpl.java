@@ -5,8 +5,8 @@ import com.project.crm.model.Category;
 import com.project.crm.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,34 +17,32 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryDao categoryDao;
 
+    @Transactional
     @Override
     public List<Category> getCategoriesByTopCategory(String category) {
         return categoryDao.getCategoriesByTopCategory(category);
     }
 
-    @Override
-    public List<Category> getAllCategories() {
-        return categoryDao.getAllCategories();
-    }
-
+    @Transactional
     @Override
     public List<Category> getAllTopCategories() {
         return categoryDao.getAllTopCategories();
     }
 
+    @Transactional
     @Override
     public Map<Category, List<Category>> getTopCategoriesWithSubCategory() {
-        Map<Category, List<Category>> categoryMap=new HashMap<>();
+        Map<Category, List<Category>> categoryMap = new HashMap<>();
         List<Category> topCatigoriesList = categoryDao.getAllTopCategories();
-        for(Category category:topCatigoriesList) {
-            List<Category>subcategories=categoryDao.getCategoriesByTopCategory(category.getTitle());
-            //category.setSubcategory(subcategories);
+        for(Category category: topCatigoriesList) {
+            List<Category>subcategories = categoryDao.getCategoriesByTopCategory(category.getTitle());
+            category.setSubcategories(subcategories);
             categoryMap.put(category,subcategories);
         }
         return categoryMap;
     }
 
-    public static void main(String [] args)  {
+   /* public static void main(String [] args)  {
 
         CategoryServiceImpl categoryService = new CategoryServiceImpl();
         Map<Category,List<Category>> categoryMap;
@@ -68,6 +66,6 @@ public class CategoryServiceImpl implements CategoryService {
             else{
                 System.out.println(topCategotiesList.get(i).getTitle()+topCategotiesList.get(i).isTop());
 
-            }*/
-        }
+            }
+        }*/
 }

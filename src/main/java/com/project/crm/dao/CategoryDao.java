@@ -12,6 +12,5 @@ import java.util.List;
 public interface CategoryDao {
 
     List<Category> getCategoriesByTopCategory(String category);
-    List<Category> getAllCategories();
     List<Category> getAllTopCategories();
 }

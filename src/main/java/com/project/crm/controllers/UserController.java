@@ -1,11 +1,8 @@
 package com.project.crm.controllers;
 
-
-
 import com.project.crm.model.User;
 import com.project.crm.services.ProfileService;
 import com.project.crm.services.security.SecurityService;
-
 import com.project.crm.services.UserService;
 import com.project.crm.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Controller for {@link com.project.crm.model.User}'s pages.
@@ -62,6 +61,11 @@ public class UserController {
         user.setEmail("");
         user.setSex("");
         user.setFio("");
+        user.setStatus("0");
+        user.setRating("0");
+        Date date = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
+        user.setAccountCreationDate(formatForDateNow.format(date));
         profileService.addUser(user);
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 

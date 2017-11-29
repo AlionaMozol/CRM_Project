@@ -1,5 +1,7 @@
 package com.project.crm.model;
 
+import java.util.List;
+
 /**
  * Created by 1 on 06.11.2017.
  */
@@ -10,6 +12,15 @@ public class Category {
     private boolean isTop;
     private Category supercategory;
 
+    public List<Category> getSubcategories() {
+        return subcategories;
+    }
+
+    public void setSubcategories(List<Category> subcatigories) {
+        this.subcategories = subcategories;
+    }
+
+    private List <Category> subcategories;
 
     public Category() {
         this.isTop=false;

@@ -9,12 +9,23 @@ public class SqlService {
     private static SqlService instance;
     private static ResourceBundle bundle;
 
-    private static final String SQL_FILE = "sql";
 
     //user query
     public static final String SQL_GET_USER_FROM_ID =              "SQL_GET_USER_FROM_ID";
-    public static final String SQL_ADD_USER =                      "SQL_ADD_USER";
     public static final String SQL_GET_USER_FROM_USERNAME =        "SQL_GET_USER_FROM_USERNAME";
+
+
+    private static final String SQL_FILE = "sql";
+
+    public static final String SQL_GET_USER_ID_BY_USERNAME =       "SQL_GET_USER_ID_BY_USERNAME";
+
+
+    public static final String SQL_GET_OWNER_ATTR_ID = "SQL_GET_OWNER_ATTR_ID";
+    public static final String SQL_GET_COST_ATTR_ID = "SQL_GET_COST_ATTR_ID";
+
+    public static final String SQL_GET_USER_BY_ID =              "SQL_GET_USER_FROM_ID";
+    public static final String SQL_ADD_USER =                      "SQL_ADD_USER";
+    public static final String SQL_GET_USER_BY_USERNAME =        "SQL_GET_USER_FROM_USERNAME";
     public static final String SQL_CHECK_USER =                    "SQL_CHECK_USER";
     public static final String SELECT_ALL_USERS =                  "SELECT_ALL_USERS";
     public static final String SQL_GET_PRODUCTS_BY_CATEGORY =      "SQL_GET_PRODUCTS_BY_CATEGORY";
@@ -26,27 +37,29 @@ public class SqlService {
     public static final String SQL_SELECT_NECESSARY_ATTR_ID =      "SQL_SELECT_NECESSARY_ATTR_ID";
     public static final String SQL_ADD_OBJECT =                    "SQL_ADD_OBJECT";
     public static final String  SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS =
-                                                                   "SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS";
+            "SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS";
     public static final String SQL_GET_PRODUCT_OBJECT_TYPE_ID =    "SQL_GET_PRODUCT_OBJECT_TYPE_ID";
     public static final String SQL_GET_CATEGORY_ATTR_ID =          "SQL_GET_CATEGORY_ATTR_ID";
     public static final String SQL_GET_SUPERCATEGORY_ATTR_ID =     "SQL_GET_SUPERCATEGORY_ATTR_ID";
+    public static final String SQL_GET_ALL_SUPERCATEGORIES =            "SQL_GET_ALL_SUPERCATEGORIES";
+    public static final String SQL_GET_SUBCATEGORIES_BY_CATEGORY =            "SQL_GET_SUBCATEGORIES_BY_CATEGORY";
     public static final String SQL_GET_ALL_CATEGORIES =            "SQL_GET_ALL_CATEGORIES";
     public static final String SQL_SELECT_BY_OBJECT_TYPE =         "SQL_SELECT_BY_OBJECT_TYPE";
 
     public static final String SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE =
-                                                                   "SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE";
+            "SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE";
     public static final String SQL_INSERT_OBJECT  =                "SQL_INSERT_OBJECT";
     public static final String SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR =
-                                                                   "SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR";
+            "SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR";
     public static final String SQL_INSERT_VALUE =                  "SQL_INSERT_VALUE";
     public static final String SQL_SELECT_OBJECT_ID_BY_VALUE =     "SQL_SELECT_OBJECT_ID_BY_VALUE";
     public static final String SQL_DELETE_VALUES =                 "SQL_DELETE_VALUES";
     public static final String SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR =
-                                                                   "SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR";
+            "SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR";
     public static final String SQL_SELECT_USER_ATTRIBUTES =        "SQL_SELECT_USER_ATTRIBUTES";
     public static final String SQL_GET_PRODUCT_BY_USER_ID =        "SQL_GET_PRODUCT_BY_USER_ID";
     public static final String SQL_GET_USER_OBJECT_ID_BY_ID =      "SQL_GET_USER_OBJECT_ID_BY_ID";
-    public static final String SQL_GET_USER_ID_BY_USERNAME =       "SQL_GET_USER_ID_BY_USERNAME";
+
 
     public static final String SQL_EDIT_PRODUCT_BY_ID =             "SQL_EDIT_PRODUCT_BY_ID";
     public static final String SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME =
@@ -56,9 +69,6 @@ public class SqlService {
 
     public static final String SQL_GET_COMMENT_BY_POST_ID = "SQL_GET_COMMENT_BY_POST_ID";
     public static final String SQL_GET_COMMENT_ATTR_ID = "SQL_GET_COMMENT_ATTR_ID";
-
-    public static final String SQL_GET_OWNER_ATTR_ID = "SQL_GET_OWNER_ATTR_ID";
-    public static final String SQL_GET_COST_ATTR_ID = "SQL_GET_COST_ATTR_ID";
 
     private SqlService(){}
 

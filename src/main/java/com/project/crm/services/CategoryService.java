@@ -11,7 +11,6 @@ import java.util.Map;
 public interface CategoryService {
 
     List<Category> getCategoriesByTopCategory(String category);
-    List<Category> getAllCategories();
     List<Category> getAllTopCategories();
     Map<Category, List<Category>> getTopCategoriesWithSubCategory();
 }

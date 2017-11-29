@@ -25,101 +25,106 @@
 </head>
 
 <body>
-    <%@include file="../layouts/preloader.jsp"%>
-    <%@include file="../layouts/high_menu_bar.jsp"%>
-    <f:form class="content" method="post" commandName="User" acceptCharset="utf-8">
-        <div class="col-md-6 col-md-offset-5">
-            <div class="form-group row has-feedback">
-                <label class="col-2 col-form-label">ФИО</label>
-                <div class="col-10">
-                    <f:input class="form-control" type="text" name="fio" path="fio" pattern="[а-яА-ЯёЁa-zA-Z\s-]{0,15}$"/>
-                    <form:errors path="fio"/>
-                </div>
+<%@include file="../layouts/preloader.jsp"%>
+<%@include file="../layouts/high_menu_bar.jsp"%>
+<f:form class="content" method="post" commandName="User" acceptCharset="utf-8">
+    <div class="col-md-5 profile-img">
+        <img src="${contextPath}/resources/img/placeholder-image.png" alt="">
+        <label class="btn btn-default col-md-6 col-md-offset-3">
+            Выбрать фото <input type="file" name="file" hidden>
+        </label>
+    </div>
+    <div class="col-md-5 ">
+        <div class="form-group row has-feedback">
+            <label class="col-2 col-form-label">ФИО</label>
+            <div class="col-10">
+                <f:input class="form-control" type="text" name="fio" path="fio" pattern="[а-яА-ЯёЁa-zA-Z\\s-]{0,40}$"/>
+                <form:errors path="fio"/>
             </div>
-            <div class="form-group row has-feedback">
-                <label class="col-2 col-form-label">Email</label>
-                <div class="col-10">
-                    <f:input class="form-control" type="email" name="email" path="email"/>
-                    <form:errors path="email"/>
-                </div>
-            </div>
-            <div class="form-group row has-feedback">
-                <label class="col-2 col-form-label">Телефон</label>
-                <div class="col-10">
-                    <f:input class="form-control" type="text" name="telephone" path="telephone" pattern="\+?([0-9]{2})?\(?[0-9]{3}\)?[0-9]{3}\-?[0-9]{2}\-?[0-9]{2}"/>
-                    <form:errors path="telephone"/>
-                </div>
-            </div>
-            <div class="form-group row has-feedback">
-                <label class="col-2 col-form-label">Город</label>
-                <div class="col-10">
-                    <f:input class="form-control" type="text" name="city" path="city" pattern="[а-яА-ЯёЁa-zA-Z]{0,20}"/>
-                    <form:errors path="city"/>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-2 col-form-label">Дата рождения</label>
-                <div class="col-10">
-                    <f:input class="form-control" type="date" name="dateOfBirth" path="dateOfBirth"/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label">Пол</label>
-                <div class="col-10">
-                    <form:radiobutton path="sex" value="М"/>Мужчина
-                    <form:radiobutton path="sex" value="Ж"/>Женщина
-                </div>
-            </div>
-            <button type="submit" class="btn">Cохранить</button>
         </div>
-    </f:form>
+        <div class="form-group row has-feedback">
+            <label class="col-2 col-form-label">Email</label>
+            <div class="col-10">
+                <f:input class="form-control" type="email" name="email" path="email"/>
+                <form:errors path="email"/>
+            </div>
+        </div>
+        <div class="form-group row has-feedback">
+            <label class="col-2 col-form-label">Телефон</label>
+            <div class="col-10">
+                <f:input class="form-control" type="text" name="telephone" path="telephone" pattern="\((8|\+3)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}"/>
+                <form:errors path="telephone"/>
+            </div>
+        </div>
+        <div class="form-group row has-feedback">
+            <label class="col-2 col-form-label">Город</label>
+            <div class="col-10">
+                <f:input class="form-control" type="text" name="city" path="city" pattern="[а-яА-ЯёЁa-zA-Z]{0,20}"/>
+                <form:errors path="city"/>
+            </div>
+        </div>
 
-    <script type="text/javascript">$(document).ready(function() {
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Дата рождения</label>
+            <div class="col-10">
+                <f:input class="form-control" type="date" name="dateOfBirth" path="dateOfBirth"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Пол</label>
+            <div class="col-10">
+                <form:radiobutton path="sex" value="М"/>Мужчина
+                <form:radiobutton path="sex" value="Ж"/>Женщина
+            </div>
+        </div>
+        <button type="submit" class="btn">Cохранить</button>
+    </div>
+</f:form>
 
-        $('#email').blur(function() {
-            if($(this).val() != '') {
-                var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
-                if(pattern.test($(this).val())){
-                    $(this).css({'border' : '1px solid #04f92d'});
-                } else {
-                    $(this).css({'border' : '1px solid #ff0000'});
-                }
-            }
-        });
-        $('#city').blur(function() {
-            if($(this).val() != '') {
-                var pattern = /^[а-яА-ЯёЁa-zA-Z]{0,20}$/i;
-                if(pattern.test($(this).val())){
-                    $(this).css({'border' : '1px solid #04f92d'});
-                } else {
-                    $(this).css({'border' : '1px solid #ff0000'});
-                }
-            }
-        });
-        $('#fio').blur(function() {
-            if($(this).val() != '') {
-                var pattern = /^[а-яА-ЯёЁa-zA-Z\s-]{0,15}$/i;
-                if(pattern.test($(this).val())){
-                    $(this).css({'border' : '1px solid #04f92d'});
-                } else {
-                    $(this).css({'border' : '1px solid #ff0000'});
-                }
-            }
-        });
-        $('#telephone').blur(function() {
-            if($(this).val() != '') {
-                var pattern = /^\+?([0-9]{2})?\(?[0-9]{3}\)?[0-9]{3}\-?[0-9]{2}\-?[0-9]{2}$/i;
-                if(pattern.test($(this).val())){
-                    $(this).css({'border' : '1px solid #04f92d'});
-                } else {
-                    $(this).css({'border' : '1px solid #ff0000'});
-                }
-            }
-        });
-    })
-    </script>
+<script type="text/javascript">$(document).ready(function() {
 
+    $('#email').blur(function() {
+        if($(this).val() != '') {
+            var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+            if(pattern.test($(this).val())){
+                $(this).css({'border' : '1px solid #04f92d'});
+            } else {
+                $(this).css({'border' : '1px solid #ff0000'});
+            }
+        }
+    });
+    $('#city').blur(function() {
+        if($(this).val() != '') {
+            var pattern = /^[а-яА-ЯёЁa-zA-Z]{0,20}$/i;
+            if(pattern.test($(this).val())){
+                $(this).css({'border' : '1px solid #04f92d'});
+            } else {
+                $(this).css({'border' : '1px solid #ff0000'});
+            }
+        }
+    });
+    $('#fio').blur(function() {
+        if($(this).val() != '') {
+            var pattern = /^[а-яА-ЯёЁa-zA-Z\s-]{0,40}$/i;
+            if(pattern.test($(this).val())){
+                $(this).css({'border' : '1px solid #04f92d'});
+            } else {
+                $(this).css({'border' : '1px solid #ff0000'});
+            }
+        }
+    });
+    $('#telephone').blur(function() {
+        if($(this).val() != '') {
+            var pattern = /^((8|\+3)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/i;
+            if(pattern.test($(this).val())){
+                $(this).css({'border' : '1px solid #04f92d'});
+            } else {
+                $(this).css({'border' : '1px solid #ff0000'});
+            }
+        }
+    });
+})
+</script>
 </body>
 
 

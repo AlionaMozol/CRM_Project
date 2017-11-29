@@ -56,9 +56,36 @@ public class User {
     private String city;
     @Transient
     private String email;
+    @Transient
+    private String status;
+    @Transient
+    private String AccountCreationDate;
+    @Transient
+    private String rating;
 
+    public String getRating() {
+        return rating;
+    }
 
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 
+    public String getAccountCreationDate() {
+        return AccountCreationDate;
+    }
+
+    public void setAccountCreationDate(String AccountCreationDate) {
+        this.AccountCreationDate = AccountCreationDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
     public String getCity() {
         return city;
     }
