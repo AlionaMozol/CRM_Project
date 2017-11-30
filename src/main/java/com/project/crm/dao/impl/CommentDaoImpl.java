@@ -80,6 +80,9 @@ public class CommentDaoImpl extends DAO implements CommentDao {
                     case "fdb85110-cbcf-11e7-97a3-94de807a9669":
                         preparedStatement.setString(4, "it");
                         break;
+                    case "2c29c2e5-d466-11e7-bdec-94de807a9669":
+                        preparedStatement.setString(4, "data commenta");
+                        break;
                     default:
                         System.out.println("chet ne to");
                 }
