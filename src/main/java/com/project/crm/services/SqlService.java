@@ -23,7 +23,7 @@ public class SqlService {
     public static final String SQL_GET_OWNER_ATTR_ID = "SQL_GET_OWNER_ATTR_ID";
     public static final String SQL_GET_COST_ATTR_ID = "SQL_GET_COST_ATTR_ID";
 
-    public static final String SQL_GET_USER_BY_ID =              "SQL_GET_USER_FROM_ID";
+    public static final String SQL_GET_USERNAME_BY_ID =              "SQL_GET_USERNAME_BY_ID";
     public static final String SQL_ADD_USER =                      "SQL_ADD_USER";
     public static final String SQL_GET_USER_BY_USERNAME =        "SQL_GET_USER_FROM_USERNAME";
     public static final String SQL_CHECK_USER =                    "SQL_CHECK_USER";

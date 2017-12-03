@@ -5,6 +5,7 @@ import com.project.crm.dao.UserDao;
 import com.project.crm.model.User;
 import com.project.crm.services.ProductService;
 import com.project.crm.services.ProfileService;
+import com.project.crm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,11 +27,13 @@ public class ProfileServiceImpl implements ProfileService {
     private ProductService productService;
 
 
+
     @Transactional
     @Override
     public User getUserByID(int id) {
         User user = userDao.getUserById(id);
         user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
+        user.setUsername(userDao.findUsernameById(user.getId()).getUsername());
         return user;
     }
 

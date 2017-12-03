@@ -260,14 +260,14 @@ public class UserDaoImpl extends DAO implements UserDao {
             rollbackFor=Exception.class)
 
     @Override
-    public User findByUsername(String username) {
+    public User findUsernameById(int id) {
         Connection connection = poolInst.getConnection();
         User user = null;
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_USER_BY_USERNAME));
-            statement.setString(1, username);
+                    getProperty(SqlService.SQL_GET_USERNAME_BY_ID));
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
                 user = new User();
@@ -288,18 +288,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
     /*public static void main(String [] args) throws SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
-        User user = new User();
-        user.setId(1452);
-        user.setDateOfBirth("11.11.11");
-        user.setCity("brest");
-        user.setEmail("anna@mail.ru");
-        user.setTelephone("8285183");
-        user.setSex("women");
-        user.setFio("anna tochilo");
-        user.setRating("1");
-        user.setStatus("1");
-        user.setAccountCreationDate("1");
-        userDao.addUser(user);
+        System.out.println(userDao.findUsernameById(3).getUsername());
         //userDao.deleteRegisteredUserDao(registeredUser);
         //user=userDao.getUserById(1452);
         //System.out.println(user.getStatus()+ " "+ user.getAccountCreationDate());
