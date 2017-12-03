@@ -21,6 +21,8 @@ import java.util.UUID;
  * Created by 1 on 30.10.2017.
  */
 @Component
+
+
 public class UserDaoImpl extends DAO implements UserDao {
 
     @Transactional(propagation = Propagation.MANDATORY,
@@ -119,7 +121,8 @@ public class UserDaoImpl extends DAO implements UserDao {
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
             statement.setString(1,objectTypeId);
-            statement.setInt(2,id);
+            statement.setString(2,"SECURITY_ID");
+            statement.setInt(3,id);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
                 objectId=resultSet.getString(1);
@@ -172,6 +175,57 @@ public class UserDaoImpl extends DAO implements UserDao {
         }
         poolInst.footConnection(connection);
         return user;
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
+    @Override
+    public int getUserIdByEmail(String email) {
+        Connection connection = poolInst.getConnection();
+        User user = new User();
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+            statement.setString(1,"USER");
+            ResultSet resultSet = statement.executeQuery();
+            String objectTypeId="";
+            String objectId="";
+            if(resultSet.next()){
+                objectTypeId=resultSet.getString(1);
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
+            statement.setString(1,objectTypeId);
+            statement.setString(2,"MAIL");
+            statement.setString(3,email);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                objectId=resultSet.getString(1);
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_USER_ATTRIBUTES));
+            statement.setString(1,objectId);
+            resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                if (resultSet.getString("attribute").equals("SECURITY_ID")){
+                    user.setId(resultSet.getInt("value"));
+                    statement.close();
+                    resultSet.close();
+                    poolInst.footConnection(connection);
+                    return user.getId();
+                }
+            }
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        poolInst.footConnection(connection);
+        return -1;
     }
 
 
@@ -232,7 +286,7 @@ public class UserDaoImpl extends DAO implements UserDao {
     }
 
 
-    public static void main(String [] args) throws SQLException {
+    /*public static void main(String [] args) throws SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
         User user = new User();
         user.setId(1452);
@@ -271,7 +325,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
 
 
-    }
+    //}
 
 
 //    public static void main(String[] args) throws ClassNotFoundException {

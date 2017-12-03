@@ -1,15 +1,19 @@
 package com.project.crm.controllers;
 
+import com.project.crm.model.Comment;
 import com.project.crm.model.User;
 import com.project.crm.services.ProfileService;
 import com.project.crm.services.UserService;
 import com.project.crm.validator.ProfileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -24,10 +28,7 @@ public class ProfileController {
     ProfileValidator profileValidator;
 
     @RequestMapping(value = "/profiles", method = RequestMethod.GET)
-    public String allUsers (Model model, String error){
-       if (error != null) {
-            model.addAttribute("error", "Username or password is incorrect.");
-        }
+    public String allUsers (Model model){
         org.springframework.security.core.userdetails.User spring_user =
                 (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                         getContext().getAuthentication().getPrincipal();
@@ -45,6 +46,22 @@ public class ProfileController {
         String username = spring_user.getUsername();
         int  id = userService.findByUsername(username).getId();
         return profileService.getUserByID(id);
+    }
+
+
+    @RequestMapping(value = "/checkEmail")
+    public @ResponseBody int showComments(@RequestParam String email){
+        int id=0;
+        id = profileService.getUserIdByEmail(email);
+        org.springframework.security.core.userdetails.User spring_user =
+                (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+                        getContext().getAuthentication().getPrincipal();
+        String username = spring_user.getUsername();
+        int  user_id = userService.findByUsername(username).getId();
+        if(id!=-1 && user_id!=id){
+            return -1;
+        }
+        return 1;
     }
 
    @RequestMapping(value="/profiles", method=RequestMethod.POST)
