@@ -15,6 +15,7 @@ public interface ProfileService {
 
 
     User getUserByID(int id);
+    User getUserByUsername(String username);
     void addUser(User user);
     void updateUser(User user);
     int getUserIdByEmail(String email);

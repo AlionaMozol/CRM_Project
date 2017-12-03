@@ -33,7 +33,16 @@ public class ProfileServiceImpl implements ProfileService {
     public User getUserByID(int id) {
         User user = userDao.getUserById(id);
         user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
-        user.setUsername(userDao.findUsernameById(user.getId()).getUsername());
+        user.setUsername(userDao.findUserById(user.getId()).getUsername());
+        return user;
+    }
+
+    @Transactional
+    @Override
+    public User getUserByUsername(String username) {
+        User user = userDao.getUserById(userDao.findUserByUsername(username).getId());
+        user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
+        user.setUsername(username);
         return user;
     }
 

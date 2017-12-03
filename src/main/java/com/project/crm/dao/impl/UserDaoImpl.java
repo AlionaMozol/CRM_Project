@@ -4,6 +4,7 @@ import com.project.crm.dao.DAO;
 import com.project.crm.dao.UserDao;
 import com.project.crm.model.User;
 import com.project.crm.services.SqlService;
+import com.project.crm.services.impl.ProfileServiceImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -260,19 +261,44 @@ public class UserDaoImpl extends DAO implements UserDao {
             rollbackFor=Exception.class)
 
     @Override
-    public User findUsernameById(int id) {
+    public User findUserById(int id) {
         Connection connection = poolInst.getConnection();
         User user = null;
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_USERNAME_BY_ID));
+                    getProperty(SqlService.SQL_GET_USER_BY_ID));
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
                 user = new User();
-                user.setId(rs.getInt(1));
+                user.setId(id);
                 user.setUsername(rs.getString(2));
+                user.setPassword(rs.getString(3));
+            }
+            statement.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        poolInst.footConnection(connection);
+        return user;
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        Connection connection = poolInst.getConnection();
+        User user = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_USER_BY_USERNAME));
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                user = new User();
+                user.setId(rs.getInt(1));
+                user.setUsername(username);
                 user.setPassword(rs.getString(3));
             }
             statement.close();
@@ -288,7 +314,11 @@ public class UserDaoImpl extends DAO implements UserDao {
 
     /*public static void main(String [] args) throws SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
-        System.out.println(userDao.findUsernameById(3).getUsername());
+        System.out.println(userDao.findUserByUsername("123456789").getId());
+        ProfileServiceImpl profileService = new ProfileServiceImpl();
+        System.out.println(profileService.getUserByID(11).getId());
+
+
         //userDao.deleteRegisteredUserDao(registeredUser);
         //user=userDao.getUserById(1452);
         //System.out.println(user.getStatus()+ " "+ user.getAccountCreationDate());
@@ -314,7 +344,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
 
 
-    //}
+   // }
 
 
 //    public static void main(String[] args) throws ClassNotFoundException {
