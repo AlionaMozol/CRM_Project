@@ -69,7 +69,7 @@ public class ProfileController {
                                 BindingResult bindingResult, Model model) {
        profileValidator.validate(user,bindingResult);
        if (bindingResult.hasErrors()) {
-           return "profiles";
+           return "redirect: /profiles";
        }
        model.addAttribute("profiles", user);
        profileService.updateUser(user);

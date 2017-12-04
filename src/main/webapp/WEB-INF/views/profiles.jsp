@@ -83,7 +83,7 @@ user_roles
         <div class="form-group row has-feedback">
             <label class="col-2 col-form-label">Email</label>
             <div class="col-10">
-                <f:input id="email" class="form-control" type="email" name="email" path="email" onchange="SendForm()" onkeydown="SendForm()" />
+                <f:input id="email" class="form-control" type="email" name="email" path="email"  />
                 <span id="res" name="res"></span>
                 <form:errors path="email"/>
 
@@ -107,7 +107,7 @@ user_roles
         <div class="form-group row">
             <label class="col-2 col-form-label">Дата рождения</label>
             <div class="col-10">
-                <f:input class="form-control" type="date" name="dateOfBirth" path="dateOfBirth"/>
+                <f:input class="form-control" type="date" name="dateOfBirth" path="dateOfBirth"  max="2000-12-31" min="1900-01-01"/>
             </div>
         </div>
         <div class="form-group row">
@@ -135,7 +135,7 @@ user_roles
     });
     $('#fio').on("input",function() {
         if($(this).val() != '') {
-            var pattern = /^[а-яА-ЯёЁa-zA-Z\s-]{0,40}$/i;
+            var pattern = /^[а-яА-ЯёЁa-zA-Z\\s-]{0,40}$/i;
             if(pattern.test($(this).val())){
                 $(this).css({'border' : '1px solid #04f92d'});
             } else {

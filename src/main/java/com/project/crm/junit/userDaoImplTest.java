@@ -26,6 +26,6 @@ public class userDaoImplTest {
         user.setDateOfBirth("11.11.1997");
         user.setEmail("ankabrest@mail.ru");
         userDao.addUser(user);
-        assertEquals("user1", userDao.getUserById(111).getFio());
+        assertEquals(user.getFio(), userDao.getUserById(111).getFio());
     }
 }
