@@ -20,34 +20,38 @@
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
 
-    <div style="padding: 100px">
-        <h1>Products</h1>
-        <table style="border-style: solid">
-            <tr>
-                <td>    Ид     </td>
-                <td>  ТопКатегория</td>
-                <td>    Категория   </td>
-                <td>      Цена      </td>
-                <td>   Пользователь  </td>
-                <td>Другие атррибуты</td>
-            </tr>
-            <c:forEach var="product" items="${products}">
-                <tr>
-                    <td><a href="${contextPath}/product/${product.id}">${product.id}</a> </td>
-                    <td>${product.superCategory}</td>
-                    <td>${product.category}</td>
-                    <td>${product.cost}</td>
-                    <td>${product.owner}</td>
-                        <c:forEach items="${product.attributesAndValues}" var="value">
-                            <td style="padding: 10px">
-                            <option value="${product.attributesAndValues.key}">${product.attributesAndValues.value}</option>
-                            </td>
-                        </c:forEach>
-                    <td>${product.attributesAndValues}</td>
-                </tr>
+    <div class="container content">
+        <a class="btn btn-success" href="${contextPath}/new_product" role="button">Добавить объявление</a>
+        <div class="col-lg-9 products">
+
+            <c:forEach items="${products}" var="product">
+
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#"><img src="${contextPath}/resources/img/placeholder-image.png" alt=""></a>
+                            <div class="product-icons">
+                                <div class="product-icons-item">
+                                    <a href="#" class="icon">
+                                        <img src="${contextPath}/resources/img/heart.png">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="product-title">
+                            <a href="${contextPath}/product/${product.id}"><strong>${product.id}</strong></a>
+                        </p>
+
+                        <p class="product-desc">${product.description}</p>
+                        <p class="product-category">${product.category}</p>
+                        <p class="product-price">${product.cost}</p>
+                    </div>
+                </div>
+
             </c:forEach>
-        </table>
-        <a href="${contextPath}/new_product">New product</a>
+
+        </div>
     </div>
 
 </body>

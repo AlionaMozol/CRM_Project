@@ -43,7 +43,7 @@
                         "<tr>" +
                         "   <td>" + value + "</td>" +
                         "   <td><label>" +
-                        "       <input name=" + value+ "value=" + "${product.attributesAndValues}"+" >" +
+                        "       <input name=" + value + ">" +
                         "   </label></td>" +
                         "</tr>");
                     $('#wrapper-for-attributes').append(newInput);
@@ -82,43 +82,35 @@
 </script>
 
 <div style="padding: 100px">
-    <f:form method="post" commandName="product" action="/new-product/add/" acceptCharset="utf-8">
+    <form method="post" action="/new-product/add?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8">
         <table>
             <tr>
                 <td>
-                    <p><f:select path="superCategory" id="select_top_category" onchange="showSubCategories()">
+                    <p> <label>Category:</label>
+                        <select name="superCategory" id="select_top_category" onchange="showSubCategories()">
                         <option disabled>Category</option>
                         <c:forEach items="${topCategories}" var="topCategory">
                         <option value="${topCategory.title}">${topCategory.title}</option>
                         </c:forEach>
-                        </f:select>
+                        </select>
                 </td>
             </tr>
             <tr>
                 <td>
                     <p>
-                        <f:select path="category" id="select_sub_category" onchange="showAttributes()">
-                            <option disabled>Type</option></f:select>
+                        <label>Type:</label>
+                        <select name="category" id="select_sub_category" onchange="showAttributes()">
+                            <option disabled>Type</option></select>
                     </p>
                 </td>
             </tr>
 
             <tr>
-                <input name="${product.owner}" hidden="hidden" value="${pageContext.request.userPrincipal.name}"/>
+                <td><label>COST:</label>
+                    <input name="COST"  value="0"/>
+                </td>
             </tr>
 
-
-            <c:forEach  items="${product.attributesAndValues}" var="attributesAndValues">
-                <tr>
-                    <td>${attributesAndValues.key}</td>
-                    <td>
-                        <label>
-                                <input name="attributesAndValues['${attributesAndValues.key}']"
-                                       value="${attributesAndValues.key}">
-                        </label>
-                    </td>
-                </tr>
-            </c:forEach>
 
             <tr id="wrapper-for-attributes">
 
@@ -127,7 +119,7 @@
                 <td><input id="submit-button" hidden="hidden" type="submit"/></td>
             </tr>
         </table>
-    </f:form>
+    </form>
 
 </div>
 
