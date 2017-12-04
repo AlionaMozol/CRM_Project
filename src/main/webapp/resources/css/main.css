@@ -384,3 +384,14 @@ img {
     margin: 25px;
     text-decoration: white;
 }
+
+/*--Edit product--*/
+.row-distance{
+    border-collapse: separate; /* Способ отображения границы */
+    border-spacing: 30px 10px; /* Расстояние между ячейками */
+}
+
+.button-fill-two-cell{
+    width: 100%;
+    height: 100%
+}
