@@ -1,5 +1,6 @@
-package com.project.crm.dao.impl;
+package com.project.crm.junit;
 
+import com.project.crm.dao.impl.ProductDaoImpl;
 import com.project.crm.model.Product;
 import com.project.crm.model.User;
 import org.junit.Test;
