@@ -9,7 +9,6 @@ public class SqlService {
     private static SqlService instance;
     private static ResourceBundle bundle;
 
-
     //user query
     public static final String SQL_GET_USER_FROM_ID =              "SQL_GET_USER_FROM_ID";
     public static final String SQL_GET_USER_FROM_USERNAME =        "SQL_GET_USER_FROM_USERNAME";
@@ -23,9 +22,9 @@ public class SqlService {
     public static final String SQL_GET_OWNER_ATTR_ID = "SQL_GET_OWNER_ATTR_ID";
     public static final String SQL_GET_COST_ATTR_ID = "SQL_GET_COST_ATTR_ID";
 
-    public static final String SQL_GET_USER_BY_ID =              "SQL_GET_USER_BY_ID";
+    public static final String SQL_GET_USER_BY_ID =                "SQL_GET_USER_BY_ID";
     public static final String SQL_ADD_USER =                      "SQL_ADD_USER";
-    public static final String SQL_GET_USER_BY_USERNAME =        "SQL_GET_USER_BY_USERNAME";
+    public static final String SQL_GET_USER_BY_USERNAME =          "SQL_GET_USER_BY_USERNAME";
     public static final String SQL_CHECK_USER =                    "SQL_CHECK_USER";
     public static final String SELECT_ALL_USERS =                  "SELECT_ALL_USERS";
     public static final String SQL_GET_PRODUCTS_BY_CATEGORY =      "SQL_GET_PRODUCTS_BY_CATEGORY";
@@ -76,6 +75,14 @@ public class SqlService {
     public static final String SQL_GET_LIKE_OBJECT_TYPE_ID =         "SQL_GET_LIKE_OBJECT_TYPE_ID";
     public static final String SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS = "SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS";
     public static final String SQL_INSERT_LIKE_INTO_VALUES =         "SQL_INSERT_LIKE_INTO_VALUES";
+
+    public static final String SQL_GET_TITLE_ATTR_ID =               "SQL_GET_TITLE_ATTR_ID";
+    public static final String SQL_GET_STATUS_ATTR_ID =              "SQL_GET_STATUS_ATTR_ID";
+    public static final String SQL_GET_DESCRIPTION_ATTR_ID =         "SQL_GET_DESCRIPTION_ATTR_ID";
+    public static final String SQL_GET_PRODUCT_CREATE_DATE_TIME_ATTR_ID =
+                                                                     "SQL_GET_PRODUCT_CREATE_DATE_TIME_ATTR_ID";
+    public static final String SQL_GET_PRODUCT_LAST_EDIT_DATE_TIME_ATTR_ID =
+                                                                     "SQL_GET_PRODUCT_LAST_EDIT_DATE_TIME_ATTR_ID";
     private SqlService(){}
 
     public static SqlService getInstance(){
