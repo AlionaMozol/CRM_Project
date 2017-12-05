@@ -20,23 +20,26 @@
 <body>
 <%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
-<f:form class="content" method="post" acceptCharset="utf-8">
-    <div class="col-md-12 col-md-offset-1">
+<f:form class="content" method="post" commandName="Email" acceptCharset="utf-8">
+    <div class="col-md-10 col-md-offset-1">
         <div class="form-group row has-feedback">
             <label class="col-2 col-form-label">От кого</label>
             <div class="col-10">
-                <input class="form-control" type="text" name="emailFrom" pattern="([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$"/>
+                <input class="form-control" type="text" name="from" path="from" pattern="([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$"/>
+                <form:errors path="from"/>
             </div>
         </div>
         <div class="form-group row has-feedback">
             <label class="col-2 col-form-label">Тема письма</label>
             <div class="col-10">
-                <input class="form-control" type="text" name="about" pattern="[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$"/>
+                <input class="form-control" type="text" name="title" path="title" pattern="[0-9а-яА-ЯёЁa-zA-Z\s-]{0,70}$"/>
+                <form:errors path="title"/>
             </div>
         </div>
         <div class="form-group row has-feedback">
             <label class="col-2 col-form-label">Текст</label>
-            <textarea class="form-control" rows="5" name="message" pattern="[0-9а-яА-ЯёЁa-zA-Z]{1,500}$"></textarea>
+            <textarea class="form-control" rows="5" name="message" path="message" pattern="[0-9а-яА-ЯёЁa-zA-Z]{0,500}$"></textarea>
+            <form:errors path="message"/>
         </div>
         <button type="submit" class="btn">Отправить</button>
     </div>
@@ -44,7 +47,7 @@
 
 <script type="text/javascript">$(document).ready(function() {
 
-    $('#emailFrom').blur(function() {
+    $('#from').blur(function() {
         if($(this).val() != '') {
             var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
             if(pattern.test($(this).val())){
@@ -55,9 +58,9 @@
         }
     });
 
-    $('#theme').blur(function() {
+    $('#title').blur(function() {
         if($(this).val() != '') {
-            var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{1,70}$/i;
+            var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{0,70}$/i;
             if(pattern.test($(this).val())){
                 $(this).css({'border' : '1px solid #04f92d'});
             } else {
@@ -66,9 +69,9 @@
         }
     });
 
-    $('#comment').blur(function() {
+    $('#message').blur(function() {
         if($(this).val() != '') {
-            var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{1,500}$/i;
+            var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{0,500}$/i;
             if(pattern.test($(this).val())){
                 $(this).css({'border' : '1px solid #04f92d'});
             } else {
