@@ -61,7 +61,7 @@ public class UserController {
         user.setEmail("");
         user.setSex("");
         user.setFio("");
-        user.setStatus("0");
+        user.setStatus("UNBLOCKED");
         user.setRating("0");
         Date date = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");

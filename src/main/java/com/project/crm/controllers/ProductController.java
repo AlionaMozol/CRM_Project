@@ -107,20 +107,21 @@ public class ProductController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
 
-        Map<String, String[]> myMap = request.getParameterMap();
+        Map<String, String[]> parameterMap = request.getParameterMap();
 
 
 
         product.setOwner(name);
-        product.setSuperCategory(myMap.get("superCategory")[0]);
-        product.setCategory(myMap.get("category")[0]);
-        product.setCost(myMap.get("COST")[0]);
+        product.setSuperCategory(parameterMap.get("superCategory")[0]);
+        product.setCategory(parameterMap.get("category")[0]);
+        product.setCost(parameterMap.get("COST")[0]);
         product.setPhoto(addPohotoToDrive(multipartFile));
 
-        List<String> attributes = attributeService.getAttributesByCategory(myMap.get("category")[0]);
+        List<String> attributes = attributeService.getAttributesByCategory(parameterMap.get("category")[0]);
+
         Map<String, String> productAttributes = new HashMap<>();
         for(int i = 0; i < attributes.size(); i++){
-            productAttributes.put(attributes.get(i), myMap.get(attributes.get(i))[0]);
+            productAttributes.put(attributes.get(i), parameterMap.get(attributes.get(i))[0]);
         }
 
         product.setAttributesAndValues(productAttributes);
