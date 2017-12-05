@@ -3,7 +3,7 @@ package com.project.crm.services.impl;
 import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
 import com.project.crm.model.User;
-import com.project.crm.model.enums.Status;
+import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
-    public List<Product> getProductByStatus(Status status) {
+    public List<Product> getProductByStatus(ProductStatus status) {
         return productDao.getProductByStatus(status);
     }
 

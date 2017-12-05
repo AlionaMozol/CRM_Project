@@ -1,6 +1,6 @@
 package com.project.crm.model;
 
-import com.project.crm.model.enums.Status;
+import com.project.crm.model.enums.ProductStatus;
 
 import java.awt.*;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Map;
 public class Product {
 
     private String id;
-    private Status productStatus;
+    private ProductStatus status;
     private String superCategory;
     private String category;
     private String cost;
@@ -106,12 +106,12 @@ public class Product {
         this.photo = photo;
     }
 
-    public Status getProductStatus() {
-        return productStatus;
+    public ProductStatus getProductStatus() {
+        return status;
     }
 
-    public void setProductStatus(Status productStatus) {
-        this.productStatus = productStatus;
+    public void setProductStatus(ProductStatus status) {
+        this.status = status;
     }
 
     public String getDateOfLastEdit() {
@@ -131,7 +131,7 @@ public class Product {
         Product product = (Product) o;
 
         if (id != null ? !id.equals(product.id) : product.id != null) return false;
-        if (productStatus != product.productStatus) return false;
+        if (status != product.status) return false;
         if (superCategory != null ? !superCategory.equals(product.superCategory) : product.superCategory != null)
             return false;
         if (category != null ? !category.equals(product.category) : product.category != null) return false;
@@ -153,7 +153,7 @@ public class Product {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (productStatus != null ? productStatus.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (superCategory != null ? superCategory.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
@@ -178,7 +178,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id='" + id + '\'' +
-                ", productStatus=" + productStatus +
+                ", productStatus=" + status +
                 ", superCategory='" + superCategory + '\'' +
                 ", category='" + category + '\'' +
                 ", cost='" + cost + '\'' +

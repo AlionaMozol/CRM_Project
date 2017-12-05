@@ -1,6 +1,6 @@
 package com.project.crm.model.enums;
 
-public enum Status {
+public enum ProductStatus {
     MODERATION,
     APPROVED
 }

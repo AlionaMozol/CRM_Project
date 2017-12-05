@@ -4,8 +4,7 @@ package com.project.crm.dao.impl;
 import com.project.crm.dao.DAO;
 import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
-import com.project.crm.model.User;
-import com.project.crm.model.enums.Status;
+import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.SqlService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -13,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
@@ -130,7 +130,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 statement.setString(1, UUID.randomUUID().toString());
                 statement.setString(2, newObjectId);
                 statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getProductStatus().toString());
+                statement.setString(4, "MODERATION");
                 statement.execute();
             }
 
@@ -165,11 +165,14 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             resultSet = statement.executeQuery();
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_ADD_OBJECT));
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+
             while(resultSet.next()) {
                 statement.setString(1, UUID.randomUUID().toString());
                 statement.setString(2, newObjectId);
                 statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getDateOfLastEdit());
+                statement.setString(4, formatter.format(new Date(System.currentTimeMillis())));
                 statement.execute();
             }
 
@@ -182,7 +185,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 statement.setString(1, UUID.randomUUID().toString());
                 statement.setString(2, newObjectId);
                 statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getPublicationDate());
+                statement.setString(4, formatter.format(new Date(System.currentTimeMillis())));
                 statement.execute();
             }
            statement.close();
@@ -314,7 +317,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 } else if(resultSet.getString(1).equals("DESCRIPTION")) {
                     currentProduct.setDescription(resultSet.getString(2));
                 } else if(resultSet.getString(1).equals("STATUS")) {
-                    currentProduct.setProductStatus(Status.valueOf(resultSet.getString(2)));
+                    currentProduct.setProductStatus(ProductStatus.valueOf(resultSet.getString(2)));
                 } else if(resultSet.getString(1).equals("PRODUCT_CREATE_DATE_TIME")) {
                     currentProduct.setPublicationDate(resultSet.getString(2));
                 } else if(resultSet.getString(1).equals("PRODUCT_LAST_EDIT_DATE_TIME")) {
@@ -383,7 +386,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
     @Transactional(propagation = Propagation.MANDATORY)
     @Override
-    public List<Product> getProductByStatus(Status status) {  // Пока нет в базе
+    public List<Product> getProductByStatus(ProductStatus status) {  // Пока нет в базе
         Connection connection = poolInst.getConnection();
 
 
@@ -486,11 +489,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         p.setSuperCategory("Fashion");
         p.setOwner("SASHA");
         p.setCost("SASHA NUMBER 1");
-        p.setProductStatus(Status.MODERATION);
+//        p.setProductStatus(Status.MODERATION);
         p.setDescription("AAAAAAAAAAAAAAAAAAAAAAAA");
         p.setTitle("PRODUCT");
-        p.setDateOfLastEdit("01.10");
-        p.setPublicationDate("19.19");
         Map<String, String> map = new HashMap<>();
         map.put("SIZE_", "TEST");
         map.put("CONDITION", "TEST");

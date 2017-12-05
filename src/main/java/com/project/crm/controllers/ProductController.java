@@ -2,7 +2,6 @@ package com.project.crm.controllers;
 
 import com.project.crm.model.Comment;
 import com.project.crm.model.Product;
-import com.project.crm.model.enums.Status;
 import com.project.crm.services.AttributeService;
 import com.project.crm.services.CommentService;
 import com.project.crm.services.ProductService;
@@ -115,7 +114,7 @@ public class ProductController {
         product.setSuperCategory(parameterMap.get("superCategory")[0]);
         product.setCategory(parameterMap.get("category")[0]);
         product.setCost(parameterMap.get("COST")[0]);
-        product.setPhoto(addPohotoToDrive(multipartFile));
+        //product.setPhoto(addPohotoToDrive(multipartFile));
 
         List<String> attributes = attributeService.getAttributesByCategory(parameterMap.get("category")[0]);
 
