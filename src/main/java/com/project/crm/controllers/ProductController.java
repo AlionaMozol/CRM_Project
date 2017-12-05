@@ -15,10 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @Controller
 //@RequestMapping("/product")
@@ -99,7 +97,26 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)
-    public String addProduct(@ModelAttribute("product") Product product) {
+    public String addProduct(HttpServletRequest request) {
+        Product product = new Product();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+
+        Map<String, String[]> myMap = request.getParameterMap();
+
+        product.setOwner(name);
+        product.setSuperCategory(myMap.get("superCategory")[0]);
+        product.setCategory(myMap.get("category")[0]);
+        product.setCost(myMap.get("COST")[0]);
+
+        List<String> attributes = attributeService.getAttributesByCategory(myMap.get("category")[0]);
+        Map<String, String> productAttributes = new HashMap<>();
+        for(int i = 0; i < attributes.size(); i++){
+            productAttributes.put(attributes.get(i), myMap.get(attributes.get(i))[0]);
+        }
+
+        product.setAttributesAndValues(productAttributes);
         productService.addProduct(product);
         return "redirect:/products";
     }

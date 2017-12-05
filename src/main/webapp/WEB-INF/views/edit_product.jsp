@@ -17,39 +17,71 @@
 <body>
 
 
-    <%@include file="../layouts/preloader.jsp"%>
-    <%@include file="../layouts/high_menu_bar.jsp"%>
+<%@include file="../layouts/preloader.jsp"%>
+<%@include file="../layouts/high_menu_bar.jsp"%>
 
-    <div class="container content">
-        <div class="row wrapper-for-product">
-            <div class="col-lg-4 product-img-1">
-                <h2>Nazvanie</h2>
-                <div class="wrapper-for-img">
-                    <img src="${contextPath}/resources/img/placeholder-image.png">
-                </div>
+<div class="container content">
+    <div class="row wrapper-for-product">
+        <div class="col-lg-4 product-img-1">
+            <h2>Nazvanie</h2>
+            <div class="wrapper-for-img">
+                <img src="${contextPath}/resources/img/placeholder-image.png">
             </div>
-            <div class="col-lg-6 description-of-the-product">
-                <p class="name-of-product">Haracteristiki</p>
-                <table>
+        </div>
+        <div class="col-lg-6 description-of-the-product">
+            <p class="name-of-product"><spring:message code="product.characteristics"/></p>
+            <f:form method="post" action="/product/edit/${ID}" acceptCharset="utf-8">
 
+                <table class="row-distance">
                     <c:forEach  items="${IDProduct.attributesAndValues}" var="Values" varStatus="status">
+
                         <tr>
-                            <td><spring:message code="${Values.key}"/></td>
-                            <td><label>
-                                <input name="attributesAndValues['${Values.key}']"
-                                value="${Values.value}">
-                            </label></td>
+                            <td>
+                                <spring:message code="${Values.key}"/>
+                            </td>
+                            <td>
+                                <input name="attributesAndValues['${Values.key}']" value="${Values.value}">
+                            </td>
                         </tr>
+
                     </c:forEach>
 
                     <tr>
-                        <td><input type="submit" value="Изменить"/></td>
+                        <td colspan="2"><input type="submit" value="Изменить" class="button-fill-two-cell"/></td>
                     </tr>
                 </table>
-            </div>
-        </div>
+            </f:form>
+            <%--<f:form method="post" action="/product/edit/${ID}" acceptCharset="utf-8">--%>
+                <%--<div class="wrapper-for-ul">--%>
+                    <%--<div class="li-margin">--%>
+                        <%--<ul>--%>
 
+                            <%--<c:forEach  items="${IDProduct.attributesAndValues}" var="Values" varStatus="status">--%>
+                                <%--<li>--%>
+                                    <%--<spring:message code="${Values.key}"/>--%>
+                                <%--</li>--%>
+                            <%--</c:forEach>--%>
+
+
+                        <%--</ul>--%>
+                    <%--</div>--%>
+
+                    <%--<div class="li-margin">--%>
+                        <%--<ul>--%>
+                            <%--<c:forEach  items="${IDProduct.attributesAndValues}" var="Values" varStatus="status">--%>
+                                <%--<li>--%>
+                                    <%--<input name="attributesAndValues['${Values.key}']" value="${Values.value}">--%>
+                                <%--</li>--%>
+                            <%--</c:forEach>--%>
+                        <%--</ul>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<input type="submit" value="Изменить"/>--%>
+            <%--</f:form>--%>
+        </div>
     </div>
+
+</div>
 
 </body>
 </html>

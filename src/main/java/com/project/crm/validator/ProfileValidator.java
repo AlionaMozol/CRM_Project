@@ -1,6 +1,13 @@
 package com.project.crm.validator;
 
 import com.project.crm.model.User;
+import com.project.crm.services.ProductService;
+import com.project.crm.services.ProfileService;
+import com.project.crm.services.UserService;
+import com.project.crm.services.impl.ProductServiceImpl;
+import com.project.crm.services.impl.ProfileServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -15,45 +22,61 @@ import java.util.regex.Pattern;
 @Component
 public class ProfileValidator implements Validator {
 
+    @Autowired
+    ProfileService profileService;
+
+    @Autowired
+    UserService userService;
+
+    private String emailPattern="^([a-z0-9_\\.-])+@[a-z0-9-]+\\.([a-z]{2,4}\\.)?[a-z]{2,4}$";
+    private String telephonePatten="^((80|\\+375|375))(\\(?\\d{2}\\)?)(\\d{3}\\-?)(\\-?\\d{2}\\-?)(\\-?\\d{2})$";
+    private String cityPattern="^[а-яА-ЯёЁa-zA-Z]+$";
+    private String fioPattern="^[а-яА-ЯёЁa-zA-Z\\s-]{0,40}$";
+
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);
     }
 
-    public static boolean checkEmail(String userNameString){
-        Pattern p = Pattern.compile("^([a-z0-9_\\.-])+@[a-z0-9-]+\\.([a-z]{2,4}\\.)?[a-z]{2,4}$");
-        Matcher m = p.matcher(userNameString);
+    private boolean checkUniquenessEmail(String email){
+        int id = profileService.getUserIdByEmail(email);
+        org.springframework.security.core.userdetails.User spring_user =
+                (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+                        getContext().getAuthentication().getPrincipal();
+        String username = spring_user.getUsername();
+        int  user_id = userService.findByUsername(username).getId();
+        if(id!=-1 && user_id!=id){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkField(String field, String pattern){
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(field);
         return m.matches();
     }
-    public static boolean checkTelephone(String userNameString){
-        Pattern p = Pattern.compile("^\\+?([0-9]{2})?\\(?[0-9]{3}\\)?[0-9]{3}\\-?[0-9]{2}\\-?[0-9]{2}$");
-        Matcher m = p.matcher(userNameString);
-        return m.matches();
-    }
-    public static boolean checkCity(String userNameString){
-        Pattern p = Pattern.compile("^[а-яА-ЯёЁa-zA-Z]+$");
-        Matcher m = p.matcher(userNameString);
-        return m.matches();
-    }
-    public static boolean checkFio(String userNameString){
-        Pattern p = Pattern.compile("^[а-яА-ЯёЁa-zA-Z\\s-]{0,15}$");
-        Matcher m = p.matcher(userNameString);
-        return m.matches();
-    }
+
 
     @Override
     public void validate(Object o, Errors errors) {
         User user = (User) o;
-        if (!user.getEmail().equals("") && !checkEmail(user.getEmail())) {
-            errors.rejectValue("email", "email.error");
+        if(!user.getEmail().equals("")) {
+            if (!checkField(user.getEmail(),emailPattern)) {
+                errors.rejectValue("email", "emailFormat.error");
+            } else {
+                if (!checkUniquenessEmail(user.getEmail())) {
+                    errors.rejectValue("email", "emailUniq.error");
+                }
+            }
         }
-        if (!user.getTelephone().equals("") && !checkTelephone(user.getTelephone())) {
+        if (!user.getTelephone().equals("") && !checkField(user.getTelephone(),telephonePatten)) {
             errors.rejectValue("telephone", "telephone.error");
         }
-        if (!user.getCity().equals("") && !checkCity(user.getCity())) {
+        if (!user.getCity().equals("") && !checkField(user.getCity(),cityPattern)) {
             errors.rejectValue("city", "city.error");
         }
-        if (!user.getFio().equals("") && !checkFio(user.getFio())) {
+        if (!user.getFio().equals("") && !checkField(user.getFio(),fioPattern)) {
             errors.rejectValue("fio", "fio.error");
         }
     }

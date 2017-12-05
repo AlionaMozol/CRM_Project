@@ -4,6 +4,7 @@ import com.project.crm.dao.DAO;
 import com.project.crm.dao.UserDao;
 import com.project.crm.model.User;
 import com.project.crm.services.SqlService;
+import com.project.crm.services.impl.ProfileServiceImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,6 +22,8 @@ import java.util.UUID;
  * Created by 1 on 30.10.2017.
  */
 @Component
+
+
 public class UserDaoImpl extends DAO implements UserDao {
 
     @Transactional(propagation = Propagation.MANDATORY,
@@ -119,7 +122,8 @@ public class UserDaoImpl extends DAO implements UserDao {
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
             statement.setString(1,objectTypeId);
-            statement.setInt(2,id);
+            statement.setString(2,"SECURITY_ID");
+            statement.setInt(3,id);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
                 objectId=resultSet.getString(1);
@@ -174,6 +178,57 @@ public class UserDaoImpl extends DAO implements UserDao {
         return user;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
+    @Override
+    public int getUserIdByEmail(String email) {
+        Connection connection = poolInst.getConnection();
+        User user = new User();
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+            statement.setString(1,"USER");
+            ResultSet resultSet = statement.executeQuery();
+            String objectTypeId="";
+            String objectId="";
+            if(resultSet.next()){
+                objectTypeId=resultSet.getString(1);
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
+            statement.setString(1,objectTypeId);
+            statement.setString(2,"MAIL");
+            statement.setString(3,email);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                objectId=resultSet.getString(1);
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_USER_ATTRIBUTES));
+            statement.setString(1,objectId);
+            resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                if (resultSet.getString("attribute").equals("SECURITY_ID")){
+                    user.setId(resultSet.getInt("value"));
+                    statement.close();
+                    resultSet.close();
+                    poolInst.footConnection(connection);
+                    return user.getId();
+                }
+            }
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        poolInst.footConnection(connection);
+        return -1;
+    }
+
 
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
@@ -206,18 +261,18 @@ public class UserDaoImpl extends DAO implements UserDao {
             rollbackFor=Exception.class)
 
     @Override
-    public User findByUsername(String username) {
+    public User findUserById(int id) {
         Connection connection = poolInst.getConnection();
         User user = null;
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_USER_BY_USERNAME));
-            statement.setString(1, username);
+                    getProperty(SqlService.SQL_GET_USER_BY_ID));
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
                 user = new User();
-                user.setId(rs.getInt(1));
+                user.setId(id);
                 user.setUsername(rs.getString(2));
                 user.setPassword(rs.getString(3));
             }
@@ -231,21 +286,39 @@ public class UserDaoImpl extends DAO implements UserDao {
         return user;
     }
 
+    @Override
+    public User findUserByUsername(String username) {
+        Connection connection = poolInst.getConnection();
+        User user = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_USER_BY_USERNAME));
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                user = new User();
+                user.setId(rs.getInt(1));
+                user.setUsername(username);
+                user.setPassword(rs.getString(3));
+            }
+            statement.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-    public static void main(String [] args) throws SQLException {
+        poolInst.footConnection(connection);
+        return user;
+    }
+
+
+    /*public static void main(String [] args) throws SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
-        User user = new User();
-        user.setId(1452);
-        user.setDateOfBirth("11.11.11");
-        user.setCity("brest");
-        user.setEmail("anna@mail.ru");
-        user.setTelephone("8285183");
-        user.setSex("women");
-        user.setFio("anna tochilo");
-        user.setRating("1");
-        user.setStatus("1");
-        user.setAccountCreationDate("1");
-        userDao.addUser(user);
+        System.out.println(userDao.findUserByUsername("123456789").getId());
+        ProfileServiceImpl profileService = new ProfileServiceImpl();
+        System.out.println(profileService.getUserByID(11).getId());
+
+
         //userDao.deleteRegisteredUserDao(registeredUser);
         //user=userDao.getUserById(1452);
         //System.out.println(user.getStatus()+ " "+ user.getAccountCreationDate());
@@ -271,7 +344,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
 
 
-    }
+   // }
 
 
 //    public static void main(String[] args) throws ClassNotFoundException {
