@@ -36,13 +36,12 @@ public class GoogleDriveAPI {
         /**
          * Directory to store user credentials for this application.
          */
-        private static final java.io.File DATA_STORE_DIR = new java.io.File(
-                System.getProperty("user.home"), ".credentials/drive-java-quickstart");
+        private static final java.io.File DATA_STORE_DIR = new java.io.File( "./DriveJava/drive_sample");
 
         /**
          * Global instance of the {@link FileDataStoreFactory}.
          */
-        private static FileDataStoreFactory DATA_STORE_FACTORY;
+        private static FileDataStoreFactory dataStoreFactory;
 
         /**
          * Global instance of the JSON factory.
@@ -53,7 +52,7 @@ public class GoogleDriveAPI {
         /**
          * Global instance of the HTTP transport.
          */
-        private static HttpTransport HTTP_TRANSPORT;
+        private static HttpTransport httpTransport;
 
         /**
          * Global instance of the scopes required by this quickstart.
@@ -65,8 +64,8 @@ public class GoogleDriveAPI {
 
         static {
             try {
-                HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-                DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
             } catch (Throwable t) {
                 t.printStackTrace();
                 System.exit(1);
@@ -79,7 +78,7 @@ public class GoogleDriveAPI {
          * @return an authorized Credential object.
          * @throws IOException
          */
-        public static Credential authorize() throws IOException {
+      /*  public static Credential authorize() throws IOException {
             // Load client secrets.
             InputStream in =
                     com.project.crm.services.GoogleDriveAPI.class.getResourceAsStream("/client_secret.json");
@@ -100,22 +99,57 @@ public class GoogleDriveAPI {
             return credential;
         }
 
-        /**
+        *//**
          * Build and return an authorized Drive client service.
          *
          * @return an authorized Drive client service
          * @throws IOException
-         */
+         *//*
         public static Drive getDriveService() throws IOException {
             Credential credential = authorize();
             return new Drive.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, credential)
                     .setApplicationName(APPLICATION_NAME)
                     .build();
+        }*/
+
+
+    private static Credential authorize() throws Exception {
+        // load client secrets
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+                new InputStreamReader(GoogleDriveAPI.class.getResourceAsStream("/client_secret.json")));
+        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+            System.out.println(
+                    "Enter Client ID and Secret from https://code.google.com/apis/console/?api=drive "
+                            + "into drive-cmdline-sample/src/main/resources/client_secrets.json");
+            System.exit(1);
         }
+        // set up authorization code flow
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport,
+                JSON_FACTORY, clientSecrets, SCOPES)
+                .setDataStoreFactory(dataStoreFactory).build();
+        // authorize
+        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    }
+
+    public static Drive getDriveService() {
+        Credential credential = null;
+        try {
+            credential = authorize();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Authorize troubles");
+        }
+        return new Drive.Builder(
+                httpTransport, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
 
 
-        public static String addPohotoToDrive(MultipartFile multipartFile) throws IOException {
+
+    public static String addPohotoToDrive(MultipartFile multipartFile) throws IOException {
             Drive driveService = getDriveService();
             File fileMetadata = new File();
             String folderId = "1T6MFpWCdnYIGdNxuwvkEnfqDBWldFfhI"; // folder id at google drive

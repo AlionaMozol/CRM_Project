@@ -116,7 +116,7 @@ public class ProductController {
         product.setCost(parameterMap.get("COST")[0]);
         product.setTitle(parameterMap.get("TITLE")[0]);
         product.setDescription(parameterMap.get("DESCRIPTION")[0]);
-        //product.setPhoto(addPohotoToDrive(multipartFile));
+        product.setPhoto(addPohotoToDrive(multipartFile));
 
         List<String> attributes = attributeService.getAttributesByCategory(parameterMap.get("category")[0]);
 
