@@ -6,15 +6,18 @@ import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.SqlService;
+import javafx.util.Pair;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Component
@@ -26,30 +29,30 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     public void addProduct(Product product) {
         Connection connection = poolInst.getConnection();
         try {
-           PreparedStatement statement;
-           ResultSet resultSet;
-           String newObjectTypeId = null;
-           Map<String, String> attributesAndValues;
+            PreparedStatement statement;
+            ResultSet resultSet;
+            String newObjectTypeId = null;
+            Map<String, String> attributesAndValues;
 
-           statement = connection.prepareStatement(sql.
-                   getProperty(SqlService.SQL_GET_PRODUCT_OBJECT_TYPE_ID));
-           resultSet = statement.executeQuery();
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_PRODUCT_OBJECT_TYPE_ID));
+            resultSet = statement.executeQuery();
 
-           while(resultSet.next()) {
-              newObjectTypeId = resultSet.getString(1);
-           }
-           statement = connection.prepareStatement(sql.
+            while(resultSet.next()) {
+                newObjectTypeId = resultSet.getString(1);
+            }
+            statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_INSERT_INTO_OBJECT));
 
-           String newObjectId = UUID.randomUUID().toString();
-           statement.setString(1, newObjectId);
-           statement.setString(2, newObjectTypeId);
-           statement.execute();
+            String newObjectId = UUID.randomUUID().toString();
+            statement.setString(1, newObjectId);
+            statement.setString(2, newObjectTypeId);
+            statement.execute();
 
-           attributesAndValues = product.getAttributesAndValues();
+            attributesAndValues = product.getAttributesAndValues();
 
-           String attributesAttrId = null;
-           for (Map.Entry entry: attributesAndValues.entrySet()) {
+            String attributesAttrId = null;
+            for (Map.Entry entry: attributesAndValues.entrySet()) {
                 //Получаем атрибуты и их значения
                 String currentAttribute = (String) entry.getKey();
                 String currentAttributeValue = (String) entry.getValue();
@@ -69,127 +72,154 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 statement.setString(3, attributesAttrId);
                 statement.setString(4, currentAttributeValue);
                 statement.execute();
-           }
-           statement = connection.prepareStatement(sql.
-                   getProperty(SqlService.SQL_GET_CATEGORY_ATTR_ID));
-           resultSet = statement.executeQuery();
-           statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getCategory());
-                statement.execute();
             }
+//           statement = connection.prepareStatement(sql.
+//                   getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//           statement.setString(1, "CATEGORY");
+//           resultSet = statement.executeQuery();
+//           statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, product.getCategory());
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "CATEGORY", UUID.randomUUID().toString(),
+                    newObjectId, product.getCategory());
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_SUPERCATEGORY_ATTR_ID));
-            resultSet = statement.executeQuery();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getSuperCategory());
-                statement.execute();
-            }
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//            statement.setString(1, "SUPERCATEGORY");
+//            resultSet = statement.executeQuery();
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, product.getSuperCategory());
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "SUPERCATEGOTY", UUID.randomUUID().toString(),
+                    newObjectId, product.getSuperCategory());
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_OWNER_ATTR_ID));
-            resultSet = statement.executeQuery();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getOwner());
-                statement.execute();
-            }
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//            statement.setString(1, "OWNER");
+//            resultSet = statement.executeQuery();
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, product.getOwner());
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "OWNER", UUID.randomUUID().toString(),
+                    newObjectId, product.getOwner());
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//            statement.setString(1, "COST");
+//            resultSet = statement.executeQuery();
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, product.getCost());
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "COST", UUID.randomUUID().toString(),
+                    newObjectId, product.getCost());
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_COST_ATTR_ID));
-            resultSet = statement.executeQuery();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getCost());
-                statement.execute();
-            }
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_STATUS_ATTR_ID));
-            resultSet = statement.executeQuery();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, "MODERATION");
-                statement.execute();
-            }
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//            statement.setString(1, "STATUS");
+//            resultSet = statement.executeQuery();
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, "MODERATION");
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "STATUS", UUID.randomUUID().toString(),
+                    newObjectId, "MODERATION");
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_TITLE_ATTR_ID));
-            resultSet = statement.executeQuery();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getTitle());
-                statement.execute();
-            }
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//            statement.setString(1, "TITLE");
+//            resultSet = statement.executeQuery();
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, product.getTitle());
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "TITLE", UUID.randomUUID().toString(),
+                    newObjectId, product.getTitle());
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_DESCRIPTION_ATTR_ID));
-            resultSet = statement.executeQuery();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, product.getDescription());
-                statement.execute();
-            }
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//            statement.setString(1, "DESCRIPTION");
+//            resultSet = statement.executeQuery();
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, product.getDescription());
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "DESCRIPTION", UUID.randomUUID().toString(),
+                    newObjectId, product.getDescription());
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_PRODUCT_LAST_EDIT_DATE_TIME_ATTR_ID));
-            resultSet = statement.executeQuery();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//            statement.setString(1, "PRODUCT_LAST_EDIT_DATE_TIME");
+//            resultSet = statement.executeQuery();
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, formatter.format(new Date(System.currentTimeMillis())));
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "PRODUCT_LAST_EDIT_DATE_TIME", UUID.randomUUID().toString(),
+                    newObjectId, formatter.format(new Date(System.currentTimeMillis())));
 
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, formatter.format(new Date(System.currentTimeMillis())));
-                statement.execute();
-            }
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//            statement.setString(1, "PRODUCT_CREATE_DATE_TIME");
+//            resultSet = statement.executeQuery();
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_ADD_OBJECT));
+//            while(resultSet.next()) {
+//                statement.setString(1, UUID.randomUUID().toString());
+//                statement.setString(2, newObjectId);
+//                statement.setString(3, resultSet.getString(1));
+//                statement.setString(4, formatter.format(new Date(System.currentTimeMillis())));
+//                statement.execute();
+//            }
+            buildAndExecuteStatement(connection, "PRODUCT_CREATE_DATE_TIME", UUID.randomUUID().toString(),
+                    newObjectId, formatter.format(new Date(System.currentTimeMillis())));
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_PRODUCT_CREATE_DATE_TIME_ATTR_ID));
-            resultSet = statement.executeQuery();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-            while(resultSet.next()) {
-                statement.setString(1, UUID.randomUUID().toString());
-                statement.setString(2, newObjectId);
-                statement.setString(3, resultSet.getString(1));
-                statement.setString(4, formatter.format(new Date(System.currentTimeMillis())));
-                statement.execute();
-            }
-           statement.close();
-           resultSet.close();
+            statement.close();
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -304,6 +334,8 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.setString(1, id);
             resultSet = statement.executeQuery();
             while(resultSet.next()) {
+                //resultSet.getString(1) - имя атрибута
+                //resultSet.getString(2) - его значение
                 if(resultSet.getString(1).equals("CATEGORY")) {
                     currentProduct.setCategory(resultSet.getString(2));
                 } else if(resultSet.getString(1).equals("SUPERCATEGORY")) {
@@ -341,11 +373,44 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
     @Override
-    public List<Product> getProductsByTitle(String title) {  //Пока нет в базе
+    public List<Product> getProductsByKeyWords(String keyWords) {
         Connection connection = poolInst.getConnection();
-
-        poolInst.footConnection(connection);
-        return null;
+        List<Pair<Product, String>> productsAndTitles = new ArrayList<>();
+        List<Product> matchedProducts = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_ALL_PRODUCTS));
+            ResultSet allProducts = statement.executeQuery();
+            while (allProducts.next()) {
+                Product product = getProductById(allProducts.getString(1));
+                if(product.getTitle() != null) {
+                    productsAndTitles.add(new Pair<>(product, product.getTitle()));
+                }
+            }
+            String pattern = "(" + keyWords + ")" +
+                    "|(" + keyWords.toLowerCase() + ")" +
+                    "|(" + keyWords.toUpperCase() + ")";
+            for(String part : keyWords.split("\\s")) {
+                pattern = pattern + "|(" + part + ")";
+                pattern = pattern + "|(" + part.toUpperCase() + ")";
+                pattern = pattern + "|(" + part.toLowerCase() + ")";
+            }
+            Pattern pt = Pattern.compile(pattern);
+            Matcher matcher;
+            for(Pair <Product, String> productAndTitle : productsAndTitles) {
+                matcher = pt.matcher(productAndTitle.getValue());
+                if(matcher.find()) {
+                    matchedProducts.add(productAndTitle.getKey());
+                }
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            poolInst.footConnection(connection);
+        }
+        return matchedProducts;
     }
 
     @Transactional(propagation = Propagation.MANDATORY,
@@ -376,7 +441,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
     @Override
-    public List<Product> getProductsAfterDate(Date date) {   //Пока нет в базе
+    public List<Product> getProductsAfterDate(Date date) {
         Connection connection = poolInst.getConnection();
 
 
@@ -386,12 +451,26 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
     @Transactional(propagation = Propagation.MANDATORY)
     @Override
-    public List<Product> getProductByStatus(ProductStatus status) {  // Пока нет в базе
+    public List<Product> getProductsByStatus(ProductStatus status) {
         Connection connection = poolInst.getConnection();
-
-
-        poolInst.footConnection(connection);
-        return null;
+        List<Product> productsOfCurrentStatus = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_PRODUCTS_BY_STATUS));
+            statement.setString(1, status.name());
+            ResultSet setOfTargetObjectIds = statement.executeQuery();
+            while (setOfTargetObjectIds.next()) {
+                productsOfCurrentStatus.add(getProductById(setOfTargetObjectIds.getString(1)));
+            }
+            setOfTargetObjectIds.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            poolInst.footConnection(connection);
+        }
+        return productsOfCurrentStatus;
     }
 
     @Transactional(propagation = Propagation.MANDATORY,
@@ -444,6 +523,24 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         }
     }
 
+
+    public void buildAndExecuteStatement(Connection connection, String attrType,
+                                         String id, String newObjectId, String value) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement(sql.
+                getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+        statement.setString(1, attrType);
+        ResultSet resultSet = statement.executeQuery();
+        statement = connection.prepareStatement(sql.
+                getProperty(SqlService.SQL_ADD_OBJECT));
+        while(resultSet.next()) {
+            statement.setString(1, id);
+            statement.setString(2, newObjectId);
+            statement.setString(3, resultSet.getString(1));
+            statement.setString(4, value);
+            statement.execute();
+        }
+    }
+
     public static void main(String[] args) throws ClassNotFoundException {
 //        Connection connection = null;
 //        try {
@@ -478,20 +575,15 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //        }
         ProductDaoImpl pDaoImpl = new ProductDaoImpl();
         List<Product> lst;
-        lst = pDaoImpl.getProductsByCategory("WOMEN_CLOTHING");
-        int i = 0;
-        for(Product x : lst ) {
-            System.out.println(i++ +". "+ x.toString());
-        }
-        System.out.println("------------------------------");
+        //===========================
         Product p = new Product();
         p.setCategory("WOMEN_CLOTHING");
         p.setSuperCategory("Fashion");
         p.setOwner("SASHA");
         p.setCost("SASHA NUMBER 1");
-//        p.setProductStatus(Status.MODERATION);
+//      p.setProductStatus(Status.MODERATION);
         p.setDescription("AAAAAAAAAAAAAAAAAAAAAAAA");
-        p.setTitle("PRODUCT");
+        p.setTitle("котик Джерри");
         Map<String, String> map = new HashMap<>();
         map.put("SIZE_", "TEST");
         map.put("CONDITION", "TEST");
@@ -499,9 +591,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         map.put("KIND_OF_CLOTHES", "TEST");
         p.setAttributesAndValues(map);
         pDaoImpl.addProduct(p);
-        lst = pDaoImpl.getProductsByCategory("WOMEN_CLOTHING");
-        //------------------------
-        i = 0;
+        lst = pDaoImpl.getProductsByKeyWords("Котик смешно падает смотреть онлайн");
+        //===========================
+        int i = 0;
         for(Product x : lst ) {
             System.out.println(i++ +". "+ x.toString());
         }

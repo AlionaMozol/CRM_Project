@@ -17,10 +17,10 @@ public interface ProductDao {
     List<Product> getProductsByUsername(String username);
     void editProduct(String id, Product product);
     Product getProductById(String id);
-    List<Product> getProductsByTitle(String title);
+    List<Product> getProductsByKeyWords(String keyWords);
     List<Product> getProductsByCategory(String category);
     List<Product> getProductsAfterDate(Date date);
-    List<Product> getProductByStatus(ProductStatus status);
+    List<Product> getProductsByStatus(ProductStatus status);
     List<Product> getAllProducts();
     void deleteProductById(String id);
 }
