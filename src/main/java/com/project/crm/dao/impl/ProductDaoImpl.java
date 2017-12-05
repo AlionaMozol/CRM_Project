@@ -234,7 +234,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
             //StringBuilder unionForUpdate = new StringBuilder("");
 
-            StringBuilder unionForUpdate = new StringBuilder("UPDATE spring_security_app.values JOIN ( ");
+            StringBuilder unionForUpdate = new StringBuilder("UPDATE values_table JOIN ( ");
 
             boolean first = true;
             for (Map.Entry entry: attributesAndValues.entrySet()) {
@@ -273,7 +273,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 first = false;
             }
 
-            unionForUpdate.append(" ) A ON A.v2=spring_security_app.values.value_id SET spring_security_app.values.Value = A.v1");
+            unionForUpdate.append(" ) A ON A.v2=values_table.value_id SET values_table.Value = A.v1");
 
             statement = connection.prepareStatement(unionForUpdate.toString());
             statement.execute();
