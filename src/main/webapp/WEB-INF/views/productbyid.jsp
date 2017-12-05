@@ -26,7 +26,7 @@
             <div class="col-lg-4 product-img-1">
                 <h2>Nazvanie</h2>
                 <div class="wrapper-for-img">
-                <img src="${contextPath}/resources/img/placeholder-image.png">
+                <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${productid.photo}">
                 </div>
             </div>
             <div class="col-lg-6 description-of-the-product">
@@ -46,6 +46,7 @@
                 </ul>
 
                 </div>
+                <p class="description"> <spring:message code="product.cost"/>: ${productid.cost}</p>
                 <p class="description"> <spring:message code="product.description"/>: ${productid.description}</p>
 
             </div>

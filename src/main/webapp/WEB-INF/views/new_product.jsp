@@ -82,7 +82,7 @@
 </script>
 
 <div style="padding: 100px">
-    <form method="post" action="/new-product/add?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8">
+    <form method="post" action="/new-product/add?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
         <table>
             <tr>
                 <td>
@@ -114,6 +114,9 @@
 
             <tr id="wrapper-for-attributes">
 
+            </tr>
+            <tr>
+                File to upload: <input type="file" name="file"><br />
             </tr>
             <tr>
                 <td><input id="submit-button" hidden="hidden" type="submit"/></td>

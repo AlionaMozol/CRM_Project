@@ -69,6 +69,7 @@ public class SqlService {
 
     public static final String SQL_GET_COMMENT_BY_POST_ID =          "SQL_GET_COMMENT_BY_POST_ID";
     public static final String SQL_GET_COMMENT_ATTR_ID =             "SQL_GET_COMMENT_ATTR_ID";
+    public static final String SQL_GET_PHOTO_ATTR_ID =               "SQL_GET_PHOTO_ATTR_ID";
 
     public static final String SQL_GET_LIKES_BY_USER_ID =            "SQL_GET_LIKES_BY_USER_ID";
     public static final String SQL_GET_LIKE_ATTR_ID =                "SQL_GET_LIKE_ATTR_ID";

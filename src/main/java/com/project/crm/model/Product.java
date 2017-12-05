@@ -18,7 +18,7 @@ public class Product {
     private Map<String, String> attributesAndValues;
     private String title;
     private String description;
-    private Image photo;
+    private String photo;
     private Date publicationDate;
     private String phone;
     private List<String> commentList;
@@ -100,10 +100,6 @@ public class Product {
 
     public void setDescription(String description) { this.description = description; }
 
-    public Image getPhoto() { return photo; }
-
-    public void setPhoto(Image photo) { this.photo = photo; }
-
     public Date getPublicationDate() { return publicationDate; }
 
     public void setPublicationDate(Date publicationDate) { this.publicationDate = publicationDate; }
@@ -146,6 +142,14 @@ public class Product {
 
     public void setCost(String cost) {
         this.cost = cost;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     /**

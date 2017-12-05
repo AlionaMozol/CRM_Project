@@ -14,9 +14,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.*;
+
+import static com.project.crm.services.GoogleDriveAPI.*;
 
 @Controller
 //@RequestMapping("/product")
@@ -97,7 +101,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)
-    public String addProduct(HttpServletRequest request) {
+    public String addProduct(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) throws IOException {
         Product product = new Product();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -105,10 +109,13 @@ public class ProductController {
 
         Map<String, String[]> myMap = request.getParameterMap();
 
+
+
         product.setOwner(name);
         product.setSuperCategory(myMap.get("superCategory")[0]);
         product.setCategory(myMap.get("category")[0]);
         product.setCost(myMap.get("COST")[0]);
+        product.setPhoto(addPohotoToDrive(multipartFile));
 
         List<String> attributes = attributeService.getAttributesByCategory(myMap.get("category")[0]);
         Map<String, String> productAttributes = new HashMap<>();
