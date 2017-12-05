@@ -106,18 +106,31 @@
             </tr>
 
             <tr>
+                <td>
+                    File to upload: <input type="file" name="file"><br />
+                </td>
+            </tr>
+
+            <tr>
+                <td><label>Title:</label>
+                    <input name="TITLE"  value="title"/>
+                </td>
+            </tr>
+            <tr>
                 <td><label>COST:</label>
                     <input name="COST"  value="0"/>
                 </td>
             </tr>
-
-
             <tr id="wrapper-for-attributes">
 
             </tr>
+
             <tr>
-                File to upload: <input type="file" name="file"><br />
+                <td><label>Description:</label>
+                    <input name="DESCRIPTION"  value="DESCRIPTION"/>
+                </td>
             </tr>
+
             <tr>
                 <td><input id="submit-button" hidden="hidden" type="submit"/></td>
             </tr>
