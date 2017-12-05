@@ -1,6 +1,5 @@
 package com.project.crm.controllers;
 
-import com.project.crm.model.Comment;
 import com.project.crm.model.User;
 import com.project.crm.services.ProfileService;
 import com.project.crm.services.UserService;
@@ -73,7 +72,7 @@ public class ProfileController {
        }
        model.addAttribute("profiles", user);
        profileService.updateUser(user);
-       return "redirect: /profiles";
+       return "redirect: /account";
     }
 
 }

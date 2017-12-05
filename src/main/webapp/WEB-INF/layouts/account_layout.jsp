@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -58,11 +59,23 @@
                             </p>
                         </figcaption>
                     </figure>
+                    <security:authorize access="principal.username=='${user.username}'">
+                        <div class="col-xs-12 text-center product-icons">
+                            <a href="${contextPath}/feedback" class="icon">
+                                <img src="${contextPath}/resources/img/feedback_button.png">
+                            </a>
+                        </div>
+                        <div class="col-xs-12 text-center product-icons" id="pencil">
+                            <a href="${contextPath}/profiles" class="icon">
+                                <img src="${contextPath}/resources/img/pencil.png">
+                            </a>
+                        </div>
+                    </security:authorize>
                 </div>
             </div>
             <div class="col-xs-12 divider text-center">
-                <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>-1</strong></h2>
+                <!--<div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>${user.userProductList.size()}</strong></h2>
                     <p>
                         <small>Объявлеиний</small>
                     </p>
@@ -70,7 +83,7 @@
                     </button>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>-1</strong></h2>
+                    <h2><strong>${user.favoriteProductList.size()}</strong></h2>
                     <p>
                         <small>В избранном</small>
                     </p>
@@ -96,10 +109,11 @@
                             <li><a href="#" class="btn disabled" role="button"> Отписатся </a></li>
                         </ul>
                     </div>
-                </div>
+                    -->
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

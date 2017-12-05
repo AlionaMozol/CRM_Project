@@ -67,7 +67,7 @@
                     <li>
                         <div id="dd" class="wrapper-dropdown-5" tabindex="1"><spring:message code="headerAccount"/>
                             <ul class="dropdown">
-                                <li><a href="${contextPath}/profiles"><i class="icon-user"></i><spring:message code="headerMenuProfile"/></a></li>
+                                <!--li><a href="${contextPath}/profiles"><i class="icon-user"></i><spring:message code="headerMenuProfile"/></a></li-->
                                 <li><a href="${contextPath}/account"><i class="icon-user"></i><spring:message code="headerAccount"/></a></li>
                                 <li><a href="${contextPath}/products"><i class="icon-list"></i><spring:message code="headerMenuMyProducts"/></a></li>
                                 <c:if test="${pageContext.request.isUserInRole(\"ROLE_ADMIN\")}">

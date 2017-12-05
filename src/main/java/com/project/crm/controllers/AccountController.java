@@ -28,9 +28,8 @@ public class AccountController {
 
     @RequestMapping(value = "/account/{name}", method = RequestMethod.GET)
     public String account(@PathVariable String name, Model model) {
-        int idOfCurrentUser = userService.findByUsername(name).getId();
-        User currentUser = profileService.getUserByID(idOfCurrentUser);
-        model.addAttribute("user", currentUser);
+        User currentUserFull = userService.findByUsername(name);
+        model.addAttribute("user", currentUserFull);
         return "account";
     }
 }

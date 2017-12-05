@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService{
     @Transactional
     @Override
     public void addProduct(Product product) {
-         productDao.addProduct(product);
+        productDao.addProduct(product);
     }
 
     @Transactional
@@ -44,8 +44,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
-    public List<Product> getProductsByTitle(String title) {
-        return productDao.getProductsByTitle(title);
+    public List<Product> getProductsByKeyWords(String keyWords) {
+        return productDao.getProductsByKeyWords(keyWords);
     }
 
     @Transactional
@@ -62,8 +62,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
-    public List<Product> getProductByStatus(ProductStatus status) {
-        return productDao.getProductByStatus(status);
+    public List<Product> getProductsByStatus(ProductStatus status) {
+        return productDao.getProductsByStatus(status);
     }
 
     @Transactional
