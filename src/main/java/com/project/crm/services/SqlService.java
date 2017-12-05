@@ -67,9 +67,14 @@ public class SqlService {
 
     public static final String SQL_GET_ATTRIBUTES_BY_CATEGORY =      "SQL_GET_ATTRIBUTES_BY_CATEGORY";
 
-    public static final String SQL_GET_COMMENT_BY_POST_ID = "SQL_GET_COMMENT_BY_POST_ID";
-    public static final String SQL_GET_COMMENT_ATTR_ID = "SQL_GET_COMMENT_ATTR_ID";
+    public static final String SQL_GET_COMMENT_BY_POST_ID =          "SQL_GET_COMMENT_BY_POST_ID";
+    public static final String SQL_GET_COMMENT_ATTR_ID =             "SQL_GET_COMMENT_ATTR_ID";
 
+    public static final String SQL_GET_LIKES_BY_USER_ID =            "SQL_GET_LIKES_BY_USER_ID";
+    public static final String SQL_GET_LIKE_ATTR_ID =                "SQL_GET_LIKE_ATTR_ID";
+    public static final String SQL_GET_LIKE_OBJECT_TYPE_ID =         "SQL_GET_LIKE_OBJECT_TYPE_ID";
+    public static final String SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS = "SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS";
+    public static final String SQL_INSERT_LIKE_INTO_VALUES =         "SQL_INSERT_LIKE_INTO_VALUES";
     private SqlService(){}
 
     public static SqlService getInstance(){

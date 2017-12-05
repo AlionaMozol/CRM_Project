@@ -1,18 +1,16 @@
 package com.project.crm.controllers;
 
 import com.project.crm.model.Category;
+import com.project.crm.model.Product;
 import com.project.crm.services.CategoryService;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -24,6 +22,8 @@ public class NavigationController {
     @Autowired
     ProductService productService;
 
+    //Category currentCategory;
+
     @RequestMapping(value = {"/", "/welcome", "/catalog"}, method = RequestMethod.GET)
     public String main(Model model) {
 
@@ -33,6 +33,21 @@ public class NavigationController {
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("product_cost", productService.getAllProducts());
         return "/welcome";
+    }
+
+   /* @RequestMapping(value = "/post-category")
+    public void addComment(@RequestBody Category category){
+        currentCategory = category;
+    }*/
+
+    @RequestMapping(value = "/get-products-by-category", method = RequestMethod.GET)
+    public @ResponseBody
+    List showProducts(@RequestParam String category){
+        System.out.println(category);
+        List<Product> productList = null;
+        productList = productService.getProductsByCategory(category);
+        System.out.println(productList);
+        return productList;
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)

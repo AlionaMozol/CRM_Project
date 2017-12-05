@@ -69,4 +69,9 @@ public class Category {
         result = 31 * result + (supercategory != null ? supercategory.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
