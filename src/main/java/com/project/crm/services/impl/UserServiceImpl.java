@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,5 +48,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User eavUserRegistration(int securityId) {
+        User user = new User();
+        //userForm.getId()
+        user.setId(securityId);
+        user.setCity("");
+        user.setTelephone("");
+        user.setDateOfBirth("");
+        user.setEmail("");
+        user.setSex("");
+        user.setFio("");
+        user.setStatus("UNBLOCKED");
+        user.setRating("0");
+        Date date = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
+        user.setAccountCreationDate(formatForDateNow.format(date));
+        return user;
     }
 }
