@@ -53,20 +53,7 @@ public class UserController {
         }
 
         userService.save(userForm);
-        User user = new User();
-        user.setId(userForm.getId());
-        user.setCity("");
-        user.setTelephone("");
-        user.setDateOfBirth("");
-        user.setEmail("");
-        user.setSex("");
-        user.setFio("");
-        user.setStatus("0");
-        user.setRating("0");
-        Date date = new Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
-        user.setAccountCreationDate(formatForDateNow.format(date));
-        profileService.addUser(user);
+        profileService.addUser(userService.eavUserRegistration(userForm.getId()));
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
         return "redirect:/welcome";
