@@ -395,3 +395,28 @@ img {
     width: 100%;
     height: 100%
 }
+
+/*--Add product--*/
+.add-product-attribute{
+    text-align: left;
+}
+
+.add-product-attribute input{
+    height: 23%;
+}
+
+.label-attribute{
+    font-style: italic;
+    margin-left: 40px;
+    margin-bottom: 0;
+    color: #122b40;
+}
+
+.add-product-description{
+    width: 300px;
+    height: auto;
+}
+
+.row.add-product-category{
+    margin-left: 5%;
+}

@@ -1,27 +1,26 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <!DOCTYPE html>
 
 <head>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
 
-    <title>Netcufar | New Product</title>
-
-    <script src="../../resources/js/new_product.js"></script>
+    <title>Netcufar | Products By Id</title>
 
 </head>
 
 <body>
 
-<%@include file="../layouts/preloader.jsp"%>
-<%@include file="../layouts/high_menu_bar.jsp"%>
-
+<%@include file="../layouts/preloader.jsp" %>
+<%@include file="../layouts/high_menu_bar.jsp" %>
 <script type="text/JavaScript"
         src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js">
 </script>
@@ -39,13 +38,9 @@
                 $('#submit-button').show();
                 $('#wrapper-for-attributes').empty();
                 $.each(data, function (index, value) {
-                    var newInput = (
-                        "<tr>" +
-                        "   <td>" + value + "</td>" +
-                        "   <td><label>" +
-                        "       <input name=" + value + ">" +
-                        "   </label></td>" +
-                        "</tr>");
+                    var newInput = ("<p class='add-product-attribute'>" +
+                            "<label class='label-attribute'>" +  value  +"</label>" +
+                        "<input name=" + value + " placeholder=" + 'your '+  value +"/></p>");
                     $('#wrapper-for-attributes').append(newInput);
                 })
             },
@@ -81,62 +76,57 @@
     }
 </script>
 
-<div style="padding: 100px">
+<div class="container content">
     <form method="post" action="/new-product/add?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
-        <table>
-            <tr>
-                <td>
-                    <p> <label>Category:</label>
-                        <select name="superCategory" id="select_top_category" onchange="showSubCategories()">
-                        <option disabled>Category</option>
-                        <c:forEach items="${topCategories}" var="topCategory">
+    <div class="row wrapper-for-product">
+        <div class="col-lg-4 product-img-1">
+            <h2>Nazvanie</h2>
+            <div class="wrapper-for-img">
+                <img src="${contextPath}/resources/img/placeholder-image.png">
+            </div>
+            File to upload: <input type="file" name="file"><br />
+        </div>
+        <div class="col-lg-6 description-of-the-product">
+            <p class="name-of-product"><spring:message code="product.characteristics"/></p>
+            <div class="row add-product-category">
+                <select name="superCategory" id="select_top_category" onchange="showSubCategories()">
+                    <option disabled>Category</option>
+                    <c:forEach items="${topCategories}" var="topCategory">
                         <option value="${topCategory.title}">${topCategory.title}</option>
-                        </c:forEach>
-                        </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>
-                        <label>Type:</label>
-                        <select name="category" id="select_sub_category" onchange="showAttributes()">
-                            <option disabled>Type</option></select>
-                    </p>
-                </td>
-            </tr>
+                    </c:forEach>
+                </select>
 
-            <tr>
-                <td>
-                    File to upload: <input type="file" name="file"><br />
-                </td>
-            </tr>
+                <select name="category" id="select_sub_category" onchange="showAttributes()">
+                    <option disabled>Type</option>
+                </select>
+            </div>
 
-            <tr>
-                <td><label>Title:</label>
-                    <input name="TITLE"  value="title"/>
-                </td>
-            </tr>
-            <tr>
-                <td><label>COST:</label>
-                    <input name="COST"  value="0"/>
-                </td>
-            </tr>
-            <tr id="wrapper-for-attributes">
+            <div class="col-sm-3">
+                <p class="add-product-attribute" >
+                    <label class="label-attribute"><spring:message code="TITLE"/></label>
+                    <input name="TITLE"  placeholder="<spring:message code="TITLE"/>"/>
+                </p>
+            </div>
 
-            </tr>
+            <div id="wrapper-for-attributes" class="col-sm-3"></div>
 
-            <tr>
-                <td><label>Description:</label>
-                    <input name="DESCRIPTION"  value="DESCRIPTION"/>
-                </td>
-            </tr>
-
-            <tr>
-                <td><input id="submit-button" hidden="hidden" type="submit"/></td>
-            </tr>
-        </table>
+            <div class="col-sm-3">
+                <p class="add-product-attribute">
+                    <label class="label-attribute"><spring:message code="COST"/> </label>
+                    <input name="COST"  placeholder="<spring:message code="COST"/>"/>
+                </p>
+                <p class="add-product-attribute">
+                    <label class="label-attribute"><spring:message code="DESCRIPTION"/></label>
+                    <textarea class="add-product-description" name="DESCRIPTION"  placeholder="<spring:message code="DESCRIPTION"/>"></textarea>
+                </p>
+            </div>
+            <input id="submit-button" hidden="hidden" type="submit"/>
+        </div>
+    </div>
     </form>
 
+
 </div>
+
 
 </body>
