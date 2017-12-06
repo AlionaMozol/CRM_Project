@@ -5,9 +5,11 @@ import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInsta
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
@@ -33,10 +35,15 @@ public class GoogleDriveAPI {
         private static final String APPLICATION_NAME =
                 "Drive API Java Quickstart";
 
+   static String myJarPath = GoogleDriveAPI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    static String dirPath = new java.io.File(myJarPath).getAbsolutePath();
+
+
         /**
          * Directory to store user credentials for this application.
          */
-        private static final java.io.File DATA_STORE_DIR = new java.io.File( "./DriveJava/drive_sample");
+        private static final java.io.File DATA_STORE_DIR = new java.io.File(dirPath);
+
 
         /**
          * Global instance of the {@link FileDataStoreFactory}.
@@ -114,8 +121,9 @@ public class GoogleDriveAPI {
         }*/
 
 
-    private static Credential authorize() throws Exception {
+    /*private static Credential authorize() throws Exception {
         // load client secrets
+        System.out.println(DATA_STORE_DIR.getAbsolutePath());
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
                 new InputStreamReader(GoogleDriveAPI.class.getResourceAsStream("/client_secret.json")));
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
@@ -131,12 +139,15 @@ public class GoogleDriveAPI {
                 .setDataStoreFactory(dataStoreFactory).build();
         // authorize
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
-    }
+    }*/
 
     public static Drive getDriveService() {
-        Credential credential = null;
+       /* Credential credential = null;
         try {
             credential = authorize();
+            System.out.println(" accesstoken " + credential.getAccessToken());
+            System.out.println(" refresh token " + credential.getRefreshToken());
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Authorize troubles");
@@ -144,12 +155,21 @@ public class GoogleDriveAPI {
         return new Drive.Builder(
                 httpTransport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
-                .build();
+                .build();*/
+        HttpTransport httpTransport = new NetHttpTransport();
+        JsonFactory jsonFactory = new JacksonFactory();
+        GoogleCredential credential = new GoogleCredential.Builder()
+                .setTransport(httpTransport)
+                .setJsonFactory(jsonFactory)
+                .setClientSecrets("474244092827-bpc41ip38d02pqnrg59hhtos0k42jphh.apps.googleusercontent.com", "3D8aaDyXT_BUZDTjwdj19l3a").build();
+        credential.setAccessToken("ya29.GlsZBZaDhdk8CH6Nh7sBXUDLNxOwL7sw9GBvOFYqKgZOk6sjGxIcaYg1n-YwV1tZBsqL0FYb0_jhK_ob8-gF4WaA3OcUKan1BHOkNKChVgWT1taGO4USVNc6vNBQ");
+        return new Drive.Builder(httpTransport, jsonFactory, credential).setApplicationName(APPLICATION_NAME).build();
     }
 
 
 
     public static String addPohotoToDrive(MultipartFile multipartFile) throws IOException {
+
             Drive driveService = getDriveService();
             File fileMetadata = new File();
             String folderId = "1T6MFpWCdnYIGdNxuwvkEnfqDBWldFfhI"; // folder id at google drive
