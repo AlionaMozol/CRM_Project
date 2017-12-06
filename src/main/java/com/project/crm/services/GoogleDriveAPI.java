@@ -121,7 +121,7 @@ public class GoogleDriveAPI {
         }*/
 
 
-    /*private static Credential authorize() throws Exception {
+  /*  private static Credential authorize() throws Exception {
         // load client secrets
         System.out.println(DATA_STORE_DIR.getAbsolutePath());
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
@@ -161,8 +161,14 @@ public class GoogleDriveAPI {
         GoogleCredential credential = new GoogleCredential.Builder()
                 .setTransport(httpTransport)
                 .setJsonFactory(jsonFactory)
-                .setClientSecrets("474244092827-bpc41ip38d02pqnrg59hhtos0k42jphh.apps.googleusercontent.com", "3D8aaDyXT_BUZDTjwdj19l3a").build();
-        credential.setAccessToken("ya29.GlsZBZaDhdk8CH6Nh7sBXUDLNxOwL7sw9GBvOFYqKgZOk6sjGxIcaYg1n-YwV1tZBsqL0FYb0_jhK_ob8-gF4WaA3OcUKan1BHOkNKChVgWT1taGO4USVNc6vNBQ");
+                .setClientSecrets("474244092827-bpc41ip38d02pqnrg59hhtos0k42jphh.apps.googleusercontent.com", "3D8aaDyXT_BUZDTjwdj19l3a").build()
+                .setRefreshToken("1/9ASl30Jb0QBKcgvL9PHGgZH-6nNTsiNgWBtC8cSGK70");
+       // credential.setAccessToken("ya29.GlsZBZaDhdk8CH6Nh7sBXUDLNxOwL7sw9GBvOFYqKgZOk6sjGxIcaYg1n-YwV1tZBsqL0FYb0_jhK_ob8-gF4WaA3OcUKan1BHOkNKChVgWT1taGO4USVNc6vNBQ");
+        try {
+            credential.refreshToken();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new Drive.Builder(httpTransport, jsonFactory, credential).setApplicationName(APPLICATION_NAME).build();
     }
 
