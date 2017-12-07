@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -47,12 +48,12 @@ public class ProductController {
 
 
 
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @RequestMapping(value = "/my_products", method = RequestMethod.GET)
     public String allProducts (Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("products", productService.getProductsByUsername(name));
-        return "/products";
+        return "/my_products";
     }
 
 
@@ -67,7 +68,7 @@ public class ProductController {
     @RequestMapping(value = "/product/edit/{id}", method = RequestMethod.POST)
     public String editProduct(@PathVariable String id, @ModelAttribute("EditProduct") Product product) {
         productService.editProduct(id, product);
-        return "redirect:/products";
+        return "redirect:/my_products";
     }
     /////////////////////////////////
 
@@ -75,29 +76,21 @@ public class ProductController {
     public String notModeratedProducts(Model model){
         //is expected
         //model.addAttribute("products", productService.getProductByStatus(Status.MODERATION));
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("my_products", productService.getAllProducts());
         return "/product_moderation";
 
     }
 
     @RequestMapping(value = "/new_product", method = RequestMethod.GET)
-    public String addProduct(Model model) {
+    public String addProduct(Model model, HttpServletRequest request) {
+        Locale locale = RequestContextUtils.getLocale(request);
+
+        ResourceBundle bundle = ResourceBundle.getBundle("locales.messages", locale);
+        model.addAttribute("keys", bundle.getKeys());
         model.addAttribute("topCategories", categoryService.getAllTopCategories());
         return "new_product";
     }
 
-    @ModelAttribute("product")
-    public Product newProduct() {
-        Product product = new Product();
-        Map<String,String> map = new HashMap<>();
-        map.put("COST","");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        product.setOwner(name);
-
-        product.setAttributesAndValues(map);
-        return product;
-    }
 
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)
     public String addProduct(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) throws IOException {
@@ -121,13 +114,13 @@ public class ProductController {
         List<String> attributes = attributeService.getAttributesByCategory(parameterMap.get("category")[0]);
 
         Map<String, String> productAttributes = new HashMap<>();
-        for(int i = 0; i < attributes.size(); i++){
-            productAttributes.put(attributes.get(i), parameterMap.get(attributes.get(i))[0]);
+        for (String attribute : attributes) {
+            productAttributes.put(attribute, parameterMap.get(attribute)[0]);
         }
 
         product.setAttributesAndValues(productAttributes);
         productService.addProduct(product);
-        return "redirect:/products";
+        return "redirect:/my_products";
     }
 
     @RequestMapping(value = "/attributes", method = RequestMethod.GET)
@@ -136,9 +129,4 @@ public class ProductController {
         return attributeService.getAttributesByCategory(subCategory);
     }
 
-//    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
-//    public String getPayment(@PathVariable("id") long id, Model model) {
-//        model.addAttribute("payment", productService.getProductById(id));
-//        return "/payment.jsp";
-//    }
 }

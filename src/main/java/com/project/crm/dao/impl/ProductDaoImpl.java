@@ -184,6 +184,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             buildAndExecuteStatement(connection, "DESCRIPTION", UUID.randomUUID().toString(),
                     newObjectId, product.getDescription());
 
+            buildAndExecuteStatement(connection, "PHOTO", UUID.randomUUID().toString(),
+                    newObjectId, product.getPhoto());
+
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 //            statement = connection.prepareStatement(sql.
@@ -348,6 +351,8 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     currentProduct.setTitle(resultSet.getString(2));
                 } else if(resultSet.getString(1).equals("DESCRIPTION")) {
                     currentProduct.setDescription(resultSet.getString(2));
+                } else if(resultSet.getString(1).equals("PHOTO")) {
+                    currentProduct.setPhoto(resultSet.getString(2));
                 } else if(resultSet.getString(1).equals("STATUS")) {
                     currentProduct.setProductStatus(ProductStatus.valueOf(resultSet.getString(2)));
                 } else if(resultSet.getString(1).equals("PRODUCT_CREATE_DATE_TIME")) {

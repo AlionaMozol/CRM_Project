@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -26,6 +27,11 @@
 </script>
 
 <script type="text/javascript">
+    var messages = [];
+    <c:forEach var="key" items="${keys}">
+        messages["<spring:message text="${key}" javaScriptEscape="true"/>"] = "<spring:message code='${key}' javaScriptEscape='true' />";
+    </c:forEach>
+
     function showAttributes() {
         $.ajax({
             type: 'GET',
@@ -37,10 +43,16 @@
             success: function (data) {
                 $('#submit-button').show();
                 $('#wrapper-for-attributes').empty();
+
+
+
                 $.each(data, function (index, value) {
-                    var newInput = ("<p class='add-product-attribute'>" +
-                            "<label class='label-attribute'>" +  value  +"</label>" +
-                        "<input name=" + value + " placeholder=" + 'your '+  value +"/></p>");
+                    var newInput = (
+                        "<p class='add-product-attribute'>" +
+                            "<label class='label-attribute'> " +
+                        messages[value] +
+                        "</label>" +
+                        "<input name=" + value + " placeholder=" +  messages[value] +"></p>");
                     $('#wrapper-for-attributes').append(newInput);
                 })
             },
@@ -64,7 +76,7 @@
                 $('#wrapper-for-attributes').empty();
                 $('#select_sub_category').empty();
                 $.each(data, function (index, value) {
-                    var newOption = ("<option value=" + value.title + ">" + value.title + "</option>");
+                    var newOption = ("<option value=" + value.title + ">" + messages[value.title] + "</option>");
                     $('#select_sub_category').append(newOption);
                 })
             },
@@ -77,7 +89,7 @@
 </script>
 
 <div class="container content">
-    <form method="post" action="/new-product/add?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
+    <form method="post" action="${pageContext.request.contextPath}/new-product/add?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
     <div class="row wrapper-for-product">
         <div class="col-lg-4 product-img-1">
             <h2>Nazvanie</h2>
@@ -92,7 +104,7 @@
                 <select name="superCategory" id="select_top_category" onchange="showSubCategories()">
                     <option disabled>Category</option>
                     <c:forEach items="${topCategories}" var="topCategory">
-                        <option value="${topCategory.title}">${topCategory.title}</option>
+                        <option value="${topCategory.title}"><spring:message code="${topCategory.title}"/> </option>
                     </c:forEach>
                 </select>
 
@@ -120,7 +132,7 @@
                     <textarea class="add-product-description" name="DESCRIPTION"  placeholder="<spring:message code="DESCRIPTION"/>"></textarea>
                 </p>
             </div>
-            <input id="submit-button" hidden="hidden" type="submit"/>
+            <input class="btn btn-success" hidden="hidden" type="submit"/>
         </div>
     </div>
     </form>

@@ -33,7 +33,7 @@
             <div class="col-sm-4">
                 <div class="product">
                     <div class="product-img">
-                        <a href="#"><img src="${contextPath}/resources/img/placeholder-image.png" alt=""></a>
+                        <a href="#"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"/></a>
                         <div class="product-icons">
                             <div class="product-icons-item">
                                 <a href="#" class="icon">
@@ -48,7 +48,7 @@
                     </p>
 
                     <p class="product-desc">${product.description}</p>
-                    <p class="product-category">${product.category}</p>
+                    <p class="product-category"><spring:message code="${product.category}"/> </p>
                     <p class="product-price">${product.cost}</p>
                     <%--<c:forEach items="${product.attributesAndValues}" var="cost">
                                                 <c:if test="${cost.key=='COST'}">

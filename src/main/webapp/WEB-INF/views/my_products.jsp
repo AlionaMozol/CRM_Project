@@ -29,7 +29,7 @@
                 <div class="col-sm-4">
                     <div class="product">
                         <div class="product-img">
-                            <a href="#"><img src="${contextPath}/resources/img/placeholder-image.png" alt=""></a>
+                            <a href="#"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"></a>
                             <div class="product-icons">
                                 <div class="product-icons-item">
                                     <a href="#" class="icon">
@@ -40,7 +40,7 @@
                         </div>
 
                         <p class="product-title">
-                            <a href="${contextPath}/product/${product.id}"><strong>${product.id}</strong></a>
+                            <a href="${contextPath}/product/${product.id}"><strong>${product.title}</strong></a>
                         </p>
 
                         <p class="product-desc">${product.description}</p>
