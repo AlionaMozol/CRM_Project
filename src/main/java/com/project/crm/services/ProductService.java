@@ -1,10 +1,8 @@
 package com.project.crm.services;
 
 import com.project.crm.model.Product;
-import com.project.crm.model.User;
 import com.project.crm.model.enums.ProductStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +16,7 @@ public interface ProductService {
     List<Product> getProductsByKeyWords(String keyWords);
     List<Product> getProductsByUsername(String username);
     List<Product> getProductsByCategory(String category);
+    List<Product> getProductsBySupercategory(String supercategory);
     List<Product> getProductsAfterDate(Date date);
     List<Product> getProductsByStatus(ProductStatus status);
     List<Product> getAllProducts();

@@ -28,33 +28,24 @@
 
         $(document).on('click','.list-group-item',function(event){
             event.preventDefault();
-            var category = event.currentTarget;
-
+            var supercategory = event.currentTarget.id;
+            console.log(supercategory);
             $.ajax({
-                /*type : "POST",
-                 contentType : "application/json",
-                 url : "/post-category",
-                 data : JSON.stringify(category),
-                 dataType : 'json',
-                 complete:function () {
-                 doAjax();
-                 }*/
-
-                url : '/get-products-by-category',
+                url : '/get-products-by-supercategory',
                 type: 'GET',
                 dataType: 'json',
                 contentType: 'application/json',
                 data : ({
-                    id: category
+                    supercategory: supercategory
                 }),
                 success: function (data) {
                     $('.products').empty();
                     $.each(data, function(id, key){
-                        var product =
+                        var product = ///// spring:message missing
                                 "<div class=\"col-sm-4\">\n" +
                                 "   <div class=\"product\">\n" +
                                 "       <div class=\"product-img\">\n" +
-                                "           <img src=\"${contextPath}/resources/img/placeholder-image.png\" alt=\"\">\n" +
+                                "           <a><img src=\"https://drive.google.com/uc?export=download&confirm=no_antivirus&id=" + key.photo + "\"/></a>\n" +
                                 "           <div class=\"product-icons\">\n" +
                                 "               <div class=\"product-icons-item\">\n" +
                                 "                   <a href=\"#\" class=\"icon\">\n" +
@@ -64,7 +55,7 @@
                                 "           </div>\n" +
                                 "       </div>\n" +
                                 "       <p class=\"product-title\">\n" +
-                                "           <a href=\"${contextPath}/product/" + key.id + "\"><strong>" + key.id + "</strong></a>\n" +
+                                "           <a href=\"${contextPath}/product/" + key.id + "\"><strong>" + key.title + "</strong></a>\n" +
                                 "       </p>\n" +
                                 "       <p class=\"product-desc\">" + key.description + "</p>\n" +
                                 "       <p class=\"product-category\">" + key.category + "</p>\n" +
@@ -77,8 +68,26 @@
             });
             return false;
         });
-        /*$(document).ready(function($) {
+       /* $(document).ready(function($) {
             $(".list-group-item").click(function(event) {
+                event.preventDefault();
+                var category = event.currentTarget.id;
+                console.log(category);
+
+                /*$.ajax({
+                    url : 'getCharNum',
+                    type: 'GET',
+                    //dataType: 'json',
+                    //contentType: 'application/json',
+                    data : ({
+                        text: category
+                    }),
+                    success: function (data) {
+                        console.log(data);
+                        var result = data;
+                        $("#result_text").text(result);
+                    }
+                });
 
             });
         });*/

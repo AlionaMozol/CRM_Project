@@ -3,8 +3,11 @@ package com.project.crm.controllers;
 import com.project.crm.model.Category;
 import com.project.crm.model.Product;
 import com.project.crm.services.CategoryService;
+import com.project.crm.services.LikeService;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +25,9 @@ public class NavigationController {
     @Autowired
     ProductService productService;
 
-    //Category currentCategory;
+    LikeService likeService;
 
-    @RequestMapping(value = {"/", "/welcome", "/catalog"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String main(Model model) {
 
         List<Category> supercategoryList = null;
@@ -35,19 +38,45 @@ public class NavigationController {
         return "/welcome";
     }
 
-   /* @RequestMapping(value = "/post-category")
-    public void addComment(@RequestBody Category category){
-        currentCategory = category;
+   /*
+    @RequestMapping(value = "/getCharNum", method = RequestMethod.GET)
+    public @ResponseBody String getCharNum(@RequestParam String text) {
+
+        String result = null;
+
+        if (text != null) {
+            result = text + "   " + text.length();
+        }
+        System.out.println(result);
+        return result;
     }*/
 
-    @RequestMapping(value = "/get-products-by-category", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-products-by-supercategory", method = RequestMethod.GET)
     public @ResponseBody
-    List showProducts(@RequestParam String category){
-        System.out.println(category);
+    List showProducts(@RequestParam String supercategory){
+        System.out.println(supercategory);
         List<Product> productList = null;
-        productList = productService.getProductsByCategory(category);
+        //category = "WOMEN_CLOTHING";
+        //productList = productService.getProductsByCategory(category);
+        productList = productService.getProductsBySupercategory(supercategory);
         System.out.println(productList);
+        if (productList != null) {
+            System.out.println("Super!");
+        } else {
+            System.out.println("Nothing to show.\n");
+        }
+
         return productList;
+    }
+
+    @Secured(value={"ROLE_ADMIN", "ROLE_USER"})
+    @RequestMapping(value = "/add-product-to-favorites", method = RequestMethod.POST)
+    public void addProductToFavorites(@RequestParam String productId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        System.out.println("Almost");
+        likeService.addProductToFavorites(productId, name);
+        System.out.println("Added");
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -55,10 +84,12 @@ public class NavigationController {
         return "admin";
     }
 
-
-    @RequestMapping(value = "/catalog", method = RequestMethod.GET)
-    public String catalog(Model model) {
-        return "catalog";
+    @RequestMapping(value = "/favorites", method = RequestMethod.GET)
+    public String favorites(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("products", likeService.getFavoriteProductsByUsername(name));
+        return "/favorites";
     }
 
     @RequestMapping(value = "/about", method = RequestMethod.GET)
