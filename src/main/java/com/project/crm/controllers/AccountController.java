@@ -20,15 +20,14 @@ import java.util.List;
 @Controller
 public class AccountController {
 
-    @Autowired
-    UserService userService;
+
 
     @Autowired
     ProfileService profileService; //im use it for account!
 
     @RequestMapping(value = "/account/{name}", method = RequestMethod.GET)
     public String account(@PathVariable String name, Model model) {
-        User currentUserFull = userService.findByUsername(name);
+        User currentUserFull = profileService.getUserByUsername(name);
         model.addAttribute("user", currentUserFull);
         return "account";
     }

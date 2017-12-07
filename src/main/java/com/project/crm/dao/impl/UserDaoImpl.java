@@ -26,6 +26,7 @@ import java.util.UUID;
 
 public class UserDaoImpl extends DAO implements UserDao {
 
+
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
     @Override
@@ -296,6 +297,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
+
                 user = new User();
                 user.setId(rs.getInt(1));
                 user.setUsername(username);
@@ -312,11 +314,10 @@ public class UserDaoImpl extends DAO implements UserDao {
     }
 
 
-    /*public static void main(String [] args) throws SQLException {
+    public static void main(String [] args) throws SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
         System.out.println(userDao.findUserByUsername("123456789").getId());
-        ProfileServiceImpl profileService = new ProfileServiceImpl();
-        System.out.println(profileService.getUserByID(11).getId());
+        //System.out.println(userDao.getUserById(11).getUsername());
 
 
         //userDao.deleteRegisteredUserDao(registeredUser);
@@ -344,7 +345,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
 
 
-   // }
+    }
 
 
 //    public static void main(String[] args) throws ClassNotFoundException {

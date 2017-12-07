@@ -135,7 +135,7 @@ user_roles
     });
     $('#fio').on("input",function() {
         if($(this).val() != '') {
-            var pattern = /^[а-яА-ЯёЁa-zA-Z\\s-]{0,40}$/i;
+            var pattern = /^[а-яА-ЯёЁa-zA-Z\s-]{0,40}$/i;
             if(pattern.test($(this).val())){
                 $(this).css({'border' : '1px solid #04f92d'});
             } else {
