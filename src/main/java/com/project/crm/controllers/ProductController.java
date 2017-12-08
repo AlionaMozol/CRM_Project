@@ -76,7 +76,7 @@ public class ProductController {
     public String notModeratedProducts(Model model){
         //is expected
         //model.addAttribute("products", productService.getProductByStatus(Status.MODERATION));
-        model.addAttribute("my_products", productService.getAllProducts());
+        model.addAttribute("nmod_products", productService.getAllProducts());
         return "/product_moderation";
 
     }

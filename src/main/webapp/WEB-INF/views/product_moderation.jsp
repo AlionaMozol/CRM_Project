@@ -13,21 +13,16 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 
-<html>
-
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Products moderation</title>
+    <title>Product moderation</title>
 
+    <%--
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="${contextPath}/resources/css/catalog.css" rel="stylesheet">
-    <%--
     <link rel="stylesheet"  href="../../resources/css/main.css">
     --%>
 </head>
@@ -36,7 +31,8 @@
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
     <%@include file="../layouts/left_menu_layout.jsp"%>
-    <div class="container content">
+    <%@include file="../layouts/moderation_layout.jsp"%>
+    <%--<div class="container content">
         <div class="col-lg-9 products">
 
             <c:forEach items="${products}" var="product">
@@ -45,13 +41,6 @@
                     <div class="product">
                         <div class="product-img">
                             <a href="#"><img src="${contextPath}/resources/img/placeholder-image.png" alt=""></a>
-                            <%--<div class="product-icons">
-                                <div class="product-icons-item">
-                                    <a href="#" class="icon">
-                                        <img src="${contextPath}/resources/img/heart.png">
-                                    </a>
-                                </div>
-                            </div>--%>
                         </div>
                         <p class="product-title-mod">
                             <a href="${contextPath}/product/${product.id}"><strong>${product.id}</strong></a>
@@ -71,8 +60,7 @@
             </c:forEach>
 
         </div>
-    </div>
-    <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-
+    </div>--%>
+    <%--<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+--%>
 </body>
-</html>
