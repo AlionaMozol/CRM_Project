@@ -1,5 +1,6 @@
 package com.project.crm.controllers;
 
+import com.project.crm.model.Category;
 import com.project.crm.model.Comment;
 import com.project.crm.model.Product;
 import com.project.crm.services.AttributeService;
@@ -76,6 +77,7 @@ public class ProductController {
     public String notModeratedProducts(Model model){
         //is expected
         //model.addAttribute("products", productService.getProductByStatus(Status.MODERATION));
+        model.addAttribute("productCategory", categoryService.getAllTopCategories());
         model.addAttribute("nmod_products", productService.getAllProducts());
         return "/product_moderation";
 

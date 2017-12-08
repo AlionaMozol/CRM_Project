@@ -101,14 +101,14 @@
         <div class="col-lg-6 description-of-the-product">
             <p class="name-of-product"><spring:message code="product.characteristics"/></p>
             <div class="row add-product-category">
-                <select name="superCategory" id="select_top_category" onchange="showSubCategories()">
+                <select name="superCategory" id="select_top_category" onclick="showSubCategories()">
                     <option disabled>Category</option>
                     <c:forEach items="${topCategories}" var="topCategory">
-                        <option value="${topCategory.title}"><spring:message code="${topCategory.title}"/> </option>
+                        <option value="${topCategory.title}" ><spring:message code="${topCategory.title}"/> </option>
                     </c:forEach>
                 </select>
 
-                <select name="category" id="select_sub_category" onchange="showAttributes()">
+                <select name="category" id="select_sub_category" onclick="showAttributes()">
                     <option disabled>Type</option>
                 </select>
             </div>
