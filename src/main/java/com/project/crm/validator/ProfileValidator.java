@@ -51,6 +51,19 @@ public class ProfileValidator implements Validator {
         return true;
     }
 
+    private boolean checkUniquenessTelephone(String telephone){
+        int id = profileService.getUserIdByTelephone(telephone);
+        org.springframework.security.core.userdetails.User spring_user =
+                (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+                        getContext().getAuthentication().getPrincipal();
+        String username = spring_user.getUsername();
+        int  user_id = userService.findByUsername(username).getId();
+        if(id!=-1 && user_id!=id){
+            return false;
+        }
+        return true;
+    }
+
     private boolean checkField(String field, String pattern){
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(field);
@@ -67,6 +80,15 @@ public class ProfileValidator implements Validator {
             } else {
                 if (!checkUniquenessEmail(user.getEmail())) {
                     errors.rejectValue("email", "emailUniq.error");
+                }
+            }
+        }
+        if(!user.getTelephone().equals("")) {
+            if (!checkField(user.getTelephone(),telephonePatten)) {
+                errors.rejectValue("telephone", "telephone.error");
+            } else {
+                if (!checkUniquenessTelephone(user.getTelephone())) {
+                    errors.rejectValue("telephone", "telephone.error");
                 }
             }
         }

@@ -76,6 +76,9 @@
                                 <c:if test="${pageContext.request.isUserInRole(\"ROLE_ADMIN\")}">
                                     <li><a href="${contextPath}/not_moderated"><i class="icon-list"></i><spring:message code="headerMenuProductModeration"/></a></li>
                                 </c:if>
+                                <c:if test="${pageContext.request.isUserInRole(\"ROLE_ADMIN\")}">
+                                    <li><a href="${contextPath}/all_profiles"><i class="icon-list"></i><spring:message code="headerMenuAllProfiles"/></a></li>
+                                </c:if>
                                 <li><a href="#"><i class="icon-cog"></i><spring:message code="headerMenuSettings"/></a></li>
                                 <li>
                                     <c:if test="${pageContext.request.userPrincipal.name != null}">

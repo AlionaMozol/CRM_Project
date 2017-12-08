@@ -99,7 +99,29 @@ public class UserDaoImpl extends DAO implements UserDao {
         poolInst.footConnection(connection);
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
+    @Override
+    public List<User> getAllUsers() {
+        Connection connection = poolInst.getConnection();
+        User user = new User();;
+        List<User>userList = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM user_roles WHERE role_id=1");
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                user=getUserById(rs.getInt(1));
+                userList.add(user);
+            }
+            statement.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        poolInst.footConnection(connection);
+        return userList;
+    }
 
 
     @Transactional(propagation = Propagation.MANDATORY,
@@ -260,7 +282,59 @@ public class UserDaoImpl extends DAO implements UserDao {
 
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
+    @Override
+    public int getUserIdByTelephone(String telephone) {
+        Connection connection = poolInst.getConnection();
+        User user = new User();
+        try {
 
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+            statement.setString(1,"USER");
+            ResultSet resultSet = statement.executeQuery();
+            String objectTypeId="";
+            String objectId="";
+            if(resultSet.next()){
+                objectTypeId=resultSet.getString(1);
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
+            statement.setString(1,objectTypeId);
+            statement.setString(2,"TELEPHONE");
+            statement.setString(3,telephone);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                objectId=resultSet.getString(1);
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_USER_ATTRIBUTES));
+            statement.setString(1,objectId);
+            resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                if (resultSet.getString("attribute").equals("SECURITY_ID")){
+                    user.setId(resultSet.getInt("value"));
+                    statement.close();
+                    resultSet.close();
+                    poolInst.footConnection(connection);
+                    System.out.println(user.getId());
+                    return user.getId();
+                }
+            }
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        poolInst.footConnection(connection);
+        return -1;
+    }
+
+
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public User findUserById(int id) {
         Connection connection = poolInst.getConnection();
@@ -308,15 +382,114 @@ public class UserDaoImpl extends DAO implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         poolInst.footConnection(connection);
         return user;
+    }
+
+    @Override
+    public void updateUser(User user) {
+        User oldUser = getUserById(user.getId());
+        Connection connection = poolInst.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+            statement.setString(1,"USER");
+            ResultSet resultSet = statement.executeQuery();
+            String objectTypeId="";
+            String objectId="";
+            if(resultSet.next()){
+                objectTypeId=resultSet.getString(1);
+            }
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
+            statement.setString(1,objectTypeId);
+            statement.setString(2,"SECURITY_ID");
+            statement.setInt(3,user.getId());
+            resultSet = statement.executeQuery();
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_UPDATE_PROFILE));
+
+            if (resultSet.next()){
+                objectId=resultSet.getString(1);
+            }
+            if (!oldUser.getFio().equals(user.getFio())){
+                statement.setString(1,user.getFio());
+                statement.setString(2,objectId);
+                statement.setString(3,"fd93b41b-cbcf-11e7-97a3-94de807a9669");
+                statement.execute();
+            }
+
+            if(!oldUser.getTelephone().equals(user.getTelephone())){
+                statement.setString(1,user.getTelephone());
+                statement.setString(2,objectId);
+                statement.setString(3,"fd9c98fa-cbcf-11e7-97a3-94de807a9669");
+                statement.execute();
+
+            }
+            if(!oldUser.getDateOfBirth().equals(user.getDateOfBirth())){
+                statement.setString(1,user.getDateOfBirth());
+                statement.setString(2,objectId);
+                statement.setString(3,"fda0bbe9-cbcf-11e7-97a3-94de807a9669");
+                statement.execute();
+            }
+            if(!oldUser.getCity().equals(user.getCity())){
+                statement.setString(1,user.getCity());
+                statement.setString(2,objectId);
+                statement.setString(3,"fdad14d4-cbcf-11e7-97a3-94de807a9669");
+                statement.execute();
+            }
+            if(!oldUser.getEmail().equals(user.getEmail())){
+                statement.setString(1,user.getEmail());
+                statement.setString(2,objectId);
+                statement.setString(3,"fda621dc-cbcf-11e7-97a3-94de807a9669");
+                statement.execute();
+
+            }
+            if(!oldUser.getSex().equals(user.getSex())){
+                statement.setString(1,user.getSex());
+                statement.setString(2,objectId);
+                statement.setString(3,"fd97346f-cbcf-11e7-97a3-94de807a9669");
+                statement.execute();
+            }
+            if(!oldUser.getStatus().equals(user.getStatus())){
+                statement.setString(1,user.getStatus());
+                statement.setString(2,objectId);
+                statement.setString(3,"e7fed6d6-d465-11e7-bdec-94de807a9669");
+                statement.execute();
+            }
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        poolInst.footConnection(connection);
+
+
     }
 
 
     public static void main(String [] args) throws SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
         System.out.println(userDao.findUserByUsername("123456789").getId());
+        List <User> userList = new ArrayList<>();
+        userList=userDao.getAllUsers();
+        for(int i=0 ; i<userList.size(); i++){
+            System.out.println(userList.get(i).getId());
+        }
+/*
+        User user1 = new User();
+        user1.setFio("user1");
+        user1.setSex("M");
+        user1.setCity("minsk");
+        user1.setStatus("2");
+        user1.setAccountCreationDate("25.12.2008");
+        user1.setRating("1");
+        user1.setId(111);
+        user1.setTelephone("80298285183");
+        user1.setDateOfBirth("11.11.1997");
+        user1.setEmail("ankabrest@mail.ru");
+        userDao.updateUser(user1);*/
         //System.out.println(userDao.getUserById(11).getUsername());
 
 

@@ -33,7 +33,7 @@ public class ProfileServiceImpl implements ProfileService {
     public User getUserByID(int id) {
         User user = userDao.getUserById(id);
         user.setUsername(userDao.findUserById(user.getId()).getUsername());
-        user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
+        //user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
         return user;
     }
 
@@ -43,7 +43,7 @@ public class ProfileServiceImpl implements ProfileService {
         int id=userDao.findUserByUsername(username).getId();
         User user = userDao.getUserById(id);
         user.setUsername(username);
-        user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
+        // user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
         return user;
     }
 
@@ -56,13 +56,27 @@ public class ProfileServiceImpl implements ProfileService {
     @Transactional
     @Override
     public void updateUser(User user) {
-        userDao.deleteUser(user);
-        userDao.addUser(user);
+        //userDao.deleteUser(user);
+        //userDao.addUser(user);
+        userDao.updateUser(user);
     }
 
     @Transactional
     @Override
     public int getUserIdByEmail(String email) {
         return userDao.getUserIdByEmail(email);
+    }
+
+    @Transactional
+    @Override
+    public int getUserIdByTelephone(String telephone) {
+        return userDao.getUserIdByTelephone(telephone);
+    }
+
+
+    @Transactional
+    @Override
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 }
