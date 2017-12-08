@@ -2,24 +2,11 @@ package com.project.crm.model;
 
 import java.util.List;
 
-/**
- * Created by 1 on 06.11.2017.
- */
 public class Category {
-
 
     private String title;
     private boolean isTop;
     private Category supercategory;
-
-    public List<Category> getSubcategories() {
-        return subcategories;
-    }
-
-    public void setSubcategories(List<Category> subcatigories) {
-        this.subcategories = subcategories;
-    }
-
     private List <Category> subcategories;
 
     public Category() {
@@ -31,23 +18,32 @@ public class Category {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public boolean isTop() {
         return isTop;
+    }
+
+    public void setTop(boolean top) {
+        isTop = top;
     }
 
     public Category getSupercategory() {
         return supercategory;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setTop(boolean top) {
-        isTop = top;
-    }
     public void setSupercategory(Category supercategory) {
         this.supercategory = supercategory;
+    }
+
+    public List<Category> getSubcategories() {
+        return subcategories;
+    }
+
+    public void setSubcategories(List<Category> subcatigories) {
+        this.subcategories = subcategories;
     }
 
     @Override

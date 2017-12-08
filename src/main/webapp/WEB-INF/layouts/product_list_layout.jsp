@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -15,8 +16,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Список товаров</title>
-
     <link rel="stylesheet"  href="../../resources/css/main.css">
     <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
     <link href="${contextPath}/resources/css/catalog.css" rel="stylesheet">
@@ -24,6 +23,10 @@
 </head>
 
 <body>
+
+<script type="text/JavaScript"
+        src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js">
+</script>
 
 <div class="container content">
     <div class="col-lg-9 products">
@@ -33,14 +36,19 @@
             <div class="col-sm-4">
                 <div class="product">
                     <div class="product-img">
-                        <a href="#"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"/></a>
-                        <div class="product-icons">
-                            <div class="product-icons-item">
-                                <a href="#" class="icon">
-                                    <img src="${contextPath}/resources/img/heart.png">
-                                </a>
+                        <a href="#">
+                            <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
+                                 onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+                        </a>
+                        <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
+                            <div class="product-icons">
+                                <div class="product-icons-item">
+                                    <a id="${product.id}" class="icon">
+                                        <img src="${contextPath}/resources/img/heart.png">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        </sec:authorize>
                     </div>
 
                     <p class="product-title">
@@ -50,11 +58,6 @@
                     <p class="product-desc">${product.description}</p>
                     <p class="product-category"><spring:message code="${product.category}"/> </p>
                     <p class="product-price">${product.cost}</p>
-                    <%--<c:forEach items="${product.attributesAndValues}" var="cost">
-                                                <c:if test="${cost.key=='COST'}">
-                                                    <p class="product-price">${cost.value}</p>
-                                                </c:if>
-                                            </c:forEach>--%>
                 </div>
             </div>
 
@@ -66,3 +69,25 @@
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 
 </body>
+
+<script>
+    $(document).on('click','.icon',function(event) {
+        event.preventDefault();
+        var productId = event.currentTarget.id;
+        console.log(productId);
+
+        $.ajax({
+            type : "POST",
+            contentType : "application/json",
+            url : "/add-product-to-favorites",
+            data : ({
+                productId : productId
+            }),
+            dataType : 'json',
+            complete:function () {
+                console.log("Yay!")
+            }
+        });
+    });
+
+</script>

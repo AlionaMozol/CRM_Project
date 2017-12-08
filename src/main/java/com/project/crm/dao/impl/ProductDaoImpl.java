@@ -7,15 +7,16 @@ import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.SqlService;
 import javafx.util.Pair;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -446,6 +447,31 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
     @Override
+    public List<Product> getProductsBySupercategory(String supercategory) {
+        Connection connection = poolInst.getConnection();
+        List<Product> productsOfTargetSupercategory = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_PRODUCTS_BY_SUPERCATEGORY));
+            statement.setString(1, supercategory);
+            ResultSet setOfTargetObjectIds = statement.executeQuery();
+            while (setOfTargetObjectIds.next()) {
+                productsOfTargetSupercategory.add(getProductById(setOfTargetObjectIds.getString(1)));
+            }
+            setOfTargetObjectIds.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            poolInst.footConnection(connection);
+        }
+        return productsOfTargetSupercategory;
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
+    @Override
     public List<Product> getProductsAfterDate(Date date) {
         Connection connection = poolInst.getConnection();
 
@@ -581,7 +607,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         ProductDaoImpl pDaoImpl = new ProductDaoImpl();
         List<Product> lst;
         //===========================
-        Product p = new Product();
+    /*    Product p = new Product();
         p.setCategory("WOMEN_CLOTHING");
         p.setSuperCategory("Fashion");
         p.setOwner("SASHA");
@@ -596,11 +622,16 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         map.put("KIND_OF_CLOTHES", "TEST");
         p.setAttributesAndValues(map);
         pDaoImpl.addProduct(p);
-        lst = pDaoImpl.getProductsByKeyWords("Котик смешно падает смотреть онлайн");
+        lst = pDaoImpl.getProductsByKeyWords("Котик смешно падает смотреть онлайн");*/
         //===========================
+        lst = pDaoImpl.getProductsBySupercategory("Fashion");
         int i = 0;
-        for(Product x : lst ) {
-            System.out.println(i++ +". "+ x.toString());
+        if (lst != null) {
+            for (Product x : lst) {
+                System.out.println(i++ + ". " + x.toString());
+            }
+        } else {
+            System.out.println("Nothing to shown\n");
         }
 
     }

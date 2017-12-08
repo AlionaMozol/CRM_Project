@@ -30,6 +30,7 @@ public class SqlService {
     public static final String SQL_CHECK_USER =                    "SQL_CHECK_USER";
     public static final String SELECT_ALL_USERS =                  "SELECT_ALL_USERS";
     public static final String SQL_GET_PRODUCTS_BY_CATEGORY =      "SQL_GET_PRODUCTS_BY_CATEGORY";
+    public static final String SQL_GET_PRODUCTS_BY_SUPERCATEGORY = "SQL_GET_PRODUCTS_BY_SUPERCATEGORY";
     public static final String SQL_GET_ALL_PRODUCTS =              "SQL_GET_ALL_PRODUCTS";
     public static final String SQL_DELETE_OBJECT_BY_ID =           "SQL_DELETE_OBJECT_BY_ID";
     public static final String SQL_DELETE_VALUES_BY_OBJECT_ID =    "SQL_DELETE_VALUES_BY_OBJECT_ID";
@@ -72,7 +73,7 @@ public class SqlService {
     public static final String SQL_GET_COMMENT_ATTR_ID =             "SQL_GET_COMMENT_ATTR_ID";
     public static final String SQL_GET_PHOTO_ATTR_ID =               "SQL_GET_PHOTO_ATTR_ID";
 
-    public static final String SQL_GET_LIKES_BY_USER_ID =            "SQL_GET_LIKES_BY_USER_ID";
+    public static final String SQL_GET_LIKES_BY_USERNAME =           "SQL_GET_LIKES_BY_USERNAME";
     public static final String SQL_GET_LIKE_ATTR_ID =                "SQL_GET_LIKE_ATTR_ID";
     public static final String SQL_GET_LIKE_OBJECT_TYPE_ID =         "SQL_GET_LIKE_OBJECT_TYPE_ID";
     public static final String SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS = "SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS";

@@ -2,20 +2,17 @@ package com.project.crm.services.impl;
 
 import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
-import com.project.crm.model.User;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.Date;
 import java.util.List;
 
 @Component
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDao productDao;
@@ -52,6 +49,11 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public List<Product> getProductsByCategory(String category) {
         return productDao.getProductsByCategory(category);
+    }
+
+    @Override
+    public List<Product> getProductsBySupercategory(String supercategory) {
+        return productDao.getProductsBySupercategory(supercategory);
     }
 
     @Transactional

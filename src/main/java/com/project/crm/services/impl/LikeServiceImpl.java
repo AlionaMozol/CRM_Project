@@ -2,7 +2,6 @@ package com.project.crm.services.impl;
 
 import com.project.crm.dao.LikeDao;
 import com.project.crm.model.Product;
-import com.project.crm.model.User;
 import com.project.crm.services.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,19 +15,19 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     @Transactional
-    public void addProductToFavourites(Product product, User currentUser) {
-        likeDao.addProductToFavourites(product, currentUser);
+    public void addProductToFavorites(String productId, String username) {
+        likeDao.addProductToFavorites(productId, username);
     }
 
     @Override
     @Transactional
-    public void removeProductFromFavourites(Product product) {
-        likeDao.removeProductFromFavourites(product);
+    public void removeProductFromFavorites(Product product) {
+        likeDao.removeProductFromFavorites(product);
     }
 
     @Override
     @Transactional
-    public List<Product> getFavouriteProductsByUserId(String userId) {
-        return likeDao.getFavouriteProductsByUsername(userId);
+    public List<Product> getFavoriteProductsByUsername(String userName) {
+        return likeDao.getFavoriteProductsByUsername(userName);
     }
 }

@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class LikeDaoImpl extends DAO implements LikeDao {
 
@@ -21,7 +23,7 @@ public class LikeDaoImpl extends DAO implements LikeDao {
     @Override
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor = Exception.class)
-    public void addProductToFavourites(Product product, User currentUser) {
+    public void addProductToFavorites(String productId, String username) {
         Connection connection = poolInst.getConnection();
         String likeId = UUID.randomUUID().toString();
         String likeObjectTypeId;
@@ -43,40 +45,11 @@ public class LikeDaoImpl extends DAO implements LikeDao {
             preparedStatement = connection.prepareStatement(sql.getProperty(SqlService.SQL_INSERT_LIKE_INTO_VALUES));
             preparedStatement.setString(1, UUID.randomUUID().toString());
             preparedStatement.setString(2, likeId);
-            preparedStatement.setString(3, Integer.toString(currentUser.getId()));
+            preparedStatement.setString(3, username);
             preparedStatement.setString(4, UUID.randomUUID().toString());
             preparedStatement.setString(5, likeId);
-            preparedStatement.setString(6, product.getId());
+            preparedStatement.setString(6, productId);
             preparedStatement.execute();
-
-
-
-
-            /*
-            preparedStatement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_LIKE_ATTR_ID));
-            resultSet = preparedStatement.executeQuery();
-            preparedStatement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_ADD_OBJECT));
-
-
-            while (resultSet.next()) {
-                preparedStatement.setString(1, UUID.randomUUID().toString());
-                preparedStatement.setString(2, likeId);
-                preparedStatement.setString(3, resultSet.getString(1));
-                switch (resultSet.getString(1)) {
-                    case "fdc02d2a-cbcf-11e7-97a3-94de807a9669": // user
-                        preparedStatement.setString(4, currentUser.getUsername());
-                        break;
-                    case "fdc55704-cbcf-11e7-97a3-94de807a9669": // product
-                        preparedStatement.setString(4, product.getId());
-                        break;
-                    default:
-                        System.out.println("chet ne to");
-                }
-                preparedStatement.execute();
-
-            }*/
 
             preparedStatement.close();
             resultSet.close();
@@ -91,7 +64,7 @@ public class LikeDaoImpl extends DAO implements LikeDao {
     @Override
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
-    public void removeProductFromFavourites(Product product) {
+    public void removeProductFromFavorites(Product product) {
 
     }
 
@@ -106,11 +79,13 @@ public class LikeDaoImpl extends DAO implements LikeDao {
             statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS));
             statement.setString(1, likeId);
             resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                if(resultSet.getString(1).equals("PRODUCT")) {
+            resultSet.next();
+            //while(resultSet.next()) {
+            //    if(resultSet.getString(1).equals("PRODUCT")) {
+            System.out.println(resultSet.getString(1));
                     product = productDao.getProductById(resultSet.getString(2));
-                }
-            }
+            //    }
+            //}
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
@@ -126,16 +101,17 @@ public class LikeDaoImpl extends DAO implements LikeDao {
     @Override
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
-    public List<Product> getFavouriteProductsByUsername(String userName) {  /////////////  name/id
+    public List<Product> getFavoriteProductsByUsername(String username) {  /////////////  name/id
         Connection connection = poolInst.getConnection();
         List<Product> favouriteProductList = new ArrayList<>();
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql
-                    .getProperty(SqlService.SQL_GET_LIKES_BY_USER_ID)); //////// name/id
-            statement.setString(1, userName);  ////////// name/id
+                    .getProperty(SqlService.SQL_GET_LIKES_BY_USERNAME)); //////// name/id
+            statement.setString(1, username);  ////////// name/id
             ResultSet likesIds = statement.executeQuery();
             while (likesIds.next()) {
+                System.out.println(likesIds.getString(1));
                 favouriteProductList.add(getProductByLikeId(likesIds.getString(1)));
             }
             likesIds.close();
@@ -154,9 +130,7 @@ public class LikeDaoImpl extends DAO implements LikeDao {
     public static void main(String[] args) {
         LikeDaoImpl likeDao = new LikeDaoImpl();
         UserDaoImpl userDao = new UserDaoImpl();
-
-        Product product = new Product();
-
+/*
         Product p = new Product();
         Map<String, String> att = new HashMap<>();
         p.setCost("10");
@@ -164,10 +138,20 @@ public class LikeDaoImpl extends DAO implements LikeDao {
         p.setCategory("MEN_SHOES");
         p.setSuperCategory("Fashion");
         p.setAttributesAndValues(att);
+        p.setId("1234567654321");
+        p.setProductStatus(ProductStatus.APPROVED);
+        p.setTitle("Туфли супер чёрные");
+        p.setDescription("dcvbnmnbvcxdcvbnhgfd");
+        p.setPhoto("jhn njc");
+        p.setPublicationDate("06.12.2017");
+        p.setDateOfLastEdit("07.12.2017");
 
         productDao.addProduct(p);
 
+        System.out.println(p.getTitle());
+
         User user = new User();
+        user.setUsername("USERNAME");
         user.setId(1452);
         user.setDateOfBirth("11.11.11");
         user.setCity("brest");
@@ -181,12 +165,16 @@ public class LikeDaoImpl extends DAO implements LikeDao {
 
         userDao.addUser(user);
 
-        likeDao.addProductToFavourites(p, user);
+        likeDao.addProductToFavorites(p, user);
 
-        List<Product> list = likeDao.getFavouriteProductsByUsername(user.getUsername());
+        System.out.println(p.getTitle());
+*/
+        List<Product> list = likeDao.getFavoriteProductsByUsername(/*user.getUsername()*/"USERNAME");
 
-        for (Product prod: list) {
-            System.out.println(product.getCategory());
+      //  System.out.println(p.getTitle());
+
+        for (Product product: list) {
+            System.out.println(product);
         }
 
     }
