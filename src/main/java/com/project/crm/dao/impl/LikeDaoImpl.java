@@ -3,8 +3,8 @@ package com.project.crm.dao.impl;
 import com.project.crm.dao.DAO;
 import com.project.crm.dao.LikeDao;
 import com.project.crm.model.Product;
-import com.project.crm.model.User;
 import com.project.crm.services.SqlService;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Component
 public class LikeDaoImpl extends DAO implements LikeDao {
 
     private static ProductDaoImpl productDao = new ProductDaoImpl();
@@ -76,16 +77,12 @@ public class LikeDaoImpl extends DAO implements LikeDao {
         try {
             PreparedStatement statement;
             ResultSet resultSet;
-            statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS));
+            statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_PRODUCT_BY_LIKE_ID));
             statement.setString(1, likeId);
             resultSet = statement.executeQuery();
             resultSet.next();
-            //while(resultSet.next()) {
-            //    if(resultSet.getString(1).equals("PRODUCT")) {
             System.out.println(resultSet.getString(1));
-                    product = productDao.getProductById(resultSet.getString(2));
-            //    }
-            //}
+            product = productDao.getProductById(resultSet.getString(1));
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
@@ -101,17 +98,16 @@ public class LikeDaoImpl extends DAO implements LikeDao {
     @Override
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
-    public List<Product> getFavoriteProductsByUsername(String username) {  /////////////  name/id
+    public List<Product> getFavoriteProductsByUsername(String username) {
         Connection connection = poolInst.getConnection();
         List<Product> favouriteProductList = new ArrayList<>();
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql
-                    .getProperty(SqlService.SQL_GET_LIKES_BY_USERNAME)); //////// name/id
-            statement.setString(1, username);  ////////// name/id
+                    .getProperty(SqlService.SQL_GET_LIKES_BY_USERNAME));
+            statement.setString(1, username);
             ResultSet likesIds = statement.executeQuery();
             while (likesIds.next()) {
-                System.out.println(likesIds.getString(1));
                 favouriteProductList.add(getProductByLikeId(likesIds.getString(1)));
             }
             likesIds.close();
@@ -126,19 +122,18 @@ public class LikeDaoImpl extends DAO implements LikeDao {
         return favouriteProductList;
     }
 
-
     public static void main(String[] args) {
-        LikeDaoImpl likeDao = new LikeDaoImpl();
-        UserDaoImpl userDao = new UserDaoImpl();
-/*
+          LikeDaoImpl likeDao = new LikeDaoImpl();
+    /*    UserDaoImpl userDao = new UserDaoImpl();
+
         Product p = new Product();
         Map<String, String> att = new HashMap<>();
-        p.setCost("10");
+        p.setCost("10 BYN");
         p.setOwner("IvanStariy");
         p.setCategory("MEN_SHOES");
         p.setSuperCategory("Fashion");
         p.setAttributesAndValues(att);
-        p.setId("1234567654321");
+        p.setId("56bab1e7-61df-4cfb-a783-c9d0d18bdb93");
         p.setProductStatus(ProductStatus.APPROVED);
         p.setTitle("Туфли супер чёрные");
         p.setDescription("dcvbnmnbvcxdcvbnhgfd");
@@ -148,7 +143,9 @@ public class LikeDaoImpl extends DAO implements LikeDao {
 
         productDao.addProduct(p);
 
-        System.out.println(p.getTitle());
+        System.out.println(productDao.getProductById("56bab1e7-61df-4cfb-a783-c9d0d18bdb93"));
+
+      System.out.println(p.getTitle());
 
         User user = new User();
         user.setUsername("USERNAME");
@@ -165,43 +162,18 @@ public class LikeDaoImpl extends DAO implements LikeDao {
 
         userDao.addUser(user);
 
-        likeDao.addProductToFavorites(p, user);
+        likeDao.addProductToFavorites("74bab1e7-61df-4cfb-a783-c9d0d18bdb93", "USERNAME");
 
-        System.out.println(p.getTitle());
-*/
-        List<Product> list = likeDao.getFavoriteProductsByUsername(/*user.getUsername()*/"USERNAME");
+        List<Product> list = likeDao.getFavoriteProductsByUsername("USERNAME");
+        for (Product product: list) {
+            System.out.println(product);
+        }*/
 
-      //  System.out.println(p.getTitle());
-
+      //  likeDao.addProductToFavorites("74bab1e7-61df-4cfb-a783-c9d0d18bdb93", "Tanushka");
+        List<Product> list = productDao.getAllProducts();
         for (Product product: list) {
             System.out.println(product);
         }
-
     }
-
-/*
-    public String getUserId(String username) {
-        Connection connection = poolInst.getConnection();
-        String userId = null;
-        try {
-            PreparedStatement preparedStatement;
-            ResultSet resultSet;
-
-            preparedStatement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_USER_ID_BY_USERNAME));
-            preparedStatement.setString(1, username);
-            resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            userId = resultSet.getString(1);
-
-            preparedStatement.close();
-            resultSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            poolInst.footConnection(connection);
-        }
-        return userId;
-    } */
 
 }

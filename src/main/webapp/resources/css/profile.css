@@ -1,7 +1,7 @@
 
 body {
-    /*background: #ececec;*/
-    background: url(../img/bg.jpg);
+    background: #ececec;
+    /*background: url(../img/bg.jpg);*/
 }
 img {
     height: auto;

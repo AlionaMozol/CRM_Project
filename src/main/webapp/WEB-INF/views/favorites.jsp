@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
 
-    <title>Netcufar | Favourites</title>
+    <title><spring:message code="PAGE_TITLE"/> <spring:message code="favorites"/></title>
 
 </head>
 

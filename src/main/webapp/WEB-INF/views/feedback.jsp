@@ -4,7 +4,7 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <html xmlns:th="http://www.thymeleaf.org">
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@ page contentType="text/html; charset=UTF-8"%>
+
 
 <!DOCTYPE html>
 
@@ -13,7 +13,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
 
-    <title>Netcufar | FeedBack</title>
+    <title><spring:message code="PAGE_TITLE"/> <spring:message code="feedback"/></title>
 
 </head>
 

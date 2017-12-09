@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Products moderation</title>
+    <title><spring:message code="PAGE_TITLE"/> <spring:message code="product_moderation"/></title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 

@@ -74,19 +74,15 @@
     $(document).on('click','.icon',function(event) {
         event.preventDefault();
         var productId = event.currentTarget.id;
-        console.log(productId);
 
         $.ajax({
-            type : "POST",
-            contentType : "application/json",
             url : "/add-product-to-favorites",
+            type : "GET",
+            dataType : 'json',
+            contentType : "application/json",
             data : ({
                 productId : productId
-            }),
-            dataType : 'json',
-            complete:function () {
-                console.log("Yay!")
-            }
+            })
         });
     });
 

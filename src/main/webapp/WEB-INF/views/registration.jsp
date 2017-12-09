@@ -16,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Netcufar | Create an account</title>
+    <title><spring:message code="PAGE_TITLE"/> <spring:message code="registration"/></title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 

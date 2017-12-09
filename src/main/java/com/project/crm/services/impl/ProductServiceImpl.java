@@ -51,6 +51,7 @@ public class ProductServiceImpl implements ProductService {
         return productDao.getProductsByCategory(category);
     }
 
+    @Transactional
     @Override
     public List<Product> getProductsBySupercategory(String supercategory) {
         return productDao.getProductsBySupercategory(supercategory);

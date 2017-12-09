@@ -13,12 +13,9 @@ public class SqlService {
     public static final String SQL_GET_USER_FROM_ID =              "SQL_GET_USER_FROM_ID";
     public static final String SQL_GET_USER_FROM_USERNAME =        "SQL_GET_USER_FROM_USERNAME";
 
-
     private static final String SQL_FILE = "sql";
 
     public static final String SQL_GET_USER_ID_BY_USERNAME =       "SQL_GET_USER_ID_BY_USERNAME";
-
-
     public static final String SQL_GET_OWNER_ATTR_ID =             "SQL_GET_OWNER_ATTR_ID";
     public static final String SQL_GET_COST_ATTR_ID =              "SQL_GET_COST_ATTR_ID";
     public static final String SQL_GET_ATTR_ID_OF =                "SQL_GET_ATTR_ID_OF";
@@ -43,8 +40,8 @@ public class SqlService {
     public static final String SQL_GET_PRODUCT_OBJECT_TYPE_ID =    "SQL_GET_PRODUCT_OBJECT_TYPE_ID";
     public static final String SQL_GET_CATEGORY_ATTR_ID =          "SQL_GET_CATEGORY_ATTR_ID";
     public static final String SQL_GET_SUPERCATEGORY_ATTR_ID =     "SQL_GET_SUPERCATEGORY_ATTR_ID";
-    public static final String SQL_GET_ALL_SUPERCATEGORIES =            "SQL_GET_ALL_SUPERCATEGORIES";
-    public static final String SQL_GET_SUBCATEGORIES_BY_CATEGORY =            "SQL_GET_SUBCATEGORIES_BY_CATEGORY";
+    public static final String SQL_GET_ALL_SUPERCATEGORIES =       "SQL_GET_ALL_SUPERCATEGORIES";
+    public static final String SQL_GET_SUBCATEGORIES_BY_CATEGORY = "SQL_GET_SUBCATEGORIES_BY_CATEGORY";
     public static final String SQL_GET_ALL_CATEGORIES =            "SQL_GET_ALL_CATEGORIES";
     public static final String SQL_SELECT_BY_OBJECT_TYPE =         "SQL_SELECT_BY_OBJECT_TYPE";
 
@@ -76,7 +73,7 @@ public class SqlService {
     public static final String SQL_GET_LIKES_BY_USERNAME =           "SQL_GET_LIKES_BY_USERNAME";
     public static final String SQL_GET_LIKE_ATTR_ID =                "SQL_GET_LIKE_ATTR_ID";
     public static final String SQL_GET_LIKE_OBJECT_TYPE_ID =         "SQL_GET_LIKE_OBJECT_TYPE_ID";
-    public static final String SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS = "SQL_GET_LIKE_ATTR_VALS_AND_ATTR_IDS";
+    public static final String SQL_GET_PRODUCT_BY_LIKE_ID =          "SQL_GET_PRODUCT_BY_LIKE_ID";
     public static final String SQL_INSERT_LIKE_INTO_VALUES =         "SQL_INSERT_LIKE_INTO_VALUES";
 
     public static final String SQL_GET_TITLE_ATTR_ID =               "SQL_GET_TITLE_ATTR_ID";

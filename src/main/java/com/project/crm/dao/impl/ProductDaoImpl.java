@@ -447,31 +447,6 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
     @Override
-    public List<Product> getProductsBySupercategory(String supercategory) {
-        Connection connection = poolInst.getConnection();
-        List<Product> productsOfTargetSupercategory = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql
-                    .getProperty(SqlService.SQL_GET_PRODUCTS_BY_SUPERCATEGORY));
-            statement.setString(1, supercategory);
-            ResultSet setOfTargetObjectIds = statement.executeQuery();
-            while (setOfTargetObjectIds.next()) {
-                productsOfTargetSupercategory.add(getProductById(setOfTargetObjectIds.getString(1)));
-            }
-            setOfTargetObjectIds.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            poolInst.footConnection(connection);
-        }
-        return productsOfTargetSupercategory;
-    }
-
-    @Transactional(propagation = Propagation.MANDATORY,
-            rollbackFor=Exception.class)
-    @Override
     public List<Product> getProductsAfterDate(Date date) {
         Connection connection = poolInst.getConnection();
 
@@ -572,6 +547,31 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         }
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
+    @Override
+    public List<Product> getProductsBySupercategory(String supercategory) {
+        Connection connection = poolInst.getConnection();
+        List<Product> productsOfTargetSupercategory = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_PRODUCTS_BY_SUPERCATEGORY));
+            statement.setString(1, supercategory);
+            ResultSet setOfTargetObjectIds = statement.executeQuery();
+            while (setOfTargetObjectIds.next()) {
+                productsOfTargetSupercategory.add(getProductById(setOfTargetObjectIds.getString(1)));
+            }
+            setOfTargetObjectIds.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            poolInst.footConnection(connection);
+        }
+        return productsOfTargetSupercategory;
+    }
+
     public static void main(String[] args) throws ClassNotFoundException {
 //        Connection connection = null;
 //        try {
@@ -624,7 +624,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         pDaoImpl.addProduct(p);
         lst = pDaoImpl.getProductsByKeyWords("Котик смешно падает смотреть онлайн");*/
         //===========================
-        lst = pDaoImpl.getProductsBySupercategory("Fashion");
+        lst = pDaoImpl.getProductsBySupercategory("Animals");
         int i = 0;
         if (lst != null) {
             for (Product x : lst) {

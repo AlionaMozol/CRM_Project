@@ -16,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Log in with your account</title>
+    <title><spring:message code="PAGE_TITLE"/> <spring:message code="profile"/></title>
 
     <link rel="stylesheet"  href="../../resources/css/main.css">
     <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">

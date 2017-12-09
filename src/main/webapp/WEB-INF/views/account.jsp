@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
 
-    <title>Netcufar | Account</title>
+    <title><spring:message code="PAGE_TITLE"/> <spring:message code="account"/></title>
 
 </head>
 
