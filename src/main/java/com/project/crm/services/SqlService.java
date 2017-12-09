@@ -83,6 +83,7 @@ public class SqlService {
                                                                      "SQL_GET_PRODUCT_CREATE_DATE_TIME_ATTR_ID";
     public static final String SQL_GET_PRODUCT_LAST_EDIT_DATE_TIME_ATTR_ID =
                                                                      "SQL_GET_PRODUCT_LAST_EDIT_DATE_TIME_ATTR_ID";
+    public static final String SQL_UPDATE_PROFILE =                  "SQL_UPDATE_PROFILE";
     private SqlService(){}
 
     public static SqlService getInstance(){

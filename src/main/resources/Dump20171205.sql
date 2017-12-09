@@ -179,7 +179,7 @@ CREATE TABLE `values_table` (
   `value_id` varchar(36) NOT NULL,
   `Object_id` varchar(36) NOT NULL,
   `Attributes_attr_id` varchar(36) NOT NULL,
-  `Value` varchar(45) NOT NULL,
+  `Value` varchar(220) NOT NULL,
   PRIMARY KEY (`value_id`,`Object_id`,`Attributes_attr_id`),
   KEY `fk_Values_Table_Object_idx` (`Object_id`),
   KEY `fk_Values_Table_Attributes1_idx` (`Attributes_attr_id`),
