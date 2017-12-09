@@ -7,6 +7,31 @@
 
 <!DOCTYPE html>
 
+<script type="text/javascript">
+    function findProducts() {
+        $.ajax({
+            scriptCharset:"utf-8",
+            type: 'GET',
+            url: "/productSearch",
+            dataType: 'json',
+            data: {
+                subString: encodeURIComponent($('#search').val())
+            },
+            success: function (products) {
+                $('#myUL').empty();
+                $.each(products, function (idx, value) {
+                    var newInput = ("<li>"+"<a href="+"${contextPath}/product/"+value.id+">"
+                        +value.title+ " | " +value.superCategory+ " - " +value.category+"</a>"+"</li>");
+                    $('#myUL').append(newInput);
+                })
+            },
+            error: function () {
+                alert('Error');
+            }
+        })
+    }
+</script>
+
 <head>
 
     <meta charset="utf-8">
@@ -53,7 +78,8 @@
                 <div class="col-sm-4 col-md-5">
                             <form class="navbar-form" role="search">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="<spring:message code="headerSearch"/>" name="q">
+                                    <input id="search" type="text" class="form-control" placeholder="<spring:message code="headerSearch"/>" name="q"
+                                       onkeyup="findProducts()">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
                                             <i class="glyphicon glyphicon-search"></i>
@@ -101,6 +127,11 @@
 
                 </ul>
             </div>
+        </div>
+        <div class="top-left" id="desired_element" style="max-height: 500px;  overflow: auto; position: fixed";>
+            <ul id="myUL">
+
+            </ul>
         </div>
     </div>
 

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Component
 public class CommentServiceImpl implements CommentService{
 
@@ -17,13 +18,11 @@ public class CommentServiceImpl implements CommentService{
     private CommentDao commentDao;
 
     @Override
-    @Transactional
     public List<Comment> getCommnetByPostId(String id) {
         return commentDao.getCommentsByProductId(id);
     }
 
     @Override
-    @Transactional
     public void addComment(Comment comment){
         commentDao.addComment(comment);
     }

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class LikeServiceImpl implements LikeService {
 
@@ -16,19 +17,16 @@ public class LikeServiceImpl implements LikeService {
     private LikeDao likeDao;
 
     @Override
-    @Transactional
     public void addProductToFavorites(String productId, String username) {
         likeDao.addProductToFavorites(productId, username);
     }
 
     @Override
-    @Transactional
     public void removeProductFromFavorites(String productId, String username) {
         likeDao.removeProductFromFavorites(productId, username);
     }
 
     @Override
-    @Transactional
     public List<Product> getFavoriteProductsByUsername(String userName) {
         return likeDao.getFavoriteProductsByUsername(userName);
     }

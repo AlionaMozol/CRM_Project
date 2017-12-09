@@ -20,11 +20,27 @@ p {
     text-align: center;
 }
 
+#myUL {
+    list-style-type: none;
+    display: table-row-group;
+    padding: 0;
+    margin: 0;
+}
 
+#myUL li a {
+    border: 1px solid #88ceff;
+    margin-top: -1px;
+    background: rgba(46,44,46,0.97) ;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #1abc9c;
+    display: block;
+}
 
-
-
-
+#myUL li a:hover:not(.header) {
+    background-color: #eee;
+}
 
 .boxtext {
     background: #ff7878;

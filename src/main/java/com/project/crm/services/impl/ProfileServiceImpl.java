@@ -16,6 +16,7 @@ import java.util.List;
  * Created by 1 on 15.11.2017.
  */
 
+@Transactional
 @Component
 public class ProfileServiceImpl implements ProfileService {
 
@@ -28,7 +29,6 @@ public class ProfileServiceImpl implements ProfileService {
 
 
 
-    @Transactional
     @Override
     public User getUserByID(int id) {
         User user = userDao.getUserById(id);
@@ -37,23 +37,20 @@ public class ProfileServiceImpl implements ProfileService {
         return user;
     }
 
-    @Transactional
     @Override
     public User getUserByUsername(String username) {
         int id=userDao.findUserByUsername(username).getId();
         User user = userDao.getUserById(id);
         user.setUsername(username);
-        // user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
+        user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
         return user;
     }
 
-    @Transactional
     @Override
     public void addUser(User user) {
         userDao.addUser(user);
     }
 
-    @Transactional
     @Override
     public void updateUser(User user) {
         //userDao.deleteUser(user);
@@ -61,20 +58,16 @@ public class ProfileServiceImpl implements ProfileService {
         userDao.updateUser(user);
     }
 
-    @Transactional
     @Override
     public int getUserIdByEmail(String email) {
         return userDao.getUserIdByEmail(email);
     }
 
-    @Transactional
     @Override
     public int getUserIdByTelephone(String telephone) {
         return userDao.getUserIdByTelephone(telephone);
     }
 
-
-    @Transactional
     @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
