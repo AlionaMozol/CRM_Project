@@ -23,8 +23,8 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     @Transactional
-    public void removeProductFromFavorites(Product product) {
-        likeDao.removeProductFromFavorites(product);
+    public void removeProductFromFavorites(String productId, String username) {
+        likeDao.removeProductFromFavorites(productId, username);
     }
 
     @Override

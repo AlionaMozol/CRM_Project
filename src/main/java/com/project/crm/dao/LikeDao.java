@@ -8,7 +8,7 @@ import java.util.List;
 @Component
 public interface LikeDao {
     void addProductToFavorites(String productId, String username);
-    void removeProductFromFavorites(Product product);
+    void removeProductFromFavorites(String productId, String username);
     Product getProductByLikeId(String likeId);
     List<Product> getFavoriteProductsByUsername(String userName);
 }

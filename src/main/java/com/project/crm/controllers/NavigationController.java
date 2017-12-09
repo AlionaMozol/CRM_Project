@@ -6,6 +6,7 @@ import com.project.crm.services.CategoryService;
 import com.project.crm.services.LikeService;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,50 +36,33 @@ public class NavigationController {
         supercategoryList = categoryService.getAllTopCategories();
         model.addAttribute("productCategory", supercategoryList);
         model.addAttribute("products", productService.getAllProducts());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
         return "/welcome";
     }
 
-   /*
-    @RequestMapping(value = "/getCharNum", method = RequestMethod.GET)
-    public @ResponseBody String getCharNum(@RequestParam String text) {
-
-        String result = null;
-
-        if (text != null) {
-            result = text + "   " + text.length();
-        }
-        System.out.println(result);
-        return result;
-    }*/
-
-    @RequestMapping(value = "/get-products-by-supercategory", method = RequestMethod.GET)
-    public @ResponseBody
-    List showProducts(@RequestParam String supercategory){
+    @RequestMapping(value = "/update-products", method = RequestMethod.GET)
+    public @ResponseBody List updateProducts(){
         List<Product> productList = null;
-        productList = productService.getProductsBySupercategory(supercategory);
+        productList = productService.getAllProducts();
         return productList;
     }
 
-/*
-    @RequestMapping(value = "/add-product-to-favorites", method = RequestMethod.GET)
-    public void addProductToFavorites(@RequestParam String productId){
+    @RequestMapping(value = "/get-products-by-supercategory", method = RequestMethod.GET)
+    public @ResponseBody List getProductsBySupercategory(@RequestParam String supercategory, Model model){
+        List<Product> productList = null;
+        productList = productService.getProductsBySupercategory(supercategory);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        likeService.addProductToFavorites(productId, name);
-    }*/
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
+        return productList;
+    }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
         return "admin";
     }
-/*
-    @RequestMapping(value = "/favorites", method = RequestMethod.GET)
-    public String favorites(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        model.addAttribute("products", likeService.getFavoriteProductsByUsername(name));
-        return "/favorites";
-    }*/
 
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String about(Model model) {

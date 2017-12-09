@@ -28,11 +28,19 @@ public class LikeController {
         likeService.addProductToFavorites(productId, name);
     }
 
+    @RequestMapping(value = "/remove-product-from-favorites", method = RequestMethod.GET)
+    public void removeProductFromFavorites(@RequestParam String productId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        likeService.removeProductFromFavorites(productId, name);
+    }
+
     @RequestMapping(value = "/favorites", method = RequestMethod.GET)
     public String favorites(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("products", likeService.getFavoriteProductsByUsername(name));
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
         return "/favorites";
     }
 

@@ -41,13 +41,22 @@
                                  onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
                         </a>
                         <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
+
                             <div class="product-icons">
-                                <div class="product-icons-item">
-                                    <a id="${product.id}" class="icon">
+                                <c:choose>
+                                <c:when test="${favorite_products.contains(product)}">
+                                    <a href="#" id="${product.id}" class="icon-green">
                                         <img src="${contextPath}/resources/img/heart.png">
                                     </a>
-                                </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" id="${product.id}" class="icon">
+                                        <img src="${contextPath}/resources/img/heart.png">
+                                    </a>
+                                </c:otherwise>
+                                </c:choose>
                             </div>
+
                         </sec:authorize>
                     </div>
 
@@ -77,6 +86,21 @@
 
         $.ajax({
             url : "/add-product-to-favorites",
+            type : "GET",
+            dataType : 'json',
+            contentType : "application/json",
+            data : ({
+                productId : productId
+            })
+        });
+    });
+
+    $(document).on('click','.icon-green',function(event) {
+        event.preventDefault();
+        var productId = event.currentTarget.id;
+
+        $.ajax({
+            url : "/remove-product-from-favorites",
             type : "GET",
             dataType : 'json',
             contentType : "application/json",

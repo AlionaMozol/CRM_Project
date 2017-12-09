@@ -8,6 +8,6 @@ import java.util.List;
 @Service
 public interface LikeService {
     void addProductToFavorites(String productId, String username);
-    void removeProductFromFavorites(Product product);
+    void removeProductFromFavorites(String productId, String username);
     List<Product> getFavoriteProductsByUsername(String userName);
 }
