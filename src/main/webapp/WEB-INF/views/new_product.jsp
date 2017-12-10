@@ -78,15 +78,18 @@
                 $.each(data, function (index, value) {
                     var newOption = ("<option value=" + value.title + ">" + messages[value.title] + "</option>");
                     $('#select_sub_category').append(newOption);
-                })
+                });
+                showAttributes();
             },
             error: function () {
-                alert('Error');
+                alert('Hello');
             }
         });
 
     }
 </script>
+
+
 
 <div class="container content">
     <form method="post" action="${pageContext.request.contextPath}/new-product/add?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
@@ -101,10 +104,10 @@
         <div class="col-lg-6 description-of-the-product">
             <p class="name-of-product"><spring:message code="product.characteristics"/></p>
             <div class="row add-product-category">
-                <select name="superCategory" id="select_top_category" onclick="showSubCategories()">
+                <select autofocus name="superCategory" id="select_top_category" onclick="showSubCategories()" onfocus="showSubCategories()">
                     <option disabled>Category</option>
                     <c:forEach items="${topCategories}" var="topCategory">
-                        <option value="${topCategory.title}" ><spring:message code="${topCategory.title}"/> </option>
+                        <option  value="${topCategory.title}" ><spring:message code="${topCategory.title}"/> </option>
                     </c:forEach>
                 </select>
 
@@ -116,7 +119,7 @@
             <div class="col-sm-3">
                 <p class="add-product-attribute" >
                     <label class="label-attribute"><spring:message code="TITLE"/></label>
-                    <input name="TITLE"  placeholder="<spring:message code="TITLE"/>"/>
+                    <input name="title"  placeholder="<spring:message code="TITLE"/>"/>
                 </p>
             </div>
 
@@ -125,11 +128,23 @@
             <div class="col-sm-3">
                 <p class="add-product-attribute">
                     <label class="label-attribute"><spring:message code="COST"/> </label>
-                    <input name="COST"  placeholder="<spring:message code="COST"/>"/>
                 </p>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <input name="cost"  placeholder="<spring:message code="COST"/>"/>
+                    </div>
+                    <div class="col-sm-offset-3" style="margin-left: 193px">
+                        <select name="COST_TYPE" style="height: 24px">
+                            <option disabled><spring:message code="COST"/></option>
+                            <option value="BYN">BYN</option>
+                            <option value="$">$</option>
+                            <option value="€">€</option>
+                        </select>
+                    </div>
+                </div>
                 <p class="add-product-attribute">
                     <label class="label-attribute"><spring:message code="DESCRIPTION"/></label>
-                    <textarea class="add-product-description" name="DESCRIPTION"  placeholder="<spring:message code="DESCRIPTION"/>"></textarea>
+                    <textarea class="add-product-description" name="description"  placeholder="<spring:message code="DESCRIPTION"/>"></textarea>
                 </p>
             </div>
             <input class="btn btn-success" hidden="hidden" type="submit"/>

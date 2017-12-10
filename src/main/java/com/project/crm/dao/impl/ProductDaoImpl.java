@@ -5,12 +5,14 @@ import com.project.crm.dao.DAO;
 import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
+import com.project.crm.services.ProductService;
 import com.project.crm.services.SqlService;
+
+import com.project.crm.services.impl.ProductServiceImpl;
 import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -103,7 +105,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //                statement.setString(4, product.getSuperCategory());
 //                statement.execute();
 //            }
-            buildAndExecuteStatement(connection, "SUPERCATEGOTY", UUID.randomUUID().toString(),
+            buildAndExecuteStatement(connection, "SUPERCATEGORY", UUID.randomUUID().toString(),
                     newObjectId, product.getSuperCategory());
 
 //            statement = connection.prepareStatement(sql.
@@ -261,55 +263,24 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     public void editProduct(String id, Product product) {
         Connection connection = poolInst.getConnection();
         try {
-            PreparedStatement statement;
+            PreparedStatement statement = null;
             ResultSet resultSet = null;
             Map<String, String> attributesAndValues = product.getAttributesAndValues();
 
-            //StringBuilder unionForUpdate = new StringBuilder("");
+            for (Map.Entry entry: attributesAndValues.entrySet()) {
+                statement = connection.prepareStatement(sql.
+                        getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
+                statement.setString(1, id);
+                statement.setString(2, (String) entry.getKey());
+                resultSet = statement.executeQuery();
+                resultSet.next();
 
-            StringBuilder unionForUpdate = new StringBuilder("UPDATE values_table JOIN ( ");
-
-            boolean first = true;
-            for (Map.Entry entry : attributesAndValues.entrySet()) {
-                if (first) {
-
-                    unionForUpdate.append("select '");
-                    unionForUpdate.append((String) entry.getValue());
-                    unionForUpdate.append("' as v1, '");
-
-                    statement = connection.prepareStatement(sql.
-                            getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
-                    statement.setString(1, id);
-                    statement.setString(2, (String) entry.getKey());
-                    resultSet = statement.executeQuery();
-                    resultSet.next();
-
-                    unionForUpdate.append(resultSet.getString(1));
-                    unionForUpdate.append("' as v2");
-                } else {
-
-                    unionForUpdate.append(" union select '");
-                    unionForUpdate.append((String) entry.getValue());
-                    unionForUpdate.append("', '");
-
-                    statement = connection.prepareStatement(sql.
-                            getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
-                    statement.setString(1, id);
-                    statement.setString(2, (String) entry.getKey());
-                    resultSet = statement.executeQuery();
-                    resultSet.next();
-
-                    unionForUpdate.append(resultSet.getString(1));
-                    unionForUpdate.append("'");
-
-                }
-                first = false;
+                statement = connection.prepareStatement(sql.
+                        getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE_BY_VALUE_ID));
+                statement.setString(1, (String) entry.getValue());
+                statement.setString(2, resultSet.getString(1));
+                statement.execute();
             }
-
-            unionForUpdate.append(" ) A ON A.v2=values_table.value_id SET values_table.Value = A.v1");
-
-            statement = connection.prepareStatement(unionForUpdate.toString());
-            statement.execute();
 
             statement.close();
             resultSet.close();
@@ -397,7 +368,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             }
             Pattern pt = Pattern.compile(pattern);
             Matcher matcher;
-            for (Pair<Product, String> productAndTitle : productsAndTitles) {
+            for(Pair<Product, String> productAndTitle : productsAndTitles) {
                 matcher = pt.matcher(productAndTitle.getValue().toLowerCase());
                 if (matcher.find()) {
                     matchedProducts.add(productAndTitle.getKey());
@@ -611,10 +582,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //            e.printStackTrace();
 //
 //        }
+
         ProductDaoImpl pDaoImpl = new ProductDaoImpl();
-        //List<Product> lst;
+        List<Product> lst;
         //===========================
-    /*    Product p = new Product();
+        Product p = new Product();
         p.setCategory("WOMEN_CLOTHING");
         p.setSuperCategory("Fashion");
         p.setOwner("SASHA");
@@ -622,6 +594,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //      p.setProductStatus(Status.MODERATION);
         p.setDescription("AAAAAAAAAAAAAAAAAAAAAAAA");
         p.setTitle("котик Джерри");
+        p.setPhoto("-1");
         Map<String, String> map = new HashMap<>();
         map.put("SIZE_", "TEST");
         map.put("CONDITION", "TEST");
@@ -629,9 +602,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         map.put("KIND_OF_CLOTHES", "TEST");
         p.setAttributesAndValues(map);
         pDaoImpl.addProduct(p);
-        lst = pDaoImpl.getProductsByKeyWords("Котик смешно падает смотреть онлайн");*/
+        lst = pDaoImpl.getAllProducts();
         //===========================
-        /*lst = pDaoImpl.getProductsBySupercategory("Animals");
+        //lst = pDaoImpl.getProductsBySupercategory("Fashion");
         int i = 0;
         if (lst != null) {
             for (Product x : lst) {
@@ -639,7 +612,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             }
         } else {
             System.out.println("Nothing to shown\n");
-        }*/
+        }
         pDaoImpl.changeProductStatus("06276637-0c12-4fc7-aebe-fc71f52af13c", ProductStatus.APPROVED);
         Product product = pDaoImpl.getProductById("06276637-0c12-4fc7-aebe-fc71f52af13c");
         System.out.println(product.toString());

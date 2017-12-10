@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 @Controller
@@ -31,7 +35,7 @@ public class NavigationController {
     LikeService likeService;
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String main(Model model) {
+    public String main(Model model, HttpServletRequest request) {
         List<Category> supercategoryList = null;
         supercategoryList = categoryService.getAllTopCategories();
         model.addAttribute("productCategory", supercategoryList);
@@ -39,6 +43,9 @@ public class NavigationController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
+        Locale locale = RequestContextUtils.getLocale(request);
+        ResourceBundle bundle = ResourceBundle.getBundle("locales.messages", locale);
+        model.addAttribute("keys", bundle.getKeys());
         return "/welcome";
     }
 

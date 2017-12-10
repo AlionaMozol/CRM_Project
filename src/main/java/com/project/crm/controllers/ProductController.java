@@ -6,15 +6,18 @@ import com.project.crm.services.AttributeService;
 import com.project.crm.services.CommentService;
 import com.project.crm.services.ProductService;
 import com.project.crm.services.*;
+import com.project.crm.validator.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -36,6 +39,9 @@ public class ProductController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    ProductValidator productValidator;
 
 
     @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
@@ -103,33 +109,13 @@ public class ProductController {
 
 
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)
-    public String addProduct(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-        Product product = new Product();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-
-        Map<String, String[]> parameterMap = request.getParameterMap();
-
-
-
-        product.setOwner(name);
-        product.setSuperCategory(parameterMap.get("superCategory")[0]);
-        product.setCategory(parameterMap.get("category")[0]);
-        product.setCost(parameterMap.get("COST")[0]);
-        product.setTitle(parameterMap.get("TITLE")[0]);
-        product.setDescription(parameterMap.get("DESCRIPTION")[0]);
-        product.setPhoto(addPohotoToDrive(multipartFile));
-
-        List<String> attributes = attributeService.getAttributesByCategory(parameterMap.get("category")[0]);
-
-        Map<String, String> productAttributes = new HashMap<>();
-        for (String attribute : attributes) {
-            productAttributes.put(attribute, parameterMap.get(attribute)[0]);
-        }
-
-        product.setAttributesAndValues(productAttributes);
-        productService.addProduct(product);
+    public String addProduct(@ModelAttribute Product product, BindingResult bindingResult, HttpServletRequest request,
+                             @RequestParam("file") MultipartFile multipartFile) throws IOException {
+        product = productService.getProductByHttpServletRequestAndPhoto(request, multipartFile);
+        productValidator.validate(product,bindingResult);
+        if(bindingResult.hasErrors())
+            return "redirect:/new_product";
+       productService.addProduct(product);
         return "redirect:/my_products";
     }
 

@@ -34,11 +34,28 @@
             <p class="name-of-product"><spring:message code="product.characteristics"/></p>
             <div class="wrapper-for-ul">
                 <ul>
+    <%@include file="../layouts/preloader.jsp"%>
+    <%@include file="../layouts/high_menu_bar.jsp"%>
+    <div class="container content">
+        <div class="row wrapper-for-product">
+            <div class="col-lg-4 product-img-1">
+                <h2><strong>${productid.title}</strong></h2>
+                <div class="wrapper-for-img">
+                <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${productid.photo}"
+                     onerror="this.src='${contextPath}/resources/img/placeholder-image.png'">
+                </div>
+            </div>
+            <div class="col-lg-6 description-of-the-product">
+                <p class="name-of-product">
+                    <strong><spring:message code="product.characteristics"/></strong>
+                </p>
+                <div class="wrapper-for-ul">
+                    <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">
-                        <li><spring:message code="${value.key}"/> :</li>
+                        <li><strong><spring:message code="${value.key}"/> :</strong></li>
 
                     </c:forEach>
-                </ul>
+                    </ul>
                 <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">
                         <li>${value.value}</li>
@@ -49,8 +66,8 @@
             </div>
             <p class="description"><spring:message code="product.cost"/>: ${productid.cost}</p>
             <p class="description"><spring:message code="product.description"/>: ${productid.description}</p>
+            </div>
 
-        </div>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
         <div class="col-lg-2 btn-group-vertical align-middle">
             <button type="submit" id="btn_accept" class="btn btn-primary"><spring:message
