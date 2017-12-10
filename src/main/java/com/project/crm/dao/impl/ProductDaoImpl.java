@@ -6,6 +6,7 @@ import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.SqlService;
+
 import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -261,22 +262,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     public void editProduct(String id, Product product) {
         Connection connection = poolInst.getConnection();
         try {
-            PreparedStatement statement;
+            PreparedStatement statement = null;
             ResultSet resultSet = null;
             Map<String, String> attributesAndValues = product.getAttributesAndValues();
 
-            //StringBuilder unionForUpdate = new StringBuilder("");
-
-            StringBuilder unionForUpdate = new StringBuilder("UPDATE values_table JOIN ( ");
-
-            boolean first = true;
             for (Map.Entry entry: attributesAndValues.entrySet()) {
-                if(first){
-
-                    unionForUpdate.append("select '");
-                    unionForUpdate.append((String) entry.getValue());
-                    unionForUpdate.append("' as v1, '");
-
                     statement = connection.prepareStatement(sql.
                             getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
                     statement.setString(1, id);
@@ -284,32 +274,12 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     resultSet = statement.executeQuery();
                     resultSet.next();
 
-                    unionForUpdate.append(resultSet.getString(1));
-                    unionForUpdate.append("' as v2");
-                }else {
-
-                    unionForUpdate.append(" union select '");
-                    unionForUpdate.append((String) entry.getValue());
-                    unionForUpdate.append("', '");
-
                     statement = connection.prepareStatement(sql.
-                            getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
-                    statement.setString(1, id);
-                    statement.setString(2, (String) entry.getKey());
-                    resultSet = statement.executeQuery();
-                    resultSet.next();
-
-                    unionForUpdate.append(resultSet.getString(1));
-                    unionForUpdate.append("'");
-
-                }
-                first = false;
+                        getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE_BY_VALUE_ID));
+                    statement.setString(1, (String) entry.getValue());
+                    statement.setString(2, resultSet.getString(1));
+                    statement.execute();
             }
-
-            unionForUpdate.append(" ) A ON A.v2=values_table.value_id SET values_table.Value = A.v1");
-
-            statement = connection.prepareStatement(unionForUpdate.toString());
-            statement.execute();
 
             statement.close();
             resultSet.close();

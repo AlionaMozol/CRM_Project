@@ -28,6 +28,13 @@
 
                 <div class="col-sm-4">
                     <div class="product">
+                        <div class="col-xs-12 text-left">
+                            <a href="${contextPath}/product/edit/${product.id}">
+                                <img src="${contextPath}/resources/img/pencil.png">
+                            </a>
+                        </div>
+
+
                         <div class="product-img">
                             <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
                                  onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
