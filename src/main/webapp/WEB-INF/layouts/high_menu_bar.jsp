@@ -29,6 +29,12 @@
 
 </head>
 
+<style>
+    body {
+        background: #ececec;
+    }
+</style>
+
 <body>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
