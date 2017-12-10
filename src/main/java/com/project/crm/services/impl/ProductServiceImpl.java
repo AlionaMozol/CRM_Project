@@ -5,11 +5,13 @@ import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.ProductService;
+import com.project.crm.validator.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +33,11 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     AttributeDao attributeDao;
 
-    @Override
-    public void addProduct(HttpServletRequest request, MultipartFile multipartFile) {
+    @Autowired
+    ProductValidator productValidator;
 
+    @Override
+    public Product getProductByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo){
         Product product = new Product();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,14 +48,14 @@ public class ProductServiceImpl implements ProductService {
         product.setOwner(name);
         product.setSuperCategory(parameterMap.get("superCategory")[0]);
         product.setCategory(parameterMap.get("category")[0]);
-        product.setCost(parameterMap.get("COST")[0]);
-        product.setTitle(parameterMap.get("TITLE")[0]);
-        product.setDescription(parameterMap.get("DESCRIPTION")[0]);
-        if(multipartFile.isEmpty())
+        product.setCost(parameterMap.get("cost")[0] + " " + parameterMap.get("COST_TYPE")[0]);
+        product.setTitle(parameterMap.get("title")[0]);
+        product.setDescription(parameterMap.get("description")[0]);
+        if(photo.isEmpty())
             product.setPhoto("-1");
         else
             try {
-                product.setPhoto(addPohotoToDrive(multipartFile));
+                product.setPhoto(addPohotoToDrive(photo));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -64,6 +68,11 @@ public class ProductServiceImpl implements ProductService {
         }
 
         product.setAttributesAndValues(productAttributes);
+        return product;
+    }
+
+    @Override
+    public void addProduct(Product product) {
         productDao.addProduct(product);
     }
 
@@ -71,6 +80,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductsByUsername(String username) {
         return productDao.getProductsByUsername(username);
     }
+
 
     @Override
     public void editProduct(String id, Product product) {productDao.editProduct(id, product);  }
