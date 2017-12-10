@@ -5,8 +5,10 @@ import com.project.crm.dao.DAO;
 import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
+import com.project.crm.services.ProductService;
 import com.project.crm.services.SqlService;
 
+import com.project.crm.services.impl.ProductServiceImpl;
 import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -103,7 +105,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //                statement.setString(4, product.getSuperCategory());
 //                statement.execute();
 //            }
-            buildAndExecuteStatement(connection, "SUPERCATEGOTY", UUID.randomUUID().toString(),
+            buildAndExecuteStatement(connection, "SUPERCATEGORY", UUID.randomUUID().toString(),
                     newObjectId, product.getSuperCategory());
 
 //            statement = connection.prepareStatement(sql.
@@ -368,7 +370,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             }
             Pattern pt = Pattern.compile(pattern);
             Matcher matcher;
-            for(Pair <Product, String> productAndTitle : productsAndTitles) {
+            for(Pair<Product, String> productAndTitle : productsAndTitles) {
                 matcher = pt.matcher(productAndTitle.getValue().toLowerCase());
                 if(matcher.find()) {
                     matchedProducts.add(productAndTitle.getKey());
@@ -569,10 +571,11 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //            e.printStackTrace();
 //
 //        }
+
         ProductDaoImpl pDaoImpl = new ProductDaoImpl();
         List<Product> lst;
         //===========================
-    /*    Product p = new Product();
+        Product p = new Product();
         p.setCategory("WOMEN_CLOTHING");
         p.setSuperCategory("Fashion");
         p.setOwner("SASHA");
@@ -580,6 +583,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //      p.setProductStatus(Status.MODERATION);
         p.setDescription("AAAAAAAAAAAAAAAAAAAAAAAA");
         p.setTitle("котик Джерри");
+        p.setPhoto("-1");
         Map<String, String> map = new HashMap<>();
         map.put("SIZE_", "TEST");
         map.put("CONDITION", "TEST");
@@ -587,9 +591,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         map.put("KIND_OF_CLOTHES", "TEST");
         p.setAttributesAndValues(map);
         pDaoImpl.addProduct(p);
-        lst = pDaoImpl.getProductsByKeyWords("Котик смешно падает смотреть онлайн");*/
+        lst = pDaoImpl.getAllProducts();
         //===========================
-        lst = pDaoImpl.getProductsBySupercategory("Fashion");
+        //lst = pDaoImpl.getProductsBySupercategory("Fashion");
         int i = 0;
         if (lst != null) {
             for (Product x : lst) {
