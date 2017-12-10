@@ -48,9 +48,9 @@ public class ProductServiceImpl implements ProductService {
         product.setOwner(name);
         product.setSuperCategory(parameterMap.get("superCategory")[0]);
         product.setCategory(parameterMap.get("category")[0]);
-        product.setCost(parameterMap.get("cost")[0] + " " + parameterMap.get("COST_TYPE")[0]);
-        product.setTitle(parameterMap.get("title")[0]);
-        product.setDescription(parameterMap.get("description")[0]);
+        product.setCost(parameterMap.get("cost")[0].trim() + " " + parameterMap.get("COST_TYPE")[0]);
+        product.setTitle(parameterMap.get("title")[0].trim());
+        product.setDescription(parameterMap.get("description")[0].trim());
         if(photo.isEmpty())
             product.setPhoto("-1");
         else
@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 
         Map<String, String> productAttributes = new HashMap<>();
         for (String attribute : attributes) {
-            productAttributes.put(attribute, parameterMap.get(attribute)[0]);
+            productAttributes.put(attribute, parameterMap.get(attribute)[0].trim());
         }
 
         product.setAttributesAndValues(productAttributes);
@@ -123,5 +123,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProductById(String id) {
         productDao.deleteProductById(id);
+    }
+
+    @Override
+    public void changeProductStatus(String id, ProductStatus status) {
+        productDao.changeProductStatus(id, status);
     }
 }

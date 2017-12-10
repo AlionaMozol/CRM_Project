@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <!DOCTYPE html>
 
@@ -15,13 +15,14 @@
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
 
     <title><spring:message code="PAGE_TITLE"/> <spring:message code="productbyid"/></title>
+    <link href="${contextPath}/resources/css/catalog.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-    <%@include file="../layouts/preloader.jsp"%>
-    <%@include file="../layouts/high_menu_bar.jsp"%>
+<%@include file="../layouts/preloader.jsp" %>
+<%@include file="../layouts/high_menu_bar.jsp" %>
     <div class="container content">
         <div class="row wrapper-for-product">
             <div class="col-lg-4 product-img-1">
@@ -45,10 +46,11 @@
                     </ul>
                 <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">
-                    <li>${value.value}</li>
+                        <li>${value.value}</li>
 
                     </c:forEach>
                 </ul>
+
 
                 </div>
                 <p class="description"> <strong><spring:message code="product.cost"/>:</strong> ${productid.cost}</p>
@@ -63,13 +65,80 @@
                             </a>
                     </form>
                 </security:authorize>
+
             </div>
+            <p class="description"><spring:message code="product.cost"/>: ${productid.cost}</p>
+            <p class="description"><spring:message code="product.description"/>: ${productid.description}</p>
+            </div>
+
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <div class="col-lg-2 btn-group-vertical align-middle">
+            <button type="submit" id="btn_accept" class="btn btn-primary"><spring:message
+                    code="moderationButtonAccept"/></button>
+            <button type="button" id="btn_deny" class="btn btn-primary"><spring:message
+                    code="moderationButtonDeny"/></button>
         </div>
-
-        <%@include file="../layouts/comment_layout.jsp"%>
-
-
+        </sec:authorize>
     </div>
 
+    <%@include file="../layouts/comment_layout.jsp" %>
 
+
+</div>
 </body>
+
+<script>
+    <%--$("btn_accept").click(function () {
+    })--%>
+    //function accept_result() {
+        $("#btn_accept").click(function (event) {
+            event.preventDefault();
+            var productId = "${productid.id}";
+            $.ajax({
+                url : "/not_moderated_accept",
+                type : "GET",
+                dataType : 'json',
+                contentType : "application/json",
+                data : ({
+                    productId : productId
+                }),
+                complete : function () {
+                    console.log("accept was pressed");
+                }
+            });
+        });
+        /*$(document).on('click','#btn_accept',function(event) {
+            //event.preventDefault();
+            let productId = "";
+            $.ajax({
+                url : "/not_moderated_accept",
+                type : "GET",
+                dataType : 'json',
+                contentType : "application/json",
+                data : ({
+                    productId : productId
+                }),
+                complete : function () {
+                    console.log("accept was pressed");
+                }
+            });
+        });*/
+    //}
+
+    $(document).on('click','#btn_deny',function(event) {
+        event.preventDefault();
+        var productId = "${productid.id}";
+        $.ajax({
+            url : "/not_moderated_deny",
+            type : "GET",
+            dataType : 'json',
+            contentType : "application/json",
+            data : ({
+                productId : productId
+            }),
+            complete : function () {
+                console.log("deny was pressed");
+            }
+        });
+    });
+</script>
