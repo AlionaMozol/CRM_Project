@@ -70,4 +70,9 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductById(String id) {
         productDao.deleteProductById(id);
     }
+
+    @Override
+    public void changeProductStatus(String id, ProductStatus status) {
+        productDao.changeProductStatus(id, status);
+    }
 }

@@ -21,4 +21,5 @@ public interface ProductService {
     List<Product> getProductsByStatus(ProductStatus status);
     List<Product> getAllProducts();
     void deleteProductById(String id);
+    void changeProductStatus(String id, ProductStatus status);
 }

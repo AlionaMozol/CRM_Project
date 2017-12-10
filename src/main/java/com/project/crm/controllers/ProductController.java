@@ -1,6 +1,7 @@
 package com.project.crm.controllers;
 
 import com.project.crm.model.Product;
+import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.AttributeService;
 import com.project.crm.services.CommentService;
 import com.project.crm.services.ProductService;
@@ -43,7 +44,17 @@ public class ProductController {
         return "/productbyid";
     }
 
+    @RequestMapping(value = "/not_moderated_accept", method = RequestMethod.GET)
+    public String acceptProduct(@RequestParam String productId){
+        productService.changeProductStatus(productId, ProductStatus.APPROVED);
+        return "/product_moderation";
+    }
 
+    @RequestMapping(value = "/not_moderated_deny", method = RequestMethod.GET)
+    public String denyProduct(@RequestParam String productId){
+        productService.changeProductStatus(productId, ProductStatus.CANCELED);
+        return "/product_moderation";
+    }
 
 
     @RequestMapping(value = "/my_products", method = RequestMethod.GET)
@@ -72,10 +83,10 @@ public class ProductController {
 
     @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
     public String notModeratedProducts(Model model){
-        //is expected
-        //model.addAttribute("products", productService.getProductByStatus(Status.MODERATION));
+        //почему-то все возвращается в 2 экземплярах - запрос в бд неправильный?
         model.addAttribute("productCategory", categoryService.getAllTopCategories());
-        model.addAttribute("nmod_products", productService.getAllProducts());
+        model.addAttribute("nmod_products", productService.getProductsByStatus(ProductStatus.MODERATION));
+        //model.addAttribute("nmod_products", productService.getAllProducts());
         return "/product_moderation";
 
     }
