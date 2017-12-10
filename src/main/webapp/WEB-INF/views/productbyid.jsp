@@ -22,20 +22,6 @@
 
 <%@include file="../layouts/preloader.jsp" %>
 <%@include file="../layouts/high_menu_bar.jsp" %>
-<div class="container content">
-    <div class="row wrapper-for-product">
-        <div class="col-lg-4 product-img-1">
-            <h2>Nazvanie</h2>
-            <div class="wrapper-for-img">
-                <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${productid.photo}">
-            </div>
-        </div>
-        <div class="col-lg-6 description-of-the-product">
-            <p class="name-of-product"><spring:message code="product.characteristics"/></p>
-            <div class="wrapper-for-ul">
-                <ul>
-    <%@include file="../layouts/preloader.jsp"%>
-    <%@include file="../layouts/high_menu_bar.jsp"%>
     <div class="container content">
         <div class="row wrapper-for-product">
             <div class="col-lg-4 product-img-1">
@@ -124,7 +110,7 @@
 
     $(document).on('click','#btn_deny',function(event) {
         event.preventDefault();
-        let productId = "${productid.id}";
+        var productId = "${productid.id}";
         $.ajax({
             url : "/not_moderated_deny",
             type : "GET",

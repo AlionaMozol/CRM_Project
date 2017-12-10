@@ -92,7 +92,7 @@
 
 <div class="container content">
     <form method="post" action="${pageContext.request.contextPath}/new-product/add?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
-    <div class="row wrapper-for-product">
+    <div class="row wrapper-for-product" style="margin-bottom: 40px">
         <div class="col-lg-4 product-img-1">
             <h2>Nazvanie</h2>
             <div class="wrapper-for-img">
@@ -146,7 +146,7 @@
                     <textarea class="add-product-description" name="description"  placeholder="<spring:message code="DESCRIPTION"/>"></textarea>
                 </p>
             </div>
-            <input class="btn btn-success" hidden="hidden" type="submit"/>
+            <input class="btn btn-success"  type="submit" style="margin-left: 300px; margin-bottom: 10px"/>
         </div>
     </div>
     </form>
