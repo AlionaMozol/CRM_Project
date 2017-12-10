@@ -73,7 +73,6 @@
 
             success: function (data) {
                 $('#submit-button').hide();
-                $('#wrapper-for-attributes').empty();
                 $('#select_sub_category').empty();
                 $.each(data, function (index, value) {
                     var newOption = ("<option value=" + value.title + ">" + messages[value.title] + "</option>");
