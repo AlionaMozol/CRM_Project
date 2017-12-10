@@ -3,14 +3,16 @@ package com.project.crm.services;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public interface ProductService {
 
-    void addProduct(Product product);
+    void addProduct(HttpServletRequest request, MultipartFile multipartFile);
     void editProduct(String id, Product product);
     Product getProductById(String id);
     List<Product> getProductsByKeyWords(String keyWords);

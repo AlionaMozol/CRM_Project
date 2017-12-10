@@ -29,7 +29,9 @@
                 <div class="col-sm-4">
                     <div class="product">
                         <div class="product-img">
-                            <a href="#"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"></a>
+                            <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
+                                 onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+
                         </div>
 
                         <p class="product-title">

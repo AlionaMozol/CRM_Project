@@ -93,32 +93,7 @@ public class ProductController {
 
     @RequestMapping(value = "/new-product/add", method = RequestMethod.POST)
     public String addProduct(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-        Product product = new Product();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-
-        Map<String, String[]> parameterMap = request.getParameterMap();
-
-
-
-        product.setOwner(name);
-        product.setSuperCategory(parameterMap.get("superCategory")[0]);
-        product.setCategory(parameterMap.get("category")[0]);
-        product.setCost(parameterMap.get("COST")[0]);
-        product.setTitle(parameterMap.get("TITLE")[0]);
-        product.setDescription(parameterMap.get("DESCRIPTION")[0]);
-        product.setPhoto(addPohotoToDrive(multipartFile));
-
-        List<String> attributes = attributeService.getAttributesByCategory(parameterMap.get("category")[0]);
-
-        Map<String, String> productAttributes = new HashMap<>();
-        for (String attribute : attributes) {
-            productAttributes.put(attribute, parameterMap.get(attribute)[0]);
-        }
-
-        product.setAttributesAndValues(productAttributes);
-        productService.addProduct(product);
+        productService.addProduct(request, multipartFile);
         return "redirect:/my_products";
     }
 
