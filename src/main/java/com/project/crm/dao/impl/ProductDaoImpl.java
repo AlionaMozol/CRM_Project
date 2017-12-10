@@ -10,7 +10,6 @@ import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -620,7 +619,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         pDaoImpl.addProduct(p);
         lst = pDaoImpl.getProductsByKeyWords("Котик смешно падает смотреть онлайн");*/
         //===========================
-        lst = pDaoImpl.getProductsBySupercategory("Animals");
+        lst = pDaoImpl.getProductsBySupercategory("Fashion");
         int i = 0;
         if (lst != null) {
             for (Product x : lst) {
