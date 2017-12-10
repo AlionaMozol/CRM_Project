@@ -6,17 +6,22 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Component
 public class ProductValidator implements Validator{
 
-    private String emailPattern="^([a-z0-9_\\.-])+@[a-z0-9-]+\\.([a-z]{2,4}\\.)?[a-z]{2,4}$";
-    private String telephonePatten="^((80|\\+375|375))(\\(?\\d{2}\\)?)(\\d{3}\\-?)(\\-?\\d{2}\\-?)(\\-?\\d{2})$";
-    private String cityPattern="^[а-яА-ЯёЁa-zA-Z]+$";
-    private String fioPattern="^[а-яА-ЯёЁa-zA-Z\\s-]{0,40}$";
 
     @Override
     public boolean supports(Class<?> aClass) {
         return Product.class.equals(aClass);
+    }
+
+    private boolean checkField(String field, String pattern){
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(field);
+        return m.matches();
     }
 
     @Override
@@ -30,12 +35,19 @@ public class ProductValidator implements Validator{
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "category", "category");
 
         //title
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "title.error.null");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "error.null");
         if(product.getTitle().length() > 100)
             errors.rejectValue("title", "title.error.large");
 
         //cost
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cost", "product.cost");
+        if(product.getCost() == null)
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cost", "error.null");
+        else{
+            String costPattern = "([1-9]+([0-9]+)?){0,40}(\\s)(BYN|\\$|\\€)";
+            if(!checkField(product.getCost(), costPattern))
+                errors.rejectValue("cost", "cost.error");
+        }
+
 
         //description
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "product.description");
