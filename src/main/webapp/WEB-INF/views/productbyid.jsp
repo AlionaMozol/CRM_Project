@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@ page contentType="text/html; charset=UTF-8"%>
@@ -25,6 +26,7 @@
         <div class="row wrapper-for-product">
             <div class="col-lg-4 product-img-1">
                 <h2><strong>${productid.title}</strong></h2>
+
                 <div class="wrapper-for-img">
                 <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${productid.photo}"
                      onerror="this.src='${contextPath}/resources/img/placeholder-image.png'">
@@ -52,6 +54,15 @@
                 <p class="description"> <strong><spring:message code="product.cost"/>:</strong> ${productid.cost}</p>
                 <p class="description"> <strong><spring:message code="product.description"/>:</strong> ${productid.description}</p>
 
+
+                <security:authorize access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')) and principal.username=='${productid.owner}'">
+                    <form action="" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <a href="${contextPath}/product/edit/${productid.id}">
+                                <img src="${contextPath}/resources/img/pencil.png">
+                            </a>
+                    </form>
+                </security:authorize>
             </div>
         </div>
 
