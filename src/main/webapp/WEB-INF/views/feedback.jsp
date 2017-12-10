@@ -4,7 +4,7 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <html xmlns:th="http://www.thymeleaf.org">
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<%@ page contentType="text/html; charset=UTF-8"%>
 
 <!DOCTYPE html>
 
@@ -20,65 +20,90 @@
 <body>
 <%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
-<f:form class="content" method="post" commandName="Email" acceptCharset="utf-8">
+<f:form class="content" method="post" commandName="Email" acceptCharset="utf-8" id="form_feedback">
     <div class="col-md-10 col-md-offset-1">
         <div class="form-group row has-feedback">
             <label class="col-2 col-form-label">От кого</label>
             <div class="col-10">
-                <input class="form-control" type="text" name="from" path="from" pattern="([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$"/>
+                <input class="form-control" type="text" name="from" id="from" path="from"/>
                 <form:errors path="from"/>
             </div>
         </div>
         <div class="form-group row has-feedback">
             <label class="col-2 col-form-label">Тема письма</label>
             <div class="col-10">
-                <input class="form-control" type="text" name="title" path="title" pattern="[0-9а-яА-ЯёЁa-zA-Z\s-]{0,70}$"/>
+                <input class="form-control" type="text" name="title" id="title" path="title"/>
                 <form:errors path="title"/>
             </div>
         </div>
         <div class="form-group row has-feedback">
             <label class="col-2 col-form-label">Текст</label>
-            <textarea class="form-control" rows="5" name="message" path="message" pattern="[0-9а-яА-ЯёЁa-zA-Z]{0,500}$"></textarea>
+            <textarea class="form-control" rows="5" name="message" id="message" path="message"></textarea>
             <form:errors path="message"/>
         </div>
         <button type="submit" class="btn">Отправить</button>
     </div>
 </f:form>
 
-<script type="text/javascript">$(document).ready(function() {
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#form_feedback').submit(function() {
+            if($('#from').val() != '' &&
+                $('#title').val() != '' &&
+                $('#message').val() != '') {
+                var patternEmail = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+                var patternTitle = /^[0-9а-яА-ЯёЁa-zA-Z]{1,70}$/i;
+                var patternMessage = /^[0-9а-яА-ЯёЁa-zA-Z]{1,500}$/i;
+                if(patternEmail.test($('#from').val()) &&
+                    patternTitle.test($('#title').val()) &&
+                    patternMessage.test($('#message').val())){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        });
 
-    $('#from').blur(function() {
-        if($(this).val() != '') {
-            var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
-            if(pattern.test($(this).val())){
-                $(this).css({'border' : '1px solid #04f92d'});
+        $('#from').on("input",function() {
+            if($(this).val() != '') {
+                var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+                if(pattern.test($(this).val())){
+                    $(this).css({'border' : '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border' : '1px solid #ff0000'});
+                }
             } else {
                 $(this).css({'border' : '1px solid #ff0000'});
             }
-        }
-    });
+        });
 
-    $('#title').blur(function() {
-        if($(this).val() != '') {
-            var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{0,70}$/i;
-            if(pattern.test($(this).val())){
-                $(this).css({'border' : '1px solid #04f92d'});
+        $('#title').on("input",function() {
+            if($(this).val() != '') {
+                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{1,70}$/i;
+                if(pattern.test($(this).val())){
+                    $(this).css({'border' : '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border' : '1px solid #ff0000'});
+                }
             } else {
                 $(this).css({'border' : '1px solid #ff0000'});
             }
-        }
-    });
+        });
 
-    $('#message').blur(function() {
-        if($(this).val() != '') {
-            var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{0,500}$/i;
-            if(pattern.test($(this).val())){
-                $(this).css({'border' : '1px solid #04f92d'});
+        $('#message').on("input",function() {
+            if($(this).val() != '') {
+                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{1,500}$/i;
+                if(pattern.test($(this).val())){
+                    $(this).css({'border' : '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border' : '1px solid #ff0000'});
+                }
             } else {
                 $(this).css({'border' : '1px solid #ff0000'});
             }
-        }
+        });
     });
-})
 </script>
 </body>

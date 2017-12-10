@@ -393,18 +393,14 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     productsAndTitles.add(new Pair<>(product, product.getTitle()));
                 }
             }
-            String pattern = "(" + keyWords + ")" +
-                    "|(" + keyWords.toLowerCase() + ")" +
-                    "|(" + keyWords.toUpperCase() + ")";
+            String pattern = "(" + keyWords.toLowerCase() + ")";
             for(String part : keyWords.split("\\s")) {
-                pattern = pattern + "|(" + part + ")";
-                pattern = pattern + "|(" + part.toUpperCase() + ")";
                 pattern = pattern + "|(" + part.toLowerCase() + ")";
             }
             Pattern pt = Pattern.compile(pattern);
             Matcher matcher;
             for(Pair <Product, String> productAndTitle : productsAndTitles) {
-                matcher = pt.matcher(productAndTitle.getValue());
+                matcher = pt.matcher(productAndTitle.getValue().toLowerCase());
                 if(matcher.find()) {
                     matchedProducts.add(productAndTitle.getKey());
                 }

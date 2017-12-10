@@ -1,13 +1,10 @@
 package com.project.crm.controllers;
 
-import com.project.crm.model.Category;
-import com.project.crm.model.Comment;
 import com.project.crm.model.Product;
 import com.project.crm.services.AttributeService;
 import com.project.crm.services.CommentService;
 import com.project.crm.services.ProductService;
 import com.project.crm.services.*;
-import com.project.crm.services.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,9 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.RequestContextUtils;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 import static com.project.crm.services.GoogleDriveAPI.*;
@@ -131,4 +128,14 @@ public class ProductController {
         return attributeService.getAttributesByCategory(subCategory);
     }
 
+    @RequestMapping(value = "/productSearch", method = RequestMethod.GET)
+    @ResponseBody
+    public List getProductsBySubString(@RequestParam String subString) throws UnsupportedEncodingException {
+        String checkIfEmptyBuf = java.net.URLDecoder.decode(subString,"UTF-8");
+        if(!(checkIfEmptyBuf.replaceAll("\\s","")).equals("")) {
+            return productService.getProductsByKeyWords(java.net.URLDecoder.decode(subString,"UTF-8"));
+        } else {
+            return new ArrayList();
+        }
+    }
 }

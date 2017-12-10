@@ -11,25 +11,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Transactional
 @Component
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryDao categoryDao;
 
-    @Transactional
     @Override
     public List<Category> getCategoriesByTopCategory(String category) {
         return categoryDao.getCategoriesByTopCategory(category);
     }
 
-    @Transactional
     @Override
     public List<Category> getAllTopCategories() {
         return categoryDao.getAllTopCategories();
     }
 
-    @Transactional
     @Override
     public Map<Category, List<Category>> getTopCategoriesWithSubCategory() {
         Map<Category, List<Category>> categoryMap = new HashMap<>();
