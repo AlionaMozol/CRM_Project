@@ -23,27 +23,27 @@
 
 <%@include file="../layouts/preloader.jsp" %>
 <%@include file="../layouts/high_menu_bar.jsp" %>
-    <div class="container content">
-        <div class="row wrapper-for-product">
-            <div class="col-lg-4 product-img-1">
-                <h2><strong>${productid.title}</strong></h2>
+<div class="container content">
+    <div class="row wrapper-for-product">
+        <div class="col-lg-4 product-img-1">
+            <h2><strong>${productid.title}</strong></h2>
 
-                <div class="wrapper-for-img">
+            <div class="wrapper-for-img">
                 <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${productid.photo}"
                      onerror="this.src='${contextPath}/resources/img/placeholder-image.png'">
-                </div>
             </div>
-            <div class="col-lg-6 description-of-the-product">
-                <p class="name-of-product">
-                    <strong><spring:message code="product.characteristics"/></strong>
-                </p>
-                <div class="wrapper-for-ul">
-                    <ul>
+        </div>
+        <div class="col-lg-6 description-of-the-product">
+            <p class="name-of-product">
+                <strong><spring:message code="product.characteristics"/></strong>
+            </p>
+            <div class="wrapper-for-ul">
+                <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">
                         <li><strong><spring:message code="${value.key}"/> :</strong></li>
 
                     </c:forEach>
-                    </ul>
+                </ul>
                 <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">
                         <li>${value.value}</li>
@@ -52,36 +52,40 @@
                 </ul>
 
 
-                </div>
-                <p class="description"> <strong><spring:message code="product.cost"/>:</strong> ${productid.cost}</p>
-                <p class="description"> <strong><spring:message code="product.description"/>:</strong> ${productid.description}</p>
-
-
-                <security:authorize access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')) and principal.username=='${productid.owner}'">
-                    <form action="" method="post">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            <a href="${contextPath}/product/edit/${productid.id}">
-                                <img src="${contextPath}/resources/img/pencil.png">
-                            </a>
-                    </form>
-                </security:authorize>
-
             </div>
-            <p class="description"><spring:message code="product.cost"/>: ${productid.cost}</p>
-            <p class="description"><spring:message code="product.description"/>: ${productid.description}</p>
-            </div>
+            <p class="description"><strong><spring:message code="product.cost"/>:</strong> ${productid.cost}</p>
+            <p class="description"><strong><spring:message
+                    code="product.description"/>:</strong> ${productid.description}</p>
 
-        <sec:authorize access="hasRole('ROLE_ADMIN')">
-        <div class="col-lg-2 btn-group-vertical align-middle">
-            <button type="submit" id="btn_accept" class="btn btn-primary"><spring:message
-                    code="moderationButtonAccept"/></button>
-            <button type="button" id="btn_deny" class="btn btn-primary"><spring:message
-                    code="moderationButtonDeny"/></button>
+
+            <security:authorize
+                    access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')) and principal.username=='${productid.owner}'">
+                <form action="" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <a href="${contextPath}/product/edit/${productid.id}">
+                        <img src="${contextPath}/resources/img/pencil.png">
+                    </a>
+                </form>
+            </security:authorize>
+
         </div>
-        </sec:authorize>
-    </div>
+        <p class="description"><spring:message code="product.cost"/>: ${productid.cost}</p>
+        <p class="description"><spring:message code="product.description"/>: ${productid.description}</p>
 
-    <%@include file="../layouts/comment_layout.jsp" %>
+        <c:if test="${productid.productStatus.toString() == 'MODERATION'}">
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <div class="col-lg-2 btn-group-vertical align-middle">
+                    <button type="submit" id="btn_accept" class="btn btn-primary"><spring:message
+                            code="moderationButtonAccept"/></button>
+                    <button type="button" id="btn_deny" class="btn btn-primary"><spring:message
+                            code="moderationButtonDeny"/></button>
+                </div>
+            </sec:authorize>
+        </c:if>
+    </div>
+</div>
+
+<%@include file="../layouts/comment_layout.jsp" %>
 
 
 </div>
@@ -91,45 +95,27 @@
     <%--$("btn_accept").click(function () {
     })--%>
     //function accept_result() {
-        $("#btn_accept").click(function (event) {
-            event.preventDefault();
-            var productId = "${productid.id}";
-            $.ajax({
-                url : "/not_moderated_accept",
-                type : "GET",
-                dataType : 'json',
-                contentType : "application/json",
-                data : ({
-                    productId : productId
-                }),
-                complete : function () {
-                    console.log("accept was pressed");
-                }
-            });
-        });
-        /*$(document).on('click','#btn_accept',function(event) {
-            //event.preventDefault();
-            let productId = "";
-            $.ajax({
-                url : "/not_moderated_accept",
-                type : "GET",
-                dataType : 'json',
-                contentType : "application/json",
-                data : ({
-                    productId : productId
-                }),
-                complete : function () {
-                    console.log("accept was pressed");
-                }
-            });
-        });*/
-    //}
-
-    $(document).on('click','#btn_deny',function(event) {
+    $("#btn_accept").click(function (event) {
         event.preventDefault();
         var productId = "${productid.id}";
         $.ajax({
-            url : "/not_moderated_deny",
+            url: "/not_moderated_accept",
+            type: "GET",
+            dataType: 'json',
+            contentType: "application/json",
+            data: ({
+                productId: productId
+            }),
+            complete: function () {
+                console.log("accept was pressed");
+            }
+        });
+    });
+    /*$(document).on('click','#btn_accept',function(event) {
+        //event.preventDefault();
+        let productId = "";
+        $.ajax({
+            url : "/not_moderated_accept",
             type : "GET",
             dataType : 'json',
             contentType : "application/json",
@@ -137,6 +123,24 @@
                 productId : productId
             }),
             complete : function () {
+                console.log("accept was pressed");
+            }
+        });
+    });*/
+    //}
+
+    $(document).on('click', '#btn_deny', function (event) {
+        event.preventDefault();
+        var productId = "${productid.id}";
+        $.ajax({
+            url: "/not_moderated_deny",
+            type: "GET",
+            dataType: 'json',
+            contentType: "application/json",
+            data: ({
+                productId: productId
+            }),
+            complete: function () {
                 console.log("deny was pressed");
             }
         });

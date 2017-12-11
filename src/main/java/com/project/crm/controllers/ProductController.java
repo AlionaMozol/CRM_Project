@@ -53,7 +53,7 @@ public class ProductController {
     @RequestMapping(value = "/not_moderated_accept", method = RequestMethod.GET)
     public String acceptProduct(@RequestParam String productId){
         productService.changeProductStatus(productId, ProductStatus.APPROVED);
-        return "/product_moderation";
+        return "redirect:/product_moderation";
     }
 
     @RequestMapping(value = "/not_moderated_deny", method = RequestMethod.GET)
