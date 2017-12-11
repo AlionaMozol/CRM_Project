@@ -34,23 +34,23 @@
 
                 <table class="row-distance">
                     <tr>
-                        <td>Время публикации</td>
+                        <td><spring:message code="PRODUCT_CREATE_DATE_TIME"/></td>
                         <td>${IDProduct.publicationDate}</td>
                     </tr>
                     <tr>
-                        <td>В последний раз редактировалось</td>
+                        <td><spring:message code="PRODUCT_LAST_EDIT_DATE_TIME"/></td>
                         <td>${IDProduct.dateOfLastEdit}</td>
                     </tr>
                     <tr>
-                        <td>Статус</td>
+                        <td><spring:message code="STATUS"/></td>
                         <td>${IDProduct.productStatus}</td>
                     </tr>
                     <tr>
-                        <td>Номер телефона</td>
+                        <td><spring:message code="TELEPHONE"/></td>
                         <td>${IDProduct.phone}</td>
                     </tr>
                     <tr>
-                        <td>Цена</td>
+                        <td><spring:message code="COST"/></td>
                         <td><input class="fill-whole-cell" name="attributesAndValues['COST']" value="${IDProduct.cost}"></td>
                     </tr>
                     <c:forEach  items="${IDProduct.attributesAndValues}" var="Values" varStatus="status">
@@ -62,7 +62,7 @@
                     </c:forEach>
 
                     <tr>
-                        <td colspan="2">Описание</td>
+                        <td colspan="2"><spring:message code="DESCRIPTION"/></td>
                     </tr>
 
                     <tr>
