@@ -59,7 +59,7 @@
                             </p>
                         </figcaption>
                     </figure>
-                    <security:authorize access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')) and principal.username=='${user.username}'">
+                    <security:authorize access="(hasAnyRole('ROLE_ADMIN','ROLE_USER')) and principal.username=='${user.username}'">
                     <form action="" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="col-xs-12 text-center product-icons">
