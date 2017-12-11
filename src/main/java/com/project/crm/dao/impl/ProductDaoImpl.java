@@ -282,6 +282,21 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 statement.execute();
             }
 
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
+            statement.setString(1, id);
+            statement.setString(2, "PRODUCT_LAST_EDIT_DATE_TIME");
+            resultSet = statement.executeQuery();
+            resultSet.next();
+
+            Date date = new Date();
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE_BY_VALUE_ID));
+            statement.setString(1, date.toString());
+            statement.setString(2, resultSet.getString(1));
+            statement.execute();
+
             statement.close();
             resultSet.close();
         } catch (SQLException e) {
@@ -302,6 +317,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             PreparedStatement statement;
             ResultSet resultSet;
             Map<String, String> attributesAndValues = new HashMap<>();
+            String owner = "";
 
             statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS));
@@ -315,7 +331,8 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 } else if (resultSet.getString(1).equals("SUPERCATEGORY")) {
                     currentProduct.setSuperCategory(resultSet.getString(2));
                 } else if (resultSet.getString(1).equals("OWNER")) {
-                    currentProduct.setOwner(resultSet.getString(2));
+                    owner = resultSet.getString(2);
+                    currentProduct.setOwner(owner);
                 } else if (resultSet.getString(1).equals("COST")) {
                     currentProduct.setCost(resultSet.getString(2));
                 } else if (resultSet.getString(1).equals("TITLE")) {
@@ -330,11 +347,22 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     currentProduct.setPublicationDate(resultSet.getString(2));
                 } else if (resultSet.getString(1).equals("PRODUCT_LAST_EDIT_DATE_TIME")) {
                     currentProduct.setDateOfLastEdit(resultSet.getString(2));
+                } else if (resultSet.getString(1).equals("TELEPHONE")) {
+                    currentProduct.setPhone(resultSet.getString(2));
                 } else attributesAndValues.put(
                         resultSet.getString(1),
                         resultSet.getString(2));
             }
             currentProduct.setAttributesAndValues(attributesAndValues);
+
+            statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_USER_PHONE_BY_USERNAME));
+            statement.setString(1, owner);
+            resultSet = statement.executeQuery();
+
+            resultSet.next();
+            currentProduct.setPhone(resultSet.getString(1));
+
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
