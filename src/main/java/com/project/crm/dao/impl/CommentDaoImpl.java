@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
@@ -48,6 +49,8 @@ public class CommentDaoImpl extends DAO implements CommentDao {
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
     public void addComment(Comment comment) {
+        Date date = new Date();
+        SimpleDateFormat dateFormat=new SimpleDateFormat();
         Connection connection = poolInst.getConnection();
         String commentId = UUID.randomUUID().toString();
         String commentObjectTypeId = "6bc34fa0-cbce-11e7-97a3-94de807a9669";
@@ -81,7 +84,7 @@ public class CommentDaoImpl extends DAO implements CommentDao {
                         preparedStatement.setString(4, "it");
                         break;
                     case "2c29c2e5-d466-11e7-bdec-94de807a9669":
-                        preparedStatement.setString(4, "data commenta");
+                        preparedStatement.setString(4, dateFormat.format(date));
                         break;
                     default:
                         System.out.println("chet ne to");
@@ -125,6 +128,8 @@ public class CommentDaoImpl extends DAO implements CommentDao {
                     currentComment.setUsername(resultSet.getString(2));
                 } else if (resultSet.getString(1).equals("TEXT_")){
                     currentComment.setText(resultSet.getString(2));
+                }else if (resultSet.getString(1).equals("COMMENT_DATE_TIME")){
+                    currentComment.setDate(resultSet.getString(2));
                 }
             }
 

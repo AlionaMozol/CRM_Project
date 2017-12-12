@@ -44,11 +44,12 @@
                 $.each(data, function(id, key){
                     var comment = "<div class=\"comment-in-product\">\n" +
                         "\n" +
+                        "        <p class=\"comment-date\">"+key.date+"</p>\n" +
+                        "        <p class=\"username\"><a href=\"${contextPath}/account/\""+key.username+">"+key.username+"</a> </p>\n" +
                         "    <div class=\"image-of-user\">\n" +
                         "        <img src=\"${contextPath}/resources/img/placeholder-image.png\"> \n" +
                         "    </div>\n" +
                         "    <div class=\"text-in-user-comment\">\n" +
-                        "        <p class=\"username\"><a href=\"${contextPath}/account/\""+key.username+">"+key.username+"</a> </p>\n" +
                         "        <p class=\"comment\">"+key.text+"</p>\n" +
                         "    </div>\n" +
                         "</div>"
@@ -67,7 +68,7 @@
 
 <script type="text/javascript"> doAjax() </script>
 
-
+<div class="block">
 <div class="wrapper-for-comments">
 
 </div>
@@ -76,13 +77,13 @@
 <form class="form-horizontal" id="comment-form">
     <p><spring:message code="form.comment"/><Br>
         <textarea id="textField" name="text" cols="40" rows="3"></textarea>
-        <input type="hidden" id="username" value="${pageContext.request.userPrincipal.name}"/>
         <input id="postId" type="hidden" name="postID" value="${productid.id}"/>
     </p>
     <button type="submit" id="btn" value="Отправить"><spring:message code="button.send"/></button>
 
 </form>
 </sec:authorize>
+</div>
 </body>
 
 
@@ -107,7 +108,7 @@
     function ajaxAddComment() {
 
         var comment = {};
-        comment["username"] = $("#username").val();
+        comment["username"] = "${pageContext.request.userPrincipal.name}";
         comment["postId"] = $("#postId").val();
         comment["text"] = $("#textField").val();
 
@@ -119,6 +120,7 @@
             dataType : 'json',
             complete:function () {
                 doAjax();
+                $('form[id=comment-form]').trigger('reset');
             }
         });
 

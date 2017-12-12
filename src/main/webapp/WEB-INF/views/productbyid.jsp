@@ -83,9 +83,10 @@
             </sec:authorize>
         </c:if>
     </div>
+    <%@include file="../layouts/comment_layout.jsp" %>
 </div>
 
-<%@include file="../layouts/comment_layout.jsp" %>
+
 
 
 </div>

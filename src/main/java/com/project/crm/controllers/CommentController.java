@@ -4,8 +4,10 @@ package com.project.crm.controllers;
 
 import com.project.crm.model.Comment;
 import com.project.crm.services.CommentService;
+import com.project.crm.validator.CommentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,7 +18,8 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-
+    @Autowired
+    CommentValidator commentValidator;
 
     @RequestMapping(value = "/getcomments")
     public @ResponseBody List showComments(@RequestParam String id){
@@ -28,8 +31,12 @@ public class CommentController {
 
     @Secured(value={"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "/addComment")
-    public void addComment(@RequestBody Comment comment){
-        commentService.addComment(comment);
+    public void addComment(@RequestBody Comment comment, BindingResult bindingResult){
+        commentValidator.validate(comment, bindingResult);
+        if(!bindingResult.hasErrors()){
+            commentService.addComment(comment);
+        }
+
     }
 
     /*@ModelAttribute("comment")

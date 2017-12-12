@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.ObjectName;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Transactional
@@ -19,7 +23,15 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public List<Comment> getCommnetByPostId(String id) {
-        return commentDao.getCommentsByProductId(id);
+        List<Comment> commentList = new ArrayList<>();
+        commentList = commentDao.getCommentsByProductId(id);
+        Collections.sort(commentList, new Comparator<Comment>() {
+            public int compare(Comment o1, Comment o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+
+        return commentList;
     }
 
     @Override
