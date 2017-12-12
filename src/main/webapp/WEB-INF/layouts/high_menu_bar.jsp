@@ -51,6 +51,22 @@
 
     <script src="../../resources/js/jquery-3.2.1.min.js"></script>
     <script src="../../resources/js/drop-down.js"></script>
+    <script>
+        function changeLocaleFunction(locale) {
+
+            $.ajax({
+                type : "POST",
+                contentType : "application/json",
+                url : "/changeLocale?${_csrf.parameterName}=${_csrf.token}",
+                data : JSON.stringify(locale),
+                dataType : 'json',
+                complete:function () {
+                   location.reload();
+                }
+            });
+
+        }
+    </script>
 
 </head>
 
@@ -71,8 +87,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="${contextPath}/welcome"><spring:message code="headerShop"/></a>
-                <a href="<%=request.getContextPath()%>?languageVar=en">EN</a>
-                <a href="<%=request.getContextPath()%>?languageVar=ru">RU</a>
+                <button type="submit" onclick="changeLocaleFunction('en')">EN</button>
+                <button type="submit" onclick="changeLocaleFunction('ru')">RU</button>
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                     <a class="navbar-text">
                         <spring:message code="headerWelcome"/>, ${pageContext.request.userPrincipal.name}
