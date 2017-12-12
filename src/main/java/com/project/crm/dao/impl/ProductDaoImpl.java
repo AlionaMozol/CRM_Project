@@ -5,10 +5,7 @@ import com.project.crm.dao.DAO;
 import com.project.crm.dao.ProductDao;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
-import com.project.crm.services.ProductService;
 import com.project.crm.services.SqlService;
-
-import com.project.crm.services.impl.ProductServiceImpl;
 import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -617,11 +614,12 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         Product p = new Product();
         p.setCategory("WOMEN_CLOTHING");
         p.setSuperCategory("Fashion");
-        p.setOwner("SASHA");
-        p.setCost("SASHA NUMBER 1");
+        p.setOwner("TEST");
+        p.setCost("TEST");
 //      p.setProductStatus(Status.MODERATION);
-        p.setDescription("AAAAAAAAAAAAAAAAAAAAAAAA");
+        p.setDescription("TEST");
         p.setTitle("Блузка");
+        p.setPhone("TEST");
         p.setPhoto("-1");
         Map<String, String> map = new HashMap<>();
         map.put("SIZE_", "TEST");
@@ -629,6 +627,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         map.put("SEASONS", "TEST");
         map.put("KIND_OF_CLOTHES", "TEST");
         p.setAttributesAndValues(map);
+        for(int i = 0; i < 10; i++)
         pDaoImpl.addProduct(p);
         lst = pDaoImpl.getAllProducts();
         //===========================

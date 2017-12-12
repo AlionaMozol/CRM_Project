@@ -100,7 +100,7 @@
                 <div class="col-sm-4 col-md-5">
                             <form class="navbar-form" role="search">
                                 <div class="input-group">
-                                    <input id="search" type="text" class="form-control" placeholder="<spring:message code="headerSearch"/>" name="q"
+                                    <input id="search" type="text" class="form-control"  autocomplete="off" placeholder="<spring:message code="headerSearch"/>" name="q"
                                        onkeyup="findProducts()">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
@@ -109,6 +109,11 @@
                                     </div>
                                 </div>
                             </form>
+                            <div class="dropdown" id="desired_element" style="max-height: 500px;  overflow: auto; position: fixed">
+                               <ul id="myUL">
+
+                               </ul>
+                            </div>
                         </div>
                     <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome"><spring:message code="headerStartPage"/></a></li>
                     <li><a href="${contextPath}/about"><spring:message code="headerAbout"/></a></li>
@@ -149,11 +154,6 @@
 
                 </ul>
             </div>
-        </div>
-        <div class="top-left" id="desired_element" style="max-height: 500px;  overflow: auto; position: fixed";>
-            <ul id="myUL">
-
-            </ul>
         </div>
     </div>
 
