@@ -621,7 +621,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         p.setCost("SASHA NUMBER 1");
 //      p.setProductStatus(Status.MODERATION);
         p.setDescription("AAAAAAAAAAAAAAAAAAAAAAAA");
-        p.setTitle("котик Джерри");
+        p.setTitle("Блузка");
         p.setPhoto("-1");
         Map<String, String> map = new HashMap<>();
         map.put("SIZE_", "TEST");
@@ -632,7 +632,6 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         pDaoImpl.addProduct(p);
         lst = pDaoImpl.getAllProducts();
         //===========================
-        //lst = pDaoImpl.getProductsBySupercategory("Fashion");
         int i = 0;
         if (lst != null) {
             for (Product x : lst) {
@@ -641,9 +640,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         } else {
             System.out.println("Nothing to shown\n");
         }
-        pDaoImpl.changeProductStatus("06276637-0c12-4fc7-aebe-fc71f52af13c", ProductStatus.APPROVED);
-        Product product = pDaoImpl.getProductById("06276637-0c12-4fc7-aebe-fc71f52af13c");
-        System.out.println(product.toString());
+//        pDaoImpl.changeProductStatus("06276637-0c12-4fc7-aebe-fc71f52af13c", ProductStatus.APPROVED);
+//        Product product = pDaoImpl.getProductById("06276637-0c12-4fc7-aebe-fc71f52af13c");
+//        System.out.println(product.toString());
     }
 
 }

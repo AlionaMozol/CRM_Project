@@ -3,6 +3,12 @@ package com.project.crm.controllers;
 import com.project.crm.model.Email;
 import com.project.crm.validator.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,29 +36,19 @@ public class FeedBackController {
         if (bindingResult.hasErrors()) {
             return "feedback";
         }
-        Properties messageProperties = System.getProperties();
-        messageProperties.put("mail.smtp.host", "smtp.gmail.com");
-        messageProperties.put("mail.smtp.socketFactory.port", "465");
-        messageProperties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-        messageProperties.put("mail.smtp.auth", "true");
-
-        Session session = Session.getDefaultInstance(messageProperties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(
-                        "netcufar@gmail.com", "nfvu&#h#DGFh2");
-            }
-        });
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        JavaMailSender mailSender = context.getBean("emailSender", JavaMailSender.class);
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(email.getFrom());
+        simpleMailMessage.setTo("netcufar@gmail.com");
+        simpleMailMessage.setSubject(email.getTitle());
+        simpleMailMessage.setText(email.getMessage());
 
         try {
-            MimeMessage mimeMessage = new MimeMessage(session);
-            model.addAttribute("Email", email);
-            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress("netcufar@gmail.com"));
-            mimeMessage.setSubject(email.getTitle());
-            mimeMessage.setText("User email: " + email.getFrom() + "\nMessage: " + email.getMessage());
-            Transport.send(mimeMessage);
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
+             mailSender.send(simpleMailMessage);
+        } catch (MailException e) {
+             System.out.println("EMAIL SENDING ERROR");
+             e.printStackTrace();
         }
         return "redirect: /account";
     }

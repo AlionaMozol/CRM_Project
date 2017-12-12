@@ -17,12 +17,12 @@ public class EmailValidator implements Validator{
     }
 
     private boolean checkTitle(String userNameString){
-        Pattern p = Pattern.compile("^[0-9а-яА-ЯёЁa-zA-Z]{0,70}$");
+        Pattern p = Pattern.compile("^[0-9а-яА-ЯёЁa-zA-Z\\s-]{0,70}$");
         Matcher m = p.matcher(userNameString);
         return m.matches();
     }
     private boolean checkMessage(String userNameString){
-        Pattern p = Pattern.compile("^[0-9а-яА-ЯёЁa-zA-Z]{0,500}$");
+        Pattern p = Pattern.compile("^[0-9а-яА-ЯёЁa-zA-Z\\s-]{0,500}$");
         Matcher m = p.matcher(userNameString);
         return m.matches();
     }

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -60,19 +61,19 @@
                         </figcaption>
                     </figure>
                     <security:authorize access="(hasAnyRole('ROLE_ADMIN','ROLE_USER')) and principal.username=='${user.username}'">
-                    <form action="" method="post">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <div class="col-xs-12 text-center product-icons">
+                      <form method="post">
+                        <sec:csrfInput/>
+                          <div class="col-xs-12 text-center product-icons">
                             <a href="${contextPath}/feedback" class="icon">
                                 <img src="${contextPath}/resources/img/feedback_button.png">
                             </a>
-                        </div>
-                        <div class="col-xs-12 text-center product-icons" id="pencil">
+                          </div>
+                          <div class="col-xs-12 text-center product-icons" id="pencil">
                             <a href="${contextPath}/profiles" class="icon">
                                 <img src="${contextPath}/resources/img/pencil.png">
                             </a>
-                        </div>
-                    </form>
+                          </div>
+                      </form>
                     </security:authorize>
                 </div>
             </div>

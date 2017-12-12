@@ -52,8 +52,8 @@
                 $('#title').val() != '' &&
                 $('#message').val() != '') {
                 var patternEmail = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
-                var patternTitle = /^[0-9а-яА-ЯёЁa-zA-Z]{1,70}$/i;
-                var patternMessage = /^[0-9а-яА-ЯёЁa-zA-Z]{1,500}$/i;
+                var patternTitle = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$/i;
+                var patternMessage = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,500}$/i;
                 if(patternEmail.test($('#from').val()) &&
                     patternTitle.test($('#title').val()) &&
                     patternMessage.test($('#message').val())){
@@ -81,7 +81,7 @@
 
         $('#title').on("input",function() {
             if($(this).val() != '') {
-                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{1,70}$/i;
+                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$/i;
                 if(pattern.test($(this).val())){
                     $(this).css({'border' : '1px solid #04f92d'});
                 } else {
@@ -94,7 +94,7 @@
 
         $('#message').on("input",function() {
             if($(this).val() != '') {
-                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z]{1,500}$/i;
+                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,500}$/i;
                 if(pattern.test($(this).val())){
                     $(this).css({'border' : '1px solid #04f92d'});
                 } else {
