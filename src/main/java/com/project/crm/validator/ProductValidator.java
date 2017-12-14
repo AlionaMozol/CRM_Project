@@ -49,7 +49,7 @@ public class ProductValidator implements Validator{
         }
 
 
-        //description
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "product.description");
+//        //description
+//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "product.description");
     }
 }

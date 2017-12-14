@@ -181,8 +181,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //                statement.setString(4, product.getDescription());
 //                statement.execute();
 //            }
-            buildAndExecuteStatement(connection, "DESCRIPTION", UUID.randomUUID().toString(),
-                    newObjectId, product.getDescription());
+            if(product.getDescription()!=null)
+                buildAndExecuteStatement(connection, "DESCRIPTION", UUID.randomUUID().toString(),
+                        newObjectId, product.getDescription());
 
             buildAndExecuteStatement(connection, "PHOTO", UUID.randomUUID().toString(),
                     newObjectId, product.getPhoto());

@@ -17,12 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-
-import static com.project.crm.services.GoogleDriveAPI.*;
 
 @Controller
 //@RequestMapping("/product")
@@ -42,7 +39,6 @@ public class ProductController {
 
     @Autowired
     ProductValidator productValidator;
-
 
     @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
@@ -97,6 +93,7 @@ public class ProductController {
 
     }
 
+
     @RequestMapping(value = "/new_product", method = RequestMethod.GET)
     public String addProduct(Model model, HttpServletRequest request) {
         Locale locale = RequestContextUtils.getLocale(request);
@@ -113,8 +110,9 @@ public class ProductController {
                              @RequestParam("file") MultipartFile multipartFile) throws IOException {
         product = productService.getProductByHttpServletRequestAndPhoto(request, multipartFile);
         productValidator.validate(product,bindingResult);
-        if(bindingResult.hasErrors())
+        if(bindingResult.hasErrors()){
             return "redirect:/new_product";
+        }
        productService.addProduct(product);
         return "redirect:/my_products";
     }

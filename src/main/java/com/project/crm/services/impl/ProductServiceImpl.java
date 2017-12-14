@@ -50,7 +50,8 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(parameterMap.get("category")[0]);
         product.setCost(parameterMap.get("cost")[0].trim() + " " + parameterMap.get("COST_TYPE")[0]);
         product.setTitle(parameterMap.get("title")[0].trim());
-        product.setDescription(parameterMap.get("description")[0].trim());
+        if(parameterMap.get("description")[0] != null)
+            product.setDescription(parameterMap.get("description")[0].trim());
         if(photo.isEmpty())
             product.setPhoto("-1");
         else
