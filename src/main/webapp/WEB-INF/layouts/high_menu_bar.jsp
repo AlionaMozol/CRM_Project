@@ -98,9 +98,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                 <div class="col-sm-4 col-md-5">
-                            <form class="navbar-form" role="search">
+                            <form class="navbar-form" role="search" action="/catalog">
                                 <div class="input-group">
-                                    <input id="search" type="text" class="form-control"  autocomplete="off" placeholder="<spring:message code="headerSearch"/>" name="q"
+                                    <input id="search" type="text" class="form-control"  autocomplete="off"
+                                           placeholder="<spring:message code="headerSearch"/>" name="q"
                                        onkeyup="findProducts()">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
@@ -110,9 +111,9 @@
                                 </div>
                             </form>
                             <div class="dropdown" id="desired_element" style="max-height: 500px;  overflow: auto; position: fixed">
-                               <ul id="myUL">
+                                <ul id="myUL">
 
-                               </ul>
+                                </ul>
                             </div>
                         </div>
                     <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome"><spring:message code="headerStartPage"/></a></li>
@@ -120,7 +121,6 @@
                     <li>
                         <div id="dd" class="wrapper-dropdown-5" tabindex="1"><spring:message code="headerAccount"/>
                             <ul class="dropdown">
-                                <!--li><a href="${contextPath}/profiles"><i class="icon-user"></i><spring:message code="headerMenuProfile"/></a></li-->
                                 <li><a href="${contextPath}/account"><i class="icon-user"></i><spring:message code="headerAccount"/></a></li>
                                 <li><a href="${contextPath}/my_products"><i class="icon-list"></i><spring:message code="headerMenuMyProducts"/></a></li>
                                 <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -132,7 +132,7 @@
                                 <c:if test="${pageContext.request.isUserInRole(\"ROLE_ADMIN\")}">
                                     <li><a href="${contextPath}/all_profiles"><i class="icon-list"></i><spring:message code="headerMenuAllProfiles"/></a></li>
                                 </c:if>
-                                <li><a href="#"><i class="icon-cog"></i><spring:message code="headerMenuSettings"/></a></li>
+                                <%--<li><a href="#"><i class="icon-cog"></i><spring:message code="headerMenuSettings"/></a></li>--%>
                                 <li>
                                     <c:if test="${pageContext.request.userPrincipal.name != null}">
                                         <form id="logoutForm" method="POST" action="${contextPath}/logout">

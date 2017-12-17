@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
-<html xmlns:th="http://www.thymeleaf.org">
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@ page contentType="text/html; charset=UTF-8"%>
 
@@ -12,7 +11,9 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
-
+    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${contextPath}/resources/css/account.css"/>
+    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <title><spring:message code="PAGE_TITLE"/> <spring:message code="feedback"/></title>
 
 </head>
@@ -23,25 +24,33 @@
 <f:form class="content" method="post" commandName="Email" acceptCharset="utf-8" id="form_feedback">
     <div class="col-md-10 col-md-offset-1">
         <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label">От кого</label>
+            <label class="col-2 col-form-label"><strong>
+                <spring:message code="email_from"/>
+            </label>
             <div class="col-10">
                 <input class="form-control" type="text" name="from" id="from" path="from"/>
                 <form:errors path="from"/>
             </div>
         </div>
         <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label">Тема письма</label>
+            <label class="col-2 col-form-label"><strong>
+                <spring:message code="email_about"/>
+            </label>
             <div class="col-10">
                 <input class="form-control" type="text" name="title" id="title" path="title"/>
                 <form:errors path="title"/>
             </div>
         </div>
         <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label">Текст</label>
+            <label class="col-2 col-form-label"><strong>
+                <spring:message code="email_text"/>
+            </label>
             <textarea class="form-control" rows="5" name="message" id="message" path="message"></textarea>
             <form:errors path="message"/>
         </div>
-        <button type="submit" class="btn">Отправить</button>
+        <button type="submit" class="btn"><strong>
+            <spring:message code="send"/>
+        </button>
     </div>
 </f:form>
 

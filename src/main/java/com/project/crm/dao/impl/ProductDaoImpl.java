@@ -352,15 +352,16 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                         resultSet.getString(2));
             }
             currentProduct.setAttributesAndValues(attributesAndValues);
-
+            //----
             statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_USER_PHONE_BY_USERNAME));
             statement.setString(1, owner);
             resultSet = statement.executeQuery();
 
-            resultSet.next();
-            currentProduct.setPhone(resultSet.getString(1));
-
+            if(resultSet.next()) {
+                currentProduct.setPhone(resultSet.getString(1));
+            }
+            //----
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
@@ -388,9 +389,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     productsAndTitles.add(new Pair<>(product, product.getTitle()));
                 }
             }
-            String pattern = "(" + keyWords.toLowerCase() + ")";
+            String pattern = "(" + Pattern.quote(keyWords.toLowerCase()) + ")";
             for (String part : keyWords.split("\\s")) {
-                pattern = pattern + "|(" + part.toLowerCase() + ")";
+                pattern = pattern + "|(" + Pattern.quote(part.toLowerCase()) + ")";
             }
             Pattern pt = Pattern.compile(pattern);
             Matcher matcher;

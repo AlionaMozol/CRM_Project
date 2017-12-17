@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Controller
@@ -39,6 +40,38 @@ public class ProductController {
 
     @Autowired
     ProductValidator productValidator;
+
+    @Autowired
+    LikeService likeService;
+
+    @RequestMapping(value= "/catalog", method = RequestMethod.GET)
+    public String getSearch(Model model, HttpServletRequest request) throws UnsupportedEncodingException {
+        //products by key words
+        String keyWord;
+        String resultMSG = "NOTHING FOUND";
+        if(request.getParameter("q") != null) {
+            keyWord = new String(request.getParameter("q").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            if(!keyWord.replaceAll("\\s","").equals("")) {
+                List<Product> productsByKeyWords = productService.getProductsByKeyWords(keyWord);
+                if(productsByKeyWords.size() == 0) {
+                    resultMSG = "NOTHING FOUND FOR '" + keyWord + "'";
+                } else {
+                    resultMSG = "RESULTS FOR '" + keyWord + "'";
+                }
+                model.addAttribute("products", productsByKeyWords);
+            }
+        }
+        model.addAttribute("result_message", resultMSG);
+        //liked products
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
+        //locale
+        Locale locale = RequestContextUtils.getLocale(request);
+        ResourceBundle bundle = ResourceBundle.getBundle("locales.messages", locale);
+        model.addAttribute("keys", bundle.getKeys());
+        return "catalog";
+    }
 
     @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
@@ -81,7 +114,6 @@ public class ProductController {
         productService.editProduct(id, product);
         return "redirect:/my_products";
     }
-    /////////////////////////////////
 
     @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
     public String notModeratedProducts(Model model){

@@ -39,7 +39,11 @@ public class NavigationController {
         List<Category> supercategoryList = null;
         supercategoryList = categoryService.getAllTopCategories();
         model.addAttribute("productCategory", supercategoryList);
-        model.addAttribute("products", productService.getAllProducts());
+        if(request.getParameter("q") != null && !request.getParameter("q").replaceAll("\\s","").equals("")) {
+            model.addAttribute("products", productService.getProductsByKeyWords(request.getParameter("q")));
+        } else {
+            model.addAttribute("products", productService.getAllProducts());
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));

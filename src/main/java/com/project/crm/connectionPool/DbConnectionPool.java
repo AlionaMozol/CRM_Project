@@ -1,11 +1,6 @@
 package com.project.crm.connectionPool;
 
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -26,7 +21,7 @@ public class DbConnectionPool {
 
     private static DbConnectionPool instance;
 
-    private Deque<Connection> deque;
+    private Deque<Connection> connections;
 
     private DbConnectionPool(){
 
@@ -38,28 +33,23 @@ public class DbConnectionPool {
             password = resourceBundle.getString("jdbc.password");
             Driver driver =  (Driver)Class.forName(driverName).newInstance();
             DriverManager.registerDriver(driver);
-            this.deque = new LinkedList<Connection>();
+            this.connections = new LinkedList<>();
 
         }
         catch(InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e){
             e.printStackTrace();
-
         }
     }
 
     public synchronized Connection getConnection() {
-        //System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
-        //System.out.println("FROM GET CONNECTION: " + TransactionSynchronizationManager.getCurrentTransactionName());
-        if (!deque.isEmpty()) {
-            while (!deque.isEmpty()) {
-                Connection connection;
-                connection = deque.poll();
-                return connection;
-            }
+        if(!connections.isEmpty()) {
+            return connections.poll();
+
         }
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, user, password);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,10 +59,9 @@ public class DbConnectionPool {
     public void footConnection(Connection connection) {
         try {
             if (!connection.isClosed()) {
-                deque.add(connection);
+                connections.add(connection);
             }
         } catch (SQLException e) {
-
             e.printStackTrace();
         }
     }

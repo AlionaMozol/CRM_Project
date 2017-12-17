@@ -24,12 +24,12 @@
             <div class="col-sm-12">
                 <div class="col-xs-12 col-sm-8">
                     <h2>${user.username}</h2>
-                    <p><strong>ФИО: </strong>${user.fio!=null ? user.fio : "Не установлено"}</p>
-                    <p><strong>Место проживания: </strong>${user.city!=null ? user.city : "Не установлено"}</p>
-                    <p><strong>email: </strong>${user.email!=null ? user.email : "Не установлено"}</p>
-                    <p><strong>Телефон: </strong>${user.telephone!=null ? user.telephone : "Не установлено"}</p>
-                    <p><strong>Пол: </strong>${user.sex!=null ? user.sex : "Не установлено"}</p>
-                    <p><strong>Дата рождения: </strong>${user.dateOfBirth!=null ? user.dateOfBirth : "Не установлено"}</p>
+                    <p><strong><spring:message code="full_name"/>: </strong>${user.fio!=null && !user.fio.equals("") ? user.fio : "--"}</p>
+                    <p><strong><spring:message code="from"/>: </strong>${user.city!=null && !user.city.equals("") ? user.city : "--"}</p>
+                    <p><strong><spring:message code="email"/>: </strong>${user.email!=null && !user.email.equals("") ? user.email : "--"}</p>
+                    <p><strong><spring:message code="telephone_number"/>: </strong>${user.telephone!=null && !user.telephone.equals("") ? user.telephone : "--"}</p>
+                    <p><strong><spring:message code="sex"/>: </strong>${user.sex!=null && !user.sex.equals("") ? user.sex : "--"}</p>
+                    <p><strong><spring:message code="date_of_birth"/>: </strong>${user.dateOfBirth!=null && !user.dateOfBirth.equals("") ? user.dateOfBirth : "--"}</p>
                     <%--<p><strong>Темы объявлений: </strong>--%>
                         <%--<span class="tags">Техника</span>--%>
                         <%--<span class="tags">Стиль</span>--%>
@@ -41,7 +41,7 @@
                     <figure>
                         <img src="../../resources/img/dsa.jpg" alt="user" class="img-circle img-responsive">
                         <figcaption class="ratings">
-                            <p>Рейтинг
+                            <p><spring:message code="rating"/>
                                 <a href="#">
                                     <span class="fa fa-star"></span>
                                 </a>
@@ -62,7 +62,7 @@
                     </figure>
                     <security:authorize access="(hasAnyRole('ROLE_ADMIN','ROLE_USER')) and principal.username=='${user.username}'">
                       <form method="post">
-                        <sec:csrfInput/>
+                          <sec:csrfInput/>
                           <div class="col-xs-12 text-center product-icons">
                             <a href="${contextPath}/feedback" class="icon">
                                 <img src="${contextPath}/resources/img/feedback_button.png">
@@ -81,9 +81,13 @@
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>${user.userProductList.size()}</strong></h2>
                     <p>
-                        <small>Объявлений</small>
+                        <small><spring:message code="ad"/></small>
                     </p>
-                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Просмотреть
+                    <button class="btn btn-success btn-block">
+                        <spring:message code="look"/>
+                        <span class="fa fa-plus-circle">
+
+                        </span>
                     </button>
                 </div>
                 <%--<div class="col-xs-12 col-sm-4 emphasis">--%>
