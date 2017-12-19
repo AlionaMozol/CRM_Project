@@ -1,5 +1,6 @@
 package com.project.crm.controllers;
 
+import com.project.crm.model.Product;
 import com.project.crm.model.User;
 import com.project.crm.services.ProfileService;
 import com.project.crm.services.UserService;
@@ -12,8 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
+
+import static com.project.crm.services.GoogleDriveAPI.addPohotoToDrive;
 
 @Controller
 public class ProfileController {
@@ -79,14 +85,39 @@ public class ProfileController {
         return 1;
     }
 
-    @RequestMapping(value="/profiles", method=RequestMethod.POST)
+    /*@RequestMapping(value="/profiles", method=RequestMethod.POST)
     public String profileSubmit(@ModelAttribute("User") User user,
-                                BindingResult bindingResult, Model model) {
+                                BindingResult bindingResult,
+                                @RequestParam("file") MultipartFile multipartFile,
+                                Model model) {
         profileValidator.validate(user,bindingResult);
         if (bindingResult.hasErrors()) {
             return "redirect: /profiles";
         }
+        if(multipartFile.isEmpty()) {
+            user.setPhoto("-1");
+        }
+        else {
+            try {
+                user.setPhoto(addPohotoToDrive(multipartFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         model.addAttribute("profiles", user);
+        profileService.updateUser(user);
+        return "redirect: /account";
+    }*/
+
+    @RequestMapping(value = "/profiles", method = RequestMethod.POST)
+    public String upDateProfile(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request,
+                                @RequestParam("file") MultipartFile multipartFile) throws IOException {
+        user = profileService.getUserByHttpServletRequestAndPhoto(request, multipartFile);
+        System.out.println(user.getFio());
+        profileValidator.validate(user,bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "redirect: /profiles";
+        }
         profileService.updateUser(user);
         return "redirect: /account";
     }
@@ -101,7 +132,7 @@ public class ProfileController {
 
     @RequestMapping(value="/all_profiles", method=RequestMethod.POST)
     public String changeStatus(@ModelAttribute("User") User user,
-                                BindingResult bindingResult, Model model) {
+                               BindingResult bindingResult, Model model) {
         if(user.getStatus().equals("UNBLOCKED")){
             user.setStatus("BLOCKED");
         }
@@ -109,7 +140,7 @@ public class ProfileController {
             user.setStatus("UNBLOCKED");
         }
         System.out.println(user.getStatus());
-        profileService.updateUser(user);
+        profileService.updateUser(user );
 
         return "redirect: /all_profiles";
     }

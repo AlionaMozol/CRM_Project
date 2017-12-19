@@ -22,9 +22,11 @@
     <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
     <link href="${contextPath}/resources/css/profile.css" rel="stylesheet">
 
+    <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 </head>
 user_roles
-<body>
+<body >
 <%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
 
@@ -93,68 +95,83 @@ user_roles
 })
 
 </script>
-<f:form class="content" method="post" commandName="User" acceptCharset="utf-8">
-    <div class="col-md-5 profile-img">
-        <img src="${contextPath}/resources/img/placeholder-image.png" alt="">
-        <label class="btn btn-default col-md-6 col-md-offset-3">
-            <div class="wrapper-for-img">
-                <img src="${contextPath}/resources/img/placeholder-image.png">
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        if(${profiles.sex=='Ж'}) {
+            $('#women').attr('checked',true);
+        }
+        else {
+            $('#men').attr('checked',true);
+        }
+    })
+
+</script>
+
+<div class="content">
+    <form:form method="post" action="${pageContext.request.contextPath}/profiles?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
+        <div class="col-md-5 profile-img">
+
+            <label class="btn btn-default col-md-6 col-md-offset-3">
+                <div class="wrapper-for-img">
+                    <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${profiles.photo}"
+                         onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+                </div>
+                File to upload: <input type="file" name="file"><br />
+            </label>
+        </div>
+        <div class="col-md-5 ">
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label">ФИО</label>
+                <div class="col-10">
+                    <input id="fio" class="form-control" type="text" name="fio" value="${profiles.fio}"/>
+                </div>
+            </div>
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label">Email</label>
+                <div class="col-10">
+                    <input id="email" class="form-control" type="email" name="email" value="${profiles.email}"  />
+                    <span id="errEmail" name="errEmail"></span>
+
+                </div>
+            </div>
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label">Телефон</label>
+                <div class="col-10">
+                    <input id="telephone" class="form-control" type="text" name="telephone" value="${profiles.telephone}"/>
+                    <span id="errTelephone" name="errTelephone"></span>
+                </div>
+            </div>
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label">Город</label>
+                <div class="col-10">
+                    <input id="city" class="form-control" type="text" name="city" value="${profiles.city}"/>
+                </div>
             </div>
 
-            File to upload: <input type="file" name="file"><br />
-        </label>
-    </div>
-    <div class="col-md-5 ">
-        <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label">ФИО</label>
-            <div class="col-10">
-                <f:input class="form-control" type="text" name="fio" path="fio"/>
-                <form:errors path="fio"/>
+            <div class="form-group row">
+                <label class="col-2 col-form-label">Дата рождения</label>
+                <div class="col-10">
+                    <input class="form-control" type="date" name="dateOfBirth" value="${profiles.dateOfBirth}"  max="2000-12-31" min="1900-01-01"/>
+                </div>
             </div>
-        </div>
-        <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label">Email</label>
-            <div class="col-10">
-                <f:input id="email" class="form-control" type="email" name="email" path="email"  />
-                <span id="errEmail" name="errEmail"></span>
-                <form:errors path="email"/>
+            <div class="form-group row">
+                <label class="col-2 col-form-label">Пол</label>
+                <div class="col-10">
 
+                    <input type="radio" name="sex"  id="men" value="М"/>Мужчина
+                    <input type="radio" name="sex"  id="women" value="Ж"/>Женщина
+                </div>
             </div>
+            <button id="submit" type="submit" class="btn">Cохранить</button>
         </div>
-        <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label">Телефон</label>
-            <div class="col-10">
-                <f:input id="telephone" class="form-control" type="text" name="telephone" path="telephone"/>
-                <span id="errTelephone" name="errTelephone"></span>
-                <form:errors path="telephone"/>
-            </div>
-        </div>
-        <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label">Город</label>
-            <div class="col-10">
-                <f:input class="form-control" type="text" name="city" path="city"/>
-                <form:errors path="city"/>
-            </div>
-        </div>
+    </form:form>
+</div>
 
-        <div class="form-group row">
-            <label class="col-2 col-form-label">Дата рождения</label>
-            <div class="col-10">
-                <f:input class="form-control" type="date" name="dateOfBirth" path="dateOfBirth"  max="2000-12-31" min="1900-01-01"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-2 col-form-label">Пол</label>
-            <div class="col-10">
-                <form:radiobutton path="sex" value="М"/>Мужчина
-                <form:radiobutton path="sex" value="Ж"/>Женщина
-            </div>
-        </div>
-        <button id="submit" type="submit" class="btn">Cохранить</button>
-    </div>
-</f:form>
+
+
 <script type="text/javascript">$(document).on("input",function(ev) {
-
 
     $('#city').on("input",function() {
         if($(this).val() != '') {
@@ -166,6 +183,7 @@ user_roles
             }
         }
     });
+
     $('#fio').on("input",function() {
         if($(this).val() != '') {
             var pattern = /^[а-яА-ЯёЁa-zA-Z\s-]{0,40}$/i;

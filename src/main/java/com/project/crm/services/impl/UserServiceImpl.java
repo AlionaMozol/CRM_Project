@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setFio("");
         user.setStatus("UNBLOCKED");
         user.setRating("0");
+        user.setPhoto("-1");
         Date date = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
         user.setAccountCreationDate(formatForDateNow.format(date));

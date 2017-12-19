@@ -1,9 +1,12 @@
 package com.project.crm.services;
 
 
+import com.project.crm.model.Product;
 import com.project.crm.model.User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,5 +23,6 @@ public interface ProfileService {
     void updateUser(User user);
     int getUserIdByEmail(String email);
     int getUserIdByTelephone(String telephone);
+    User getUserByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo);
     List<User>getAllUsers();
 }

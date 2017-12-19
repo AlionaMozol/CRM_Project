@@ -43,6 +43,7 @@ public class UserDaoImpl extends DAO implements UserDao {
         attribute_type.add("ACC_DATE_TIME");
         attribute_type.add("RATING");
         attribute_type.add("STATUS");
+        attribute_type.add("PHOTO");
         userInformation.add(Integer.toString(user.getId()));
         userInformation.add(user.getFio());
         userInformation.add(user.getSex());
@@ -53,7 +54,7 @@ public class UserDaoImpl extends DAO implements UserDao {
         userInformation.add(user.getAccountCreationDate());
         userInformation.add(user.getRating());
         userInformation.add(user.getStatus());
-
+        userInformation.add(user.getPhoto());
 
         String objectTypeId="";
         Connection connection = poolInst.getConnection();
@@ -85,6 +86,7 @@ public class UserDaoImpl extends DAO implements UserDao {
                     result_statement.setString(index+1, objectId);
                     result_statement.setString(index+2, resultSet.getString(1));
                     result_statement.setString(index+3, userInformation.get(i));
+
                 }
                 index+=4;
             }
@@ -188,6 +190,9 @@ public class UserDaoImpl extends DAO implements UserDao {
                         break;
                     case "STATUS":
                         user.setStatus(resultSet.getString("value"));
+                        break;
+                    case "PHOTO":
+                        user.setPhoto(resultSet.getString("value"));
                         break;
 
                 }
@@ -389,6 +394,7 @@ public class UserDaoImpl extends DAO implements UserDao {
     @Override
     public void updateUser(User user) {
         User oldUser = getUserById(user.getId());
+        System.out.print(oldUser.getFio()+ " "+ user.getFio());
         Connection connection = poolInst.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
@@ -446,18 +452,24 @@ public class UserDaoImpl extends DAO implements UserDao {
                 statement.execute();
 
             }
+            System.out.println(user.getSex()+" "+ oldUser.getSex());
             if(!oldUser.getSex().equals(user.getSex())){
                 statement.setString(1,user.getSex());
                 statement.setString(2,objectId);
                 statement.setString(3,"fd97346f-cbcf-11e7-97a3-94de807a9669");
                 statement.execute();
             }
-            if(!oldUser.getStatus().equals(user.getStatus())){
+            /*if(!oldUser.getStatus().equals(user.getStatus())){
                 statement.setString(1,user.getStatus());
                 statement.setString(2,objectId);
-                statement.setString(3,"e7fed6d6-d465-11e7-bdec-94de807a9669");
+                statement.setString(3,"cff83967-d465-11e7-bdec-94de807a9669");
                 statement.execute();
-            }
+            }*/
+            statement.setString(1,user.getPhoto());
+            statement.setString(2,objectId);
+            statement.setString(3,"cff83967-d465-11e7-bdec-94de807a9669");
+            System.out.println(user.getPhoto());
+            statement.execute();
             statement.close();
             resultSet.close();
         } catch (SQLException e) {
