@@ -34,7 +34,8 @@
                 </div>
                 <div class="col-xs-12 col-sm-4 text-center">
                     <figure>
-                        <img src="${user.photo}" alt="user" class="img-circle img-responsive">
+                        <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${user.photo}"
+                             onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
                         <security:authorize access="(hasAnyRole('ROLE_ADMIN','ROLE_USER')) and principal.username != '${user.username}'">
                           <%--<figcaption class="ratings">--%>
                             <%--<p><spring:message code="rating"/></p>--%>

@@ -1,5 +1,6 @@
 package com.project.crm.controllers;
 
+
 import com.project.crm.model.Category;
 import com.project.crm.model.Product;
 import com.project.crm.services.CategoryService;
@@ -36,7 +37,7 @@ public class NavigationController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String main(Model model, HttpServletRequest request) {
-        List<Category> supercategoryList = null;
+        List<Category> supercategoryList;
         supercategoryList = categoryService.getAllTopCategories();
         model.addAttribute("productCategory", supercategoryList);
         if(request.getParameter("q") != null && !request.getParameter("q").replaceAll("\\s","").equals("")) {
@@ -55,15 +56,15 @@ public class NavigationController {
 
     @RequestMapping(value = "/update-products", method = RequestMethod.GET)
     public @ResponseBody List updateProducts(){
-        List<Product> productList = null;
+        List<Product> productList;
         productList = productService.getAllProducts();
         return productList;
     }
 
     @RequestMapping(value = "/get-products-by-supercategory", method = RequestMethod.GET)
-    public @ResponseBody List getProductsBySupercategory(@RequestParam String supercategory, Model model){
-        List<Product> productList = null;
-        productList = productService.getProductsBySupercategory(supercategory);
+    public @ResponseBody List getProductsBySuperCategory(@RequestParam String supercategory, Model model){
+        List<Product> productList;
+        productList = productService.getProductsBySuperCategory(supercategory);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
@@ -71,22 +72,22 @@ public class NavigationController {
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String admin(Model model) {
+    public String admin() {
         return "admin";
     }
 
     @RequestMapping(value = "/about", method = RequestMethod.GET)
-    public String about(Model model) {
+    public String about() {
         return "/about";
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String profile(Model model) {
-        return "profile";
+    public String profile() {
+        return "/profile";
     }
 
     @RequestMapping(value = "/account", method = RequestMethod.GET)
-    public String account(Model model) {
+    public String account() {
         return "redirect:/account/" + SecurityContextHolder.getContext().getAuthentication().getName();
     }
 

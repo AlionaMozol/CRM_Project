@@ -9,7 +9,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +20,13 @@ public class FeedBackController {
     EmailValidator emailValidator;
 
     @RequestMapping(value="/feedback", method= RequestMethod.GET)
-    public String getMethodFeedBack(Model model) {
+    public String getMethodFeedBack() {
         return "feedback";
     }
 
     @RequestMapping(value="/feedback", method= RequestMethod.POST)
     public String sendFeedBack(@ModelAttribute ("Email") Email email,
-                               BindingResult bindingResult, Model model) {
+                               BindingResult bindingResult) {
         emailValidator.validate(email, bindingResult);
         if (bindingResult.hasErrors()) {
             return "feedback";

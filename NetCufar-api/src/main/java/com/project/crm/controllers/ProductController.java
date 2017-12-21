@@ -1,7 +1,6 @@
 package com.project.crm.controllers;
 
 import com.project.crm.model.Product;
-import com.project.crm.model.User;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.*;
 import com.project.crm.validator.ProductValidator;
@@ -102,7 +101,7 @@ public class ProductController {
         }
         if(userService.findByUsername(username) != null) {
             if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
-                result_msg = "Продукты пользователя: " + username + ". Количество : " + products.size();
+                result_msg = "Товары пользователя: " + username + ". Количество : " + products.size();
             }
             if (RequestContextUtils.getLocale(request).toString().equals("en")) {
                 result_msg = "Products of user: " + username + ". Amount : " + products.size();

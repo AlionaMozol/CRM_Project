@@ -12,8 +12,11 @@
         <title>403 error</title>
     </head>
     <body>
-        <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
-            <spring:message code="error403"/>
-        </div>
+    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center; margin-top: 10%">
+        <spring:message code="error403"/>
+    </div>
+    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
+        <img src="../../resources/img/error.png" alt="" class="img-responsive">
+    </div>
     </body>
 </html>

@@ -15,8 +15,7 @@ public interface ProductDao {
     Product getProductById(String id);
     List<Product> getProductsByKeyWords(String keyWords);
     List<Product> getProductsByCategory(String category);
-    List<Product> getProductsBySupercategory(String supercategory);
-    List<Product> getProductsAfterDate(Date date);
+    List<Product> getProductsBySuperCategory(String superCategory);
     List<Product> getProductsByStatus(ProductStatus status);
     List<Product> getAllProducts();
     void deleteProductById(String id);

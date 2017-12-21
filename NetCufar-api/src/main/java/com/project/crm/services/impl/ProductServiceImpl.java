@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +80,6 @@ public class ProductServiceImpl implements ProductService {
         return productDao.getProductsByUsername(username);
     }
 
-
     @Override
     public void editProduct(String id, Product product) {productDao.editProduct(id, product);  }
 
@@ -101,13 +99,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsBySupercategory(String supercategory) {
-        return productDao.getProductsBySupercategory(supercategory);
-    }
-
-    @Override
-    public List<Product> getProductsAfterDate(Date date) {
-        return productDao.getProductsAfterDate(date);
+    public List<Product> getProductsBySuperCategory(String superCategory) {
+        return productDao.getProductsBySuperCategory(superCategory);
     }
 
     @Override
