@@ -110,13 +110,13 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="dropdown" id="desired_element" style="max-height: 500px;  overflow: auto; position: fixed">
-                                <ul id="myUL">
+                    <div class="dropdown" id="desired_element" style="max-height: 500px;  overflow: auto; position: fixed">
+                        <ul id="myUL">
 
-                                </ul>
-                            </div>
-                        </div>
-                    <li><a class="wrapper-dropdown-5" href="${contextPath}/welcome"><spring:message code="headerStartPage"/></a></li>
+                        </ul>
+                    </div>
+                </div>
+                    <li><a href="${contextPath}/welcome"><spring:message code="headerStartPage"/></a></li>
                     <li><a href="${contextPath}/about"><spring:message code="headerAbout"/></a></li>
                     <li>
                         <div id="dd" class="wrapper-dropdown-5" tabindex="1"><spring:message code="headerAccount"/>

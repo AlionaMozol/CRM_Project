@@ -30,97 +30,64 @@
                     <p><strong><spring:message code="telephone_number"/>: </strong>${user.telephone!=null && !user.telephone.equals("") ? user.telephone : "--"}</p>
                     <p><strong><spring:message code="sex"/>: </strong>${user.sex!=null && !user.sex.equals("") ? user.sex : "--"}</p>
                     <p><strong><spring:message code="date_of_birth"/>: </strong>${user.dateOfBirth!=null && !user.dateOfBirth.equals("") ? user.dateOfBirth : "--"}</p>
-                    <%--<p><strong>Темы объявлений: </strong>--%>
-                        <%--<span class="tags">Техника</span>--%>
-                        <%--<span class="tags">Стиль</span>--%>
-                        <%--<span class="tags">Животные</span>--%>
-                        <%--<span class="tags">IvanTkachev</span>--%>
-                    <%--</p>--%>
+                    <%--<p><strong><spring:message code="rating"/>: </strong>${user.rating!=null && !user.rating.equals("") ? user.rating : "--"}</p>--%>
                 </div>
                 <div class="col-xs-12 col-sm-4 text-center">
                     <figure>
-                        <img src="../../resources/img/dsa.jpg" alt="user" class="img-circle img-responsive">
-                        <figcaption class="ratings">
-                            <p><spring:message code="rating"/>
-                                <a href="#">
-                                    <span class="fa fa-star"></span>
-                                </a>
-                                <a href="#">
-                                    <span class="fa fa-star"></span>
-                                </a>
-                                <a href="#">
-                                    <span class="fa fa-star"></span>
-                                </a>
-                                <a href="#">
-                                    <span class="fa fa-star"></span>
-                                </a>
-                                <a href="#">
-                                    <span class="fa fa-star-o"></span>
-                                </a>
-                            </p>
-                        </figcaption>
+                        <img src="${user.photo}" alt="user" class="img-circle img-responsive">
+                        <security:authorize access="(hasAnyRole('ROLE_ADMIN','ROLE_USER')) and principal.username != '${user.username}'">
+                          <%--<figcaption class="ratings">--%>
+                            <%--<p><spring:message code="rating"/></p>--%>
+                                <%--<a href="#">--%>
+                                    <%--<img src="${contextPath}/resources/img/star.png">--%>
+                                <%--</a>--%>
+                                <%--<a href="#">--%>
+                                    <%--<img src="${contextPath}/resources/img/star.png">--%>
+                                <%--</a>--%>
+                                <%--<a href="#">--%>
+                                    <%--<img src="${contextPath}/resources/img/star.png">--%>
+                                <%--</a>--%>
+                                <%--<a href="#">--%>
+                                    <%--<img src="${contextPath}/resources/img/star.png">--%>
+                                <%--</a>--%>
+                                <%--<a href="#">--%>
+                                    <%--<img src="${contextPath}/resources/img/star.png">--%>
+                                <%--</a>--%>
+                          <%--</figcaption>--%>
+                        </security:authorize>
                     </figure>
-                    <security:authorize access="(hasAnyRole('ROLE_ADMIN','ROLE_USER')) and principal.username=='${user.username}'">
-                      <form method="post">
-                          <sec:csrfInput/>
-                          <div class="col-xs-12 text-center product-icons">
-                            <a href="${contextPath}/feedback" class="icon">
-                                <img src="${contextPath}/resources/img/feedback_button.png">
-                            </a>
-                          </div>
-                          <div class="col-xs-12 text-center product-icons" id="pencil">
-                            <a href="${contextPath}/profiles" class="icon">
-                                <img src="${contextPath}/resources/img/pencil.png">
-                            </a>
-                          </div>
-                      </form>
-                    </security:authorize>
                 </div>
             </div>
             <div class="col-xs-12 divider text-center">
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-8 col-sm-8 emphasis">
                     <h2><strong>${user.userProductList.size()}</strong></h2>
                     <p>
                         <small><spring:message code="ad"/></small>
                     </p>
-                    <button class="btn btn-success btn-block">
+                    <a href="${contextPath}/catalog/${user.username}" class="btn btn-success btn-block" role="button">
                         <spring:message code="look"/>
-                        <span class="fa fa-plus-circle">
-
-                        </span>
-                    </button>
+                    </a>
                 </div>
-                <%--<div class="col-xs-12 col-sm-4 emphasis">--%>
-                    <%--<h2><strong>${user.favoriteProductList.size()}</strong></h2>--%>
-                    <%--<p>--%>
-                        <%--<small>В избранном</small>--%>
-                    <%--</p>--%>
-                    <%--<button class="btn btn-info btn-block"><span class="fa fa-user"></span> Просмотреть</button>--%>
-                <%--</div>--%>
-                <%--<div class="col-xs-12 col-sm-4 emphasis">--%>
-                    <%--<h2><strong>-1</strong></h2>--%>
-                    <%--<p>--%>
-                        <%--<small>Комментариев</small>--%>
-                    <%--</p>--%>
-                    <%--<div class="btn-group dropup btn-block">--%>
-                        <%--<button type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Опции</button>--%>
-                        <%--<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">--%>
-                            <%--<span class="caret"></span>--%>
-                            <%--<span class="sr-only">Toggle Dropdown</span>--%>
-                        <%--</button>--%>
-                        <%--<ul class="dropdown-menu text-left" role="menu">--%>
-                            <%--<li><a href="#"><span class="fa fa-envelope pull-right"></span> Отправить email </a></li>--%>
-                            <%--<li><a href="#"><span class="fa fa-list pull-right"></span> Редактировать список</a></li>--%>
-                            <%--<li class="divider"></li>--%>
-                            <%--<li><a href="#"><span class="fa fa-warning pull-right"></span>Сообщить о спаме</a></li>--%>
-                            <%--<li class="divider"></li>--%>
-                            <%--<li><a href="#" class="btn disabled" role="button"> Отписатся </a></li>--%>
-                        <%--</ul>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
+                <div class="col-xs-4 col-sm-4 emphasis">
+                    <security:authorize access="(hasAnyRole('ROLE_ADMIN','ROLE_USER')) and principal.username=='${user.username}'">
+                        <form method="post" class="col-xs-12">
+                            <sec:csrfInput/>
+                            <div class="col-xs-6 product-icons">
+                                <a href="${contextPath}/feedback" class="icon">
+                                    <img src="${contextPath}/resources/img/feedback_button.png">
+                                </a>
+                            </div>
+                            <div class="col-xs-6 product-icons">
+                                <a href="${contextPath}/profiles" class="icon">
+                                    <img src="${contextPath}/resources/img/pencil.png">
+                                </a>
+                            </div>
+                        </form>
+                    </security:authorize>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

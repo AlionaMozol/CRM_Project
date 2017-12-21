@@ -1,6 +1,7 @@
 package com.project.crm.controllers;
 
 import com.project.crm.model.Product;
+import com.project.crm.model.User;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.*;
 import com.project.crm.validator.ProductValidator;
@@ -26,6 +27,8 @@ import java.util.ResourceBundle;
 @Controller
 //@RequestMapping("/product")
 public class ProductController {
+    @Autowired
+    UserService userService;
 
     @Autowired
     ProductService productService;
@@ -49,15 +52,29 @@ public class ProductController {
     public String getSearch(Model model, HttpServletRequest request) throws UnsupportedEncodingException {
         //products by key words
         String keyWord;
-        String resultMSG = "NOTHING FOUND";
+        String resultMSG;
+        if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+            resultMSG = "ВВЕДИТЕ ЧТО-НИБУДЬ В СТРОКУ ПОИСКА :)";
+        } else {
+            resultMSG = "YOU DID'NT ENTER WHAT YOU WANT :)";
+        }
         if(request.getParameter("q") != null) {
             keyWord = new String(request.getParameter("q").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             if(!keyWord.replaceAll("\\s","").equals("")) {
                 List<Product> productsByKeyWords = productService.getProductsByKeyWords(keyWord);
                 if(productsByKeyWords.size() == 0) {
-                    resultMSG = "NOTHING FOUND FOR '" + keyWord + "'";
+                    if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+                        resultMSG = "НИЧЕГО НЕ НАЙДЕНО ПО ЗАПРОСУ '" + keyWord + "'";
+                    }
+                    else {
+                        resultMSG = "NOTHING FOUND FOR '" + keyWord + "'";
+                    }
                 } else {
-                    resultMSG = "RESULTS FOR '" + keyWord + "'";
+                    if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+                        resultMSG = "РЕЗУЛЬТАТЫ ПО ЗАПРОСУ '" + keyWord + "'";
+                    } else {
+                        resultMSG = "RESULTS FOR '" + keyWord + "'";
+                    }
                 }
                 model.addAttribute("products", productsByKeyWords);
             }
@@ -73,6 +90,29 @@ public class ProductController {
         model.addAttribute("keys", bundle.getKeys());
         return "catalog";
     }
+
+    @RequestMapping(value= "/catalog/{username}", method = RequestMethod.GET)
+    public String getCurrentUserProducts(@PathVariable String username, Model model, HttpServletRequest request) {
+        List<Product> products = productService.getProductsByUsername(username);
+        String result_msg;
+        if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+            result_msg = "ТАКОГО ПОЛЬЗОВАТЕЛЯ НЕ СУЩЕСТВУЕТ";
+        } else {
+            result_msg = "USER NOT FOUND";
+        }
+        if(userService.findByUsername(username) != null) {
+            if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+                result_msg = "Продукты пользователя: " + username + ". Количество : " + products.size();
+            }
+            if (RequestContextUtils.getLocale(request).toString().equals("en")) {
+                result_msg = "Products of user: " + username + ". Amount : " + products.size();
+            }
+        }
+        model.addAttribute("result_message", result_msg);
+        model.addAttribute("products", products);
+        return "/catalog";
+    }
+
 
     @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {

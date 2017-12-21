@@ -38,7 +38,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--- В tomcat по дефолту длительность сессии 30 мин,
+    <!--- В tomcat длительность сессии 30 мин,
     но можно переопределить -->
     <!---
     <session-config>
@@ -64,5 +64,30 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+    <error-page>
+        <error-code>400</error-code>
+        <location>/WEB-INF/views/error_pages/error_page400.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/views/error_pages/error_page401.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/views/error_pages/error_page403.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/error_pages/error_page404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/error_pages/error_page500.jsp</location>
+    </error-page>
 
 </web-app>

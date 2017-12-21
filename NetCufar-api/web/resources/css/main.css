@@ -34,12 +34,12 @@ p {
     padding: 12px;
     text-decoration: none;
     font-size: 18px;
-    color: #1abc9c;
+    color: lightgray;
     display: block;
 }
 
 #myUL li a:hover:not(.header) {
-    background-color: #eee;
+    background-color: lightseagreen;
 }
 
 .boxtext {
