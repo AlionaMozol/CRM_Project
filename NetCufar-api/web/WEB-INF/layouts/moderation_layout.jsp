@@ -56,9 +56,9 @@
                     <p class="product-price-mod">${product.cost}</p>
 
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-accept"><spring:message
+                        <button type="button" name="${product.id}"  id="btn_accept" class="btn btn-primary"><spring:message
                                 code="moderationButtonAccept"/></button>
-                        <button type="button" class="btn btn-primary btn-deny"><spring:message
+                        <button type="button" name="${product.id}"  id="btn_deny" class="btn btn-primary"><spring:message
                                 code="moderationButtonDeny"/></button>
                     </div>
                 </div>
@@ -71,4 +71,41 @@
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 
 </body>
+<script>
+    $(document).on('click','#btn_accept',function(event) {
 
+        var btn = document.getElementsByName(event.currentTarget.name)[0].disabled=true;
+        var btn = document.getElementsByName(event.currentTarget.name)[1].disabled=false;
+
+        event.preventDefault();
+        var productId = event.currentTarget.name;
+        $.ajax({
+            url : "/not_moderated_accept",
+            type : 'GET',
+            dataType : 'json',
+            contentType : "application/json",
+            data : ({
+                productId : productId
+            }),
+        });
+    });
+
+
+    $(document).on('click','#btn_deny',function(event) {
+        var btn = document.getElementsByName(event.currentTarget.name)[0].disabled=false;
+        var btn = document.getElementsByName(event.currentTarget.name)[1].disabled=true;
+
+        event.preventDefault();
+        var productId = event.currentTarget.name;
+        $.ajax({
+            url : "/not_moderated_deny",
+            type : 'GET',
+            dataType : 'json',
+            contentType : "application/json",
+            data : ({
+                productId : productId
+            }),
+        });
+    });
+
+</script>
