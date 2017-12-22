@@ -390,9 +390,51 @@ public class UserDaoImpl extends DAO implements UserDao {
     }
 
     @Override
+    public void updateStatus(User user) {
+        User oldUser = getUserById(user.getId());
+        Connection connection = poolInst.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+            statement.setString(1,"USER");
+            ResultSet resultSet = statement.executeQuery();
+            String objectTypeId="";
+            String objectId="";
+            if(resultSet.next()){
+                objectTypeId=resultSet.getString(1);
+            }
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
+            statement.setString(1,objectTypeId);
+            statement.setString(2,"SECURITY_ID");
+            statement.setInt(3,user.getId());
+            resultSet = statement.executeQuery();
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_UPDATE_PROFILE));
+
+            if (resultSet.next()){
+                objectId=resultSet.getString(1);
+            }
+            if(!oldUser.getStatus().equals(user.getStatus())){
+                statement.setString(1,user.getStatus());
+                statement.setString(2,objectId);
+                statement.setString(3,"e7fed6d6-d465-11e7-bdec-94de807a9669");
+                statement.execute();
+            }
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        poolInst.footConnection(connection);
+
+
+    }
+
+    @Override
     public void updateUser(User user) {
         User oldUser = getUserById(user.getId());
-        System.out.print(oldUser.getFio()+ " "+ user.getFio());
         Connection connection = poolInst.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
@@ -450,23 +492,15 @@ public class UserDaoImpl extends DAO implements UserDao {
                 statement.execute();
 
             }
-            System.out.println(user.getSex()+" "+ oldUser.getSex());
             if(!oldUser.getSex().equals(user.getSex())){
                 statement.setString(1,user.getSex());
                 statement.setString(2,objectId);
                 statement.setString(3,"fd97346f-cbcf-11e7-97a3-94de807a9669");
                 statement.execute();
             }
-            /*if(!oldUser.getStatus().equals(user.getStatus())){
-                statement.setString(1,user.getStatus());
-                statement.setString(2,objectId);
-                statement.setString(3,"cff83967-d465-11e7-bdec-94de807a9669");
-                statement.execute();
-            }*/
             statement.setString(1,user.getPhoto());
             statement.setString(2,objectId);
             statement.setString(3,"cff83967-d465-11e7-bdec-94de807a9669");
-            System.out.println(user.getPhoto());
             statement.execute();
             statement.close();
             resultSet.close();
@@ -474,8 +508,6 @@ public class UserDaoImpl extends DAO implements UserDao {
             e.printStackTrace();
         }
         poolInst.footConnection(connection);
-
-
     }
 
 

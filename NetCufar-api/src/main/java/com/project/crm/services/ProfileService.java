@@ -20,6 +20,7 @@ public interface ProfileService {
     User getUserByUsername(String username);
     void addUser(User user);
     void updateUser(User user);
+    void updateUserStatus(User user);
     int getUserIdByEmail(String email);
     int getUserIdByTelephone(String telephone);
     User getUserByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo);

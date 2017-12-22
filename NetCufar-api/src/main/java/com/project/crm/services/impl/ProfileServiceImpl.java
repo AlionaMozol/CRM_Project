@@ -46,7 +46,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public User getUserByUsername(String username) {
-        int id = userDao.findUserByUsername(username).getId();
+        int id=userDao.findUserByUsername(username).getId();
         User user = userDao.getUserById(id);
         user.setUsername(username);
         user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
@@ -64,6 +64,10 @@ public class ProfileServiceImpl implements ProfileService {
         //userDao.addUser(user);
 
         userDao.updateUser(user);
+    }
+    @Override
+    public void updateUserStatus(User user) {
+        userDao.updateStatus(user);
     }
 
     @Override

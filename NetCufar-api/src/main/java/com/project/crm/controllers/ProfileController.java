@@ -125,19 +125,23 @@ public class ProfileController {
         return "/all_profiles";
     }
 
-    @RequestMapping(value="/all_profiles", method=RequestMethod.POST)
-    public String changeStatus(@ModelAttribute("User") User user,
-                               BindingResult bindingResult, Model model) {
+    @RequestMapping(value="/blocked", method=RequestMethod.GET)
+    public String changeStatusBlocked(@RequestParam Integer profileId) {
+        User user = profileService.getUserByID(profileId);
+        if(user.getStatus().equals("BLOCKED")){
+            user.setStatus("UNBLOCKED");
+        }
+        profileService.updateUserStatus(user);
+        return "/all_profiles";
+    }
+    @RequestMapping(value="/unblocked", method=RequestMethod.GET)
+    public String changeStatusUnblocked(@RequestParam Integer profileId) {
+        User user = profileService.getUserByID(profileId);
         if(user.getStatus().equals("UNBLOCKED")){
             user.setStatus("BLOCKED");
         }
-        else{
-            user.setStatus("UNBLOCKED");
-        }
-        System.out.println(user.getStatus());
-        profileService.updateUser(user );
-
-        return "redirect: /all_profiles";
+        profileService.updateUserStatus(user);
+        return "/all_profiles";
     }
 
 }

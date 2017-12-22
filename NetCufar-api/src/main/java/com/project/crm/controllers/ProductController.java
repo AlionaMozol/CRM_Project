@@ -47,6 +47,9 @@ public class ProductController {
     @Autowired
     LikeService likeService;
 
+    @Autowired
+    ProfileService profileService;
+
     @RequestMapping(value= "/catalog", method = RequestMethod.GET)
     public String getSearch(Model model, HttpServletRequest request) throws UnsupportedEncodingException {
         //products by key words
@@ -184,6 +187,15 @@ public class ProductController {
         productValidator.validate(product,bindingResult);
         if(bindingResult.hasErrors()){
             return "redirect:/new_product";
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        String userStatus = profileService.getUserByUsername(name).getStatus();
+        if(userStatus.equals("UNBLOCKED")){
+            productService.addProduct(product);
+        }
+        else{
+            return "/errorStatus";
         }
        productService.addProduct(product);
         return "redirect:/my_products";

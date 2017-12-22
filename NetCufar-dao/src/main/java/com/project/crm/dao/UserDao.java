@@ -18,4 +18,5 @@ public interface  UserDao {
     public User findUserById(int id);
     public User findUserByUsername(String username);
     public void updateUser(User user);
+    public  void  updateStatus(User user);
 }

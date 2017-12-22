@@ -25,7 +25,7 @@
     <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 </head>
-user_roles
+
 <body >
 <%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
