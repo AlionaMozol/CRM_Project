@@ -3,6 +3,7 @@ package com.project.crm.controllers;
 
 import com.project.crm.model.Category;
 import com.project.crm.model.Product;
+import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.CategoryService;
 import com.project.crm.services.LikeService;
 import com.project.crm.services.ProductService;
@@ -45,7 +46,7 @@ public class NavigationController {
         if (request.getParameter("q") != null && !request.getParameter("q").replaceAll("\\s", "").equals("")) {
             model.addAttribute("products", productService.getProductsByKeyWords(request.getParameter("q")));
         } else {
-            model.addAttribute("products", productService.getAllProducts());
+            model.addAttribute("products", productService.getProductsByStatus(ProductStatus.APPROVED));
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();

@@ -32,7 +32,6 @@
     <div class="col-lg-12 products">
 
         <c:forEach items="${products}" var="product">
-
             <div class="col-sm-4">
                 <div class="product">
                     <div class="product-img">
@@ -71,7 +70,6 @@
                     <p class="product-price">${product.cost}</p>
                 </div>
             </div>
-
         </c:forEach>
 
     </div>
