@@ -69,24 +69,16 @@
             }
         })
     }
-            $(document).on('click', function (e) {
-                if (e.target.id == 'search') {
-                    $('#desired_element').show();
-                } else if (e.target.id == 'desired_element') {
 
-                } else {
-                    $('#desired_element').hide();
-                }
-            });
+    $(document).on('click', function (e) {
+        if (e.target.id == 'search') {
+            $('#desired_element').show();
+        } else if (e.target.id == 'desired_element') {
 
-    //    $(document).ready(function() {
-    //        // This WILL work because we are listening on the 'document',
-    //        // for a click on an element with an ID of #test-element
-    //        $(document).on("click", "#search", function() {
-    //            alert("click bound to document listening for #test-element");
-    //        });
-    //    });
-
+        } else {
+            $('#desired_element').hide();
+        }
+    });
 
 </script>
 

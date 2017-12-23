@@ -195,7 +195,6 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Override
     public Product getProductById(String id) {
         Connection connection = poolInst.getConnection();
-        System.out.println("Getting connection: " + connection);
         Product currentProduct = new Product();
         currentProduct.setId(id);
         try {
@@ -253,7 +252,6 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-
             poolInst.footConnection(connection);
         }
         return currentProduct;
