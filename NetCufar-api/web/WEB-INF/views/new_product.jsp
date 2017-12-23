@@ -169,7 +169,7 @@
                 <div class="col-md-6">
                     <div class="form-group row has-feedback">
                         <label class="label-attribute"><spring:message code="TITLE"/></label>
-                        <input class="form-control" id="title" name="title" pattern=""
+                        <input class="form-control" id="title" name="title" pattern="^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$"
                                placeholder="<spring:message code="TITLE"/>"/>
                     </div>
                 </div>
