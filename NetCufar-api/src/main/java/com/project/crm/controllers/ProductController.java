@@ -198,7 +198,6 @@ public class ProductController {
         } else {
             return "/errorStatus";
         }
-        productService.addProduct(product);
         return "redirect:/my_products";
     }
 
