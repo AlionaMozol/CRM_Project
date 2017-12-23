@@ -27,7 +27,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Transactional(propagation = Propagation.MANDATORY,
                    rollbackFor = Exception.class)
     @Override
-    public void addProduct(Product product) {
+    public void addProduct(Product product) throws NullPointerException{
         Connection connection = poolInst.getConnection();
         try {
             PreparedStatement statement;
@@ -39,7 +39,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                         getProperty(SqlService.SQL_GET_PRODUCT_OBJECT_TYPE_ID));
             resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 newObjectTypeId = resultSet.getString(1);
             }
             statement = connection.prepareStatement(sql.
@@ -302,7 +302,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
     @Transactional(propagation = Propagation.MANDATORY,
-            rollbackFor = Exception.class)
+                   rollbackFor = Exception.class)
     @Override
     public List<Product> getProductsByCategory(String category) {
         Connection connection = poolInst.getConnection();
@@ -466,7 +466,15 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     public static void main(String[] args) throws ClassNotFoundException {
         ProductDaoImpl pDaoImpl = new ProductDaoImpl();
         List<Product> lst;
-
+        lst = pDaoImpl.getAllProducts();
+        int i = 0;
+        if (lst != null) {
+            for (Product x : lst) {
+                System.out.println(i++ + ". " + x.toString());
+            }
+        } else {
+            System.out.println("Nothing to shown\n");
+        }
         Product p = new Product();
         p.setCategory("WOMEN_CLOTHING");
         p.setSuperCategory("Fashion");
@@ -482,11 +490,10 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         map.put("SEASONS", "TEST");
         map.put("KIND_OF_CLOTHES", "TEST");
         p.setAttributesAndValues(map);
-        for(int i = 0; i < 10; i++)
         pDaoImpl.addProduct(p);
         lst = pDaoImpl.getAllProducts();
 
-        int i = 0;
+        i = 0;
         if (lst != null) {
             for (Product x : lst) {
                 System.out.println(i++ + ". " + x.toString());

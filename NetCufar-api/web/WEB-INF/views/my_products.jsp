@@ -42,7 +42,9 @@
                         </div>
 
                         <p class="product-title">
-                            <a href="${contextPath}/product/${product.id}"><strong>${product.title}</strong></a>
+                            <a class="product-title" href="${contextPath}/product/${product.id}">
+                                <strong>${product.title}</strong>
+                            </a>
                         </p>
 
                         <p class="product-desc">${product.description}</p>
