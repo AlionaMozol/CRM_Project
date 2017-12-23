@@ -40,17 +40,20 @@
                     <c:forEach items="${productid.attributesAndValues}" var="value">
                         <li><strong><spring:message code="${value.key}"/> :</strong></li>
                     </c:forEach>
+                    <li><strong><spring:message code="product.cost"/>:</strong></li>
+                    <li><strong><spring:message code="product.description"/>:</strong></li>
                 </ul>
                 <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">
                         <li>${value.value}</li>
                     </c:forEach>
+                   <li> ${productid.cost}</li>
+                   <li>${productid.description}</li>
                 </ul>
 
 
             </div>
-            <p class="description"><strong><spring:message code="product.cost"/>:</strong> ${productid.cost}</p>
-            <p class="description"><strong><spring:message code="product.description"/>:</strong> ${productid.description}</p>
+
 
 
             <security:authorize access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')) and principal.username=='${productid.owner}'">
@@ -63,8 +66,7 @@
             </security:authorize>
 
         </div>
-        <p class="description"><spring:message code="product.cost"/>: ${productid.cost}</p>
-        <p class="description"><spring:message code="product.description"/>: ${productid.description}</p>
+
 
         <c:if test="${productid.productStatus.toString() == 'MODERATION'}">
             <sec:authorize access="hasRole('ROLE_ADMIN')">

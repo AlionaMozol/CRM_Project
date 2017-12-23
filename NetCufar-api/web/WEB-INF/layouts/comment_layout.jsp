@@ -19,6 +19,9 @@
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <style>textarea{
+    resize:none;
+    } </style>
 </head>
 <body>
 
@@ -45,7 +48,7 @@
                     var comment = "<div class=\"comment-in-product\">\n" +
                         "\n" +
                         "        <p class=\"comment-date\">"+key.date+"</p>\n" +
-                        "        <p class=\"username\"><a href=\"${contextPath}/account/\""+key.username+">"+key.username+"</a> </p>\n" +
+                        "        <p class=\"username\"><a href=\"${contextPath}/account/"+key.username+"\">"+key.username+"</a> </p>\n" +
                         "    <div class=\"image-of-user\">\n" +
                         "        <img src=\"${contextPath}/resources/img/placeholder-image.png\"> \n" +
                         "    </div>\n" +
@@ -76,7 +79,7 @@
 <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
 <form class="form-horizontal" id="comment-form">
     <p><spring:message code="form.comment"/><Br>
-        <textarea id="textField" name="text" cols="40" rows="3"></textarea>
+        <textarea id="textField" name="text" cols="60" rows="5" ></textarea>
         <input id="postId" type="hidden" name="postID" value="${productid.id}"/>
     </p>
     <button type="submit" id="btn" value="Отправить"><spring:message code="button.send"/></button>
