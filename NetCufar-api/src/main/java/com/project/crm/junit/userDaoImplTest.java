@@ -4,15 +4,15 @@ import com.project.crm.dao.impl.UserDaoImpl;
 import com.project.crm.model.User;
 import org.junit.jupiter.api.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by 1 on 02.12.2017.
  */
-public class userDaoImplTest {
+class userDaoImplTest {
 
     @Test
-    public void getUser() {
+    void getUser() {
         UserDaoImpl userDao = new UserDaoImpl();
         User user = new User();
         user.setFio("user1");

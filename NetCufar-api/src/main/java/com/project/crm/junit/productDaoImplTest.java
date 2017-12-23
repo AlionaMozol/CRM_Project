@@ -8,17 +8,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class productDaoImplTest {
+class productDaoImplTest {
 
 
     private ProductDaoImpl productDao = new ProductDaoImpl();
 
 
     @Test
-    public void getProductsByCategory(){
+    void getProductsByCategory(){
         Product product1 = new Product();
         Map<String, String> att1 = new HashMap<>();
         product1.setCost("10");
