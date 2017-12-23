@@ -1,10 +1,10 @@
 package com.project.crm.services;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
+/**
+ * Service class for attributes of {@link com.project.crm.model.Product}
+ */
 public interface AttributeService {
 
     List<String> getAttributesByCategory(String category);

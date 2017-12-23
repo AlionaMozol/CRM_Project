@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implementation of {@link CategoryService} interface.
+ */
 @Transactional
 @Component
 public class CategoryServiceImpl implements CategoryService {
@@ -32,10 +35,10 @@ public class CategoryServiceImpl implements CategoryService {
     public Map<Category, List<Category>> getTopCategoriesWithSubCategory() {
         Map<Category, List<Category>> categoryMap = new HashMap<>();
         List<Category> topCatigoriesList = categoryDao.getAllTopCategories();
-        for(Category category: topCatigoriesList) {
-            List<Category>subcategories = categoryDao.getCategoriesByTopCategory(category.getTitle());
+        for (Category category : topCatigoriesList) {
+            List<Category> subcategories = categoryDao.getCategoriesByTopCategory(category.getTitle());
             category.setSubcategories(subcategories);
-            categoryMap.put(category,subcategories);
+            categoryMap.put(category, subcategories);
         }
         return categoryMap;
     }

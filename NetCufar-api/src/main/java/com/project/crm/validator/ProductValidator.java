@@ -8,9 +8,12 @@ import org.springframework.validation.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * Validator for {@link Product} class,
+ * implements {@link Validator} interface.
+ */
 @Component
-public class ProductValidator implements Validator{
+public class ProductValidator implements Validator {
 
 
     @Override
@@ -18,7 +21,7 @@ public class ProductValidator implements Validator{
         return Product.class.equals(aClass);
     }
 
-    private boolean checkField(String field, String pattern){
+    private boolean checkField(String field, String pattern) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(field);
         return m.matches();
@@ -36,15 +39,15 @@ public class ProductValidator implements Validator{
 
         //title
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "error.null");
-        if(product.getTitle().length() > 100)
+        if (product.getTitle().length() > 100)
             errors.rejectValue("title", "title.error.large");
 
         //cost
-        if(product.getCost() == null)
+        if (product.getCost() == null)
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cost", "error.null");
-        else{
+        else {
             String costPattern = "([1-9]+([0-9]+)?){0,40}(\\s)(BYN|\\$|\\€)";
-            if(!checkField(product.getCost(), costPattern))
+            if (!checkField(product.getCost(), costPattern))
                 errors.rejectValue("cost", "cost.error");
         }
 

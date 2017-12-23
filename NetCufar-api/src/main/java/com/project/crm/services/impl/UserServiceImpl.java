@@ -16,9 +16,6 @@ import java.util.Set;
 
 /**
  * Implementation of {@link UserService} interface.
- *
- * @author Ivan Tkachev
- * @version 1.0
  */
 
 @Service
@@ -35,13 +32,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        //Кодируем пароль
+        //Encoding password
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
-        //Добавляем роль 1: User
+        //Add User role
         roles.add(roleRepository.getOne(1L));
         user.setRoles(roles);
-        //Сохраняем
+        //Save user
         userRepository.save(user);
     }
 

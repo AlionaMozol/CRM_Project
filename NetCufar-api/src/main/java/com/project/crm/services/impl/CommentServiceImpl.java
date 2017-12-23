@@ -13,9 +13,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Implementation of {@link CommentService} interface.
+ */
 @Transactional
 @Component
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentDao commentDao;
@@ -34,7 +37,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public void addComment(Comment comment){
+    public void addComment(Comment comment) {
         commentDao.addComment(comment);
     }
 }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Created by 1 on 02.12.2017.
+ * JUnit test class for {@link UserDaoImpl}
  */
 class userDaoImplTest {
 

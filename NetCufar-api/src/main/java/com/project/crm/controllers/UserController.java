@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Controller for {@link com.project.crm.model.User}'s pages.
- *
- * @author Ivan Tkachev
- * @version 1.0
  */
 
 @Controller

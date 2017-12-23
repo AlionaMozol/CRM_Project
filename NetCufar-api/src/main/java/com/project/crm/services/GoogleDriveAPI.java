@@ -20,64 +20,62 @@ import java.util.UUID;
 public class GoogleDriveAPI {
 
 
+    /**
+     * Application name.
+     */
+    private static final String APPLICATION_NAME =
+            "Drive API Java Quickstart";
 
-
-        /**
-         * Application name.
-         */
-        private static final String APPLICATION_NAME =
-                "Drive API Java Quickstart";
-
-   static String myJarPath = GoogleDriveAPI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    static String myJarPath = GoogleDriveAPI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     static String dirPath = new java.io.File(myJarPath).getAbsolutePath();
 
 
-        /**
-         * Directory to store user credentials for this application.
-         */
-        private static final java.io.File DATA_STORE_DIR = new java.io.File(dirPath);
+    /**
+     * Directory to store user credentials for this application.
+     */
+    private static final java.io.File DATA_STORE_DIR = new java.io.File(dirPath);
 
 
-        /**
-         * Global instance of the {@link FileDataStoreFactory}.
-         */
-        private static FileDataStoreFactory dataStoreFactory;
+    /**
+     * Global instance of the {@link FileDataStoreFactory}.
+     */
+    private static FileDataStoreFactory dataStoreFactory;
 
-        /**
-         * Global instance of the JSON factory.
-         */
-        private static final JsonFactory JSON_FACTORY =
-                JacksonFactory.getDefaultInstance();
+    /**
+     * Global instance of the JSON factory.
+     */
+    private static final JsonFactory JSON_FACTORY =
+            JacksonFactory.getDefaultInstance();
 
-        /**
-         * Global instance of the HTTP transport.
-         */
-        private static HttpTransport httpTransport;
+    /**
+     * Global instance of the HTTP transport.
+     */
+    private static HttpTransport httpTransport;
 
-        /**
-         * Global instance of the scopes required by this quickstart.
-         * If modifying these scopes, delete your previously saved credentials
-         * at ~/.credentials/drive-java-quickstart
-         */
-        private static final java.util.Collection<String> SCOPES =
-                DriveScopes.all();
+    /**
+     * Global instance of the scopes required by this quickstart.
+     * If modifying these scopes, delete your previously saved credentials
+     * at ~/.credentials/drive-java-quickstart
+     */
+    private static final java.util.Collection<String> SCOPES =
+            DriveScopes.all();
 
-        static {
-            try {
-                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-            } catch (Throwable t) {
-                t.printStackTrace();
-                System.exit(1);
-            }
+    static {
+        try {
+            httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.exit(1);
         }
+    }
 
-        /**
-         * Creates an authorized Credential object.
-         *
-         * @return an authorized Credential object.
-         * @throws IOException
-         */
+    /**
+     * Creates an authorized Credential object.
+     *
+     * @return an authorized Credential object.
+     * @throws IOException
+     */
       /*  public static Credential authorize() throws IOException {
             // Load client secrets.
             InputStream in =
@@ -99,12 +97,14 @@ public class GoogleDriveAPI {
             return credential;
         }
 
-        *//**
-         * Build and return an authorized Drive client service.
-         *
-         * @return an authorized Drive client service
-         * @throws IOException
-         *//*
+        */
+
+    /**
+     * Build and return an authorized Drive client service.
+     *
+     * @return an authorized Drive client service
+     * @throws IOException
+     *//*
         public static Drive getDriveService() throws IOException {
             Credential credential = authorize();
             return new Drive.Builder(
@@ -133,7 +133,6 @@ public class GoogleDriveAPI {
         // authorize
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }*/
-
     public static Drive getDriveService() {
        /* Credential credential = null;
         try {
@@ -156,7 +155,7 @@ public class GoogleDriveAPI {
                 .setJsonFactory(jsonFactory)
                 .setClientSecrets("474244092827-bpc41ip38d02pqnrg59hhtos0k42jphh.apps.googleusercontent.com", "3D8aaDyXT_BUZDTjwdj19l3a").build()
                 .setRefreshToken("1/9ASl30Jb0QBKcgvL9PHGgZH-6nNTsiNgWBtC8cSGK70");
-       // credential.setAccessToken("ya29.GlsZBZaDhdk8CH6Nh7sBXUDLNxOwL7sw9GBvOFYqKgZOk6sjGxIcaYg1n-YwV1tZBsqL0FYb0_jhK_ob8-gF4WaA3OcUKan1BHOkNKChVgWT1taGO4USVNc6vNBQ");
+        // credential.setAccessToken("ya29.GlsZBZaDhdk8CH6Nh7sBXUDLNxOwL7sw9GBvOFYqKgZOk6sjGxIcaYg1n-YwV1tZBsqL0FYb0_jhK_ob8-gF4WaA3OcUKan1BHOkNKChVgWT1taGO4USVNc6vNBQ");
         try {
             credential.refreshToken();
         } catch (IOException e) {
@@ -166,27 +165,24 @@ public class GoogleDriveAPI {
     }
 
 
+    public static String addPhotoToDrive(MultipartFile multipartFile) throws IOException {
 
-    public static String addPohotoToDrive(MultipartFile multipartFile) throws IOException {
-
-            Drive driveService = getDriveService();
-            File fileMetadata = new File();
-            String folderId = "1T6MFpWCdnYIGdNxuwvkEnfqDBWldFfhI"; // folder id at google drive
-            fileMetadata.setParents(Collections.singletonList(folderId));
-            fileMetadata.setName(UUID.randomUUID().toString());
-            java.io.File imageFile = new java.io.File(multipartFile.getOriginalFilename());
-            multipartFile.transferTo(imageFile);
-            FileContent mediaContent = new FileContent( "image/*",imageFile);
-            File file = driveService.files().create(fileMetadata, mediaContent)
-                    .setFields("id")
-                    .execute();
-            System.out.println("File ID: " + file.getId());
-            return file.getId();
-        }
-
-
-
-
+        Drive driveService = getDriveService();
+        File fileMetadata = new File();
+        String folderId = "1T6MFpWCdnYIGdNxuwvkEnfqDBWldFfhI"; // folder id at google drive
+        fileMetadata.setParents(Collections.singletonList(folderId));
+        fileMetadata.setName(UUID.randomUUID().toString());
+        java.io.File imageFile = new java.io.File(multipartFile.getOriginalFilename());
+        multipartFile.transferTo(imageFile);
+        FileContent mediaContent = new FileContent("image/*", imageFile);
+        File file = driveService.files().create(fileMetadata, mediaContent)
+                .setFields("id")
+                .execute();
+        System.out.println("File ID: " + file.getId());
+        return file.getId();
     }
+
+
+}
 
 

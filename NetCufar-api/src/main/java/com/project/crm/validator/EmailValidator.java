@@ -8,20 +8,25 @@ import org.springframework.validation.Validator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Validator for {@link Email} of {@link com.project.crm.model.User} class,
+ * implements {@link Validator} interface.
+ */
 @Component
-public class EmailValidator implements Validator{
-    private boolean checkEmail(String email){
+public class EmailValidator implements Validator {
+    private boolean checkEmail(String email) {
         Pattern p = Pattern.compile("^([a-z0-9_\\.-])+@[a-z0-9-]+\\.([a-z]{2,4}\\.)?[a-z]{2,4}$");
         Matcher m = p.matcher(email);
         return m.matches();
     }
 
-    private boolean checkTitle(String userNameString){
+    private boolean checkTitle(String userNameString) {
         Pattern p = Pattern.compile("^[0-9а-яА-ЯёЁa-zA-Z\\s-]{0,70}$");
         Matcher m = p.matcher(userNameString);
         return m.matches();
     }
-    private boolean checkMessage(String userNameString){
+
+    private boolean checkMessage(String userNameString) {
         Pattern p = Pattern.compile("^[0-9а-яА-ЯёЁa-zA-Z\\s-]{0,500}$");
         Matcher m = p.matcher(userNameString);
         return m.matches();
@@ -35,7 +40,7 @@ public class EmailValidator implements Validator{
     @Override
     public void validate(Object o, Errors errors) {
         Email email = (Email) o;
-        if(email.getFrom().length() == 0 || !checkEmail(email.getFrom())) {
+        if (email.getFrom().length() == 0 || !checkEmail(email.getFrom())) {
             errors.rejectValue("from", "emailFormat.error");
         }
         if (email.getTitle().length() == 0 || !checkTitle(email.getTitle())) {

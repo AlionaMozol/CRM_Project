@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link LikeService} interface.
+ */
 @Transactional
 @Service
 public class LikeServiceImpl implements LikeService {

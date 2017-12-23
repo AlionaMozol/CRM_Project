@@ -17,10 +17,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static com.project.crm.services.GoogleDriveAPI.addPohotoToDrive;
+import static com.project.crm.services.GoogleDriveAPI.addPhotoToDrive;
+
 
 /**
- * Created by 1 on 15.11.2017.
+ * Implementation of {@link ProfileService} interface.
  */
 
 @Transactional
@@ -35,7 +36,6 @@ public class ProfileServiceImpl implements ProfileService {
     private ProductService productService;
 
 
-
     @Override
     public User getUserByID(int id) {
         User user = userDao.getUserById(id);
@@ -46,7 +46,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public User getUserByUsername(String username) {
-        int id=userDao.findUserByUsername(username).getId();
+        int id = userDao.findUserByUsername(username).getId();
         User user = userDao.getUserById(id);
         user.setUsername(username);
         user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
@@ -65,13 +65,14 @@ public class ProfileServiceImpl implements ProfileService {
 
         userDao.updateUser(user);
     }
+
     @Override
     public void updateUserStatus(User user) {
         userDao.updateStatus(user);
     }
 
     @Override
-    public User getUserByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo){
+    public User getUserByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo) {
         User user = new User();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -80,7 +81,7 @@ public class ProfileServiceImpl implements ProfileService {
         Map<String, String[]> parameterMap = request.getParameterMap();
 
         user.setUsername(name);
-        user=(userDao.findUserByUsername(user.getUsername()));
+        user = (userDao.findUserByUsername(user.getUsername()));
         System.out.println(name);
         System.out.println(parameterMap.get("fio")[0]);
         System.out.println(parameterMap.get("email")[0]);
@@ -94,11 +95,11 @@ public class ProfileServiceImpl implements ProfileService {
         user.setDateOfBirth(parameterMap.get("dateOfBirth")[0]);
         user.setSex(parameterMap.get("sex")[0]);
 
-        if(photo.isEmpty())
+        if (photo.isEmpty())
             user.setPhoto("-1");
         else
             try {
-                user.setPhoto(addPohotoToDrive(photo));
+                user.setPhoto(addPhotoToDrive(photo));
                 System.out.println(user.getPhoto());
             } catch (IOException e) {
                 e.printStackTrace();

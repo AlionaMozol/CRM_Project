@@ -2,16 +2,19 @@ package com.project.crm.model;
 
 import java.util.List;
 
+/**
+ * Simple JavaBean object that represents Category of {@link Product}.
+ */
 public class Category {
 
     private String title;
     private boolean isTop;
     private Category supercategory;
-    private List <Category> subcategories;
+    private List<Category> subcategories;
 
     public Category() {
-        this.isTop=false;
-        this.supercategory=null;
+        this.isTop = false;
+        this.supercategory = null;
     }
 
     public String getTitle() {

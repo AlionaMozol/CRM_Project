@@ -12,15 +12,12 @@ import org.springframework.stereotype.Service;
 
 /**
  * Implementation of {@link SecurityService} interface.
- *
- * @author Ivan Tkachev
- * @version 1.0
  */
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
-    //Добавим логирование (по крайней мере попробуем)
+    //Add logger
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Autowired
@@ -29,13 +26,13 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    //Получаем имя авторизованного пользователя
+    //get username of authorize user
     @Override
     public String findLoggedInUsername() {
-        //Получаем информацию аутентификации
+        //Get information about authentication
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if (userDetails instanceof UserDetails) {
-            //Возвращаем имя данного пользователя (необходимо для приветсвтия)
+            //return username of current user
             return ((UserDetails) userDetails).getUsername();
         }
 

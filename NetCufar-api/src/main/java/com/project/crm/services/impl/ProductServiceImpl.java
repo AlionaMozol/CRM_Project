@@ -19,8 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.project.crm.services.GoogleDriveAPI.addPohotoToDrive;
+import static com.project.crm.services.GoogleDriveAPI.addPhotoToDrive;
 
+/**
+ * Implementation of {@link ProductService} interface.
+ */
 @Transactional
 @Component
 public class ProductServiceImpl implements ProductService {
@@ -35,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     ProductValidator productValidator;
 
     @Override
-    public Product getProductByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo){
+    public Product getProductByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo) {
         Product product = new Product();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -48,13 +51,13 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(parameterMap.get("category")[0]);
         product.setCost(parameterMap.get("cost")[0].trim() + " " + parameterMap.get("COST_TYPE")[0]);
         product.setTitle(parameterMap.get("title")[0].trim());
-        if(parameterMap.get("description")[0] != null)
+        if (parameterMap.get("description")[0] != null)
             product.setDescription(parameterMap.get("description")[0].trim());
-        if(photo.isEmpty())
+        if (photo.isEmpty())
             product.setPhoto("-1");
         else
             try {
-                product.setPhoto(addPohotoToDrive(photo));
+                product.setPhoto(addPhotoToDrive(photo));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -81,7 +84,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void editProduct(String id, Product product) {productDao.editProduct(id, product);  }
+    public void editProduct(String id, Product product) {
+        productDao.editProduct(id, product);
+    }
 
     @Override
     public Product getProductById(String id) {

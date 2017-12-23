@@ -7,8 +7,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link AttributeService} interface.
+ */
 @Component
-public class AttributeServiceImpl implements AttributeService{
+public class AttributeServiceImpl implements AttributeService {
     @Autowired
     AttributeDao attributeDao;
 

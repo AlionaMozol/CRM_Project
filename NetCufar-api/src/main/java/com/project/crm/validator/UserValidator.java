@@ -12,9 +12,6 @@ import org.springframework.validation.Validator;
 /**
  * Validator for {@link com.project.crm.model.User} class,
  * implements {@link Validator} interface.
- *
- * @author Ivan Tkachev
- * @version 1.0
  */
 
 @Component
@@ -28,8 +25,6 @@ public class UserValidator implements Validator {
         return User.class.equals(aClass);
     }
 
-    //Проверка при регистрации
-    //errorCode и его описание лежат в resources/validation.properties
     @Override
     public void validate(Object o, Errors errors) {
         User user = (User) o;

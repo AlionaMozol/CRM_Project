@@ -10,7 +10,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+/**
+ * JUnit test class for {@link ProductDaoImpl}
+ */
 class productDaoImplTest {
 
 
@@ -18,7 +20,7 @@ class productDaoImplTest {
 
 
     @Test
-    void getProductsByCategory(){
+    void getProductsByCategory() {
         Product product1 = new Product();
         Map<String, String> att1 = new HashMap<>();
         product1.setCost("10");
@@ -40,7 +42,7 @@ class productDaoImplTest {
         productDao.addProduct(product2);
         List<Product> productList;
         productList = productDao.getProductsByCategory("MEN_SHOES");
-        for(Product eachProduct: productList){
+        for (Product eachProduct : productList) {
             assertEquals("MEN_SHOES", eachProduct.getCategory());
         }
     }

@@ -9,14 +9,15 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-
+/**
+ * The class that creates the connection to the database
+ */
 public class DbConnectionPool {
 
 
     private String url;
     private String user;
     private String password;
-    private String driverName;
 
 
     private static DbConnectionPool instance;
@@ -27,7 +28,7 @@ public class DbConnectionPool {
 
         try {
             ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
-            driverName = resourceBundle.getString("jdbc.driverClassName");
+            String driverName = resourceBundle.getString("jdbc.driverClassName");
             url = resourceBundle.getString("jdbc.url");
             user = resourceBundle.getString("jdbc.username");
             password = resourceBundle.getString("jdbc.password");
@@ -41,6 +42,7 @@ public class DbConnectionPool {
         }
     }
 
+    /** Function that returns a DbConnectionPool#connection*/
     public synchronized Connection getConnection() {
         if(!connections.isEmpty()) {
             return connections.poll();
@@ -55,7 +57,7 @@ public class DbConnectionPool {
         }
         return connection;
     }
-
+    /** Function that close a DbConnectionPool#connection*/
     public void footConnection(Connection connection) {
         try {
             if (!connection.isClosed()) {

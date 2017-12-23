@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+/**
+ * Controller for favorites {@link com.project.crm.model.Product}'s pages
+ */
 @Controller
 public class LikeController {
 
@@ -22,14 +24,14 @@ public class LikeController {
     LikeService likeService;
 
     @RequestMapping(value = "/add-product-to-favorites", method = RequestMethod.GET)
-    public void addProductToFavorites(@RequestParam String productId){
+    public void addProductToFavorites(@RequestParam String productId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         likeService.addProductToFavorites(productId, name);
     }
 
     @RequestMapping(value = "/remove-product-from-favorites", method = RequestMethod.GET)
-    public void removeProductFromFavorites(@RequestParam String productId){
+    public void removeProductFromFavorites(@RequestParam String productId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         likeService.removeProductFromFavorites(productId, name);

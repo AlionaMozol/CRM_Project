@@ -17,9 +17,6 @@ import java.util.Set;
 
 /**
  * Implementation of {@link UserDetailsService} interface.
- *
- * @author Ivan Tkachev
- * @version 1.0
  */
 
 
@@ -27,6 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
