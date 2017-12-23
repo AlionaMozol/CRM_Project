@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProductService {
     Product getProductByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo);
     void addProduct(Product product);
-    void editProduct(String id, Product product);
+    void editProduct(String id, Product product, MultipartFile photo);
     Product getProductById(String id);
     List<Product> getProductsByKeyWords(String keyWords);
     List<Product> getProductsByUsername(String username);

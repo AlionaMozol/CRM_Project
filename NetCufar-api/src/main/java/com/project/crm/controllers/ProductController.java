@@ -147,16 +147,29 @@ public class ProductController {
     // Edition product
     @RequestMapping(value= "/product/edit/{id}", method = RequestMethod.GET)
     public String editProduct(@PathVariable String id, Model model) {
-        model.addAttribute("IDProduct", productService.getProductById(id));
+        Product product = productService.getProductById(id);
+        String[] cost = product.getCost().split(" ");
+        model.addAttribute("CURRENCY", cost[1]);
+        product.setCost(cost[0]);
+        model.addAttribute("IDProduct", product);
         model.addAttribute("ID", id);
         return "/edit_product";
     }
 
     @RequestMapping(value = "/product/edit/{id}", method = RequestMethod.POST)
-    public String editProduct(@PathVariable String id, @ModelAttribute("EditProduct") Product product) {
-        productService.editProduct(id, product);
+    public String editProduct(@PathVariable String id, @ModelAttribute("EditProduct") Product product, BindingResult bindingResult,
+                              @RequestParam("COST_TYPE") String currency, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+        product.setCost(product.getCost() + " " + currency);
+        product.setSuperCategory("SuperCategory");
+        product.setCategory("Category");
+        productValidator.validate(product,bindingResult);
+        if(bindingResult.hasErrors()){
+            return "redirect:/product/edit/{id}";
+        }
+        productService.editProduct(id, product, multipartFile);
         return "redirect:/my_products";
     }
+    ////////////////////////////////////////
 
     @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
     public String notModeratedProducts(Model model){

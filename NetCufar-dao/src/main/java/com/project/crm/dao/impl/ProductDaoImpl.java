@@ -157,13 +157,54 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 statement.setString(1, id);
                 statement.setString(2, (String) entry.getKey());
                 resultSet = statement.executeQuery();
-                resultSet.next();
-
-                statement = connection.prepareStatement(sql.
+                if(resultSet.next()) {
+                    statement = connection.prepareStatement(sql.
                             getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE_BY_VALUE_ID));
-                statement.setString(1, (String) entry.getValue());
+                    statement.setString(1, (String) entry.getValue());
+                    statement.setString(2, resultSet.getString(1));
+                    statement.execute();
+                }
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
+            statement.setString(1, id);
+            statement.setString(2, "TITLE");
+            resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                statement = connection.prepareStatement(sql.
+                        getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE_BY_VALUE_ID));
+                statement.setString(1, product.getTitle());
                 statement.setString(2, resultSet.getString(1));
                 statement.execute();
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
+            statement.setString(1, id);
+            statement.setString(2, "COST");
+            resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                statement = connection.prepareStatement(sql.
+                        getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE_BY_VALUE_ID));
+                statement.setString(1, product.getCost());
+                statement.setString(2, resultSet.getString(1));
+                statement.execute();
+            }
+
+            if(!product.getPhoto().equals("-1")) {
+                statement = connection.prepareStatement(sql.
+                        getProperty(SqlService.SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME));
+                statement.setString(1, id);
+                statement.setString(2, "PHOTO");
+                resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    statement = connection.prepareStatement(sql.
+                            getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE_BY_VALUE_ID));
+                    statement.setString(1, product.getPhoto());
+                    statement.setString(2, resultSet.getString(1));
+                    statement.execute();
+                }
             }
 
             statement = connection.prepareStatement(sql.
@@ -171,15 +212,17 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.setString(1, id);
             statement.setString(2, "PRODUCT_LAST_EDIT_DATE_TIME");
             resultSet = statement.executeQuery();
-            resultSet.next();
 
-            Date date = new Date();
+            if(resultSet.next()) {
 
-            statement = connection.prepareStatement(sql.
+                Date date = new Date();
+
+                statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE_BY_VALUE_ID));
-            statement.setString(1, date.toString());
-            statement.setString(2, resultSet.getString(1));
-            statement.execute();
+                statement.setString(1, date.toString());
+                statement.setString(2, resultSet.getString(1));
+                statement.execute();
+            }
 
             statement.close();
             resultSet.close();

@@ -81,7 +81,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void editProduct(String id, Product product) {productDao.editProduct(id, product);  }
+    public void editProduct(String id, Product product, MultipartFile photo) {
+        if(photo.isEmpty())
+            product.setPhoto("-1");
+        else {
+            try {
+                product.setPhoto(addPohotoToDrive(photo));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        productDao.editProduct(id, product);
+    }
 
     @Override
     public Product getProductById(String id) {
