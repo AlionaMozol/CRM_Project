@@ -7,30 +7,6 @@
 
 <!DOCTYPE html>
 
-<script type="text/javascript">
-    function findProducts() {
-        $.ajax({
-            scriptCharset:"utf-8",
-            type: 'GET',
-            url: "/productSearch",
-            dataType: 'json',
-            data: {
-                subString: encodeURIComponent($('#search').val())
-            },
-            success: function (products) {
-                $('#myUL').empty();
-                $.each(products, function (idx, value) {
-                    var newInput = ("<li>"+"<a href="+"${contextPath}/product/"+value.id+">"
-                        +value.title+ " | " +value.superCategory+ " - " +value.category+"</a>"+"</li>");
-                    $('#myUL').append(newInput);
-                })
-            },
-            error: function () {
-                alert('Error');
-            }
-        })
-    }
-</script>
 
 <head>
 
@@ -70,6 +46,50 @@
 
 </head>
 
+<script type="text/javascript">
+    function findProducts() {
+        $.ajax({
+            scriptCharset:"utf-8",
+            type: 'GET',
+            url: "/productSearch",
+            dataType: 'json',
+            data: {
+                subString: encodeURIComponent($('#search').val())
+            },
+            success: function (products) {
+                $('#myUL').empty();
+                $.each(products, function (idx, value) {
+                    var newInput = ("<li>"+"<a href="+"${contextPath}/product/"+value.id+">"
+                        +value.title+ " | " +value.superCategory+ " - " +value.category+"</a>"+"</li>");
+                    $('#myUL').append(newInput);
+                })
+            },
+            error: function () {
+                alert('Error');
+            }
+        })
+    }
+            $(document).on('click', function (e) {
+                if (e.target.id == 'search') {
+                    $('#desired_element').show();
+                } else if (e.target.id == 'desired_element') {
+
+                } else {
+                    $('#desired_element').hide();
+                }
+            });
+
+    //    $(document).ready(function() {
+    //        // This WILL work because we are listening on the 'document',
+    //        // for a click on an element with an ID of #test-element
+    //        $(document).on("click", "#search", function() {
+    //            alert("click bound to document listening for #test-element");
+    //        });
+    //    });
+
+
+</script>
+
 <style>
     body {
         background: #ececec;
@@ -100,9 +120,9 @@
                 <div class="col-sm-4 col-md-5">
                             <form class="navbar-form" role="search" action="/catalog">
                                 <div class="input-group">
-                                    <input id="search" type="text" class="form-control"  autocomplete="off"
+                                    <input id="search" type="text" class="form-control" autocomplete="off"
                                            placeholder="<spring:message code="headerSearch"/>" name="q"
-                                       onkeyup="findProducts()">
+                                           onkeyup="findProducts()">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
                                             <i class="glyphicon glyphicon-search"></i>
