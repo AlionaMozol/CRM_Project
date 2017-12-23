@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * Controller for category of {@link com.project.crm.model.Product}
+ */
 @Controller
 public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
-
 
 
     @RequestMapping(value = "/categories", method = RequestMethod.GET)

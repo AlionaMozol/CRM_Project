@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for {@link com.project.crm.model.Product}
+ */
 @Controller
 //@RequestMapping("/product")
 public class ProductController {
@@ -50,7 +53,7 @@ public class ProductController {
     @Autowired
     ProfileService profileService;
 
-    @RequestMapping(value= "/catalog", method = RequestMethod.GET)
+    @RequestMapping(value = "/catalog", method = RequestMethod.GET)
     public String getSearch(Model model, HttpServletRequest request) throws UnsupportedEncodingException {
         //products by key words
         String keyWord;
@@ -60,15 +63,14 @@ public class ProductController {
         } else {
             resultMSG = "YOU DID'NT ENTER WHAT YOU WANT :)";
         }
-        if(request.getParameter("q") != null) {
+        if (request.getParameter("q") != null) {
             keyWord = new String(request.getParameter("q").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-            if(!keyWord.replaceAll("\\s","").equals("")) {
+            if (!keyWord.replaceAll("\\s", "").equals("")) {
                 List<Product> productsByKeyWords = productService.getProductsByKeyWords(keyWord);
-                if(productsByKeyWords.size() == 0) {
+                if (productsByKeyWords.size() == 0) {
                     if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
                         resultMSG = "НИЧЕГО НЕ НАЙДЕНО ПО ЗАПРОСУ '" + keyWord + "'";
-                    }
-                    else {
+                    } else {
                         resultMSG = "NOTHING FOUND FOR '" + keyWord + "'";
                     }
                 } else {
@@ -93,7 +95,7 @@ public class ProductController {
         return "catalog";
     }
 
-    @RequestMapping(value= "/catalog/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "/catalog/{username}", method = RequestMethod.GET)
     public String getCurrentUserProducts(@PathVariable String username, Model model, HttpServletRequest request) {
         List<Product> products = productService.getProductsByUsername(username);
         String result_msg;
@@ -102,7 +104,7 @@ public class ProductController {
         } else {
             result_msg = "USER NOT FOUND";
         }
-        if(userService.findByUsername(username) != null) {
+        if (userService.findByUsername(username) != null) {
             if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
                 result_msg = "Товары пользователя: " + username + ". Количество : " + products.size();
             }
@@ -116,27 +118,27 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value= "/product/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
-        model.addAttribute("productid",productService.getProductById(id));
+        model.addAttribute("productid", productService.getProductById(id));
         return "/productbyid";
     }
 
     @RequestMapping(value = "/not_moderated_accept", method = RequestMethod.GET)
-    public String acceptProduct(@RequestParam String productId){
+    public String acceptProduct(@RequestParam String productId) {
         productService.changeProductStatus(productId, ProductStatus.APPROVED);
         return "redirect:/product_moderation";
     }
 
     @RequestMapping(value = "/not_moderated_deny", method = RequestMethod.GET)
-    public String denyProduct(@RequestParam String productId){
+    public String denyProduct(@RequestParam String productId) {
         productService.changeProductStatus(productId, ProductStatus.CANCELED);
         return "/product_moderation";
     }
 
 
     @RequestMapping(value = "/my_products", method = RequestMethod.GET)
-    public String allProducts (Model model){
+    public String allProducts(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("products", productService.getProductsByUsername(name));
@@ -145,7 +147,7 @@ public class ProductController {
 
 
     // Edition product
-    @RequestMapping(value= "/product/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/product/edit/{id}", method = RequestMethod.GET)
     public String editProduct(@PathVariable String id, Model model) {
         Product product = productService.getProductById(id);
         String[] cost = product.getCost().split(" ");
@@ -172,7 +174,7 @@ public class ProductController {
     ////////////////////////////////////////
 
     @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
-    public String notModeratedProducts(Model model){
+    public String notModeratedProducts(Model model) {
         //почему-то все возвращается в 2 экземплярах - запрос в бд неправильный?
         model.addAttribute("productCategory", categoryService.getAllTopCategories());
         model.addAttribute("nmod_products", productService.getProductsByStatus(ProductStatus.MODERATION));
@@ -197,35 +199,33 @@ public class ProductController {
     public String addProduct(@ModelAttribute Product product, BindingResult bindingResult, HttpServletRequest request,
                              @RequestParam("file") MultipartFile multipartFile) throws IOException {
         product = productService.getProductByHttpServletRequestAndPhoto(request, multipartFile);
-        productValidator.validate(product,bindingResult);
-        if(bindingResult.hasErrors()){
+        productValidator.validate(product, bindingResult);
+        if (bindingResult.hasErrors()) {
             return "redirect:/new_product";
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         String userStatus = profileService.getUserByUsername(name).getStatus();
-        if(userStatus.equals("UNBLOCKED")){
+        if (userStatus.equals("UNBLOCKED")) {
             productService.addProduct(product);
-        }
-        else{
+        } else {
             return "/errorStatus";
         }
-       productService.addProduct(product);
         return "redirect:/my_products";
     }
 
     @RequestMapping(value = "/attributes", method = RequestMethod.GET)
     @ResponseBody
-    public List getAttributes(@RequestParam String subCategory){
+    public List getAttributes(@RequestParam String subCategory) {
         return attributeService.getAttributesByCategory(subCategory);
     }
 
     @RequestMapping(value = "/productSearch", method = RequestMethod.GET)
     @ResponseBody
     public List getProductsBySubString(@RequestParam String subString) throws UnsupportedEncodingException {
-        String checkIfEmptyBuf = java.net.URLDecoder.decode(subString,"UTF-8");
-        if(!(checkIfEmptyBuf.replaceAll("\\s","")).equals("")) {
-            return productService.getProductsByKeyWords(java.net.URLDecoder.decode(subString,"UTF-8"));
+        String checkIfEmptyBuf = java.net.URLDecoder.decode(subString, "UTF-8");
+        if (!(checkIfEmptyBuf.replaceAll("\\s", "")).equals("")) {
+            return productService.getProductsByKeyWords(java.net.URLDecoder.decode(subString, "UTF-8"));
         } else {
             return new ArrayList();
         }

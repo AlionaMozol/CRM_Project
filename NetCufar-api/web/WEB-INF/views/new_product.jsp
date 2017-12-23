@@ -89,16 +89,12 @@
 
     $(document).ready(function () {
         $('#new-product').submit(function () {
-            if ($('#title').val() != '' &&
-                $('#cost').val() != '') {
+            if ($('#title').val() !== '' &&
+                $('#cost').val() !== '') {
                 var patternTitle = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$/i;
                 var patternCost = /^([1-9]+([0-9]+)?){0,40}$/i;
-                if (patternTitle.test($('#title').val()) &&
-                    patternCost.test($('#cost').val())) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return patternTitle.test($('#title').val()) &&
+                    patternCost.test($('#cost').val());
             } else {
                 return false;
             }
@@ -106,7 +102,7 @@
 
 
         $('#title').on("input", function () {
-            if ($(this).val() != '') {
+            if ($(this).val() !== '') {
                 var pattern = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$/i;
                 if (pattern.test($(this).val())) {
                     $(this).css({'border': '1px solid #04f92d'});
@@ -173,7 +169,7 @@
                 <div class="col-md-6">
                     <div class="form-group row has-feedback">
                         <label class="label-attribute"><spring:message code="TITLE"/></label>
-                        <input class="form-control" id="title" name="title"
+                        <input class="form-control" id="title" name="title" pattern="^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$"
                                placeholder="<spring:message code="TITLE"/>"/>
                     </div>
                 </div>
@@ -207,7 +203,7 @@
                 </div>
 
 
-                <input class="btn btn-success" type="submit" style="margin-left: 300px; margin-bottom: 10px"/>
+                <input class="btn btn-success"  type="submit" style="margin-left: 300px; margin-bottom: 10px"/>
 
 
             </div>

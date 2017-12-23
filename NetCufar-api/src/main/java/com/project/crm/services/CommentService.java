@@ -2,13 +2,15 @@ package com.project.crm.services;
 
 
 import com.project.crm.model.Comment;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+/**
+ * Service class for {@link Comment} of {@link com.project.crm.model.User}
+ */
 public interface CommentService {
 
     List<Comment> getCommnetByPostId(String id);
+
     void addComment(Comment comment);
 }

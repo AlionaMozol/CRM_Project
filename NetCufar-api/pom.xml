@@ -28,34 +28,35 @@
             <version>1.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-        </dependency>
-
+        <!-- Configure spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -63,13 +64,22 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
 
+        <!-- Feedback-->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
+
+        <!--Validator-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
+        <!-- Jackson ajax-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -85,65 +95,36 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-
+        <!-- DataBase connection -->
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
         </dependency>
 
+        <!--Contracts between a servlet class and the runtime environment-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
-
+        <!-- Log4j-->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
 
+        <!-- Junit-->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
         </dependency>
 
+        <!--To work with photos-->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -162,16 +143,6 @@
         <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.1.0-M1</version>
         </dependency>
     </dependencies>
 

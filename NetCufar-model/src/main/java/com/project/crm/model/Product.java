@@ -5,6 +5,9 @@ import com.project.crm.model.enums.ProductStatus;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Simple JavaBean object that represents Product of {@link User}.
+ */
 public class Product {
 
     private String id;
@@ -17,8 +20,8 @@ public class Product {
     private String title;
     private String description;
     private String photo;
-    private String   publicationDate;
-    private String   dateOfLastEdit;
+    private String publicationDate;
+    private String dateOfLastEdit;
     private String phone;
     private List<String> commentList;
 
@@ -26,7 +29,8 @@ public class Product {
     /**
      * Default constructor of product
      */
-    public Product() {}
+    public Product() {
+    }
 
     public String getOwner() {
         return owner;
@@ -36,33 +40,61 @@ public class Product {
         this.owner = owner;
     }
 
-    public String getId() { return id; }
+    public String getId() {
+        return id;
+    }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public String getSuperCategory() { return superCategory; }
+    public String getSuperCategory() {
+        return superCategory;
+    }
 
-    public void setSuperCategory(String superCategory) { this.superCategory = superCategory; }
+    public void setSuperCategory(String superCategory) {
+        this.superCategory = superCategory;
+    }
 
-    public String getTitle() { return title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public String  getPublicationDate() { return publicationDate; }
+    public String getPublicationDate() {
+        return publicationDate;
+    }
 
-    public void setPublicationDate(String publicationDate) { this.publicationDate = publicationDate; }
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
 
-    public String getPhone() { return phone; }
+    public String getPhone() {
+        return phone;
+    }
 
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    public List<String> getCommentsList() { return commentList; }
+    public List<String> getCommentsList() {
+        return commentList;
+    }
 
-    public void setCommentsList(List<String> commentsList) { this.commentList = commentsList; }
+    public void setCommentsList(List<String> commentsList) {
+        this.commentList = commentsList;
+    }
 
     public Map<String, String> getAttributesAndValues() {
         return attributesAndValues;

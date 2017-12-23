@@ -27,7 +27,8 @@ img {
 .product-img {
     height: 200px;
 }
-.product-title a {
+.product-title {
+    text-overflow: ellipsis;
     font-size: 22px;
     color: #000;
     text-transform: uppercase;

@@ -3,6 +3,7 @@ package com.project.crm.controllers;
 
 import com.project.crm.model.Category;
 import com.project.crm.model.Product;
+import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.CategoryService;
 import com.project.crm.services.LikeService;
 import com.project.crm.services.ProductService;
@@ -22,7 +23,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller for navigation containing simple methods get
+ */
 @Controller
 public class NavigationController {
 
@@ -40,10 +43,10 @@ public class NavigationController {
         List<Category> supercategoryList;
         supercategoryList = categoryService.getAllTopCategories();
         model.addAttribute("productCategory", supercategoryList);
-        if(request.getParameter("q") != null && !request.getParameter("q").replaceAll("\\s","").equals("")) {
+        if (request.getParameter("q") != null && !request.getParameter("q").replaceAll("\\s", "").equals("")) {
             model.addAttribute("products", productService.getProductsByKeyWords(request.getParameter("q")));
         } else {
-            model.addAttribute("products", productService.getAllProducts());
+            model.addAttribute("products", productService.getProductsByStatus(ProductStatus.APPROVED));
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -55,14 +58,16 @@ public class NavigationController {
     }
 
     @RequestMapping(value = "/update-products", method = RequestMethod.GET)
-    public @ResponseBody List updateProducts(){
+    public @ResponseBody
+    List updateProducts() {
         List<Product> productList;
         productList = productService.getAllProducts();
         return productList;
     }
 
     @RequestMapping(value = "/get-products-by-supercategory", method = RequestMethod.GET)
-    public @ResponseBody List getProductsBySuperCategory(@RequestParam String supercategory, Model model){
+    public @ResponseBody
+    List getProductsBySuperCategory(@RequestParam String supercategory, Model model) {
         List<Product> productList;
         productList = productService.getProductsBySuperCategory(supercategory);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

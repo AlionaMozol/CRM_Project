@@ -32,7 +32,6 @@
     <div class="col-lg-12 products">
 
         <c:forEach items="${products}" var="product">
-
             <div class="col-sm-4">
                 <div class="product">
                     <div class="product-img">
@@ -61,7 +60,9 @@
                     </div>
 
                     <p class="product-title">
-                        <a href="${contextPath}/product/${product.id}"><strong>${product.title}</strong></a>
+                        <a class="product-title" href="${contextPath}/product/${product.id}">
+                            <strong>${product.title}</strong>
+                        </a>
                     </p>
 
                     <p class="product-desc">${product.description}</p>
@@ -69,7 +70,6 @@
                     <p class="product-price">${product.cost}</p>
                 </div>
             </div>
-
         </c:forEach>
 
     </div>

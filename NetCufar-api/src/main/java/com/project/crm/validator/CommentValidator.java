@@ -7,6 +7,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/**
+ * Validator for {@link Comment} of {@link com.project.crm.model.User} class,
+ * implements {@link Validator} interface.
+ */
 @Component
 public class CommentValidator implements Validator {
 
@@ -19,12 +23,12 @@ public class CommentValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
-        Comment comment = (Comment)target;
+        Comment comment = (Comment) target;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"text", "comment.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "comment.empty");
 
 
-        if(comment.getText().length()>500){
+        if (comment.getText().length() > 500) {
             errors.rejectValue("text", "comment.length");
         }
 

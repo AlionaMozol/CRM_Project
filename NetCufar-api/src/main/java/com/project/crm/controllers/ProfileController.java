@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * Controller for profiles of {@link com.project.crm.model.User}'s pages
+ */
 @Controller
 public class ProfileController {
 
@@ -29,12 +32,12 @@ public class ProfileController {
     ProfileValidator profileValidator;
 
     @RequestMapping(value = "/profiles", method = RequestMethod.GET)
-    public String allUsers (Model model){
+    public String allUsers(Model model) {
         org.springframework.security.core.userdetails.User spring_user =
                 (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                         getContext().getAuthentication().getPrincipal();
         String username = spring_user.getUsername();
-        int  id = userService.findByUsername(username).getId();
+        int id = userService.findByUsername(username).getId();
         model.addAttribute("profiles", profileService.getUserByID(id));
         return "/profiles";
     }
@@ -45,36 +48,38 @@ public class ProfileController {
                 (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                         getContext().getAuthentication().getPrincipal();
         String username = spring_user.getUsername();
-        int  id = userService.findByUsername(username).getId();
+        int id = userService.findByUsername(username).getId();
         return profileService.getUserByID(id);
     }
 
 
     @RequestMapping(value = "/checkEmail")
-    public @ResponseBody int checkEmail(@RequestParam String email){
-        int id=0;
+    public @ResponseBody
+    int checkEmail(@RequestParam String email) {
+        int id = 0;
         id = profileService.getUserIdByEmail(email);
         org.springframework.security.core.userdetails.User spring_user =
                 (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                         getContext().getAuthentication().getPrincipal();
         String username = spring_user.getUsername();
-        int  user_id = userService.findByUsername(username).getId();
-        if(id!=-1 && user_id!=id){
+        int user_id = userService.findByUsername(username).getId();
+        if (id != -1 && user_id != id) {
             return -1;
         }
         return 1;
     }
 
     @RequestMapping(value = "/checkTelephone")
-    public @ResponseBody int checkTelephone(@RequestParam String telephone){
-        int id=0;
+    public @ResponseBody
+    int checkTelephone(@RequestParam String telephone) {
+        int id = 0;
         id = profileService.getUserIdByTelephone(telephone);
         org.springframework.security.core.userdetails.User spring_user =
                 (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                         getContext().getAuthentication().getPrincipal();
         String username = spring_user.getUsername();
-        int  user_id = userService.findByUsername(username).getId();
-        if(id!=-1 && user_id!=id){
+        int user_id = userService.findByUsername(username).getId();
+        if (id != -1 && user_id != id) {
             return -1;
         }
         return 1;
@@ -94,7 +99,7 @@ public class ProfileController {
         }
         else {
             try {
-                user.setPhoto(addPohotoToDrive(multipartFile));
+                user.setPhoto(addPhotoToDrive(multipartFile));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -109,7 +114,7 @@ public class ProfileController {
                                 @RequestParam("file") MultipartFile multipartFile) throws IOException {
         user = profileService.getUserByHttpServletRequestAndPhoto(request, multipartFile);
         System.out.println(user.getFio());
-        profileValidator.validate(user,bindingResult);
+        profileValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return "redirect: /profiles";
         }
@@ -118,26 +123,27 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/all_profiles", method = RequestMethod.GET)
-    public String allProducts (Model model){
+    public String allProducts(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("profiles", profileService.getAllUsers());
         return "/all_profiles";
     }
 
-    @RequestMapping(value="/blocked", method=RequestMethod.GET)
+    @RequestMapping(value = "/blocked", method = RequestMethod.GET)
     public String changeStatusBlocked(@RequestParam Integer profileId) {
         User user = profileService.getUserByID(profileId);
-        if(user.getStatus().equals("BLOCKED")){
+        if (user.getStatus().equals("BLOCKED")) {
             user.setStatus("UNBLOCKED");
         }
         profileService.updateUserStatus(user);
         return "/all_profiles";
     }
-    @RequestMapping(value="/unblocked", method=RequestMethod.GET)
+
+    @RequestMapping(value = "/unblocked", method = RequestMethod.GET)
     public String changeStatusUnblocked(@RequestParam Integer profileId) {
         User user = profileService.getUserByID(profileId);
-        if(user.getStatus().equals("UNBLOCKED")){
+        if (user.getStatus().equals("UNBLOCKED")) {
             user.setStatus("BLOCKED");
         }
         profileService.updateUserStatus(user);

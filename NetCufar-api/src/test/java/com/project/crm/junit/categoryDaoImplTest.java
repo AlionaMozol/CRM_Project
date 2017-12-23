@@ -1,7 +1,7 @@
 package com.project.crm.junit;
 
 /**
- * Created by 1 on 02.12.2017.
+ * JUnit test class for {@link com.project.crm.dao.impl.CategoryDaoImpl}
  */
 public class categoryDaoImplTest {
     /*@Test

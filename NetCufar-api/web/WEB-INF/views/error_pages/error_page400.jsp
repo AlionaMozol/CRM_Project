@@ -11,12 +11,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>400 error</title>
     </head>
+
+
     <body>
-    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center; margin-top: 10%">
-        <spring:message code="error400"/>
-    </div>
-    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
-        <img src="../../resources/img/error.png" alt="" class="img-responsive">
-    </div>
+        <%@include file="../../layouts/preloader.jsp"%>
+        <%@include file="../../layouts/high_menu_bar.jsp"%>
+
+        <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center; margin-top: 10%">
+            <spring:message code="error400"/>
+        </div>
+        <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
+            <img src="../../resources/img/error.png" alt="" class="img-responsive">
+        </div>
     </body>
 </html>

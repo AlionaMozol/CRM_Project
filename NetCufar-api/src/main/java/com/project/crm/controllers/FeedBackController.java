@@ -14,18 +14,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Controller for feedback page
+ */
 @Controller
 public class FeedBackController {
     @Autowired
     EmailValidator emailValidator;
 
-    @RequestMapping(value="/feedback", method= RequestMethod.GET)
+    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public String getMethodFeedBack() {
         return "feedback";
     }
 
-    @RequestMapping(value="/feedback", method= RequestMethod.POST)
-    public String sendFeedBack(@ModelAttribute ("Email") Email email,
+    @RequestMapping(value = "/feedback", method = RequestMethod.POST)
+    public String sendFeedBack(@ModelAttribute("Email") Email email,
                                BindingResult bindingResult) {
         emailValidator.validate(email, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -40,10 +43,10 @@ public class FeedBackController {
         simpleMailMessage.setText(email.getMessage());
 
         try {
-             mailSender.send(simpleMailMessage);
+            mailSender.send(simpleMailMessage);
         } catch (MailException e) {
-             System.out.println("EMAIL SENDING ERROR");
-             e.printStackTrace();
+            System.out.println("EMAIL SENDING ERROR");
+            e.printStackTrace();
         }
         return "redirect: /account";
     }

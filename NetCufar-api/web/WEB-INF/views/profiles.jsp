@@ -118,18 +118,18 @@
                     <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${profiles.photo}"
                          onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
                 </div>
-                File to upload: <input type="file" name="file"><br />
+                <spring:message code="profile.addPhoto"/><input type="file" name="file" ><br />
             </label>
         </div>
         <div class="col-md-5 ">
             <div class="form-group row has-feedback">
-                <label class="col-2 col-form-label">ФИО</label>
+                <label class="col-2 col-form-label"><spring:message code="profile.fio"/></label>
                 <div class="col-10">
                     <input id="fio" class="form-control" type="text" name="fio" value="${profiles.fio}"/>
                 </div>
             </div>
             <div class="form-group row has-feedback">
-                <label class="col-2 col-form-label">Email</label>
+                <label class="col-2 col-form-label"><spring:message code="profile.email"/></label>
                 <div class="col-10">
                     <input id="email" class="form-control" type="email" name="email" value="${profiles.email}"  />
                     <span id="errEmail" name="errEmail"></span>
@@ -137,34 +137,34 @@
                 </div>
             </div>
             <div class="form-group row has-feedback">
-                <label class="col-2 col-form-label">Телефон</label>
+                <label class="col-2 col-form-label"><spring:message code="profile.telephone"/></label>
                 <div class="col-10">
                     <input id="telephone" class="form-control" type="text" name="telephone" value="${profiles.telephone}"/>
                     <span id="errTelephone" name="errTelephone"></span>
                 </div>
             </div>
             <div class="form-group row has-feedback">
-                <label class="col-2 col-form-label">Город</label>
+                <label class="col-2 col-form-label"><spring:message code="profile.city"/></label>
                 <div class="col-10">
                     <input id="city" class="form-control" type="text" name="city" value="${profiles.city}"/>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-2 col-form-label">Дата рождения</label>
+                <label class="col-2 col-form-label"><spring:message code="profile.birth"/></label>
                 <div class="col-10">
                     <input class="form-control" type="date" name="dateOfBirth" value="${profiles.dateOfBirth}"  max="2000-12-31" min="1900-01-01"/>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-2 col-form-label">Пол</label>
+                <label class="col-2 col-form-label"><spring:message code="profile.sex"/></label>
                 <div class="col-10">
 
-                    <input type="radio" name="sex"  id="men" value="М"/>Мужчина
-                    <input type="radio" name="sex"  id="women" value="Ж"/>Женщина
+                    <input type="radio" name="sex"  id="men" value="М"/><spring:message code="profile.man"/>
+                    <input type="radio" name="sex"  id="women" value="Ж"/><spring:message code="profile.female"/>
                 </div>
             </div>
-            <button id="submit" type="submit" class="btn">Cохранить</button>
+            <button id="submit" type="submit" class="btn"><spring:message code="Save"/></button>
         </div>
     </form:form>
 </div>

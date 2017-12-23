@@ -42,7 +42,7 @@ public class AttributeDaoImpl extends DAO implements AttributeDao {
         return attributesOfTargetCategory;
     }
 
-    void tryToRollbackConnection(Connection connection) {
+    private void tryToRollbackConnection(Connection connection) {
         try {
             connection.rollback();
             System.err.print("Transaction is being rolled back!");
@@ -52,7 +52,7 @@ public class AttributeDaoImpl extends DAO implements AttributeDao {
         }
     }
 
-    void tryToSetAutoCommitTrueForConnection(Connection connection) {
+    private void tryToSetAutoCommitTrueForConnection(Connection connection) {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {

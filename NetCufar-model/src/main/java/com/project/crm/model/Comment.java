@@ -1,5 +1,8 @@
 package com.project.crm.model;
 
+/**
+ * Simple JavaBean object that represents Comment of {@link User}.
+ */
 public class Comment {
 
     private String id;
@@ -48,8 +51,6 @@ public class Comment {
     public void setText(String text) {
         this.text = text;
     }
-
-
 
 
 }

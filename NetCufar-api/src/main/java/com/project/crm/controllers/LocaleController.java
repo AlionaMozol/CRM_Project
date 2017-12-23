@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
+/**
+ * Rest Controller for i18n
+ */
 @RestController
 public class LocaleController {
 
@@ -20,11 +23,12 @@ public class LocaleController {
 
     @Autowired
     CookieLocaleResolver cookieLocaleResolver;
+
     @RequestMapping(value = "/changeLocale")
-    public void changeLocale(@RequestBody String localeName, HttpServletRequest httpRequest, HttpServletResponse httpResponse){
-    Locale locale = new Locale(localeName);
-    cookieLocaleResolver.setLocale(httpRequest,httpResponse, locale);
-   // WebUtils.setSessionAttribute(httpRequest,SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,localeName);
+    public void changeLocale(@RequestBody String localeName, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        Locale locale = new Locale(localeName);
+        cookieLocaleResolver.setLocale(httpRequest, httpResponse, locale);
+        // WebUtils.setSessionAttribute(httpRequest,SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,localeName);
 
     }
 

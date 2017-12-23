@@ -1,5 +1,8 @@
 package com.project.crm.model;
 
+/**
+ * Simple JavaBean object that represents Email of {@link User}.
+ */
 public class Email {
     private String from;
     private String title;
@@ -67,8 +70,6 @@ public class Email {
     public void setMessage(String message) {
         this.message = message;
     }
-
-
 
 
 }

@@ -22,7 +22,7 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @Column (name = "password")
+    @Column(name = "password")
     private String password;
 
     @Transient
@@ -97,6 +97,7 @@ public class User {
     public void setStatus(String status) {
         this.status = status;
     }
+
     public String getCity() {
         return city;
     }
@@ -146,6 +147,7 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
     public int getId() {
         return id;
     }
@@ -209,7 +211,6 @@ public class User {
     public void setFavoriteProductList(List<Product> favoriteProductList) {
         this.favoriteProductList = favoriteProductList;
     }
-
 
 
     public List<Product> getBlockedUserList() {
