@@ -44,8 +44,8 @@ public class DbConnectionPool {
     public synchronized Connection getConnection() {
         if(!connections.isEmpty()) {
             return connections.poll();
-
         }
+
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, user, password);
