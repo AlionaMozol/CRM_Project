@@ -1644,6 +1644,19 @@ a.bg-danger:focus, a.bg-danger:hover {
     background-color: #e4b9b9
 }
 
+.error_text {
+    margin-top: auto;
+    font-size: x-large;
+    text-align: center;
+    margin-top: 15%;
+}
+
+.error_icon {
+    margin-top: auto;
+    font-size: x-large;
+    margin-left: 47%;
+}
+
 .page-header {
     padding-bottom: 9px;
     margin: 40px 0 20px;
