@@ -9,6 +9,7 @@
         <module>NetCufar-dao</module>
         <module>NetCufar-api</module>
         <module>NetCufar-model</module>
+        <module>NetCufar-web</module>
     </modules>
     <name>NetCufarApp</name>
     <url>http://maven.apache.org</url>
