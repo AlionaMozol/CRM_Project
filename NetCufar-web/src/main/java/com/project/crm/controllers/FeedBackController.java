@@ -23,9 +23,7 @@ public class FeedBackController {
     EmailValidator emailValidator;
 
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
-    public String getMethodFeedBack() {
-        return "feedback";
-    }
+    public String getMethodFeedBack() { return "feedback"; }
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     public String sendFeedBack(@ModelAttribute("Email") Email email,

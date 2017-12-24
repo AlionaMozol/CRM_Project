@@ -35,7 +35,7 @@
 </script>
 
 <script type="text/javascript">$(document).on("input",function(ev) {
-    $('#email').on("input", function () {
+    $('#email').on("input", setTimeout(function () {
         var email = document.getElementById('email').value;
         $.ajax({
             url: '/checkEmail',
@@ -63,7 +63,7 @@
                 }
             }
         });
-    });
+    },1000));
     $('#telephone').on("input", function () {
         var telephone = document.getElementById('telephone').value;
         $.ajax({
@@ -109,7 +109,7 @@
 
 </script>
 
-<div class="content">
+<div class="container content" style="margin-bottom: 20%">
     <form:form method="post" action="${pageContext.request.contextPath}/profiles?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
         <div class="col-md-5 profile-img">
 
@@ -122,13 +122,13 @@
             </label>
         </div>
         <div class="col-md-5 ">
-            <div class="form-group row has-feedback">
+            <div class="form-group row">
                 <label class="col-2 col-form-label"><spring:message code="profile.fio"/></label>
                 <div class="col-10">
                     <input id="fio" class="form-control" type="text" name="fio" value="${profiles.fio}"/>
                 </div>
             </div>
-            <div class="form-group row has-feedback">
+            <div class="form-group row">
                 <label class="col-2 col-form-label"><spring:message code="profile.email"/></label>
                 <div class="col-10">
                     <input id="email" class="form-control" type="email" name="email" value="${profiles.email}"  />
@@ -136,14 +136,14 @@
 
                 </div>
             </div>
-            <div class="form-group row has-feedback">
+            <div class="form-group row">
                 <label class="col-2 col-form-label"><spring:message code="profile.telephone"/></label>
                 <div class="col-10">
                     <input id="telephone" class="form-control" type="text" name="telephone" value="${profiles.telephone}"/>
                     <span id="errTelephone" name="errTelephone"></span>
                 </div>
             </div>
-            <div class="form-group row has-feedback">
+            <div class="form-group row">
                 <label class="col-2 col-form-label"><spring:message code="profile.city"/></label>
                 <div class="col-10">
                     <input id="city" class="form-control" type="text" name="city" value="${profiles.city}"/>
@@ -168,6 +168,12 @@
         </div>
     </form:form>
 </div>
+
+
+<div>
+<%@include file="../layouts/footer_layout.jsp"%>
+</div>
+
 
 
 
@@ -196,7 +202,6 @@
     });
 })
 </script>
-<%@include file="../layouts/footer_layout.jsp"%>
 </body>
 
 
