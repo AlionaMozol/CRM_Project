@@ -10,8 +10,6 @@
 <head>
     <link rel="stylesheet" media="screen" href="../../resources/scss/left_menu.scss">
     <link rel="stylesheet" media="screen" href="../../resources/css/left_menu.css">
-    <link rel="stylesheet" media="screen" href="../../resources/css/bootstrap.css">
-    <link rel="stylesheet" media="screen" href="../../resources/css/bootstrap.min.css">
     <script src="../../resources/js/jquery-2.1.3.min.js"></script>
     <script src="../../resources/js/jquery-ui-1.11.2.min.js"></script>
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
