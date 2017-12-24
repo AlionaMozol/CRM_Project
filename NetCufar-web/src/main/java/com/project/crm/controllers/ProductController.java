@@ -95,6 +95,7 @@ public class ProductController {
         return "catalog";
     }
 
+
     @RequestMapping(value = "/catalog/{username}", method = RequestMethod.GET)
     public String getCurrentUserProducts(@PathVariable String username, Model model, HttpServletRequest request) {
         List<Product> products = productService.getProductsByUsername(username);
@@ -129,11 +130,13 @@ public class ProductController {
         }
     }
 
+
     @RequestMapping(value = "/not_moderated_accept", method = RequestMethod.GET)
     public String acceptProduct(@RequestParam String productId) {
         productService.changeProductStatus(productId, ProductStatus.APPROVED);
         return "redirect:/product_moderation";
     }
+
 
     @RequestMapping(value = "/not_moderated_deny", method = RequestMethod.GET)
     public String denyProduct(@RequestParam String productId) {
@@ -163,6 +166,7 @@ public class ProductController {
         return "/edit_product";
     }
 
+
     @RequestMapping(value = "/product/edit/{id}", method = RequestMethod.POST)
     public String editProduct(@ModelAttribute("EditProduct") Product product, BindingResult bindingResult,
                               @RequestParam("COST_TYPE") String currency, @RequestParam("file") MultipartFile multipartFile) throws IOException {
@@ -176,7 +180,7 @@ public class ProductController {
         productService.editProduct(product, multipartFile);
         return "redirect:/my_products";
     }
-    ////////////////////////////////////////
+
 
     @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
     public String notModeratedProducts(Model model) {
@@ -219,11 +223,13 @@ public class ProductController {
         return "redirect:/my_products";
     }
 
+
     @RequestMapping(value = "/attributes", method = RequestMethod.GET)
     @ResponseBody
     public List getAttributes(@RequestParam String subCategory) {
         return attributeService.getAttributesByCategory(subCategory);
     }
+
 
     @RequestMapping(value = "/productSearch", method = RequestMethod.GET)
     @ResponseBody
