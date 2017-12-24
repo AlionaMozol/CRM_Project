@@ -21,7 +21,7 @@
     <%@include file="../layouts/high_menu_bar.jsp"%>
     <%@include file="../layouts/left_menu.jsp"%>
     <!--%@include file="../layouts/left_menu_layout.jsp"%-->
-    <div style="margin-bottom: 300px">
+    <div style="margin-bottom: 300px; margin-left: 10%">
         <%@include file="../layouts/product_list_layout.jsp"%>
     </div>
 
