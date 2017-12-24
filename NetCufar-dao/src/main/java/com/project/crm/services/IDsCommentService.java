@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public class IDsCommentService {
 
-    private static final String IDS_FILE = "./attributes_ids/user_IDs";
+    private static final String IDS_FILE = "./attributes_ids/comment_IDs";
 
     private static IDsCommentService instance;
     private static ResourceBundle bundle;

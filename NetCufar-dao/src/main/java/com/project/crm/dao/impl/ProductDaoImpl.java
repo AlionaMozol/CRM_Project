@@ -459,43 +459,49 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-        ProductDaoImpl pDaoImpl = new ProductDaoImpl();
-        List<Product> lst;
-        lst = pDaoImpl.getAllProducts();
-        int i = 0;
-        if (lst != null) {
-            for (Product x : lst) {
-                System.out.println(i++ + ". " + x.toString());
-            }
-        } else {
-            System.out.println("Nothing to shown\n");
-        }
-        Product p = new Product();
-        p.setCategory("WOMEN_CLOTHING");
-        p.setSuperCategory("Fashion");
-        p.setOwner("TEST");
-        p.setCost("TEST");
-        p.setDescription("TEST");
-        p.setTitle("Блузка");
-        p.setPhone("TEST");
-        p.setPhoto("-1");
-        Map<String, String> map = new HashMap<>();
-        map.put("SIZE_", "TEST");
-        map.put("CONDITION", "TEST");
-        map.put("SEASONS", "TEST");
-        map.put("KIND_OF_CLOTHES", "TEST");
-        p.setAttributesAndValues(map);
-        pDaoImpl.addProduct(p);
-        lst = pDaoImpl.getAllProducts();
-
-        i = 0;
-        if (lst != null) {
-            for (Product x : lst) {
-                System.out.println(i++ + ". " + x.toString());
-            }
-        } else {
-            System.out.println("Nothing to shown\n");
-        }
+//        ProductDaoImpl pDaoImpl = new ProductDaoImpl();
+//        List<Product> lst;
+//        lst = pDaoImpl.getAllProducts();
+//        int i = 0;
+//        if (lst != null) {
+//            for (Product x : lst) {
+//                System.out.println(i++ + ". " + x.toString());
+//            }
+//        } else {
+//            System.out.println("Nothing to shown\n");
+//        }
+//        Product p = new Product();
+//        p.setCategory("WOMEN_CLOTHING");
+//        p.setSuperCategory("Fashion");
+//        p.setOwner("TEST");
+//        p.setCost("TEST");
+//        p.setDescription("TEST");
+//        p.setTitle("Блузка");
+//        p.setPhone("TEST");
+//        p.setPhoto("-1");
+//        Map<String, String> map = new HashMap<>();
+//        map.put("SIZE_", "TEST");
+//        map.put("CONDITION", "TEST");
+//        map.put("SEASONS", "TEST");
+//        map.put("KIND_OF_CLOTHES", "TEST");
+//        p.setAttributesAndValues(map);
+//        pDaoImpl.addProduct(p);
+//        lst = pDaoImpl.getAllProducts();
+//
+//        i = 0;
+//        if (lst != null) {
+//            for (Product x : lst) {
+//                System.out.println(i++ + ". " + x.toString());
+//            }
+//        } else {
+//            System.out.println("Nothing to shown\n");
+//        }
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
+//        Connection connection = poolInst.getConnection();
+//        new ProductDaoImpl();
+//        String s = productAttrID.getProperty("TITLE");
+//        System.out.println("Asd");
+//        System.out.println(productAttrID.getProperty("TITLE"));
     }
 
 }

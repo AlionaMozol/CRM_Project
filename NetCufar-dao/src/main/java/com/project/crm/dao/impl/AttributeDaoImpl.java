@@ -23,8 +23,10 @@ public class AttributeDaoImpl extends DAO implements AttributeDao {
         try {
             connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(sql
-                    .getProperty(SqlService.SQL_GET_ATTRIBUTES_BY_CATEGORY));
-            statement.setString(1, category);
+                    .getProperty(SqlService.SQL_GET_ATTRIBUTES_BY_CATEGORY_NAME));
+            statement.setString(1, categoryAttrID.getProperty("ATTRIBUTES_ID"));
+            statement.setString(2, category);
+            statement.setString(3, categoryAttrID.getProperty("NAME"));
             ResultSet setOfAttributes = statement.executeQuery();
             while (setOfAttributes.next()) {
                 attributesOfTargetCategory.add(setOfAttributes.getString(1));

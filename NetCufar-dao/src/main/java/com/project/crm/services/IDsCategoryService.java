@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public class IDsCategoryService {
 
-    private static final String IDS_FILE = "./attributes_ids/user_IDs";
+    private static final String IDS_FILE = "./attributes_ids/category_IDs";
 
     private static IDsCategoryService instance;
     private static ResourceBundle bundle;
