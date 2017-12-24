@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void editProduct(String id, Product product, MultipartFile photo) {
+    public void editProduct(Product product, MultipartFile photo) {
         if (photo.isEmpty())
             product.setPhoto("-1");
         else {
@@ -94,6 +94,7 @@ public class ProductServiceImpl implements ProductService {
                 e.printStackTrace();
             }
         }
+        productDao.editProduct(product);
     }
 
     @Override

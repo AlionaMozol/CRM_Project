@@ -14,7 +14,7 @@ public interface ProductService {
     Product getProductByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo);
 
     void addProduct(Product product);
-    void editProduct(String id, Product product, MultipartFile photo);
+    void editProduct(Product product, MultipartFile photo);
 
     Product getProductById(String id);
 

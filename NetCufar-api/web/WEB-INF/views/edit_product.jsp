@@ -98,6 +98,20 @@
 
                 <div class="col-md-6">
                     <div class="form-group row has-feedback">
+                        <label class="label-attribute"><spring:message code="PRODUCT_CREATE_DATE_TIME"/></label>
+                        <h4><label class="label-attribute-2">${IDProduct.publicationDate}</label></h4>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row has-feedback">
+                        <label class="label-attribute"><spring:message code="PRODUCT_LAST_EDIT_DATE_TIME"/></label>
+                        <h4><label class="label-attribute-2">${IDProduct.dateOfLastEdit}</label></h4>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row has-feedback">
                         <label class="label-attribute"><spring:message code="TITLE"/></label>
                         <input class="form-control" id="title" name="title" value="${IDProduct.title}"
                                placeholder="<spring:message code="TITLE"/>"/>

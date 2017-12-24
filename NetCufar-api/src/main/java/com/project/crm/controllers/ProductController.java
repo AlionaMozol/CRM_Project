@@ -159,7 +159,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/product/edit/{id}", method = RequestMethod.POST)
-    public String editProduct(@PathVariable String id, @ModelAttribute("EditProduct") Product product, BindingResult bindingResult,
+    public String editProduct(@ModelAttribute("EditProduct") Product product, BindingResult bindingResult,
                               @RequestParam("COST_TYPE") String currency, @RequestParam("file") MultipartFile multipartFile) throws IOException {
         product.setCost(product.getCost() + " " + currency);
         product.setSuperCategory("SuperCategory");
@@ -168,7 +168,7 @@ public class ProductController {
         if(bindingResult.hasErrors()){
             return "redirect:/product/edit/{id}";
         }
-        productService.editProduct(id, product, multipartFile);
+        productService.editProduct(product, multipartFile);
         return "redirect:/my_products";
     }
     ////////////////////////////////////////
