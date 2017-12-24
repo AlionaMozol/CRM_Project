@@ -82,7 +82,7 @@
                 <version>${commons-dbcp.version}</version>
             </dependency>
 
-                        <!-- For NetCufar-api -->
+                        <!-- For NetCufar-web -->
             <!-- Configure Spring for web -->
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -116,13 +116,6 @@
                 <version>1.4.7</version>
             </dependency>
 
-            <!-- Validator -->
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator.version}</version>
-            </dependency>
-
             <!-- Jackson for ajax -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -154,6 +147,14 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servletapi.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+                        <!-- For NetCufar-api -->
+            <!-- Validator -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
             </dependency>
 
             <!-- Log4j -->

@@ -16,8 +16,8 @@
     <artifactId>NetCufar-web</artifactId>
 
     <dependencies>
-        <!-- Include NetCuafar-dao and NetCuafar-model-->
 
+        <!-- Include NetCuafar-dao and NetCuafar-model-->
         <dependency>
             <groupId>com.project</groupId>
             <artifactId>NetCufar-model</artifactId>
@@ -58,6 +58,7 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- Configure Spring security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
@@ -103,37 +104,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Log4j -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
 
-        <!-- For work with photos-->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-drive</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.oauth-client</groupId>
-            <artifactId>google-oauth-client-jetty</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.1.0-M1</version>
-        </dependency>
     </dependencies>
 
 </project>
