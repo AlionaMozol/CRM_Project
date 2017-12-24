@@ -181,7 +181,6 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     public Product getProductById(String id) {
         Connection connection = poolInst.getConnection();
         Product currentProduct = new Product();
-        currentProduct.setId(id);
         try {
             PreparedStatement statement;
             ResultSet resultSet;
@@ -192,6 +191,10 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                         getProperty(SqlService.SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS));
             statement.setString(1, id);
             resultSet = statement.executeQuery();
+            if(!resultSet.next()){
+                return null;
+            }
+            currentProduct.setId(id);
             while (resultSet.next()) {
                 //resultSet.getString(1) - имя атрибута
                 //resultSet.getString(2) - его значение

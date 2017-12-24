@@ -120,8 +120,13 @@ public class ProductController {
 
     @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
-        model.addAttribute("productid", productService.getProductById(id));
-        return "/productbyid";
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            return "/error_page404";
+        } else {
+            model.addAttribute("productid", product);
+            return "/productbyid";
+        }
     }
 
     @RequestMapping(value = "/not_moderated_accept", method = RequestMethod.GET)
