@@ -20,9 +20,7 @@
         <div class="row">
             <div class="col-md-3 footer-brand animated fadeInLeft">
                 <h2>NetCufar</h2>
-                <p> NetCufar -  перспективаня площадка объявлений в Беларуси.
-                    Использование ресурса NetCufar означает согласие с Пользовательским соглашением и Политикой конфиденциальности.
-                    Адрес: Октябрьская 10, Минск, Беларусь.
+                <p> NetCufar -  перспективаня площадка объявлений в Беларуси..
                     Режим работы: 10.00 - 18.00, Пн-Пт.</p>
                 <p>© 2017, All rights reserved</p>
             </div>
@@ -64,7 +62,6 @@
             </div>
         </div>
     </footer>
-    <section style="text-align:center; margin:10px auto;"><p>Designed by <a href="${contextPath}/about">NetCufar Group</a></p></section>
 
 </div>
 </body>
