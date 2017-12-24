@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public class IDsLikeService {
 
-    private static final String IDS_FILE = "./attributes_ids/user_IDs";
+    private static final String IDS_FILE = "./attributes_ids/like_IDs";
 
     private static IDsLikeService instance;
     private static ResourceBundle bundle;
