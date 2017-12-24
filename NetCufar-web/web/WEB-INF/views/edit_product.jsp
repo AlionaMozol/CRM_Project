@@ -223,6 +223,6 @@
         <%--</div>--%>
     <%--</div>--%>
 <%--</div>--%>
-
+<%@include file="../layouts/footer_layout.jsp"%>
 </body>
 </html>

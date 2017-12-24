@@ -31,19 +31,15 @@
         </div>
     </div>
 
-    <div class= "container">
+    <div class= "container" style="margin-top: 10%">
         <div class="row centered">
             <div class="col-lg-6 col-lg-offset-2"></div>
             <h4>Компания Netcracker Technology – мировой лидер в области создания и внедрения комплексных BSS/OSS-решений для провайдеров услуг связи, крупных предприятий и государственных учреждений.
                 Наши успехи в области предоставления решений и сервисов по управлению телекоммуникационными операциями признаны ведущими консалтинговыми компаниями и аналитическими агентствами, включая Gartner, Analysys Mason и Stratecast. Вместе с тем, компания Netcracker получила наивысшее признание от двух ведущих организаций по стандартизации в индустрии информационно-коммуникационных технологий - TM Forum и Университета Carnegie Mellon.  Благодаря обширным экспертным знаниям и многолетнему опыту разработки и внедрения решений Netcracker предоставляет большие возможности для профессионального развития и карьерного роста.</h4>
         </div>
     </div>
-    <div class="futter">
-        <div class="row centered">
-            <div class="col-lg-8 col-lg-offset-2"></div>
-            <h5><strong><spring:message code="footerText"/></strong></h5>
-        </div>
-    </div>
+    <%@include file="../layouts/footer_layout.jsp"%>
+
 <!--
     <div class="modal login" id="loginModal">
         <div class="modal-dialog">

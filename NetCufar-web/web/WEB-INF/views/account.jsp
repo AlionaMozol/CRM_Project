@@ -25,4 +25,5 @@
         <%@include file="../layouts/account_layout.jsp"%>
     </div>
 
+    <%@include file="../layouts/footer_layout.jsp"%>
 </body>

@@ -20,7 +20,8 @@
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
 
-    <div class="container content">
+
+    <div class="container content" style="margin-bottom: 20%">
         <a class="btn btn-success" href="${contextPath}/new_product" role="button">Добавить объявление</a>
         <div class="col-lg-9 products">
 
@@ -57,5 +58,6 @@
 
         </div>
     </div>
+    <%@include file="../layouts/footer_layout.jsp"%>
 
 </body>

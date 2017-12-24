@@ -115,4 +115,5 @@
         });
     });
 </script>
+<%@include file="../layouts/footer_layout.jsp"%>
 </body>

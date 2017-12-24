@@ -24,5 +24,6 @@
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
     <%@include file="../layouts/product_list_layout.jsp"%>
+    <%@include file="../layouts/footer_layout.jsp"%>
 
 </body>
