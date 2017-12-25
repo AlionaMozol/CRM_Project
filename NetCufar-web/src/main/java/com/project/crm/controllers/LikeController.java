@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.*;
 
 /**
  * Controller for favorites {@link com.project.crm.model.Product}'s pages
@@ -42,7 +43,15 @@ public class LikeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("products", likeService.getFavoriteProductsByUsername(name));
-        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
+        List favoriteProducts = likeService.getFavoriteProductsByUsername(name);
+        model.addAttribute("favorite_products", favoriteProducts);
+        /*int number;
+        if (favoriteProducts == null) {
+            number = 0;
+        } else {
+            number = 1;
+        }
+        model.addAttribute("number", number);*/
         return "/favorites";
     }
 
