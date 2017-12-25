@@ -138,6 +138,7 @@ public class CommentDaoImpl extends DAO implements CommentDao {
             statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS));
             statement.setString(1, id);
+            statement.setString(2, productAttrID.getProperty("OBJECT_TYPE_ID"));
             resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 if(resultSet.getString(1).equals("PRODUCT_REC")) {

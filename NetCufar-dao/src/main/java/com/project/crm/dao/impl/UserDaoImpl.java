@@ -54,46 +54,53 @@ public class UserDaoImpl extends DAO implements UserDao {
         userInformation.add(user.getStatus());
         userInformation.add(user.getPhoto());
 
-        String objectTypeId="";
+//        String objectTypeId="";
         Connection connection = poolInst.getConnection();
         try {
             PreparedStatement result_statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_INSERT_VALUE));
-            PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
-            statement.setString(1,"USER");
-            ResultSet resultSet = statement.executeQuery();
+                    getProperty(SqlService.SQL_INSERT_VALUE)); // INSERT INTO values_table VALUES (?, ?, ? ,?), (?, ?, ? ,?)...........
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE)); // SELECT * FROM object_type WHERE Value = ?
+//            statement.setString(1,"USER");
+//            ResultSet resultSet = statement.executeQuery();
             String objectId= UUID.randomUUID().toString();
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_INSERT_INTO_OBJECT));
-            if(resultSet.next()){
-                objectTypeId=resultSet.getString(1);
-                statement.setString(1, objectId);
-                statement.setString(2, objectTypeId);
-            }
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_INSERT_INTO_OBJECT)); // INSERT INTO object VALUES(?, ?)
+//            if(resultSet.next()){
+//                objectTypeId=resultSet.getString(1);
+//                statement.setString(1, objectId);
+//                statement.setString(2, userAttrID.getProperty("OBJECT_TYPE_ID"));
+//            }
+            statement.setString(1, objectId);
+            statement.setString(2, userAttrID.getProperty("OBJECT_TYPE_ID"));
             statement.execute();
             int index=1;
+//            ResultSet resultSet = null;
             for(int i= 0; i<attribute_type.size(); i++){
-                statement = connection.prepareStatement(sql.
-                        getProperty(SqlService.SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR));
-                statement.setString(1,objectTypeId);
-                statement.setString(2,attribute_type.get(i));
-                resultSet = statement.executeQuery();
-                if(resultSet.next()){
-                    result_statement.setString(index, UUID.randomUUID().toString());
-                    result_statement.setString(index+1, objectId);
-                    result_statement.setString(index+2, resultSet.getString(1));
-                    result_statement.setString(index+3, userInformation.get(i));
-
-                }
+//                statement = connection.prepareStatement(sql.
+//                        getProperty(SqlService.SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR)); //SELECT attr_id FROM attributes WHERE Object_type_id = ? AND Value = ?
+//                statement.setString(1,userAttrID.getProperty("OBJECT_TYPE_ID"));
+//                statement.setString(2,attribute_type.get(i));
+//                resultSet = statement.executeQuery();
+//                if(resultSet.next()){
+//                    result_statement.setString(index, UUID.randomUUID().toString());
+//                    result_statement.setString(index+1, objectId);
+//                    result_statement.setString(index+2, resultSet.getString(1));
+//                    result_statement.setString(index+3, userInformation.get(i));
+//
+//                }
+                result_statement.setString(index, UUID.randomUUID().toString());
+                result_statement.setString(index+1, objectId);
+                result_statement.setString(index+2, userAttrID.getProperty(attribute_type.get(i)));
+                result_statement.setString(index+3, userInformation.get(i));
                 index+=4;
             }
             result_statement.execute();
             statement.close();
             result_statement.close();
-            resultSet.close();
+//            resultSet.close();
         } catch (SQLException e) {
-            System.out.println(objectTypeId);
+            System.out.println(userAttrID.getProperty("OBJECT_TYPE_ID"));
             e.printStackTrace();
         }
         poolInst.footConnection(connection);
@@ -104,10 +111,10 @@ public class UserDaoImpl extends DAO implements UserDao {
     @Override
     public List<User> getAllUsers() {
         Connection connection = poolInst.getConnection();
-        User user = new User();;
+        User user;// = new User();
         List<User>userList = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM user_roles WHERE role_id=1");
+            PreparedStatement statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_ALL_USERS));
             ResultSet rs = statement.executeQuery();
             while(rs.next()){
                 user=getUserById(rs.getInt(1));
@@ -132,22 +139,22 @@ public class UserDaoImpl extends DAO implements UserDao {
         User user = new User();
         try {
 
-            PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
-            statement.setString(1,"USER");
-            ResultSet resultSet = statement.executeQuery();
-            String objectTypeId="";
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+//            statement.setString(1,"USER");
+//            ResultSet resultSet = statement.executeQuery();
+//            String objectTypeId="";
+//            String objectId="";
+//            if(resultSet.next()){
+//                objectTypeId=resultSet.getString(1);
+//            }
             String objectId="";
-            if(resultSet.next()){
-                objectTypeId=resultSet.getString(1);
-            }
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
-            statement.setString(1,objectTypeId);
-            statement.setString(2,"SECURITY_ID");
-            statement.setInt(3,id);
-            resultSet = statement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1, userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(2,String.valueOf(id));
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
                 objectId=resultSet.getString(1);
             }
@@ -212,22 +219,21 @@ public class UserDaoImpl extends DAO implements UserDao {
         User user = new User();
         try {
 
-            PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
-            statement.setString(1,"USER");
-            ResultSet resultSet = statement.executeQuery();
-            String objectTypeId="";
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+//            statement.setString(1,"USER");
+//            ResultSet resultSet = statement.executeQuery();
+//            String objectTypeId="";
             String objectId="";
-            if(resultSet.next()){
-                objectTypeId=resultSet.getString(1);
-            }
+//            if(resultSet.next()){
+//                objectTypeId=resultSet.getString(1);
+//            }
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
-            statement.setString(1,objectTypeId);
-            statement.setString(2,"MAIL");
-            statement.setString(3,email);
-            resultSet = statement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1,userAttrID.getProperty("MAIL"));
+            statement.setString(2,email);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
                 objectId=resultSet.getString(1);
             }
@@ -263,10 +269,10 @@ public class UserDaoImpl extends DAO implements UserDao {
     public void deleteUser(User user) {
         Connection connection = poolInst.getConnection();
         try {
-
             PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_BY_VALUE));
-            statement.setInt(1,user.getId());
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1,userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(2,String.valueOf(user.getId()));
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()){
                 statement = connection.prepareStatement(sql.
@@ -291,22 +297,26 @@ public class UserDaoImpl extends DAO implements UserDao {
         User user = new User();
         try {
 
-            PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
-            statement.setString(1,"USER");
-            ResultSet resultSet = statement.executeQuery();
-            String objectTypeId="";
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+//            statement.setString(1,"USER");
+//            ResultSet resultSet = statement.executeQuery();
+//            String objectTypeId="";
             String objectId="";
-            if(resultSet.next()){
-                objectTypeId=resultSet.getString(1);
-            }
+//            if(resultSet.next()){
+//                objectTypeId=resultSet.getString(1);
+//            }
 
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
-            statement.setString(1,objectTypeId);
-            statement.setString(2,"TELEPHONE");
-            statement.setString(3,telephone);
-            resultSet = statement.executeQuery();
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
+//            statement.setString(1,objectTypeId);
+//            statement.setString(2,"TELEPHONE");
+//            statement.setString(3,telephone);
+            PreparedStatement statement = connection.prepareStatement(sql.
+                            getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1,userAttrID.getProperty("TELEPHONE"));
+            statement.setString(2,telephone);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
                 objectId=resultSet.getString(1);
             }
@@ -394,21 +404,25 @@ public class UserDaoImpl extends DAO implements UserDao {
         User oldUser = getUserById(user.getId());
         Connection connection = poolInst.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
-            statement.setString(1,"USER");
-            ResultSet resultSet = statement.executeQuery();
-            String objectTypeId="";
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+//            statement.setString(1,"USER");
+//            ResultSet resultSet = statement.executeQuery();
+//            String objectTypeId="";
             String objectId="";
-            if(resultSet.next()){
-                objectTypeId=resultSet.getString(1);
-            }
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
-            statement.setString(1,objectTypeId);
-            statement.setString(2,"SECURITY_ID");
-            statement.setInt(3,user.getId());
-            resultSet = statement.executeQuery();
+//            if(resultSet.next()){
+//                objectTypeId=resultSet.getString(1);
+////            }
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
+//            statement.setString(1,objectTypeId);
+//            statement.setString(2,"SECURITY_ID");
+//            statement.setInt(3,user.getId());
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1,userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(2,String.valueOf(user.getId()));
+            ResultSet resultSet = statement.executeQuery();
 
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_UPDATE_PROFILE));
@@ -419,7 +433,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             if(!oldUser.getStatus().equals(user.getStatus())){
                 statement.setString(1,user.getStatus());
                 statement.setString(2,objectId);
-                statement.setString(3,"e7fed6d6-d465-11e7-bdec-94de807a9669");
+                statement.setString(3,userAttrID.getProperty("STATUS"));
                 statement.execute();
             }
             statement.close();
@@ -437,21 +451,25 @@ public class UserDaoImpl extends DAO implements UserDao {
         User oldUser = getUserById(user.getId());
         Connection connection = poolInst.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
-            statement.setString(1,"USER");
-            ResultSet resultSet = statement.executeQuery();
-            String objectTypeId="";
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE));
+//            statement.setString(1,"USER");
+//            ResultSet resultSet = statement.executeQuery();
+//            String objectTypeId="";
             String objectId="";
-            if(resultSet.next()){
-                objectTypeId=resultSet.getString(1);
-            }
-            statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
-            statement.setString(1,objectTypeId);
-            statement.setString(2,"SECURITY_ID");
-            statement.setInt(3,user.getId());
-            resultSet = statement.executeQuery();
+//            if(resultSet.next()){
+//                objectTypeId=resultSet.getString(1);
+//            }
+//            statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_FROM_VALUES_AND_ATTR));
+//            statement.setString(1,objectTypeId);
+//            statement.setString(2,"SECURITY_ID");
+//            statement.setInt(3,user.getId());
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1,userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(2,String.valueOf(user.getId()));
+            ResultSet resultSet = statement.executeQuery();
 
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_UPDATE_PROFILE));
@@ -462,45 +480,45 @@ public class UserDaoImpl extends DAO implements UserDao {
             if (!oldUser.getFio().equals(user.getFio())){
                 statement.setString(1,user.getFio());
                 statement.setString(2,objectId);
-                statement.setString(3,"fd93b41b-cbcf-11e7-97a3-94de807a9669");
+                statement.setString(3,userAttrID.getProperty("FULL_NAME"));
                 statement.execute();
             }
 
             if(!oldUser.getTelephone().equals(user.getTelephone())){
                 statement.setString(1,user.getTelephone());
                 statement.setString(2,objectId);
-                statement.setString(3,"fd9c98fa-cbcf-11e7-97a3-94de807a9669");
+                statement.setString(3,userAttrID.getProperty("TELEPHONE"));
                 statement.execute();
 
             }
             if(!oldUser.getDateOfBirth().equals(user.getDateOfBirth())){
                 statement.setString(1,user.getDateOfBirth());
                 statement.setString(2,objectId);
-                statement.setString(3,"fda0bbe9-cbcf-11e7-97a3-94de807a9669");
+                statement.setString(3,userAttrID.getProperty("BIRTHDAY"));
                 statement.execute();
             }
             if(!oldUser.getCity().equals(user.getCity())){
                 statement.setString(1,user.getCity());
                 statement.setString(2,objectId);
-                statement.setString(3,"fdad14d4-cbcf-11e7-97a3-94de807a9669");
+                statement.setString(3,userAttrID.getProperty("USER_LOCATION"));
                 statement.execute();
             }
             if(!oldUser.getEmail().equals(user.getEmail())){
                 statement.setString(1,user.getEmail());
                 statement.setString(2,objectId);
-                statement.setString(3,"fda621dc-cbcf-11e7-97a3-94de807a9669");
+                statement.setString(3,userAttrID.getProperty("MAIL"));
                 statement.execute();
 
             }
             if(!oldUser.getSex().equals(user.getSex())){
                 statement.setString(1,user.getSex());
                 statement.setString(2,objectId);
-                statement.setString(3,"fd97346f-cbcf-11e7-97a3-94de807a9669");
+                statement.setString(3,userAttrID.getProperty("USER_GENDER"));
                 statement.execute();
             }
             statement.setString(1,user.getPhoto());
             statement.setString(2,objectId);
-            statement.setString(3,"cff83967-d465-11e7-bdec-94de807a9669");
+            statement.setString(3,userAttrID.getProperty("PHOTO"));
             statement.execute();
             statement.close();
             resultSet.close();
