@@ -14,7 +14,7 @@ body {
 
 nav#navigation {
     position: fixed;
-    width: 225px;
+    width: 14%;
     height: 100%;
     background: #232323;
     border-right: 1px solid #293649;
@@ -48,13 +48,13 @@ nav#navigation ul li.dropdown:before {
     color: #aaa;
 }
 nav#navigation ul li:hover:after {
-    width: 225px;
+    width: 100%;
 }
 nav#navigation ul li:after {
     content: " ";
     position: absolute;
     z-index: 1;
-    width: 0px;
+    width: 0;
     height: 2px;
     margin: -2px 0 0 0;
     background: #126CA1;
@@ -91,16 +91,16 @@ nav#navigation ul li a i {
     font-size: 1.3em;
 }
 nav#navigation ul li a span {
-    margin: 0 0 0 35px;
+    margin: 0 0 0 8%;
     font-size: 0.85em;
 }
 nav#navigation ul li ul[class*="dropdown-"] {
     position: absolute;
     display: none;
-    margin: -61px 0 0 225px;
+    margin: -61px 0 0 100%;
 }
 nav#navigation ul li ul[class*="dropdown-"] li {
-    width: 225px;
+    width: 200%;
     background: #171717;
 }
 nav#navigation ul li ul[class*="dropdown-"] li a:hover {
