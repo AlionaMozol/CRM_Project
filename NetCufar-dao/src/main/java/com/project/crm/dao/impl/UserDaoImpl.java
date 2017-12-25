@@ -65,7 +65,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             String objectId= UUID.randomUUID().toString();
             statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_INSERT_OBJECT));
+                    getProperty(SqlService.SQL_INSERT_INTO_OBJECT));
             if(resultSet.next()){
                 objectTypeId=resultSet.getString(1);
                 statement.setString(1, objectId);

@@ -34,7 +34,7 @@ public class SqlService {
 
     public static final String SQL_INSERT_INTO_OBJECT =            "SQL_INSERT_INTO_OBJECT";
     public static final String SQL_SELECT_NECESSARY_ATTR_ID =      "SQL_SELECT_NECESSARY_ATTR_ID";
-    public static final String SQL_ADD_OBJECT =                    "SQL_ADD_OBJECT";
+    public static final String SQL_INSERT_COMMENT_INTO_VALUES =    "SQL_INSERT_COMMENT_INTO_VALUES";
     public static final String  SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS =
             "SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS";
     public static final String SQL_GET_PRODUCT_OBJECT_TYPE_ID =    "SQL_GET_PRODUCT_OBJECT_TYPE_ID";
@@ -45,9 +45,9 @@ public class SqlService {
     public static final String SQL_GET_ALL_CATEGORIES =            "SQL_GET_ALL_CATEGORIES";
     public static final String SQL_SELECT_BY_OBJECT_TYPE =         "SQL_SELECT_BY_OBJECT_TYPE";
 
+    public static final String SQL_ADD_OBJECT =                    "SQL_ADD_OBJECT";
     public static final String SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE =
             "SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE";
-    public static final String SQL_INSERT_OBJECT  =                "SQL_INSERT_OBJECT";
     public static final String SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR =
             "SQL_SELECT_BY_OBJECT_TYPE_ID_AND_VALUE_FROM_ATTR";
     public static final String SQL_INSERT_VALUE =                  "SQL_INSERT_VALUE";
@@ -68,8 +68,9 @@ public class SqlService {
 
     public static final String SQL_GET_ATTRIBUTES_BY_CATEGORY_NAME =      "SQL_GET_ATTRIBUTES_BY_CATEGORY_NAME";
 
-    public static final String SQL_GET_COMMENT_BY_POST_ID =          "SQL_GET_COMMENT_BY_POST_ID";
-    public static final String SQL_GET_COMMENT_ATTR_ID =             "SQL_GET_COMMENT_ATTR_ID";
+    public static final String SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE =
+                                                                     "SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE";
+    public static final String SQL_GET_OBJECT_ATTR_ID =             "SQL_GET_OBJECT_ATTR_ID";
     public static final String SQL_GET_PHOTO_ATTR_ID =               "SQL_GET_PHOTO_ATTR_ID";
 
     public static final String SQL_GET_LIKES_BY_USERNAME =           "SQL_GET_LIKES_BY_USERNAME";
