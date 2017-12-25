@@ -8,7 +8,6 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="stylesheet" media="screen" href="../../resources/scss/left_menu.scss">
     <link rel="stylesheet" media="screen" href="../../resources/css/left_menu.css">
     <script src="../../resources/js/jquery-2.1.3.min.js"></script>
     <script src="../../resources/js/jquery-ui-1.11.2.min.js"></script>
@@ -18,8 +17,8 @@
 
 <body>
 <div class="navbar navbar-left">
-    <nav id="navigation" style="margin-top: -10%">
-        <ul style="margin-top: 80%">
+    <nav id="navigation">
+        <ul>
             <c:forEach var="category" items="${productCategory}">
                 <li class="dropdown" rel="${category.title}"><a href="#" class="my-item" id="${category.title}"><span><spring:message code="${category.title}"/></span>
                     <ul class="dropdown-${category.title}">
