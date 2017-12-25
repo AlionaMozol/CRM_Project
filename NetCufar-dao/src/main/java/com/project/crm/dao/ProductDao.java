@@ -32,7 +32,7 @@ public interface ProductDao {
 
     void changeProductStatus(String id, ProductStatus status);
 
-    public List<Product> getProductsByOneParametr(String attribute, String val);
+    public List<Product> getProductsByOneParameter(String attribute, String val);
 
-    public List<Product> getProductsByTwoParametrs(String attribute1, String val1, String attribute2, String val2);
+    public List<Product> getProductsByTwoParameters(String attribute1, String val1, String attribute2, String val2);
 }
