@@ -78,6 +78,28 @@ public class NavigationController {
         return productList;
     }
 
+    @RequestMapping(value = "/get-accepted-products-by-supercategory", method = RequestMethod.GET)
+    public @ResponseBody
+    List getAcceptedProductsBySupercategory(@RequestParam String supercategory, Model model) {
+        List<Product> productList= productService.getProductsByTwoParameters("STATUS", "APPROVED"
+                , "SUPERCATEGORY", supercategory);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
+        return productList;
+    }
+
+    @RequestMapping(value = "/get-accepted-products-by-subcategory", method = RequestMethod.GET)
+    public @ResponseBody
+    List getAcceptedProductsBySubcategory(@RequestParam String subcategory, Model model) {
+        List<Product> productList= productService.getProductsByTwoParameters("STATUS", "APPROVED"
+                , "CATEGORY", subcategory);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
+        return productList;
+    }
+
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin() {
         return "admin";

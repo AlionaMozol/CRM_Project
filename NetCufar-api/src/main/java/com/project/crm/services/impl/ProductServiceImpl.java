@@ -2,7 +2,6 @@ package com.project.crm.services.impl;
 
 import com.project.crm.dao.AttributeDao;
 import com.project.crm.dao.ProductDao;
-import com.project.crm.dao.impl.ProductDaoImpl;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.ProductService;
@@ -136,5 +135,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void changeProductStatus(String id, ProductStatus status) {
         productDao.changeProductStatus(id, status);
+    }
+
+    @Override
+    public List<Product> getProductsByOneParameter(String attribute, String val) {
+        return productDao.getProductsByOneParameter(attribute, val);
+    }
+
+    @Override
+    public List<Product> getProductsByTwoParameters(String attribute1, String val1, String attribute2, String val2) {
+        return productDao.getProductsByTwoParameters(attribute1, val1, attribute2, val2);
     }
 }

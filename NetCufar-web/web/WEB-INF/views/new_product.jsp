@@ -137,14 +137,14 @@
           acceptCharset="utf-8" enctype="multipart/form-data">
         <div class="row wrapper-for-product" style="margin-bottom: 40px">
             <div class="col-lg-4">
-                <h2>Nazvanie</h2>
+                <h2><spring:message code="NewProduct"/></h2>
                 <label class="btn btn-default col-md-10 col-md-offset-1">
                         <div id="fld">
                             <img src="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
                         </div>
                         <output id="list"></output>
                     <spring:message code="profile.addPhoto"/>
-                    <input type="file" id="file" name="file"/>
+                    <input type="file" accept="image/jpeg,jpg" id="file" name="file"/>
                 </label>
                 <span id="errorPhoto"></span>
             </div>
@@ -208,7 +208,9 @@
                 </div>
 
 
-                <input class="btn btn-success"  type="submit" style="margin-left: 300px; margin-bottom: 10px"/>
+
+                <button class="btn btn-success"  type="submit" style="margin-left: 300px; margin-bottom: 10px">
+                    <spring:message code="button.send"/></button>
 
 
             </div>

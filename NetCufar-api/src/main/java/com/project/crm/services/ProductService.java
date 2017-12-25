@@ -14,6 +14,7 @@ public interface ProductService {
     Product getProductByHttpServletRequestAndPhoto(HttpServletRequest request, MultipartFile photo);
 
     void addProduct(Product product);
+
     void editProduct(Product product, MultipartFile photo);
 
     Product getProductById(String id);
@@ -33,4 +34,8 @@ public interface ProductService {
     void deleteProductById(String id);
 
     void changeProductStatus(String id, ProductStatus status);
+
+    List<Product> getProductsByOneParameter(String attribute, String val);
+
+    List<Product> getProductsByTwoParameters(String attribute1, String val1, String attribute2, String val2);
 }
