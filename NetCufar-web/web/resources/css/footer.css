@@ -1,6 +1,8 @@
 .footer-bs {
     background-color: black;
+    position: absolute;
     padding: 2% 5%;
+    z-index: 1200;
     color: rgba(255,255,255,1.00);
     margin: 10% -25% -5%;
     border-bottom-right-radius: 1%;

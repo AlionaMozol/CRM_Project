@@ -20,7 +20,8 @@
     <nav id="navigation">
         <ul>
             <c:forEach var="category" items="${productCategory}">
-                <li class="dropdown" rel="${category.title}"><a href="#" class="my-item" id="${category.title}"><span><spring:message code="${category.title}"/></span>
+                <li class="dropdown" rel="${category.title}"><a href="#" class="my-item" id="${category.title}">
+                    <span><spring:message code="${category.title}"/></span>
                     <ul class="dropdown-${category.title}">
                         <li><a href="#"><span>SubCategory1</span></a></li>
                         <li><a href="#"><span>SubCategory2</span></a></li>

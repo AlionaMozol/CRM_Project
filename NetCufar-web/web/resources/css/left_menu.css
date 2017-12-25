@@ -12,16 +12,17 @@ body {
 }
 
 nav#navigation {
+    z-index: 1000;
     position: fixed;
-    margin-top: -100%;
     width: 14%;
-    height: 200%;
+    height: 100%;
+    margin-top: -10%;
     background: #232323;
     border-right: 1px solid #293649;
 }
 nav#navigation ul {
-    margin-top: 225%;
     list-style: none;
+    margin-top: 45%;
 }
 nav#navigation ul li {
     position: relative;
@@ -56,8 +57,8 @@ nav#navigation ul li:after {
     position: absolute;
     z-index: 1;
     width: 0;
-    height: 2px;
-    margin: -2px 0 0 0;
+    height: 1px;
+    margin: -1px 0 0 0;
     background: #126CA1;
     -webkit-transition: 150ms ease all;
     -moz-transition: 150ms ease all;
@@ -98,7 +99,7 @@ nav#navigation ul li a span {
 nav#navigation ul li ul[class*="dropdown-"] {
     position: absolute;
     display: none;
-    margin: -61px 0 0 100%;
+    margin: -60px 0 0 100%;
 }
 nav#navigation ul li ul[class*="dropdown-"] li {
     width: 200%;
@@ -109,7 +110,7 @@ nav#navigation ul li ul[class*="dropdown-"] li a:hover {
 }
 
 #wrapper {
-    margin: 0 0 0 225px;
+    margin: 0 0 0 14%;
     padding: 15px;
     color: #aaa;
 }
