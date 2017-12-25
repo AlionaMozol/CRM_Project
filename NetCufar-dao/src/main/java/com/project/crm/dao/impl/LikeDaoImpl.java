@@ -27,33 +27,35 @@ public class LikeDaoImpl extends DAO implements LikeDao {
     public void addProductToFavorites(String productId, String username) {
         Connection connection = poolInst.getConnection();
         String likeId = UUID.randomUUID().toString();
-        String likeObjectTypeId;
+//        String likeObjectTypeId;
         try {
             PreparedStatement preparedStatement;
             ResultSet resultSet;
 
-            preparedStatement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_LIKE_OBJECT_TYPE_ID));
-            resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            likeObjectTypeId = resultSet.getString(1);
+//            preparedStatement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_LIKE_OBJECT_TYPE_ID));
+//            resultSet = preparedStatement.executeQuery();
+//            resultSet.next();
+//            likeObjectTypeId = resultSet.getString(1);
 
             preparedStatement = connection.prepareStatement(sql.getProperty(SqlService.SQL_INSERT_INTO_OBJECT));
             preparedStatement.setString(1, likeId);
-            preparedStatement.setString(2, likeObjectTypeId);
+            preparedStatement.setString(2, likeAttrID.getProperty("OBJECT_TYPE_ID"));
             preparedStatement.execute();
 
             preparedStatement = connection.prepareStatement(sql.getProperty(SqlService.SQL_INSERT_LIKE_INTO_VALUES));
             preparedStatement.setString(1, UUID.randomUUID().toString());
             preparedStatement.setString(2, likeId);
-            preparedStatement.setString(3, username);
-            preparedStatement.setString(4, UUID.randomUUID().toString());
-            preparedStatement.setString(5, likeId);
-            preparedStatement.setString(6, productId);
+            preparedStatement.setString(3, likeAttrID.getProperty("USER"));
+            preparedStatement.setString(4, username);
+            preparedStatement.setString(5, UUID.randomUUID().toString());
+            preparedStatement.setString(6, likeId);
+            preparedStatement.setString(7, likeAttrID.getProperty("PRODUCT"));
+            preparedStatement.setString(8, productId);
             preparedStatement.execute();
 
             preparedStatement.close();
-            resultSet.close();
+//            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,15 +75,18 @@ public class LikeDaoImpl extends DAO implements LikeDao {
             PreparedStatement statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_LIKES_BY_USERNAME));
             statement.setString(1, username);
+            statement.setString(2, likeAttrID.getProperty("USER"));
             ResultSet likesIds = statement.executeQuery();
             ResultSet resultSet = null;
             while (likesIds.next()) {
                 statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_PRODUCT_BY_LIKE_ID));
                 statement.setString(1, likesIds.getString(1));
+                statement.setString(2, likeAttrID.getProperty("PRODUCT"));
                 resultSet = statement.executeQuery();
-                resultSet.next();
-                if (resultSet.getString(1).equals(productId)) {
-                    likeIdToRemove = likesIds.getString(1);
+                if(resultSet.next()) {
+                    if (resultSet.getString(1).equals(productId)) {
+                        likeIdToRemove = likesIds.getString(1);
+                    }
                 }
             }
 
@@ -116,9 +121,11 @@ public class LikeDaoImpl extends DAO implements LikeDao {
             ResultSet resultSet;
             statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_PRODUCT_BY_LIKE_ID));
             statement.setString(1, likeId);
+            statement.setString(2, likeAttrID.getProperty("PRODUCT"));
             resultSet = statement.executeQuery();
-            resultSet.next();
-            product = productDao.getProductById(resultSet.getString(1));
+            if(resultSet.next()) {
+                product = productDao.getProductById(resultSet.getString(1));
+            }
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
@@ -142,6 +149,7 @@ public class LikeDaoImpl extends DAO implements LikeDao {
             PreparedStatement statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_LIKES_BY_USERNAME));
             statement.setString(1, username);
+            statement.setString(2, likeAttrID.getProperty("USER"));
             ResultSet likesIds = statement.executeQuery();
             while (likesIds.next()) {
                 favouriteProductList.add(getProductByLikeId(likesIds.getString(1)));

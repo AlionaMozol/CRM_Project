@@ -18,7 +18,7 @@ public class SqlService {
     public static final String SQL_GET_USER_ID_BY_USERNAME =       "SQL_GET_USER_ID_BY_USERNAME";
     public static final String SQL_GET_OWNER_ATTR_ID =             "SQL_GET_OWNER_ATTR_ID";
     public static final String SQL_GET_COST_ATTR_ID =              "SQL_GET_COST_ATTR_ID";
-    public static final String SQL_GET_ATTR_ID_OF =                "SQL_GET_ATTR_ID_OF";
+//    public static final String SQL_GET_ATTR_ID_OF =                "SQL_GET_ATTR_ID_OF";
     public static final String SQL_GET_PRODUCTS_BY_STATUS =        "SQL_GET_PRODUCTS_BY_STATUS";
 
     public static final String SQL_GET_USER_BY_ID =                "SQL_GET_USER_BY_ID";
@@ -28,7 +28,8 @@ public class SqlService {
     public static final String SELECT_ALL_USERS =                  "SELECT_ALL_USERS";
     public static final String SQL_GET_PRODUCTS_BY_CATEGORY =      "SQL_GET_PRODUCTS_BY_CATEGORY";
     public static final String SQL_GET_PRODUCTS_BY_SUPERCATEGORY = "SQL_GET_PRODUCTS_BY_SUPERCATEGORY";
-    public static final String SQL_GET_ALL_PRODUCTS =              "SQL_GET_ALL_PRODUCTS";
+//    public static final String SQL_GET_ALL_PRODUCTS =              "SQL_GET_ALL_PRODUCTS";
+    public  static final String SQL_OBJECTS_BY_OBJECT_TYPE =       "SQL_OBJECTS_BY_OBJECT_TYPE";
     public static final String SQL_DELETE_OBJECT_BY_ID =           "SQL_DELETE_OBJECT_BY_ID";
     public static final String SQL_DELETE_VALUES_BY_OBJECT_ID =    "SQL_DELETE_VALUES_BY_OBJECT_ID";
 
@@ -70,6 +71,8 @@ public class SqlService {
 
     public static final String SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE =
                                                                      "SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE";
+    public static final String SQL_GET_OBJECT_ID_BY_TWO_ATTR_ID_AND_VALUE =
+                                                                     "SQL_GET_OBJECT_ID_BY_TWO_ATTR_ID_AND_VALUE";
     public static final String SQL_GET_OBJECT_ATTR_ID =             "SQL_GET_OBJECT_ATTR_ID";
     public static final String SQL_GET_PHOTO_ATTR_ID =               "SQL_GET_PHOTO_ATTR_ID";
 
