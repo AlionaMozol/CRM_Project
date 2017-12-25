@@ -34,8 +34,8 @@
         src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js">
 </script>
 
-<script type="text/javascript">$(document).on("input",function(ev) {
-    $('#email').on("input", setTimeout(function () {
+<script type="text/javascript">$(document).on("input",setTimeout(function(ev) {
+    $('#email').on("input", function () {
         var email = document.getElementById('email').value;
         $.ajax({
             url: '/checkEmail',
@@ -55,7 +55,6 @@
                     var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
                     if (pattern.test(email)) {
                         $('#email').css({'border': '1px solid #04f92d'});
-
                     }
                     else {
                         $('#email').css({'border': '1px solid #ff0000'});
@@ -63,8 +62,8 @@
                 }
             }
         });
-    },1000));
-    $('#telephone').on("input", function () {
+    });
+    $('#telephone').on("input",function () {
         var telephone = document.getElementById('telephone').value;
         $.ajax({
             url: '/checkTelephone',
@@ -77,6 +76,7 @@
                     $('#errTelephone').empty();
                     $('#errTelephone').append("This telephone already exist");
                     $('#telephone').css({'border': '1px solid #ff0000'});
+
                 }
                 else {
                     $('#errTelephone').empty();
@@ -92,8 +92,7 @@
             }
         });
     });
-})
-
+},1000))
 </script>
 
 
@@ -106,20 +105,25 @@
             $('#men').attr('checked',true);
         }
     })
-
 </script>
 
 <div class="container content" style="margin-bottom: 20%">
     <form:form method="post" action="${pageContext.request.contextPath}/profiles?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
-        <div class="col-md-5 profile-img">
+        <div class="col-md-5 profile-img row">
 
-            <label class="btn btn-default col-md-6 col-md-offset-3">
+            <label class="btn btn-default col-md-10 col-md-offset-1">
                 <div class="wrapper-for-img">
                     <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${profiles.photo}"
                          onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
                 </div>
-                <spring:message code="profile.addPhoto"/><input type="file" name="file" ><br />
+                <div id="fileId">
+                    <spring:message code="profile.addPhoto"/>
+                        <input type="file" id="file" name="file"/>
+                </div>
+                <output id="list"></output>
+
             </label>
+            <span id="errorPhoto"></span>
         </div>
         <div class="col-md-5 ">
             <div class="form-group row">
@@ -171,14 +175,13 @@
 
 
 <div>
-<%@include file="../layouts/footer_layout.jsp"%>
+    <%@include file="../layouts/footer_layout.jsp"%>
 </div>
 
 
 
 
 <script type="text/javascript">$(document).on("input",function(ev) {
-
     $('#city').on("input",function() {
         if($(this).val() != '') {
             var pattern = /^[а-яА-ЯёЁa-zA-Z]{0,20}$/i;
@@ -189,7 +192,6 @@
             }
         }
     });
-
     $('#fio').on("input",function() {
         if($(this).val() != '') {
             var pattern = /^[а-яА-ЯёЁa-zA-Z\s-]{0,40}$/i;
@@ -202,6 +204,51 @@
     });
 })
 </script>
+<script>
+    function handleFileSelect(evt) {
+        var f = evt.target.files;
+        if(f[0].size > 1000000){
+            $('#errorPhoto').empty();
+            $('#errorPhoto').append("Ошибка!!! Размер файла превышает допустимый.");
+            $('#list').empty();
+            $('#list').append("");
+            var reader = new FileReader();
+            reader.onload = (function() {
+                return function() {
+                    var span = document.createElement('span');
+                    document.getElementById('list').insertBefore(span,null);
+                };
+            })(f[0]);
+            reader.readAsDataURL(f[0]);
+
+
+        }
+        else{
+            if (f[0].type.match('image.*')) {
+                $('#errorPhoto').empty();
+                $('#errorPhoto').append(" ");
+                $('#list').empty();
+                $('#list').append("");
+                var reader = new FileReader();
+                reader.onload = (function(theFile) {
+                    return function(e) {
+                        var span = document.createElement('span');
+                        document.getElementById('list').insertBefore(span,null);
+                        span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+                        document.getElementById('list').insertBefore(span, null);
+                    };
+                })(f[0]);
+                reader.readAsDataURL(f[0]);
+            }
+        }
+
+    }
+    document.getElementById('file').addEventListener('change', handleFileSelect, false);
+</script>
+
+
+
 </body>
 
 
