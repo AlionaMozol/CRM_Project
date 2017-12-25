@@ -31,23 +31,23 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         Connection connection = poolInst.getConnection();
         try {
             PreparedStatement statement;
-            ResultSet resultSet;
-            String newObjectTypeId = null;
+//            ResultSet resultSet;
+//            String newObjectTypeId = null;
             Map<String, String> attributesAndValues;
 
-            statement = connection.prepareStatement(sql.
-                        getProperty(SqlService.SQL_GET_PRODUCT_OBJECT_TYPE_ID));
-            resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                newObjectTypeId = resultSet.getString(1);
-            }
+//            statement = connection.prepareStatement(sql.
+//                        getProperty(SqlService.SQL_GET_PRODUCT_OBJECT_TYPE_ID));
+//            resultSet = statement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                newObjectTypeId = resultSet.getString(1);
+//            }
             statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_INSERT_INTO_OBJECT));
 
             String newObjectId = UUID.randomUUID().toString();
             statement.setString(1, newObjectId);
-            statement.setString(2, newObjectTypeId);
+            statement.setString(2, productAttrID.getProperty("OBJECT_TYPE_ID"));
             statement.execute();
 
             attributesAndValues = product.getAttributesAndValues();
@@ -60,7 +60,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 //Получаем подходящий attr_id
                 statement = connection.prepareStatement(sql.
                             getProperty(SqlService.SQL_SELECT_NECESSARY_ATTR_ID));
-                statement.setString(1, newObjectTypeId);
+                statement.setString(1, productAttrID.getProperty("OBJECT_TYPE_ID"));
                 statement.setString(2, currentAttribute);
                 ResultSet attributesAttrIdSet = statement.executeQuery();
                 while (attributesAttrIdSet.next()) {
@@ -108,7 +108,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                     newObjectId, formatter.format(new Date(System.currentTimeMillis())));
 
             statement.close();
-            resultSet.close();
+//            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -124,8 +124,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         List<Product> productsOfUser = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                                          getProperty(SqlService.SQL_GET_PRODUCT_BY_USER_ID));
-            statement.setString(1, username);
+                                          getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1, productAttrID.getProperty("OWNER"));
+            statement.setString(2, username);
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
                 productsOfUser.add(getProductById(setOfTargetObjectIds.getString(1)));
@@ -191,9 +192,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                         getProperty(SqlService.SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS));
             statement.setString(1, id);
             resultSet = statement.executeQuery();
-            if(!resultSet.next()){
-                return null;
-            }
+//            if(!resultSet.next()){
+//                return null;
+//            }
             currentProduct.setId(id);
             while (resultSet.next()) {
                 //resultSet.getString(1) - имя атрибута
@@ -228,7 +229,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             //----
             statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_GET_USER_PHONE_BY_USERNAME));
-            statement.setString(1, owner);
+            statement.setString(1, userAttrID.getProperty("TELEPHONE"));
+            statement.setString(2, owner);
+            statement.setString(3, userAttrID.getProperty("SECURITY_ID"));
             resultSet = statement.executeQuery();
 
             if(resultSet.next()) {
@@ -254,7 +257,8 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         List<Product> matchedProducts = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                                          getProperty(SqlService.SQL_GET_ALL_PRODUCTS));
+                                          getProperty(SqlService.SQL_OBJECTS_BY_OBJECT_TYPE));
+            statement.setString(1, productAttrID.getProperty("OBJECT_TYPE_ID"));
             ResultSet allProducts = statement.executeQuery();
             while (allProducts.next()) {
                 Product product = getProductById(allProducts.getString(1));
@@ -297,8 +301,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         List<Product> productsOfTargetCategory = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                                          getProperty(SqlService.SQL_GET_PRODUCTS_BY_CATEGORY));
-            statement.setString(1, category);
+                                          getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1, productAttrID.getProperty("CATEGORY"));
+            statement.setString(2, category);
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
                 productsOfTargetCategory.add(getProductById(setOfTargetObjectIds.getString(1)));
@@ -322,8 +327,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         List<Product> productsOfCurrentStatus = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                                          getProperty(SqlService.SQL_GET_PRODUCTS_BY_STATUS));
-            statement.setString(1, status.name());
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1, productAttrID.getProperty("STATUS"));
+            statement.setString(2, status.name());
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
                 productsOfCurrentStatus.add(getProductById(setOfTargetObjectIds.getString(1)));
@@ -347,7 +353,8 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         List<Product> allProducts = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                                          getProperty(SqlService.SQL_GET_ALL_PRODUCTS));
+                                          getProperty(SqlService.SQL_OBJECTS_BY_OBJECT_TYPE));
+            statement.setString(1, productAttrID.getProperty("OBJECT_TYPE_ID"));
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
                 allProducts.add(getProductById(setOfTargetObjectIds.getString(1)));
@@ -398,7 +405,8 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_EDIT_PRODUCT_STATUS_BY_ID));
             statement.setString(1, status.toString());
-            statement.setString(2, id);
+            statement.setString(2, productAttrID.getProperty("STATUS"));
+            statement.setString(3, id);
             statement.execute();
 
             statement.close();
@@ -411,19 +419,19 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
     private void buildAndExecuteStatement(Connection connection, String attrType,
                                          String id, String newObjectId, String value) throws SQLException {
+//        PreparedStatement statement = connection.prepareStatement(sql.
+//                                      getProperty(SqlService.SQL_GET_ATTR_ID_OF));
+//        statement.setString(1, attrType);
+//        ResultSet resultSet = statement.executeQuery();
         PreparedStatement statement = connection.prepareStatement(sql.
-                                      getProperty(SqlService.SQL_GET_ATTR_ID_OF));
-        statement.setString(1, attrType);
-        ResultSet resultSet = statement.executeQuery();
-        statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_ADD_OBJECT));
-        while (resultSet.next()) {
-            statement.setString(1, id);
-            statement.setString(2, newObjectId);
-            statement.setString(3, resultSet.getString(1));
-            statement.setString(4, value);
-            statement.execute();
-        }
+//        while (resultSet.next()) {
+        statement.setString(1, id);
+        statement.setString(2, newObjectId);
+        statement.setString(3, productAttrID.getProperty(attrType));
+        statement.setString(4, value);
+        statement.execute();
+//        }
     }
 
     private void editProductAttribute(PreparedStatement statement, String value, String id, String key) throws SQLException{
@@ -441,8 +449,63 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         List<Product> productsOfTargetSuperCategory = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                                          getProperty(SqlService.SQL_GET_PRODUCTS_BY_SUPERCATEGORY));
-            statement.setString(1, supercategory);
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1, productAttrID.getProperty("SUPERCATEGORY"));
+            statement.setString(2, supercategory);
+            ResultSet setOfTargetObjectIds = statement.executeQuery();
+            while (setOfTargetObjectIds.next()) {
+                productsOfTargetSuperCategory.add(getProductById(setOfTargetObjectIds.getString(1)));
+            }
+
+            setOfTargetObjectIds.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            poolInst.footConnection(connection);
+        }
+        return productsOfTargetSuperCategory;
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor = Exception.class)
+    @Override
+    public List<Product> getProductsByOneParametr(String attribute, String val) {
+        Connection connection = poolInst.getConnection();
+        List<Product> productsOfTargetSuperCategory = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1, productAttrID.getProperty(attribute));
+            statement.setString(2, val);
+            ResultSet setOfTargetObjectIds = statement.executeQuery();
+            while (setOfTargetObjectIds.next()) {
+                productsOfTargetSuperCategory.add(getProductById(setOfTargetObjectIds.getString(1)));
+            }
+
+            setOfTargetObjectIds.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            poolInst.footConnection(connection);
+        }
+        return productsOfTargetSuperCategory;
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor = Exception.class)
+    @Override
+    public List<Product> getProductsByTwoParametrs(String attribute1, String val1, String attribute2, String val2) {
+        Connection connection = poolInst.getConnection();
+        List<Product> productsOfTargetSuperCategory = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+            statement.setString(1, productAttrID.getProperty(attribute1));
+            statement.setString(2, val1);
+            statement.setString(3, productAttrID.getProperty(attribute2));
+            statement.setString(4, val2);
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
                 productsOfTargetSuperCategory.add(getProductById(setOfTargetObjectIds.getString(1)));

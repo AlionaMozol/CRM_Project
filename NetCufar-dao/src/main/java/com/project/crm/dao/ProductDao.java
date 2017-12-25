@@ -31,4 +31,8 @@ public interface ProductDao {
     void deleteProductById(String id);
 
     void changeProductStatus(String id, ProductStatus status);
+
+    public List<Product> getProductsByOneParametr(String attribute, String val);
+
+    public List<Product> getProductsByTwoParametrs(String attribute1, String val1, String attribute2, String val2);
 }

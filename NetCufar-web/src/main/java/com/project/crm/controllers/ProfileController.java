@@ -113,7 +113,6 @@ public class ProfileController {
     public String upDateProfile(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request,
                                 @RequestParam("file") MultipartFile multipartFile) throws IOException {
         user = profileService.getUserByHttpServletRequestAndPhoto(request, multipartFile);
-        System.out.println(user.getFio());
         profileValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return "redirect: /profiles";
