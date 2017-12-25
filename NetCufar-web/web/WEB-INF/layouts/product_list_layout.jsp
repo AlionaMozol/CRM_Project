@@ -29,48 +29,58 @@
 </script>
 
 <div class="container content">
-    <div class="col-lg-12 products">
 
-        <c:forEach items="${products}" var="product">
-            <div class="col-sm-4">
-                <div class="product">
-                    <div class="product-img">
-                        <a href="#">
-                            <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
-                                 onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
-                        </a>
-                        <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
+    <div class="col-lg-12">
 
-                            <div class="product-icons">
-                                <c:choose>
-                                <c:when test="${favorite_products.contains(product)}">
-                                    <a href="#" id="${product.id}" class="icon-green">
-                                        <img src="${contextPath}/resources/img/heart.png">
-                                    </a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="#" id="${product.id}" class="icon">
-                                        <img src="${contextPath}/resources/img/heart.png">
-                                    </a>
-                                </c:otherwise>
-                                </c:choose>
-                            </div>
+        <%--<c:if test="${number == 0}">
+            <p class="text-info">
+                <spring:message code="favorites_text_info"/>
+            </p>
+        </c:if>--%>
 
-                        </sec:authorize>
+        <div class="products">
+
+            <c:forEach items="${products}" var="product">
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#">
+                                <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
+                                     onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+                            </a>
+                            <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
+
+                                <div class="product-icons">
+                                    <c:choose>
+                                    <c:when test="${favorite_products.contains(product)}">
+                                        <a href="#" id="${product.id}" class="icon-green">
+                                            <img src="${contextPath}/resources/img/heart.png">
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="#" id="${product.id}" class="icon">
+                                            <img src="${contextPath}/resources/img/heart.png">
+                                        </a>
+                                    </c:otherwise>
+                                    </c:choose>
+                                </div>
+
+                            </sec:authorize>
+                        </div>
+
+                        <p class="product-title">
+                            <a class="product-title" href="${contextPath}/product/${product.id}">
+                                <strong>${product.title}</strong>
+                            </a>
+                        </p>
+
+                        <p class="product-desc">${product.description}</p>
+                        <p class="product-category"><spring:message code="${product.category}"/> </p>
+                        <p class="product-price">${product.cost}</p>
                     </div>
-
-                    <p class="product-title">
-                        <a class="product-title" href="${contextPath}/product/${product.id}">
-                            <strong>${product.title}</strong>
-                        </a>
-                    </p>
-
-                    <p class="product-desc">${product.description}</p>
-                    <p class="product-category"><spring:message code="${product.category}"/> </p>
-                    <p class="product-price">${product.cost}</p>
                 </div>
-            </div>
-        </c:forEach>
+            </c:forEach>
+        </div>
 
     </div>
 </div>
@@ -91,7 +101,10 @@
             contentType : "application/json",
             data : ({
                 productId : productId
-            })
+            }),
+            complete: function () {
+                $('#' + productId).addClass('icon-green').removeClass('icon');
+            }
         });
     });
 
@@ -106,7 +119,10 @@
             contentType : "application/json",
             data : ({
                 productId : productId
-            })
+            }),
+            complete: function () {
+                $('#' + productId).addClass('icon').removeClass('icon-green');
+            }
         });
     });
 

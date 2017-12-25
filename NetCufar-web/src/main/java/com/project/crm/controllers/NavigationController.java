@@ -8,6 +8,7 @@ import com.project.crm.services.CategoryService;
 import com.project.crm.services.LikeService;
 import com.project.crm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,12 @@ public class NavigationController {
     @Autowired
     CategoryService categoryService;
 
-    @Autowired
-    ProductService productService;
+//    @Autowired
+//    ProductService productService;
+    private ProductService productService = (ProductService)
+            new ClassPathXmlApplicationContext("beans.xml").
+                    getBean("productService");
+
 
     @Autowired
     LikeService likeService;
