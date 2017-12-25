@@ -16,7 +16,6 @@
         <link rel="stylesheet" href="${contextPath}/resources/css/account.css"/>
         <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     </head>
-
     <body>
       <div class="row">
          <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
@@ -76,6 +75,7 @@
                  </div>
             </div>
          </div>
+      </div>
       </div>
     </body>
 </html>
