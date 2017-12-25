@@ -33,12 +33,8 @@ public class NavigationController {
     @Autowired
     CategoryService categoryService;
 
-//    @Autowired
-//    ProductService productService;
-    private ProductService productService = (ProductService)
-            new ClassPathXmlApplicationContext("beans.xml").
-                    getBean("productService");
-
+    @Autowired
+    ProductService productService;
 
     @Autowired
     LikeService likeService;

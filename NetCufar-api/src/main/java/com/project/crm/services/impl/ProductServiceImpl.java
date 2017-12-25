@@ -29,14 +29,8 @@ import static com.project.crm.services.GoogleDriveAPI.addPhotoToDrive;
 @Component
 public class ProductServiceImpl implements ProductService {
 
-//    @Autowired
-//    ProductDao productDao;
-    private ProductDaoImpl productDao;
-
-    public void setProductDao(ProductDaoImpl productDao) {
-        this.productDao = productDao;
-    }
-
+    @Autowired
+    ProductDao productDao;
 
     @Autowired
     AttributeDao attributeDao;

@@ -19,10 +19,4 @@
               <property name="password" value="${mail.password}" />
               <property name="protocol" value="${mail.protocol}" />
        </bean>
-
-       <bean id="productService" class="com.project.crm.services.impl.ProductServiceImpl">
-              <property name="productDao" ref="productDao" />
-       </bean>
-
-       <bean id="productDao" class="com.project.crm.dao.impl.ProductDaoImpl" />
 </beans>

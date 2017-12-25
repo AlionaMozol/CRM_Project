@@ -20,8 +20,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//-----non autowired bean search-----
-//@Component
+@Component
 public class ProductDaoImpl extends DAO implements ProductDao {
 
     @Transactional(propagation = Propagation.MANDATORY,

@@ -29,16 +29,11 @@ import static com.project.crm.services.GoogleDriveAPI.addPhotoToDrive;
 @Component
 public class ProfileServiceImpl implements ProfileService {
 
-
     @Autowired
     private UserDao userDao;
 
-//    @Autowired
-//    ProductService productService;
-    private ProductService productService = (ProductService)
-            new ClassPathXmlApplicationContext("beans.xml").
-                    getBean("productService");
-
+    @Autowired
+    ProductService productService;
 
     @Override
     public User getUserByID(int id) {
