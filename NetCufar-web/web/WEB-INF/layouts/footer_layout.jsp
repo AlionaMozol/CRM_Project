@@ -19,10 +19,10 @@
     <footer class="footer-bs">
         <div class="row">
             <div class="col-md-3 footer-brand animated fadeInLeft">
-                <h2>NetCufar</h2>
-                <p> NetCufar -  перспективаня площадка объявлений в Беларуси..
-                    Режим работы: 10.00 - 18.00, Пн-Пт.</p>
-                <p>© 2017, All rights reserved</p>
+                <h2><spring:message code="headerShop"/></h2>
+                <p> <spring:message code="text_netcufar_footer"/><br>
+                    <spring:message code="text_working_hours"/>: 10.00 - 18.00, <spring:message code="text_working_days"/>.</p>
+                <p>© 2017, <spring:message code="text_all_rights"/></p>
             </div>
             <div class="col-md-4 footer-nav animated fadeInUp">
                 <h4><spring:message code="Menu"/> </h4>
@@ -53,7 +53,7 @@
                 <p></p>
                 <p>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
+                    <input type="text" class="form-control" placeholder="<spring:message code="headerSearch"/>">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-envelope"></span></button>
                       </span>
