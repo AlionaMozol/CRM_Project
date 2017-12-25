@@ -67,7 +67,13 @@ public class ProductController {
             keyWord = new String(request.getParameter("q").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             if (!keyWord.replaceAll("\\s", "").equals("")) {
                 List<Product> productsByKeyWords = productService.getProductsByKeyWords(keyWord);
-                if (productsByKeyWords.size() == 0) {
+                List <Product> approvedProducts = new ArrayList<>();
+                for(Product product : productsByKeyWords) {
+                    if (product.getProductStatus() == ProductStatus.APPROVED) {
+                        approvedProducts.add(product);
+                    }
+                }
+                if (approvedProducts.size() == 0) {
                     if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
                         resultMSG = "НИЧЕГО НЕ НАЙДЕНО ПО ЗАПРОСУ '" + keyWord + "'";
                     } else {
@@ -80,7 +86,7 @@ public class ProductController {
                         resultMSG = "RESULTS FOR '" + keyWord + "'";
                     }
                 }
-                model.addAttribute("products", productsByKeyWords);
+                model.addAttribute("products", approvedProducts);
             }
         }
         model.addAttribute("result_message", resultMSG);
@@ -236,7 +242,14 @@ public class ProductController {
     public List getProductsBySubString(@RequestParam String subString) throws UnsupportedEncodingException {
         String checkIfEmptyBuf = java.net.URLDecoder.decode(subString, "UTF-8");
         if (!(checkIfEmptyBuf.replaceAll("\\s", "")).equals("")) {
-            return productService.getProductsByKeyWords(java.net.URLDecoder.decode(subString, "UTF-8"));
+            List <Product> productsByKeyWords = productService.getProductsByKeyWords(checkIfEmptyBuf);
+            List <Product> approvedProducts = new ArrayList<>();
+            for(Product product : productsByKeyWords) {
+                if (product.getProductStatus() == ProductStatus.APPROVED) {
+                    approvedProducts.add(product);
+                }
+            }
+            return approvedProducts;
         } else {
             return new ArrayList();
         }
