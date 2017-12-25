@@ -21,38 +21,41 @@
 <body>
 <%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
-<f:form class="content" method="post" commandName="Email" acceptCharset="utf-8" id="form_feedback">
-    <div class="col-md-10 col-md-offset-1">
-        <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label"><strong>
-                <spring:message code="email_from"/>
-            </label>
-            <div class="col-10">
-                <input class="form-control" type="text" name="from" id="from" path="from"/>
-                <form:errors path="from"/>
+<div class="container content">
+    <f:form class="content" method="post" commandName="Email" acceptCharset="utf-8" id="form_feedback">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label"><strong>
+                        <spring:message code="email_from"/>
+                </label>
+                <div class="col-10">
+                    <input class="form-control" type="text" name="from" id="from" path="from"/>
+                    <form:errors path="from"/>
+                </div>
             </div>
-        </div>
-        <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label"><strong>
-                <spring:message code="email_about"/>
-            </label>
-            <div class="col-10">
-                <input class="form-control" type="text" name="title" id="title" path="title"/>
-                <form:errors path="title"/>
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label"><strong>
+                        <spring:message code="email_about"/>
+                </label>
+                <div class="col-10">
+                    <input class="form-control" type="text" name="title" id="title" path="title"/>
+                    <form:errors path="title"/>
+                </div>
             </div>
+            <div class="form-group row has-feedback">
+                <label class="col-2 col-form-label"><strong>
+                        <spring:message code="email_text"/>
+                </label>
+                <textarea class="form-control" rows="5" name="message" id="message" path="message"></textarea>
+                <form:errors path="message"/>
+            </div>
+            <button type="submit" class="btn"><strong>
+                    <spring:message code="send"/>
+            </button>
         </div>
-        <div class="form-group row has-feedback">
-            <label class="col-2 col-form-label"><strong>
-                <spring:message code="email_text"/>
-            </label>
-            <textarea class="form-control" rows="5" name="message" id="message" path="message"></textarea>
-            <form:errors path="message"/>
-        </div>
-        <button type="submit" class="btn"><strong>
-            <spring:message code="send"/>
-        </button>
-    </div>
-</f:form>
+    </f:form>
+</div>
+
 
 <script type="text/javascript">
     $(document).ready(function() {
