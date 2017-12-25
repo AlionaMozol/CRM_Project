@@ -6,6 +6,7 @@ import com.project.crm.model.User;
 import com.project.crm.services.ProductService;
 import com.project.crm.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -32,8 +33,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private ProductService productService;
+//    @Autowired
+//    ProductService productService;
+    private ProductService productService = (ProductService)
+            new ClassPathXmlApplicationContext("beans.xml").
+                    getBean("productService");
 
 
     @Override
