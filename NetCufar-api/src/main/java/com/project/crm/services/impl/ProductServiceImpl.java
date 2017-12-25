@@ -2,6 +2,7 @@ package com.project.crm.services.impl;
 
 import com.project.crm.dao.AttributeDao;
 import com.project.crm.dao.ProductDao;
+import com.project.crm.dao.impl.ProductDaoImpl;
 import com.project.crm.model.Product;
 import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.ProductService;
@@ -29,7 +30,7 @@ import static com.project.crm.services.GoogleDriveAPI.addPhotoToDrive;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    private ProductDao productDao;
+    ProductDao productDao;
 
     @Autowired
     AttributeDao attributeDao;

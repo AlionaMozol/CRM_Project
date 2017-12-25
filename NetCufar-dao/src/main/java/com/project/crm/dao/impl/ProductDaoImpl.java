@@ -20,7 +20,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 @Component
 public class ProductDaoImpl extends DAO implements ProductDao {
 
@@ -470,7 +469,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor = Exception.class)
     @Override
-    public List<Product> getProductsByOneParametr(String attribute, String val) {
+    public List<Product> getProductsByOneParameter(String attribute, String val) {
         Connection connection = poolInst.getConnection();
         List<Product> productsOfTargetSuperCategory = new ArrayList<>();
         try {
@@ -496,12 +495,12 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor = Exception.class)
     @Override
-    public List<Product> getProductsByTwoParametrs(String attribute1, String val1, String attribute2, String val2) {
+    public List<Product> getProductsByTwoParameters(String attribute1, String val1, String attribute2, String val2) {
         Connection connection = poolInst.getConnection();
         List<Product> productsOfTargetSuperCategory = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_TWO_ATTR_ID_AND_VALUE));
             statement.setString(1, productAttrID.getProperty(attribute1));
             statement.setString(2, val1);
             statement.setString(3, productAttrID.getProperty(attribute2));

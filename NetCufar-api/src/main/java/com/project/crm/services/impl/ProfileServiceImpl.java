@@ -6,6 +6,7 @@ import com.project.crm.model.User;
 import com.project.crm.services.ProductService;
 import com.project.crm.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -28,13 +29,11 @@ import static com.project.crm.services.GoogleDriveAPI.addPhotoToDrive;
 @Component
 public class ProfileServiceImpl implements ProfileService {
 
-
     @Autowired
     private UserDao userDao;
 
     @Autowired
-    private ProductService productService;
-
+    ProductService productService;
 
     @Override
     public User getUserByID(int id) {
@@ -82,11 +81,6 @@ public class ProfileServiceImpl implements ProfileService {
 
         user.setUsername(name);
         user = (userDao.findUserByUsername(user.getUsername()));
-        System.out.println(name);
-        System.out.println(parameterMap.get("fio")[0]);
-        System.out.println(parameterMap.get("email")[0]);
-        System.out.println(parameterMap.get("city")[0]);
-        System.out.println(parameterMap.get("dateOfBirth")[0]);
 
         user.setFio(parameterMap.get("fio")[0]);
         user.setEmail(parameterMap.get("email")[0]);
@@ -94,13 +88,13 @@ public class ProfileServiceImpl implements ProfileService {
         user.setTelephone(parameterMap.get("telephone")[0]);
         user.setDateOfBirth(parameterMap.get("dateOfBirth")[0]);
         user.setSex(parameterMap.get("sex")[0]);
-
-        if (photo.isEmpty())
+        if (photo.isEmpty()){
             user.setPhoto("-1");
+        }
+
         else
             try {
                 user.setPhoto(addPhotoToDrive(photo));
-                System.out.println(user.getPhoto());
             } catch (IOException e) {
                 e.printStackTrace();
             }
