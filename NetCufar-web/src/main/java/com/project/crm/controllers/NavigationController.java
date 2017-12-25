@@ -43,6 +43,7 @@ public class NavigationController {
     public String main(Model model, HttpServletRequest request) {
         List<Category> supercategoryList;
         supercategoryList = categoryService.getAllTopCategories();
+        model.addAttribute("categoryAndSubCategories", categoryService.getTopCategoriesWithSubCategory());
         model.addAttribute("productCategory", supercategoryList);
         if (request.getParameter("q") != null && !request.getParameter("q").replaceAll("\\s", "").equals("")) {
             model.addAttribute("products", productService.getProductsByKeyWords(request.getParameter("q")));

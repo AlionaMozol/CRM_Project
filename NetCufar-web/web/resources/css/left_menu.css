@@ -17,6 +17,7 @@ nav#navigation {
     width: 14%;
     height: 100%;
     margin-top: -10%;
+    margin-bottom: 60%;
     background: #232323;
     border-right: 1px solid #293649;
 }
@@ -68,6 +69,7 @@ nav#navigation ul li:after {
 }
 nav#navigation ul li a {
     display: block;
+    min-width: 130px;
     width: 100%;
     line-height: 60px;
     padding: 0 15px;
