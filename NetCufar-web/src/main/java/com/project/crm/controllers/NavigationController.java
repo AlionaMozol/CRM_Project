@@ -43,6 +43,7 @@ public class NavigationController {
     public String main(Model model, HttpServletRequest request) {
         List<Category> supercategoryList;
         supercategoryList = categoryService.getAllTopCategories();
+        model.addAttribute("categoryAndSubCategories", categoryService.getTopCategoriesWithSubCategory());
         model.addAttribute("productCategory", supercategoryList);
         if (request.getParameter("q") != null && !request.getParameter("q").replaceAll("\\s", "").equals("")) {
             model.addAttribute("products", productService.getProductsByKeyWords(request.getParameter("q")));
@@ -71,6 +72,28 @@ public class NavigationController {
     List getProductsBySuperCategory(@RequestParam String supercategory, Model model) {
         List<Product> productList;
         productList = productService.getProductsBySuperCategory(supercategory);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
+        return productList;
+    }
+
+    @RequestMapping(value = "/get-accepted-products-by-supercategory", method = RequestMethod.GET)
+    public @ResponseBody
+    List getAcceptedProductsBySupercategory(@RequestParam String supercategory, Model model) {
+        List<Product> productList= productService.getProductsByTwoParameters("STATUS", "APPROVED"
+                , "SUPERCATEGORY", supercategory);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
+        return productList;
+    }
+
+    @RequestMapping(value = "/get-accepted-products-by-subcategory", method = RequestMethod.GET)
+    public @ResponseBody
+    List getAcceptedProductsBySubcategory(@RequestParam String subcategory, Model model) {
+        List<Product> productList= productService.getProductsByTwoParameters("STATUS", "APPROVED"
+                , "CATEGORY", subcategory);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));

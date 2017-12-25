@@ -19,7 +19,6 @@
 
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
-
     <!--%@include file="../layouts/left_menu_layout.jsp"%-->
     <%@include file="../layouts/left_menu.jsp"%>
     <div style="margin-bottom: 300px; margin-left: 10%">
@@ -27,5 +26,7 @@
     </div>
 
     <%@include file="../layouts/footer_layout.jsp"%>
+
+
 
 </body>

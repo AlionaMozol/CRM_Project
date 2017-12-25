@@ -76,7 +76,6 @@
                     $('#errTelephone').empty();
                     $('#errTelephone').append("This telephone already exist");
                     $('#telephone').css({'border': '1px solid #ff0000'});
-
                 }
                 else {
                     $('#errTelephone').empty();
@@ -113,14 +112,15 @@
 
             <label class="btn btn-default col-md-10 col-md-offset-1">
                 <div class="wrapper-for-img">
+                    <div id="fld">
                     <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${profiles.photo}"
                          onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+                    </div>
+                    <output id="list"></output>
                 </div>
-                <div id="fileId">
                     <spring:message code="profile.addPhoto"/>
-                        <input type="file" id="file" name="file"/>
-                </div>
-                <output id="list"></output>
+                    <input type="file" id="file" name="file"/>
+
 
             </label>
             <span id="errorPhoto"></span>
@@ -220,8 +220,6 @@
                 };
             })(f[0]);
             reader.readAsDataURL(f[0]);
-
-
         }
         else{
             if (f[0].type.match('image.*')) {
@@ -232,6 +230,12 @@
                 var reader = new FileReader();
                 reader.onload = (function(theFile) {
                     return function(e) {
+
+                        if (document.getElementById('fld') != null) {
+                            var el = document.getElementById('fld');
+                            el.parentNode.removeChild(el);
+                        }
+
                         var span = document.createElement('span');
                         document.getElementById('list').insertBefore(span,null);
                         span.innerHTML = ['<img class="thumb" src="', e.target.result,
@@ -242,7 +246,6 @@
                 reader.readAsDataURL(f[0]);
             }
         }
-
     }
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
 </script>
@@ -250,11 +253,5 @@
 
 
 </body>
-
-
-
-
-
-
 
 

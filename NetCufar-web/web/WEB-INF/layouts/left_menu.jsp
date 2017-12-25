@@ -16,23 +16,24 @@
 </head>
 
 <body>
+
 <div class="navbar navbar-left">
     <nav id="navigation">
         <ul>
-            <c:forEach var="category" items="${productCategory}">
-                <li class="dropdown" rel="${category.title}"><a href="#" class="my-item" id="${category.title}">
-                    <span><spring:message code="${category.title}"/></span>
-                    <ul class="dropdown-${category.title}">
-                        <li><a href="#"><span>SubCategory1</span></a></li>
-                        <li><a href="#"><span>SubCategory2</span></a></li>
-                        <li><a href="#"><span>SubCategory3</span></a></li>
-                    </ul></a>
-                </li>
-
+            <c:forEach items="${categoryAndSubCategories}" var="categories">
+                <li class="dropdown" rel="${categories.key.title}"><a href="#" class="my-item" id="${categories.key.title}">
+                    <span><spring:message code="${categories.key.title}"/></span>
+                    <ul class="dropdown-${categories.key.title}">
+                        <c:forEach items="${categories.value}" var="subCategory">
+                            <li><a href="#" class="my-item-subcategory" id="${subCategory.title}"><span><spring:message code="${subCategory.title}"/></span></a></li>
+                        </c:forEach>
+                    </ul>
+                </a></li>
             </c:forEach>
         </ul>
     </nav>
 </div>
+
 
 
 <script>
@@ -58,13 +59,54 @@
     messages["<spring:message text="${key}" javaScriptEscape="true"/>"] = "<spring:message code='${key}' javaScriptEscape='true' />";
     </c:forEach>
 
+    $(document).on('click','.my-item-subcategory',function(event){
+        event.preventDefault();
+        var subcategory = event.currentTarget.id;
+
+        $.ajax({
+            url : '/get-accepted-products-by-subcategory',
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            data : ({
+                subcategory: subcategory
+            }),
+            success: function (data) {
+                $('.products').empty();
+                $.each(data, function(id, key){
+                    var product = ///// icon-green (c:choose) missing
+                        "<div class=\"col-sm-4\">\n" +
+                        "   <div class=\"product\">\n" +
+                        "       <div class=\"product-img\">\n" +
+                        "           <a><img src=\"https://drive.google.com/uc?export=download&confirm=no_antivirus&id=" + key.photo + "\" onerror=\"this.src='${contextPath}/resources/img/placeholder-image.png'\"/></a>\n" +
+                        "           <div class=\"product-icons\">\n" +
+                        "                   <a href=\"#\" class=\"icon\">\n" +
+                        "                       <img src=\"${contextPath}/resources/img/heart.png\">\n" +
+                        "                   </a>\n" +
+                        "           </div>\n" +
+                        "       </div>\n" +
+                        "       <p class=\"product-title\">\n" +
+                        "           <a href=\"${contextPath}/product/" + key.id + "\"><strong>" + key.title + "</strong></a>\n" +
+                        "       </p>\n" +
+                        "       <p class=\"product-desc\">" + key.description + "</p>\n" +
+                        "       <p class=\"product-category\">" + messages[key.category] + "</p>\n" +
+                        "       <p class=\"product-price\">" + key.cost + "</p>\n" +
+                        "   </div>\n" +
+                        "</div>";
+                    $('.products').append(product);
+                })
+            }
+        });
+        return false;
+    });
+
 
     $(document).on('click','.my-item',function(event){
         event.preventDefault();
         var supercategory = event.currentTarget.id;
 
         $.ajax({
-            url : '/get-products-by-supercategory',
+            url : '/get-accepted-products-by-supercategory',
             type: 'GET',
             dataType: 'json',
             contentType: 'application/json',

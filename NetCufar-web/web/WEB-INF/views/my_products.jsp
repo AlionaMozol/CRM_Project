@@ -22,8 +22,8 @@
 
 
     <div class="container content" style="margin-bottom: 20%">
-        <a class="btn btn-success" href="${contextPath}/new_product" role="button">Добавить объявление</a>
-        <div class="col-lg-9 products">
+        <a class="btn btn-success" href="${contextPath}/new_product" role="button"><spring:message code="AddProduct"/></a>
+        <div class="col-lg-12 products">
 
             <c:forEach items="${products}" var="product">
 

@@ -136,19 +136,15 @@
           action="${pageContext.request.contextPath}/new-product/add?${_csrf.parameterName}=${_csrf.token}"
           acceptCharset="utf-8" enctype="multipart/form-data">
         <div class="row wrapper-for-product" style="margin-bottom: 40px">
-            <div class="col-lg-4 product-img-1">
-                <h2>Nazvanie</h2>
+            <div class="col-lg-4">
+                <h2><spring:message code="NewProduct"/></h2>
                 <label class="btn btn-default col-md-10 col-md-offset-1">
-                    <div class="wrapper-for-img">
-                        <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${profiles.photo}"
-                             onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
-                    </div>
-                    <div id="fileId">
-                        <spring:message code="profile.addPhoto"/>
-                        <input type="file" id="file" name="file"/>
-                    </div>
-                    <output id="list"></output>
-
+                        <div id="fld">
+                            <img src="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+                        </div>
+                        <output id="list"></output>
+                    <spring:message code="profile.addPhoto"/>
+                    <input type="file" accept="image/jpeg,jpg" id="file" name="file"/>
                 </label>
                 <span id="errorPhoto"></span>
             </div>
@@ -212,7 +208,9 @@
                 </div>
 
 
-                <input class="btn btn-success"  type="submit" style="margin-left: 300px; margin-bottom: 10px"/>
+
+                <button class="btn btn-success"  type="submit" style="margin-left: 300px; margin-bottom: 10px">
+                    <spring:message code="button.send"/></button>
 
 
             </div>
@@ -262,8 +260,6 @@
                 };
             })(f[0]);
             reader.readAsDataURL(f[0]);
-
-
         }
         else{
             if (f[0].type.match('image.*')) {
@@ -274,6 +270,12 @@
                 var reader = new FileReader();
                 reader.onload = (function(theFile) {
                     return function(e) {
+
+                        if (document.getElementById('fld') != null) {
+                            var el = document.getElementById('fld');
+                            el.parentNode.removeChild(el);
+                        }
+
                         var span = document.createElement('span');
                         document.getElementById('list').insertBefore(span,null);
                         span.innerHTML = ['<img class="thumb" src="', e.target.result,
@@ -284,7 +286,6 @@
                 reader.readAsDataURL(f[0]);
             }
         }
-
     }
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
 </script>
