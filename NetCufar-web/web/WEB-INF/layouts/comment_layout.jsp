@@ -43,7 +43,7 @@
                         "        <p class=\"comment-date\">"+key.date+"</p>\n" +
                         "        <p class=\"username\"><a href=\"${contextPath}/account/"+key.username+"\">"+key.username+"</a> </p>\n" +
                         "    <div class=\"image-of-user\">\n" +
-                        "        <img src=\"${contextPath}/resources/img/placeholder-image.png\"> \n" +
+                        "        <img src=\"https://drive.google.com/uc?export=download&confirm=no_antivirus&id="+ key.userPhoto+"\"> \n" +
                         "    </div>\n" +
                         "    <div class=\"text-in-user-comment\">\n" +
                         "        <p class=\"comment\">"+key.text+"</p>\n" +

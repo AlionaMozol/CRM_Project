@@ -27,6 +27,8 @@ public interface UserDao {
 
     User findUserByUsername(String username);
 
+    String getUserPhotoByUsername(String Username);
+
     void updateUser(User user);
 
     void updateStatus(User user);

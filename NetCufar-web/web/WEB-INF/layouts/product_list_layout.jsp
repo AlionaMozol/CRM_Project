@@ -45,7 +45,7 @@
                     <div class="product">
                         <div class="product-img">
                             <a href="#">
-                                <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
+                                <img height="200" width="300" src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
                                      onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
                             </a>
                             <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
@@ -54,7 +54,7 @@
                                     <c:choose>
                                     <c:when test="${favorite_products.contains(product)}">
                                         <a href="#" id="${product.id}" class="icon-green">
-                                            <img src="${contextPath}/resources/img/heart.png">
+                                            <img src="${contextPath}/resources/img/heart.png" >
                                         </a>
                                     </c:when>
                                     <c:otherwise>

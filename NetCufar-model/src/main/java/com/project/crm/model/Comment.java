@@ -10,7 +10,11 @@ public class Comment {
     private String postId;
     private String text;
     private String date;
+    private String userPhoto;
 
+    public String getUserPhoto() { return userPhoto; }
+
+    public void setUserPhoto(String userPhoto) { this.userPhoto = userPhoto; }
 
     public String getDate() {
         return date;

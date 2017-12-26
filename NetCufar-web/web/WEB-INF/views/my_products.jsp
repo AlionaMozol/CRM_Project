@@ -37,7 +37,7 @@
 
 
                         <div class="product-img">
-                            <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
+                            <img height="200" width="300" src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
                                  onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
 
                         </div>

@@ -42,6 +42,8 @@
                     </c:forEach>
                     <li><strong><spring:message code="product.cost"/>:</strong></li>
                     <li><strong><spring:message code="product.description"/>:</strong></li>
+                    <li><strong><spring:message code="profile.telephone"/>:</strong></li>
+                    <li><strong><spring:message code="OWNER"/>:</strong></li>
                 </ul>
                 <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">
@@ -49,6 +51,8 @@
                     </c:forEach>
                    <li> ${productid.cost}</li>
                    <li>${productid.description}</li>
+                    <li>${productid.phone}</li>
+                    <li><a href="${contextPath}/account/${productid.owner}">${productid.owner}</a></li>
                 </ul>
 
             </div>

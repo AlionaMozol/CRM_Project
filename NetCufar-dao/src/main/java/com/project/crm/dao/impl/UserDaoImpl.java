@@ -446,6 +446,50 @@ public class UserDaoImpl extends DAO implements UserDao {
 
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
+    @Override
+    public String getUserPhotoByUsername(String username){
+
+        String userPhoto="";
+        String userId ="";
+        Connection connection = poolInst.getConnection();
+        try {
+            PreparedStatement statement;
+            ResultSet resultSet;
+           statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_USER_BY_USERNAME));
+            statement.setString(1, username);
+            resultSet = statement.executeQuery();
+            if(resultSet.next()){
+
+               userId = resultSet.getString(1);
+
+            }
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_USER_PHONE_BY_USERNAME));
+            statement.setString(1, userAttrID.getProperty("PHOTO"));
+            statement.setString(2, userId);
+            statement.setString(3, userAttrID.getProperty("SECURITY_ID"));
+            resultSet = statement.executeQuery();
+
+
+            if(resultSet.next()) {
+                userPhoto = resultSet.getString(1);
+            }
+
+
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        poolInst.footConnection(connection);
+
+
+        return userPhoto;
+    }
+
     @Override
     public void updateUser(User user) {
         User oldUser = getUserById(user.getId());
@@ -532,11 +576,12 @@ public class UserDaoImpl extends DAO implements UserDao {
     public static void main(String [] args) throws SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
         System.out.println(userDao.findUserByUsername("123456789").getId());
-        List <User> userList = new ArrayList<>();
+       /* List <User> userList = new ArrayList<>();
         userList=userDao.getAllUsers();
         for(int i=0 ; i<userList.size(); i++){
             System.out.println(userList.get(i).getId());
-        }
+        }*/
+        System.out.println(userDao.getUserPhotoByUsername("qwertyui"));
 /*
         User user1 = new User();
         user1.setFio("user1");
