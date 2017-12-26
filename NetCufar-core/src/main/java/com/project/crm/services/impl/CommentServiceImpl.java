@@ -36,13 +36,16 @@ public class CommentServiceImpl implements CommentService {
                 return o1.getDate().compareTo(o2.getDate());
             }
         });
+        for (Comment comment: commentList) {
+            comment.setUserPhoto(userDao.getUserPhotoByUsername(comment.getUsername()));
+
+        }
 
         return commentList;
     }
 
     @Override
     public void addComment(Comment comment) {
-        comment.setUserPhoto(userDao.getUserPhotoByUsername(comment.getUsername()));
         commentDao.addComment(comment);
     }
 }
