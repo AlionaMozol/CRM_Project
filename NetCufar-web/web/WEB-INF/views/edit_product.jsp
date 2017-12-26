@@ -237,7 +237,7 @@
         var f = evt.target.files;
         if(f[0].size > 1000000){
             $('#errorPhoto').empty();
-            $('#errorPhoto').append("Ошибка!!! Размер файла превышает допустимый.");
+            $('#errorPhoto').append("<spring:message code="SizeError"/>");
             $('#list').empty();
             $('#list').append("");
             var reader = new FileReader();
