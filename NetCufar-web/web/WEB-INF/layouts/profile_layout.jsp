@@ -95,53 +95,33 @@
                 </div>
                 <spring:message code="profile.addPhoto"/>
                 <input type="file" id="file" name="file" />
-
-
             </label>
             <span id="errorPhoto"></span>
         </div>
         <div class="col-md-5 ">
             <div class="form-group row">
+
                 <label class="col-2 col-form-label"><spring:message code="profile.fio"/></label>
-                <div class="col-10">
-                    <input id="fio" class="form-control" type="text" name="fio" value="${profiles.fio}"/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"><spring:message code="profile.email"/></label>
-                <div class="col-10">
-                    <input id="email" class="form-control" type="email" name="email" value="${profiles.email}"  />
-                    <span id="errEmail" name="errEmail"></span>
+                <input id="fio" class="form-control" type="text" name="fio" value="${profiles.fio}"/><br>
 
-                </div>
-            </div>
-            <div class="form-group row">
+               o<label class="col-2 col-form-label"><spring:message code="profile.email"/></label>
+                <input id="email" class="form-control" type="email" name="email" value="${profiles.email}"  />
+                <span id="errEmail" name="errEmail"></span><br>
+
                 <label class="col-2 col-form-label"><spring:message code="profile.telephone"/></label>
-                <div class="col-10">
-                    <input id="telephone" class="form-control" type="text" name="telephone" value="${profiles.telephone}"/>
-                    <span id="errTelephone" name="errTelephone"></span>
-                </div>
-            </div>
-            <div class="form-group row">
+                <input id="telephone" class="form-control" type="text" name="telephone" value="${profiles.telephone}"/>
+                <span id="errTelephone" name="errTelephone"></span><br>
+
                 <label class="col-2 col-form-label"><spring:message code="profile.city"/></label>
-                <div class="col-10">
-                    <input id="city" class="form-control" type="text" name="city" value="${profiles.city}"/>
-                </div>
-            </div>
+                <input id="city" class="form-control" type="text" name="city" value="${profiles.city}"/><br>
 
-            <div class="form-group row">
                 <label class="col-2 col-form-label"><spring:message code="profile.birth"/></label>
-                <div class="col-10">
-                    <input class="form-control" type="date" name="dateOfBirth" value="${profiles.dateOfBirth}"  max="2000-12-31" min="1900-01-01"/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"><spring:message code="profile.sex"/></label>
-                <div class="col-10">
+                <input class="form-control" type="date" name="dateOfBirth" value="${profiles.dateOfBirth}"  max="2000-12-31" min="1900-01-01"/><br>
 
-                    <input type="radio" name="sex"  id="men" value="М"/><spring:message code="profile.man"/>
-                    <input type="radio" name="sex"  id="women" value="Ж"/><spring:message code="profile.female"/>
-                </div>
+                <label class="col-2 col-form-label"><spring:message code="profile.sex"/></label>
+                <input type="radio" name="sex"  id="men" value="М"/><spring:message code="profile.man"/>
+                <input type="radio" name="sex"  id="women" value="Ж"/><spring:message code="profile.female"/>
+
             </div>
             <button id="submit" type="submit" class="btn"><spring:message code="Save"/></button>
         </div>
