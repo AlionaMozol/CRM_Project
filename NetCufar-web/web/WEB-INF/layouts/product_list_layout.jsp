@@ -28,10 +28,6 @@
 
 <div class="container content">
 
-    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
-        <label>${result_message}</label>
-    </div>
-
     <div class="col-lg-12">
 
         <div class="products">

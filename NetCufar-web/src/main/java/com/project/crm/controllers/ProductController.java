@@ -111,6 +111,7 @@ public class ProductController {
         } else {
             result_msg = "USER NOT FOUND";
         }
+
         if (userService.findByUsername(username) != null) {
             if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
                 result_msg = "Товары пользователя: " + username + ". Количество : " + products.size();
