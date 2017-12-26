@@ -111,6 +111,7 @@ public class ProductController {
         } else {
             result_msg = "USER NOT FOUND";
         }
+
         if (userService.findByUsername(username) != null) {
             if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
                 result_msg = "Товары пользователя: " + username + ". Количество : " + products.size();
@@ -240,7 +241,6 @@ public class ProductController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         String userStatus = profileService.getUserByUsername(name).getStatus();
-        System.out.println(userStatus);
         if (userStatus.equals("UNBLOCKED")) {
             productService.addProduct(product);
         } else {

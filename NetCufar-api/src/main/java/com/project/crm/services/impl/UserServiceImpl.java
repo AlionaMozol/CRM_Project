@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User eavUserRegistration(int securityId) {
         User user = new User();
-        //userForm.getId()
         user.setId(securityId);
         user.setCity("");
         user.setTelephone("");

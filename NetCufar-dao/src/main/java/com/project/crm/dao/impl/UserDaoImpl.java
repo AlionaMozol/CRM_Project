@@ -24,6 +24,19 @@ import java.util.UUID;
 
 public class UserDaoImpl extends DAO implements UserDao {
 
+    private static final String OBJECT_TYPE_ID =             "OBJECT_TYPE_ID";
+    private static final String FULL_NAME =                  "FULL_NAME";
+    private static final String SECURITY_ID =                "SECURITY_ID";
+    private static final String USER_GENDER =                "USER_GENDER";
+    private static final String BIRTHDAY =                   "BIRTHDAY";
+    private static final String TELEPHONE =                  "TELEPHONE";
+    private static final String MAIL =                       "MAIL";
+    private static final String USER_LOCATION =              "USER_LOCATION";
+    private static final String ACC_DATE_TIME =              "ACC_DATE_TIME";
+    private static final String RATING =                     "RATING";
+    private static final String STATUS =                     "STATUS";
+    private static final String PHOTO =                      "PHOTO";
+
 
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
@@ -31,17 +44,17 @@ public class UserDaoImpl extends DAO implements UserDao {
     public void addUser(User user) {
         ArrayList<String> attribute_type = new ArrayList<String>();
         ArrayList<String> userInformation = new ArrayList<String>();
-        attribute_type.add("SECURITY_ID");
-        attribute_type.add("FULL_NAME");
-        attribute_type.add("USER_GENDER");
-        attribute_type.add("TELEPHONE");
-        attribute_type.add("BIRTHDAY");
-        attribute_type.add("MAIL");
-        attribute_type.add("USER_LOCATION");
-        attribute_type.add("ACC_DATE_TIME");
-        attribute_type.add("RATING");
-        attribute_type.add("STATUS");
-        attribute_type.add("PHOTO");
+        attribute_type.add(SECURITY_ID);
+        attribute_type.add(FULL_NAME);
+        attribute_type.add(USER_GENDER);
+        attribute_type.add(TELEPHONE);
+        attribute_type.add(BIRTHDAY);
+        attribute_type.add(MAIL);
+        attribute_type.add(USER_LOCATION);
+        attribute_type.add(ACC_DATE_TIME);
+        attribute_type.add(RATING);
+        attribute_type.add(STATUS);
+        attribute_type.add(PHOTO);
         userInformation.add(Integer.toString(user.getId()));
         userInformation.add(user.getFio());
         userInformation.add(user.getSex());
@@ -54,25 +67,24 @@ public class UserDaoImpl extends DAO implements UserDao {
         userInformation.add(user.getStatus());
         userInformation.add(user.getPhoto());
 
-//        String objectTypeId="";
         Connection connection = poolInst.getConnection();
         try {
             PreparedStatement result_statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_INSERT_VALUE)); // INSERT INTO values_table VALUES (?, ?, ? ,?), (?, ?, ? ,?)...........
+                    getProperty(SqlService.SQL_INSERT_VALUE));
 //            PreparedStatement statement = connection.prepareStatement(sql.
 //                    getProperty(SqlService.SQL_SELECT_FROM_OBJECT_TYPE_BY_VALUE)); // SELECT * FROM object_type WHERE Value = ?
 //            statement.setString(1,"USER");
 //            ResultSet resultSet = statement.executeQuery();
             String objectId= UUID.randomUUID().toString();
             PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_INSERT_INTO_OBJECT)); // INSERT INTO object VALUES(?, ?)
+                    getProperty(SqlService.SQL_INSERT_INTO_OBJECT));
 //            if(resultSet.next()){
 //                objectTypeId=resultSet.getString(1);
 //                statement.setString(1, objectId);
 //                statement.setString(2, userAttrID.getProperty("OBJECT_TYPE_ID"));
 //            }
             statement.setString(1, objectId);
-            statement.setString(2, userAttrID.getProperty("OBJECT_TYPE_ID"));
+            statement.setString(2, userAttrID.getProperty(OBJECT_TYPE_ID));
             statement.execute();
             int index=1;
 //            ResultSet resultSet = null;
@@ -100,7 +112,6 @@ public class UserDaoImpl extends DAO implements UserDao {
             result_statement.close();
 //            resultSet.close();
         } catch (SQLException e) {
-            System.out.println(userAttrID.getProperty("OBJECT_TYPE_ID"));
             e.printStackTrace();
         }
         poolInst.footConnection(connection);
@@ -111,7 +122,7 @@ public class UserDaoImpl extends DAO implements UserDao {
     @Override
     public List<User> getAllUsers() {
         Connection connection = poolInst.getConnection();
-        User user;// = new User();
+        User user;
         List<User>userList = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_ALL_USERS));
@@ -152,7 +163,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
             PreparedStatement statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1, userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(1, userAttrID.getProperty(SECURITY_ID));
             statement.setString(2,String.valueOf(id));
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
@@ -166,37 +177,37 @@ public class UserDaoImpl extends DAO implements UserDao {
 
             while (resultSet.next()){
                 switch (resultSet.getString("attribute")){
-                    case "FULL_NAME":
+                    case FULL_NAME:
                         user.setFio(resultSet.getString("value"));
                         break;
-                    case "USER_GENDER":
+                    case USER_GENDER:
                         user.setSex(resultSet.getString("value"));
                         break;
-                    case "TELEPHONE":
+                    case TELEPHONE:
                         user.setTelephone(resultSet.getString("value"));
                         break;
-                    case "MAIL":
+                    case MAIL:
                         user.setEmail(resultSet.getString("value"));
                         break;
-                    case "BIRTHDAY":
+                    case BIRTHDAY:
                         user.setDateOfBirth(resultSet.getString("value"));
                         break;
-                    case "SECURITY_ID":
+                    case SECURITY_ID:
                         user.setId(resultSet.getInt("value"));
                         break;
-                    case "USER_LOCATION":
+                    case USER_LOCATION:
                         user.setCity(resultSet.getString("value"));
                         break;
-                    case "ACC_DATE_TIME":
+                    case ACC_DATE_TIME:
                         user.setAccountCreationDate(resultSet.getString("value"));
                         break;
-                    case "RATING":
+                    case RATING:
                         user.setRating(resultSet.getString("value"));
                         break;
-                    case "STATUS":
+                    case STATUS:
                         user.setStatus(resultSet.getString("value"));
                         break;
-                    case "PHOTO":
+                    case PHOTO:
                         user.setPhoto(resultSet.getString("value"));
                         break;
 
@@ -231,7 +242,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
             PreparedStatement statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1,userAttrID.getProperty("MAIL"));
+            statement.setString(1,userAttrID.getProperty(MAIL));
             statement.setString(2,email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
@@ -244,7 +255,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             resultSet = statement.executeQuery();
 
             while(resultSet.next()){
-                if (resultSet.getString("attribute").equals("SECURITY_ID")){
+                if (resultSet.getString("attribute").equals(SECURITY_ID)){
                     user.setId(resultSet.getInt("value"));
                     statement.close();
                     resultSet.close();
@@ -271,7 +282,7 @@ public class UserDaoImpl extends DAO implements UserDao {
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1,userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(1,userAttrID.getProperty(SECURITY_ID));
             statement.setString(2,String.valueOf(user.getId()));
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()){
@@ -314,7 +325,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 //            statement.setString(3,telephone);
             PreparedStatement statement = connection.prepareStatement(sql.
                             getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1,userAttrID.getProperty("TELEPHONE"));
+            statement.setString(1,userAttrID.getProperty(TELEPHONE));
             statement.setString(2,telephone);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
@@ -327,7 +338,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             resultSet = statement.executeQuery();
 
             while(resultSet.next()){
-                if (resultSet.getString("attribute").equals("SECURITY_ID")){
+                if (resultSet.getString("attribute").equals(SECURITY_ID)){
                     user.setId(resultSet.getInt("value"));
                     statement.close();
                     resultSet.close();
@@ -374,6 +385,8 @@ public class UserDaoImpl extends DAO implements UserDao {
         return user;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public User findUserByUsername(String username) {
         Connection connection = poolInst.getConnection();
@@ -399,6 +412,8 @@ public class UserDaoImpl extends DAO implements UserDao {
         return user;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public void updateStatus(User user) {
         User oldUser = getUserById(user.getId());
@@ -420,7 +435,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 //            statement.setInt(3,user.getId());
             PreparedStatement statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1,userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(1,userAttrID.getProperty(SECURITY_ID));
             statement.setString(2,String.valueOf(user.getId()));
             ResultSet resultSet = statement.executeQuery();
 
@@ -433,7 +448,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             if(!oldUser.getStatus().equals(user.getStatus())){
                 statement.setString(1,user.getStatus());
                 statement.setString(2,objectId);
-                statement.setString(3,userAttrID.getProperty("STATUS"));
+                statement.setString(3,userAttrID.getProperty(STATUS));
                 statement.execute();
             }
             statement.close();
@@ -468,9 +483,7 @@ public class UserDaoImpl extends DAO implements UserDao {
             }
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_GET_USER_PHONE_BY_USER_ID));
-            statement.setString(1, userAttrID.getProperty("PHOTO"));
-            statement.setString(2, userId);
-            statement.setString(3, userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(1, userAttrID.getProperty(PHOTO));
             resultSet = statement.executeQuery();
 
 
@@ -490,6 +503,8 @@ public class UserDaoImpl extends DAO implements UserDao {
         return userPhoto;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY,
+            rollbackFor=Exception.class)
     @Override
     public void updateUser(User user) {
         User oldUser = getUserById(user.getId());
@@ -511,7 +526,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 //            statement.setInt(3,user.getId());
             PreparedStatement statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1,userAttrID.getProperty("SECURITY_ID"));
+            statement.setString(1,userAttrID.getProperty(SECURITY_ID));
             statement.setString(2,String.valueOf(user.getId()));
             ResultSet resultSet = statement.executeQuery();
 
@@ -524,51 +539,50 @@ public class UserDaoImpl extends DAO implements UserDao {
             if (!oldUser.getFio().equals(user.getFio())){
                 statement.setString(1,user.getFio());
                 statement.setString(2,objectId);
-                statement.setString(3,userAttrID.getProperty("FULL_NAME"));
+                statement.setString(3,userAttrID.getProperty(FULL_NAME));
                 statement.execute();
             }
 
             if(!oldUser.getTelephone().equals(user.getTelephone())){
                 statement.setString(1,user.getTelephone());
                 statement.setString(2,objectId);
-                statement.setString(3,userAttrID.getProperty("TELEPHONE"));
+                statement.setString(3,userAttrID.getProperty(TELEPHONE));
                 statement.execute();
 
             }
             if(!oldUser.getDateOfBirth().equals(user.getDateOfBirth())){
                 statement.setString(1,user.getDateOfBirth());
                 statement.setString(2,objectId);
-                statement.setString(3,userAttrID.getProperty("BIRTHDAY"));
+                statement.setString(3,userAttrID.getProperty(BIRTHDAY));
                 statement.execute();
             }
             if(!oldUser.getCity().equals(user.getCity())){
                 statement.setString(1,user.getCity());
                 statement.setString(2,objectId);
-                statement.setString(3,userAttrID.getProperty("USER_LOCATION"));
+                statement.setString(3,userAttrID.getProperty(USER_LOCATION));
                 statement.execute();
             }
             if(!oldUser.getEmail().equals(user.getEmail())){
                 statement.setString(1,user.getEmail());
                 statement.setString(2,objectId);
-                statement.setString(3,userAttrID.getProperty("MAIL"));
+                statement.setString(3,userAttrID.getProperty(MAIL));
                 statement.execute();
 
             }
             if(!oldUser.getSex().equals(user.getSex())){
                 statement.setString(1,user.getSex());
                 statement.setString(2,objectId);
-                statement.setString(3,userAttrID.getProperty("USER_GENDER"));
+                statement.setString(3,userAttrID.getProperty(USER_GENDER));
                 statement.execute();
             }
-            if(user.getPhoto().equals("-1")){
-                statement.setString(1,oldUser.getPhoto());
-            }
-            else {
+            if(!user.getPhoto().equals("-1")){
                 statement.setString(1,user.getPhoto());
+                statement.setString(2,objectId);
+                statement.setString(3,userAttrID.getProperty(PHOTO));
+                statement.execute();
+
             }
-            statement.setString(2,objectId);
-            statement.setString(3,userAttrID.getProperty("PHOTO"));
-            statement.execute();
+
             statement.close();
             resultSet.close();
         } catch (SQLException e) {
@@ -578,15 +592,15 @@ public class UserDaoImpl extends DAO implements UserDao {
     }
 
 
-    public static void main(String [] args) throws SQLException {
-        UserDaoImpl userDao = new UserDaoImpl();
+   // public static void main(String [] args) throws SQLException {
+        /*UserDaoImpl userDao = new UserDaoImpl();
         System.out.println(userDao.findUserByUsername("123456789").getId());
        /* List <User> userList = new ArrayList<>();
         userList=userDao.getAllUsers();
         for(int i=0 ; i<userList.size(); i++){
             System.out.println(userList.get(i).getId());
         }*/
-        System.out.println(userDao.getUserPhotoByUsername("qwertyui"));
+        //System.out.println(userDao.getUserPhotoByUsername("qwertyui"));*/
 /*
         User user1 = new User();
         user1.setFio("user1");
@@ -638,4 +652,4 @@ public class UserDaoImpl extends DAO implements UserDao {
 //        System.out.println(user.getUsername());
 //
 //    }
-}
+//}
