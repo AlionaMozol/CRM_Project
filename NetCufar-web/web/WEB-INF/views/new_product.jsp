@@ -51,8 +51,7 @@
                         "<label class='label-attribute'> " +
                         messages[value] +
                         "</label>" +
-                        "<input class=\"form-control\"  id=" + value + " name=" + value + " placeholder=" + messages[value]  +
-                        " (0-20)" + "></div>");
+                        "<input class=\"form-control\"  id=" + value + " name=" + value + " placeholder=" + messages[value] + "></div>");
                     $('#wrapper-for-attributes').append(newInput);
                 });
             },
