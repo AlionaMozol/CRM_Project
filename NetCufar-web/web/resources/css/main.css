@@ -164,14 +164,7 @@ p {
     margin-top: 60px;
 }
 
-/*
-body {
-	background: #ececec;
-}
-img {
-/*	height: auto;*/
-	max-width: 100%;
-}
+
 .content{
 	margin-top: 150px;
 }
@@ -250,7 +243,7 @@ img {
 .product-icons-item {
 	margin-bottom: 10px;
 	white-space: nowrap;
-}*/
+}
 /*--Product By Id--*/
 .wrapper-for-product {
     background-color: white;
