@@ -83,10 +83,6 @@ public class CommentDaoImpl extends DAO implements CommentDao {
             preparedStatement.setString(14, commentId);
             preparedStatement.setString(15, commentAttrID.getProperty("COMMENT_DATE_TIME"));
             preparedStatement.setString(16, dateFormat.format(date));
-            preparedStatement.setString(17, UUID.randomUUID().toString());
-            preparedStatement.setString(18, commentId);
-            preparedStatement.setString(19, commentAttrID.getProperty("USER_REC"));
-            preparedStatement.setString(20, comment.getUserPhoto());
             preparedStatement.execute();
 //            while (resultSet.next()) {
 //                preparedStatement.setString(1, UUID.randomUUID().toString());
