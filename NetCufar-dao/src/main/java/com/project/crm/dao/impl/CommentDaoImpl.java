@@ -50,7 +50,7 @@ public class CommentDaoImpl extends DAO implements CommentDao {
             rollbackFor=Exception.class)
     public void addComment(Comment comment) {
         Date date = new Date();
-        SimpleDateFormat dateFormat=new SimpleDateFormat();
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd '  ' hh:mm:ss");
         Connection connection = poolInst.getConnection();
         String commentId = UUID.randomUUID().toString();
         try {
@@ -83,6 +83,10 @@ public class CommentDaoImpl extends DAO implements CommentDao {
             preparedStatement.setString(14, commentId);
             preparedStatement.setString(15, commentAttrID.getProperty("COMMENT_DATE_TIME"));
             preparedStatement.setString(16, dateFormat.format(date));
+            preparedStatement.setString(17, UUID.randomUUID().toString());
+            preparedStatement.setString(18, commentId);
+            preparedStatement.setString(19, commentAttrID.getProperty("USER_REC"));
+            preparedStatement.setString(20, "check");
             preparedStatement.execute();
 //            while (resultSet.next()) {
 //                preparedStatement.setString(1, UUID.randomUUID().toString());
@@ -138,7 +142,7 @@ public class CommentDaoImpl extends DAO implements CommentDao {
             statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS));
             statement.setString(1, id);
-            statement.setString(2, productAttrID.getProperty("OBJECT_TYPE_ID"));
+            statement.setString(2, commentAttrID.getProperty("OBJECT_TYPE_ID"));
             resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 if(resultSet.getString(1).equals("PRODUCT_REC")) {
