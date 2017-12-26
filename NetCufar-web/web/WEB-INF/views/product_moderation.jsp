@@ -14,11 +14,15 @@
 </head>
 
 <body>
+
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
-    <%--<%@include file="../layouts/left_menu_layout.jsp"%>--%>
-    <div style="margin-bottom: 20%">
+    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
+        <label>${result_message}</label>
+    </div>
+    <div style="margin-bottom: 10%">
         <%@include file="../layouts/moderation_layout.jsp"%>
     </div>
     <%@include file="../layouts/footer_layout.jsp"%>
+
 </body>
