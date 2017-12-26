@@ -35,7 +35,7 @@ public class SqlService {
     public static final String SQL_SELECT_NECESSARY_ATTR_ID =      "SQL_SELECT_NECESSARY_ATTR_ID";
     public static final String SQL_INSERT_COMMENT_INTO_VALUES =    "SQL_INSERT_COMMENT_INTO_VALUES";
     public static final String  SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS =
-            "SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS";
+                                                                   "SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS";
     public static final String SQL_SELECT_BY_KEY_WORDS =           "SQL_SELECT_BY_KEY_WORDS";
 //    public static final String SQL_GET_PRODUCT_OBJECT_TYPE_ID =    "SQL_GET_PRODUCT_OBJECT_TYPE_ID";
 //    public static final String SQL_GET_CATEGORY_ATTR_ID =          "SQL_GET_CATEGORY_ATTR_ID";

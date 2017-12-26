@@ -288,28 +288,29 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.setString(3, keyWords);
             ResultSet allProducts = statement.executeQuery();
             while (allProducts.next()) {
-                Product product = getProductById(allProducts.getString(1));
-                if (product.getTitle() != null) {
-                    productsAndTitles.add(new Pair<>(product, product.getTitle()));
-                }
+//                Product product = getProductById(allProducts.getString(1));
+//                if (product.getTitle() != null) {
+//                    productsAndTitles.add(new Pair<>(product, product.getTitle()));
+//                }
+                matchedProducts.add(getProductById(allProducts.getString(1)));
             }
-            StringBuilder pattern = new StringBuilder();
-            pattern.append("(");
-            pattern.append(Pattern.quote(keyWords.toLowerCase()));
-            pattern.append(")");
-            for (String part : keyWords.split("\\s")) {
-                pattern.append("|(");
-                pattern.append(Pattern.quote(part.toLowerCase()));
-                pattern.append(")");
-            }
-            Pattern pt = Pattern.compile(pattern.toString());
-            Matcher matcher;
-            for(Pair<Product, String> productAndTitle : productsAndTitles) {
-                matcher = pt.matcher(productAndTitle.getValue().toLowerCase());
-                if (matcher.find()) {
-                    matchedProducts.add(productAndTitle.getKey());
-                }
-            }
+//            StringBuilder pattern = new StringBuilder();
+//            pattern.append("(");
+//            pattern.append(Pattern.quote(keyWords.toLowerCase()));
+//            pattern.append(")");
+//            for (String part : keyWords.split("\\s")) {
+//                pattern.append("|(");
+//                pattern.append(Pattern.quote(part.toLowerCase()));
+//                pattern.append(")");
+//            }
+//            Pattern pt = Pattern.compile(pattern.toString());
+//            Matcher matcher;
+//            for(Pair<Product, String> productAndTitle : productsAndTitles) {
+//                matcher = pt.matcher(productAndTitle.getValue().toLowerCase());
+//                if (matcher.find()) {
+//                    matchedProducts.add(productAndTitle.getKey());
+//                }
+//            }
 
             statement.close();
         } catch (SQLException e) {
