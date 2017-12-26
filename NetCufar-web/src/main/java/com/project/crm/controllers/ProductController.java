@@ -241,7 +241,6 @@ public class ProductController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         String userStatus = profileService.getUserByUsername(name).getStatus();
-        System.out.println(userStatus);
         if (userStatus.equals("UNBLOCKED")) {
             productService.addProduct(product);
         } else {
