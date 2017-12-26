@@ -104,7 +104,7 @@
                 <label class="col-2 col-form-label"><spring:message code="profile.fio"/></label>
                 <input id="fio" class="form-control" type="text" name="fio" value="${profiles.fio}"/><br>
 
-               o<label class="col-2 col-form-label"><spring:message code="profile.email"/></label>
+                <label class="col-2 col-form-label"><spring:message code="profile.email"/></label>
                 <input id="email" class="form-control" type="email" name="email" value="${profiles.email}"  />
                 <span id="errEmail" name="errEmail"></span><br>
 
