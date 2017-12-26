@@ -192,9 +192,9 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.setString(1, id);
             statement.setString(2, productAttrID.getProperty("OBJECT_TYPE_ID"));
             resultSet = statement.executeQuery();
-//            if(!resultSet.next()){
-//                return null;
-//            }
+            if(!resultSet.next()){
+                return null;
+            }
             currentProduct.setId(id);
             while (resultSet.next()) {
                 //resultSet.getString(1) - имя атрибута
