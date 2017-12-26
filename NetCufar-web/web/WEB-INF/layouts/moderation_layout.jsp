@@ -79,7 +79,7 @@
             contentType : "application/json",
             data : ({
                 productId : productId
-            }),
+            })
         });
     });
 
@@ -97,7 +97,7 @@
             contentType : "application/json",
             data : ({
                 productId : productId
-            }),
+            })
         });
     });
 

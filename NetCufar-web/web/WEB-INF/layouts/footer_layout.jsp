@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <section style="height:80px;"></section>
+    <!--<section style="height:80px;"></section>-->
     <!----------- Footer ------------>
     <footer class="footer-bs">
         <div class="row">

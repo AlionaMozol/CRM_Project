@@ -30,7 +30,7 @@
 <body>
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
-    <%@include file="../layouts/left_menu_layout.jsp"%>
+    <%--<%@include file="../layouts/left_menu_layout.jsp"%>--%>
     <%@include file="../layouts/moderation_layout.jsp"%>
     <%--<div class="container content">
         <div class="col-lg-9 products">
