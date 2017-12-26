@@ -28,12 +28,13 @@ p {
 }
 
 #myUL li a {
+    max-width: 500px;
     border: 1px solid #88ceff;
-    margin-top: -1px;
     background: rgba(46,44,46,0.97) ;
     padding: 12px;
-    text-decoration: none;
     font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: lightgray;
     display: block;
 }
@@ -164,14 +165,7 @@ p {
     margin-top: 60px;
 }
 
-/*
-body {
-	background: #ececec;
-}
-img {
-/*	height: auto;*/
-	max-width: 100%;
-}
+
 .content{
 	margin-top: 150px;
 }
@@ -250,7 +244,7 @@ img {
 .product-icons-item {
 	margin-bottom: 10px;
 	white-space: nowrap;
-}*/
+}
 /*--Product By Id--*/
 .wrapper-for-product {
     background-color: white;

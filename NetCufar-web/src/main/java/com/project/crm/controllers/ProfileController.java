@@ -56,12 +56,9 @@ public class ProfileController {
     @RequestMapping(value = "/checkEmail")
     public @ResponseBody
     int checkEmail(@RequestParam String email) {
-        int id = 0;
-        id = profileService.getUserIdByEmail(email);
-        org.springframework.security.core.userdetails.User spring_user =
-                (org.springframework.security.core.userdetails.User) SecurityContextHolder.
-                        getContext().getAuthentication().getPrincipal();
-        String username = spring_user.getUsername();
+        int id = profileService.getUserIdByEmail(email);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
         int user_id = userService.findByUsername(username).getId();
         if (id != -1 && user_id != id) {
             return -1;
@@ -72,12 +69,9 @@ public class ProfileController {
     @RequestMapping(value = "/checkTelephone")
     public @ResponseBody
     int checkTelephone(@RequestParam String telephone) {
-        int id = 0;
-        id = profileService.getUserIdByTelephone(telephone);
-        org.springframework.security.core.userdetails.User spring_user =
-                (org.springframework.security.core.userdetails.User) SecurityContextHolder.
-                        getContext().getAuthentication().getPrincipal();
-        String username = spring_user.getUsername();
+        int id = profileService.getUserIdByTelephone(telephone);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
         int user_id = userService.findByUsername(username).getId();
         if (id != -1 && user_id != id) {
             return -1;
@@ -112,6 +106,7 @@ public class ProfileController {
     @RequestMapping(value = "/profiles", method = RequestMethod.POST)
     public String upDateProfile(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request,
                                 @RequestParam("file") MultipartFile multipartFile) throws IOException {
+
         user = profileService.getUserByHttpServletRequestAndPhoto(request, multipartFile);
         profileValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {

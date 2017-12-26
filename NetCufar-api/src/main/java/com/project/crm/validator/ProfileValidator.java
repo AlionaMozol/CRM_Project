@@ -4,6 +4,7 @@ import com.project.crm.model.User;
 import com.project.crm.services.ProfileService;
 import com.project.crm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -38,10 +39,8 @@ public class ProfileValidator implements Validator {
 
     private boolean checkUniquenessEmail(String email) {
         int id = profileService.getUserIdByEmail(email);
-        org.springframework.security.core.userdetails.User spring_user =
-                (org.springframework.security.core.userdetails.User) SecurityContextHolder.
-                        getContext().getAuthentication().getPrincipal();
-        String username = spring_user.getUsername();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
         int user_id = userService.findByUsername(username).getId();
         if (id != -1 && user_id != id) {
             return false;
@@ -51,10 +50,8 @@ public class ProfileValidator implements Validator {
 
     private boolean checkUniquenessTelephone(String telephone) {
         int id = profileService.getUserIdByTelephone(telephone);
-        org.springframework.security.core.userdetails.User spring_user =
-                (org.springframework.security.core.userdetails.User) SecurityContextHolder.
-                        getContext().getAuthentication().getPrincipal();
-        String username = spring_user.getUsername();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
         int user_id = userService.findByUsername(username).getId();
         if (id != -1 && user_id != id) {
             return false;

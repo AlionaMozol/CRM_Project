@@ -31,6 +31,16 @@
                 <c:forEach items="${products}" var="product">
                     <div class="col-sm-4">
                         <div class="product">
+
+                            <c:if test="${product.ownerStatus.equals(\"UNBLOCKED\")}">
+                            <div class="col-xs-12 text-left">
+                                <a href="${contextPath}/product/edit/${product.id}">
+                                    <img src="${contextPath}/resources/img/gear.png">
+                                </a>
+                            </div>
+                            </c:if>
+
+
                             <div class="product-img">
                                 <a href="#">
                                     <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"

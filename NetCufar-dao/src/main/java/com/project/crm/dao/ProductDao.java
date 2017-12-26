@@ -12,7 +12,7 @@ import java.util.List;
 public interface ProductDao {
     void addProduct(Product product);
 
-    List<Product> getProductsByUsername(String username);
+    //List<Product> getProductsByUsername(String username);
 
     void editProduct(Product product);
 
@@ -20,11 +20,11 @@ public interface ProductDao {
 
     List<Product> getProductsByKeyWords(String keyWords);
 
-    List<Product> getProductsByCategory(String category);
+    //List<Product> getProductsByCategory(String category);
 
-    List<Product> getProductsBySuperCategory(String superCategory);
+    //List<Product> getProductsBySuperCategory(String superCategory);
 
-    List<Product> getProductsByStatus(ProductStatus status);
+    //List<Product> getProductsByStatus(ProductStatus status);
 
     List<Product> getAllProducts();
 
@@ -32,7 +32,7 @@ public interface ProductDao {
 
     void changeProductStatus(String id, ProductStatus status);
 
-    public List<Product> getProductsByOneParameter(String attribute, String val);
+    List<Product> getProductsByOneParameter(String attribute, String val);
 
-    public List<Product> getProductsByTwoParameters(String attribute1, String val1, String attribute2, String val2);
+    List<Product> getProductsByTwoParameters(String attribute1, String val1, String attribute2, String val2);
 }

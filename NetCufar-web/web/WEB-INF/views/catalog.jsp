@@ -12,15 +12,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
     <link href="${contextPath}/resources/fonts" rel="stylesheet">
-    <title><spring:message code="PAGE_TITLE"/> <spring:message code="search_result"/></title>
+    <title>
+        <spring:message code="PAGE_TITLE"/>
+        <spring:message code="search_result"/>
+    </title>
 
 </head>
 
 <body>
+
     <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
         <label>${result_message}</label>
     </div>
-
     <%@include file="../layouts/preloader.jsp"%>
     <%@include file="../layouts/high_menu_bar.jsp"%>
     <%@include file="../layouts/product_list_layout.jsp"%>

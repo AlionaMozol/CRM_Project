@@ -21,28 +21,27 @@ import java.util.List;
 @Component
 public class CategoryDaoImpl extends DAO implements CategoryDao {
 
+
+    private static final String NAME =             "NAME";
+    private static final String SUPERCATEGORY =    "SUPERCATEGORY";
+
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor=Exception.class)
     @Override
     public List<Category> getCategoriesByTopCategory(String topCategory) {
         Connection connection = poolInst.getConnection();
         List<Category> topCategotiesList = new ArrayList<Category>();
-//        String object_typeID="";
         try  {
-//            PreparedStatement statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_SELECT_BY_OBJECT_TYPE));
-//            statement.setString(1, "CATEGORY");
-//            ResultSet rs = statement.executeQuery();
-//            if(rs.next()){
-//                object_typeID=rs.getString(1);
-//            }
-            PreparedStatement statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_SELECT_OBJECT_ID_BY_VALUE));
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_SELECT_OBJECT_ID_BY_VALUE));
             statement.setString(1, topCategory);
             ResultSet rs = statement.executeQuery();
             ResultSet resultSet=null;
             while(rs.next()){
-                statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_PRODUCT_BY_LIKE_ID));
+                statement = connection.prepareStatement(sql.
+                        getProperty(SqlService.SQL_GET_PRODUCT_BY_LIKE_ID));
                 statement.setString(1, rs.getString(1));
-                statement.setString(2, categoryAttrID.getProperty("NAME"));
+                statement.setString(2, categoryAttrID.getProperty(NAME));
                 resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     Category category = new Category();
@@ -57,7 +56,6 @@ public class CategoryDaoImpl extends DAO implements CategoryDao {
             statement.close();
             rs.close();
             resultSet.close();
-
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -72,16 +70,10 @@ public class CategoryDaoImpl extends DAO implements CategoryDao {
     public List<Category> getAllTopCategories() {
         Connection connection = poolInst.getConnection();
         List<Category> topCategotyList = new ArrayList<Category>();
-//        String object_typeID="";
         try  {
-//            PreparedStatement statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_SELECT_BY_OBJECT_TYPE));
-//            statement.setString(1, "CATEGORY");
-//            ResultSet rs = statement.executeQuery();
-//            if(rs.next()){
-//                object_typeID=rs.getString(1);
-//            }
-            PreparedStatement statement = connection.prepareStatement(sql.getProperty(SqlService.SQL_GET_ALL_SUPERCATEGORIES));
-            statement.setString(1, categoryAttrID.getProperty("SUPERCATEGORY"));
+            PreparedStatement statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_ALL_SUPERCATEGORIES));
+            statement.setString(1, categoryAttrID.getProperty(SUPERCATEGORY));
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Category category=new Category();

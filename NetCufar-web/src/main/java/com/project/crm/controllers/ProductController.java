@@ -111,6 +111,7 @@ public class ProductController {
         } else {
             result_msg = "USER NOT FOUND";
         }
+
         if (userService.findByUsername(username) != null) {
             if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
                 result_msg = "Товары пользователя: " + username + ". Количество : " + products.size();
@@ -182,10 +183,10 @@ public class ProductController {
         product.setCost(product.getCost() + " " + currency);
         product.setSuperCategory("SuperCategory");
         product.setCategory("Category");
-        productValidator.validate(product,bindingResult);
-        if(bindingResult.hasErrors()){
-            return "redirect:/product/edit/{id}";
-        }
+//        productValidator.validate(product,bindingResult);
+//        if(bindingResult.hasErrors()){
+//            return "redirect:/product/edit/{id}";
+//        }
         productService.editProduct(product, multipartFile);
         return "redirect:/my_products";
     }

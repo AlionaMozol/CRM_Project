@@ -74,11 +74,11 @@
 
             </div>
 
-            <security:authorize access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')) and principal.username=='${productid.owner}'">
+            <security:authorize access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')) and principal.username=='${productid.owner}' and '${productid.ownerStatus.equals(\"UNBLOCKED\")}'">
                 <form action="" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <a href="${contextPath}/product/edit/${productid.id}">
-                        <img src="${contextPath}/resources/img/pencil.png">
+                        <img style="margin-left: 1000%;" src="${contextPath}/resources/img/gear.png">
                     </a>
                 </form>
             </security:authorize>
