@@ -54,8 +54,7 @@ public class ProductValidator implements Validator {
             if (!checkField(product.getCost(), costPattern))
                 errors.rejectValue("cost", "cost.error");
         }
-
-
+        
         //description
         if(product.getDescription().length()>140)
             errors.rejectValue("description", "error.large");
