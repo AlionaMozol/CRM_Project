@@ -101,9 +101,9 @@
                         "</div>";
                     $('.products').append(product);
 
-                    if (username != "") {
+                    /*if (username != "") {
                         $('.product-icons#' + key.id).append(str);
-                    }
+                    }*/
 
                 });
 
@@ -159,9 +159,9 @@
                         "</div>";
                     $('.products').append(product);
 
-                    if (username != "") {
-                        $('.product-icons#' + key.id).append(str);
-                    }
+                    /*if (username != "") {
+                     $('.product-icons#' + key.id).append(str);
+                     }*/
 
                 });
 
