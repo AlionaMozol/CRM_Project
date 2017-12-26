@@ -51,9 +51,10 @@
                         "<label class='label-attribute'> " +
                         messages[value] +
                         "</label>" +
-                        "<input class=\"form-control\" name=" + value + " placeholder=" + messages[value] + "></div>");
+                        "<input class=\"form-control\"  id=" + value + " name=" + value + " placeholder=" + messages[value]  +
+                        " (0-20)" + "></div>");
                     $('#wrapper-for-attributes').append(newInput);
-                })
+                });
             },
             error: function () {
                 alert('Error');
@@ -87,14 +88,14 @@
 
     }
 
+
     $(document).ready(function () {
         $('#new-product').submit(function () {
             if ($('#title').val() !== '' &&
-                $('#cost').val() !== '' &&
-            $('#description').val() !== ''){
-                var patternTitle = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,20}$/i;
-                var patternCost = /^([1-9]+([0-9]+)?){1,8}$/i;
-                var patternDescription = /^([0-9а-яА-ЯёЁa-zA-Z\s-]|[\W]){0,140}$/i;
+                $('#cost').val() !== ''){
+                var patternTitle = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,30}$/i;
+                var patternCost = /^[1-9]{1}[0-9]{0,7}$/i;
+                var patternDescription = /^([0-9а-яА-ЯёЁa-zA-Z\.\,\!\:\)\(\+]([\s])?){0,140}$/i;;
                 return patternTitle.test($('#title').val()) &&
                     patternCost.test($('#cost').val()) &&
                     patternDescription.test($('#description').val());
@@ -106,7 +107,7 @@
 
         $('#title').on("input", function () {
             if ($(this).val() !== '') {
-                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,20}$/i;
+                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z\-\s]{1,30}$/i;
                 if (pattern.test($(this).val())) {
                     $(this).css({'border': '1px solid #04f92d'});
                 } else {
@@ -119,7 +120,7 @@
 
         $('#cost').on("input", function () {
             if ($(this).val() != '') {
-                var pattern = /^([1-9]+([0-9]+)?){1,8}$/i;
+                var pattern = /^[1-9]{1}[0-9]{0,7}$/i;
                 if (pattern.test($(this).val())) {
                     $(this).css({'border': '1px solid #04f92d'});
                 } else {
@@ -131,13 +132,9 @@
         });
 
         $('#description').on("input", function () {
-            if ($(this).val() !== '') {
-                var pattern = /^([0-9а-яА-ЯёЁa-zA-Z\s-]|[\W]){0,140}$/i;
-                if (pattern.test($(this).val())) {
-                    $(this).css({'border': '1px solid #04f92d'});
-                } else {
-                    $(this).css({'border': '1px solid #ff0000'});
-                }
+            var pattern = /^([0-9а-яА-ЯёЁa-zA-Z\.\,\!\:\)\(\-\+]([\s])?){0,140}$/i;
+            if (pattern.test($(this).val())) {
+                $(this).css({'border': '1px solid #04f92d'});
             } else {
                 $(this).css({'border': '1px solid #ff0000'});
             }
@@ -239,20 +236,21 @@
 </div>
 
 <%@include file="../layouts/footer_layout.jsp"%>
-<script type="text/javascript">$(document).on("input",function(ev) {
-    $('#city').on("input",function() {
-        if($(this).val() != '') {
-            var pattern = /^[а-яА-ЯёЁa-zA-Z]{0,20}$/i;
-            if(pattern.test($(this).val())){
-                $(this).css({'border' : '1px solid #04f92d'});
-            } else {
-                $(this).css({'border' : '1px solid #ff0000'});
-            }
+<script type="text/javascript">
+    $(document).on("input",function(ev) {
+        $('#city').on("input",function() {
+          if($(this).val() != '') {
+             var pattern = /^[а-яА-ЯёЁa-zA-Z]{0,20}$/i;
+                if(pattern.test($(this).val())){
+                    $(this).css({'border' : '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border' : '1px solid #ff0000'});
+                }
         }
     });
     $('#fio').on("input",function() {
         if($(this).val() != '') {
-            var pattern = /^[а-яА-ЯёЁa-zA-Z\s-]{0,40}$/i;
+            var pattern = /^[а-яА-ЯёЁa-zA-Z\s]{0,40}$/i;
             if(pattern.test($(this).val())){
                 $(this).css({'border' : '1px solid #04f92d'});
             } else {
@@ -267,7 +265,7 @@
         var f = evt.target.files;
         if(f[0].size > 1000000){
             $('#errorPhoto').empty();
-            $('#errorPhoto').append("Ошибка!!! Размер файла превышает допустимый.");
+            $('#errorPhoto').append("<spring:message code="SizeError"/>");
             $('#list').empty();
             $('#list').append("");
             var reader = new FileReader();

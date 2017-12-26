@@ -21,14 +21,16 @@
     <nav id="navigation">
         <ul>
             <c:forEach items="${categoryAndSubCategories}" var="categories">
-                <li class="dropdown" rel="${categories.key.title}"><a href="#" class="my-item" id="${categories.key.title}">
-                    <span><spring:message code="${categories.key.title}"/></span>
-                    <ul class="dropdown-${categories.key.title}">
-                        <c:forEach items="${categories.value}" var="subCategory">
-                            <li><a href="#" class="my-item-subcategory" id="${subCategory.title}"><span><spring:message code="${subCategory.title}"/></span></a></li>
-                        </c:forEach>
-                    </ul>
-                </a></li>
+                <li class="dropdown" rel="${categories.key.title}">
+                    <a href="#" class="my-item" id="${categories.key.title}">
+                        <span><spring:message code="${categories.key.title}"/></span>
+                        <ul class="dropdown-${categories.key.title}">
+                            <c:forEach items="${categories.value}" var="subCategory">
+                                <li><a href="#" class="my-item-subcategory" id="${subCategory.title}"><span><spring:message code="${subCategory.title}"/></span></a></li>
+                            </c:forEach>
+                        </ul>
+                    </a>
+                </li>
             </c:forEach>
         </ul>
     </nav>

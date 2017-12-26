@@ -6,6 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
@@ -54,7 +56,11 @@ public class ProductValidator implements Validator {
             if (!checkField(product.getCost(), costPattern))
                 errors.rejectValue("cost", "cost.error");
         }
-
+        //attributes
+        for (Map.Entry<String, String> entry : product.getAttributesAndValues().entrySet()) {
+            if(entry.getValue().length()>20)
+                errors.rejectValue("description", "error.large");
+        }
 
         //description
         if(product.getDescription().length()>140)
