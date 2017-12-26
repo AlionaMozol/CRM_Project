@@ -23,7 +23,7 @@
             success: function (data) {
                 if (data.toString() == "-1") {
                     $('#errEmail').empty();
-                    $('#errEmail').append("This email already exist");
+                    $('#errEmail').append("<spring:message code="EmailError"/>");
                     $('#email').css({'border': '1px solid #ff0000'});
                 }
                 else {
@@ -51,7 +51,7 @@
             success: function (data) {
                 if (data.toString() == "-1") {
                     $('#errTelephone').empty();
-                    $('#errTelephone').append("This telephone already exist");
+                    $('#errTelephone').append("<spring:message code="TelephoneError"/>");
                     $('#telephone').css({'border': '1px solid #ff0000'});
                 }
                 else {
@@ -76,7 +76,7 @@
         if(${profiles.sex=='Ж'}) {
             $('#women').attr('checked',true);
         }
-        else {
+        if(${profiles.sex=='М'}) {
             $('#men').attr('checked',true);
         }
     })
@@ -157,7 +157,7 @@
         var f = evt.target.files;
         if(f[0].size > 1000000){
             $('#errorPhoto').empty();
-            $('#errorPhoto').append("Ошибка!!! Размер файла превышает допустимый.");
+            $('#errorPhoto').append("<spring:message code="SizeError"/>");
             $('#list').empty();
             $('#list').append("");
             var reader = new FileReader();
