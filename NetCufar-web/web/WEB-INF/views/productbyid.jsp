@@ -20,12 +20,12 @@
 <%@include file="../layouts/preloader.jsp" %>
 <%@include file="../layouts/high_menu_bar.jsp" %>
 <div class="container content">
-    <div class="row wrapper-for-product">
+    <div class="row wrapper-for-product-in-productbyid">
         <div class="col-lg-4">
             <h2><strong>${productid.title}</strong></h2>
 
             <div class="product-img-1">
-                <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${productid.photo}"
+                <img width="250" height="250" src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${productid.photo}"
                      onerror="this.src='${contextPath}/resources/img/placeholder-image.png'">
 
             </div>
@@ -59,8 +59,8 @@
                     </c:forEach>
                     <li><strong><spring:message code="product.cost"/>:</strong></li>
                     <li><strong><spring:message code="product.description"/>:</strong></li>
-                    <li><strong><spring:message code="profile.telephone"/>:</strong></li>
-                    <li><strong><spring:message code="OWNER"/>:</strong></li>
+                    <c:if test="${not empty productid.phone}" >   <li><strong><spring:message code="profile.telephone"/>:</strong></li></c:if>
+                 <c:if test="${not empty productid.owner}" > <li><strong><spring:message code="OWNER"/>:</strong></li></c:if>
                 </ul>
                 <ul>
                     <c:forEach items="${productid.attributesAndValues}" var="value">

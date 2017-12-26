@@ -28,7 +28,7 @@ public class CommentValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "comment.empty");
 
 
-        if (comment.getText().length() > 500) {
+        if (comment.getText().length() > 140) {
             errors.rejectValue("text", "comment.length");
         }
 
