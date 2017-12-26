@@ -467,7 +467,7 @@ public class UserDaoImpl extends DAO implements UserDao {
 
             }
             statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_USER_PHONE_BY_USERNAME));
+                    getProperty(SqlService.SQL_GET_USER_PHONE_BY_USER_ID));
             statement.setString(1, userAttrID.getProperty("PHOTO"));
             statement.setString(2, userId);
             statement.setString(3, userAttrID.getProperty("SECURITY_ID"));

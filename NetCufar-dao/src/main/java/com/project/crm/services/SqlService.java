@@ -61,7 +61,8 @@ public class SqlService {
 
     public static final String SQL_EDIT_PRODUCT_ATTRIBUTE =         "SQL_EDIT_PRODUCT_ATTRIBUTE";
     public static final String SQL_EDIT_PRODUCT_STATUS_BY_ID =      "SQL_EDIT_PRODUCT_STATUS_BY_ID";
-    public static final String SQL_GET_USER_PHONE_BY_USERNAME =     "SQL_GET_USER_PHONE_BY_USERNAME";
+    public static final String SQL_GET_USER_ATTR_BY_USERNAME =     "SQL_GET_USER_ATTR_BY_USERNAME";
+    public static final String SQL_GET_USER_PHONE_BY_USER_ID =      "SQL_GET_USER_PHONE_BY_USER_ID";
 //    public static final String SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME =
 //                                                                     "SQL_GET_VALUES_ID_BY_OBJECT_ID_AND_ATTRIBUTES_NAME";
 

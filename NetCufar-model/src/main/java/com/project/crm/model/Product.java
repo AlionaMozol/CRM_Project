@@ -24,6 +24,7 @@ public class Product {
     private String dateOfLastEdit;
     private String phone;
     private List<String> commentList;
+    private String ownerStatus;
 
 
     /**
@@ -31,6 +32,10 @@ public class Product {
      */
     public Product() {
     }
+
+    public String getOwnerStatus(){return ownerStatus;}
+
+    public void setOwnerStatus(String ownerStatus){this.ownerStatus = ownerStatus;}
 
     public String getOwner() {
         return owner;

@@ -148,7 +148,6 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     public void editProduct(Product product) {
         Connection connection = poolInst.getConnection();
         try {
-            Product oldProduct = productDao.getProductById(product.getId());
             PreparedStatement statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE));
             Map<String, String> attributesAndValues = product.getAttributesAndValues();
@@ -161,15 +160,10 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
             editProductAttribute(statement, product.getTitle(), product.getId(), productAttrID.getProperty("TITLE"));
             editProductAttribute(statement, product.getCost(),  product.getId(), productAttrID.getProperty("COST" ));
-            /*if(!product.getPhoto().equals("-1")) {
-                editProductAttribute(statement, product.getPhoto(), product.getId(), productAttrID.getProperty("PHOTO"));
-            }*/
-            if(product.getPhoto().equals("-1")) {
-                editProductAttribute(statement, oldProduct.getPhoto(), product.getId(), productAttrID.getProperty("PHOTO"));
-            }
-            else{
+            if(!product.getPhoto().equals("-1")) {
                 editProductAttribute(statement, product.getPhoto(), product.getId(), productAttrID.getProperty("PHOTO"));
             }
+            editProductAttribute(statement, "MODERATION", product.getId(), productAttrID.getProperty("STATUS"));
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
             editProductAttribute(statement, formatter.format(new Date(System.currentTimeMillis())),
@@ -200,11 +194,13 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement.setString(1, id);
             statement.setString(2, productAttrID.getProperty("OBJECT_TYPE_ID"));
             resultSet = statement.executeQuery();
-            if(!resultSet.next()){
-                return null;
-            }
+//            if(!resultSet.next()){
+//                return null;
+//            }
             currentProduct.setId(id);
+            boolean err = true;
             while (resultSet.next()) {
+                err = false;
                 //resultSet.getString(1) - имя атрибута
                 //resultSet.getString(2) - его значение
                 if (resultSet.getString(1).equals("CATEGORY")) {
@@ -233,17 +229,27 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 } else attributesAndValues.put(resultSet.getString(1),
                                                resultSet.getString(2));
             }
+            if(err){
+                return null;
+            }
             currentProduct.setAttributesAndValues(attributesAndValues);
             //----
             statement = connection.prepareStatement(sql.
-                        getProperty(SqlService.SQL_GET_USER_PHONE_BY_USERNAME));
+                        getProperty(SqlService.SQL_GET_USER_ATTR_BY_USERNAME));
             statement.setString(1, userAttrID.getProperty("TELEPHONE"));
             statement.setString(2, owner);
-            statement.setString(3, userAttrID.getProperty("SECURITY_ID"));
             resultSet = statement.executeQuery();
-
             if(resultSet.next()) {
                 currentProduct.setPhone(resultSet.getString(1));
+            }
+
+            statement = connection.prepareStatement(sql.
+                    getProperty(SqlService.SQL_GET_USER_ATTR_BY_USERNAME));
+            statement.setString(1, userAttrID.getProperty("STATUS"));
+            statement.setString(2, owner);
+            resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                currentProduct.setOwnerStatus(resultSet.getString(1));
             }
 
             resultSet.close();
