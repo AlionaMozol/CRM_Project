@@ -51,10 +51,7 @@
                    <li>${productid.description}</li>
                 </ul>
 
-
             </div>
-
-
 
             <security:authorize access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')) and principal.username=='${productid.owner}'">
                 <form action="" method="post">
@@ -66,7 +63,6 @@
             </security:authorize>
 
         </div>
-
 
         <c:if test="${productid.productStatus.toString() == 'MODERATION'}">
             <sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -80,7 +76,7 @@
         </c:if>
     </div>
     <%@include file="../layouts/comment_layout.jsp" %>
-</div>
+    <%@include file="../layouts/footer_layout.jsp"%>
 </div>
 </body>
 
@@ -99,7 +95,7 @@
             contentType : "application/json",
             data : ({
                 productId : productId
-            }),
+            })
         });
     });
 
@@ -117,8 +113,8 @@
             contentType : "application/json",
             data : ({
                 productId : productId
-            }),
+            })
         });
     });
-    <%@include file="../layouts/footer_layout.jsp"%>
+
 </script>

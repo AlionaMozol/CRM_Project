@@ -133,8 +133,10 @@
                     <li>
                         <div id="dd" class="wrapper-dropdown-5" tabindex="1"><spring:message code="headerAccount"/>
                             <ul class="dropdown">
-                                <li><a href="${contextPath}/account"><i class="icon-user"></i><spring:message code="headerAccount"/></a></li>
-                                <li><a href="${contextPath}/my_products"><i class="icon-list"></i><spring:message code="headerMenuMyProducts"/></a></li>
+                                <c:if test="${!pageContext.request.isUserInRole(\"ROLE_ADMIN\")}">
+                                    <li><a href="${contextPath}/account"><i class="icon-user"></i><spring:message code="headerAccount"/></a></li>
+                                    <li><a href="${contextPath}/my_products"><i class="icon-list"></i><spring:message code="headerMenuMyProducts"/></a></li>
+                                </c:if>
                                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                                     <li><a href="${contextPath}/favorites"><i class="icon-list"></i><spring:message code="headerMenuFavorites"/></a></li>
                                 </c:if>

@@ -80,7 +80,7 @@
                     <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${IDProduct.photo}"
                          onerror="this.src='${contextPath}/resources/img/placeholder-image.png'">
                 </div>
-                File to upload: <input type="file" name="file"><br/>
+                <spring:message code="text_upload"/>: <input type="file" name="file"><br/>
             </div>
             <div class="col-lg-6 description-of-the-product">
                 <p class="name-of-product"><spring:message code="product.characteristics"/></p>
@@ -156,7 +156,7 @@
                     </div>
                 </div>
 
-                <input class="btn btn-success" id="edit_product" type="submit" style="margin-left: 300px; margin-bottom: 10px"/>
+                <input class="btn btn-success" id="edit_product" type="submit" value="<spring:message code="button.send"/>" style="margin-left: 300px; margin-bottom: 10px"/>
 
 
             </div>
