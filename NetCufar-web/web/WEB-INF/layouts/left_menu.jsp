@@ -35,8 +35,10 @@
         </ul>
     </nav>
 </div>
-
-
+<%--
+<div class="col-xs-12" style="font-size: x-large; text-align: center">
+    <label class="msg">${result_message}</label>
+</div>--%>
 
 <script>
     /*
@@ -64,6 +66,11 @@
     $(document).on('click','.my-item-subcategory',function(event){
         event.preventDefault();
         var subcategory = event.currentTarget.id;
+        var username = "${pageContext.request.userPrincipal.name}";
+        var str =
+                "                   <a href=\"#\" class=\"icon\">\n" +
+                "                       <img src=\"${contextPath}/resources/img/heart.png\">\n" +
+                "                   </a>\n";
 
         $.ajax({
             url : '/get-accepted-products-by-subcategory',
@@ -76,15 +83,12 @@
             success: function (data) {
                 $('.products').empty();
                 $.each(data, function(id, key){
-                    var product = ///// icon-green (c:choose) missing
+                    var product =
                         "<div class=\"col-sm-4\">\n" +
                         "   <div class=\"product\">\n" +
                         "       <div class=\"product-img\">\n" +
-                        "           <a><img src=\"https://drive.google.com/uc?export=download&confirm=no_antivirus&id=" + key.photo + "\" onerror=\"this.src='${contextPath}/resources/img/placeholder-image.png'\"/></a>\n" +
-                        "           <div class=\"product-icons\">\n" +
-                        "                   <a href=\"#\" class=\"icon\">\n" +
-                        "                       <img src=\"${contextPath}/resources/img/heart.png\">\n" +
-                        "                   </a>\n" +
+                        "           <a><img height=\"200\" width=\"300\" src=\"https://drive.google.com/uc?export=download&confirm=no_antivirus&id=" + key.photo + "\" onerror=\"this.src='${contextPath}/resources/img/placeholder-image.png'\"/></a>\n" +
+                        "           <div class=\"product-icons\" id=\"" + key.id + "\"> \n" +
                         "           </div>\n" +
                         "       </div>\n" +
                         "       <p class=\"product-title\">\n" +
@@ -96,7 +100,20 @@
                         "   </div>\n" +
                         "</div>";
                     $('.products').append(product);
-                })
+
+                    if (username != "") {
+                        $('.product-icons#' + key.id).append(str);
+                    }
+
+                });
+
+                if (data.length == 0) {
+                    $('.msg').empty().append("<spring:message code="text_no_products_by_category"/>").
+                                    append(" \"").append(messages[subcategory]).append("\".");
+                } else {
+                    $('.msg').empty().append("<spring:message code="text_products_by_category"/>").
+                                    append(" \"").append(messages[subcategory]).append("\".");
+                }
             }
         });
         return false;
@@ -106,6 +123,11 @@
     $(document).on('click','.my-item',function(event){
         event.preventDefault();
         var supercategory = event.currentTarget.id;
+        var username = "${pageContext.request.userPrincipal.name}";
+        var str =
+                "                   <a href=\"#\" class=\"icon\">\n" +
+                "                       <img src=\"${contextPath}/resources/img/heart.png\">\n" +
+                "                   </a>\n";
 
         $.ajax({
             url : '/get-accepted-products-by-supercategory',
@@ -118,15 +140,13 @@
             success: function (data) {
                 $('.products').empty();
                 $.each(data, function(id, key){
-                    var product = ///// icon-green (c:choose) missing
+                    var product =
                         "<div class=\"col-sm-4\">\n" +
                         "   <div class=\"product\">\n" +
                         "       <div class=\"product-img\">\n" +
-                        "           <a><img src=\"https://drive.google.com/uc?export=download&confirm=no_antivirus&id=" + key.photo + "\" onerror=\"this.src='${contextPath}/resources/img/placeholder-image.png'\"/></a>\n" +
-                        "           <div class=\"product-icons\">\n" +
-                        "                   <a href=\"#\" class=\"icon\">\n" +
-                        "                       <img src=\"${contextPath}/resources/img/heart.png\">\n" +
-                        "                   </a>\n" +
+                        "           <a><img height=\"200\" width=\"300\" src=\"https://drive.google.com/uc?export=download&confirm=no_antivirus&id=" + key.photo + "\" onerror=\"this.src='${contextPath}/resources/img/placeholder-image.png'\"/></a>\n" +
+                        "           <div class=\"product-icons\" id=\"" + key.id + "\"> \n" +
+
                         "           </div>\n" +
                         "       </div>\n" +
                         "       <p class=\"product-title\">\n" +
@@ -138,7 +158,20 @@
                         "   </div>\n" +
                         "</div>";
                     $('.products').append(product);
-                })
+
+                    if (username != "") {
+                        $('.product-icons#' + key.id).append(str);
+                    }
+
+                });
+
+                if (data.length == 0) {
+                    $('.msg').empty().append("<spring:message code="text_no_products_by_category"/>").
+                                    append(" \"").append(messages[supercategory]).append("\".");
+                } else {
+                    $('.msg').empty().append("<spring:message code="text_products_by_category"/>").
+                                    append(" \"").append(messages[supercategory]).append("\".");
+                }
             }
         });
         return false;

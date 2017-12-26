@@ -28,6 +28,10 @@
 
 <div class="container content">
 
+    <div class="col-xs-12" id="msg" style="font-size: x-large; text-align: center">
+        <label class="msg"></label>
+    </div>
+
     <div class="col-lg-12">
 
         <div class="products">
@@ -36,13 +40,13 @@
                 <div class="col-sm-4">
                     <div class="product">
                         <div class="product-img">
-                            <a href="#">
+                            <a class="prod-img" href="#">
                                 <img height="200" width="300" src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
                                      onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
                             </a>
                             <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
 
-                                <div class="product-icons">
+                                <div class="product-icons" id="${product.title}">
                                     <c:choose>
                                     <c:when test="${favorite_products.contains(product)}">
                                         <a href="#" id="${product.id}" class="icon-green">
