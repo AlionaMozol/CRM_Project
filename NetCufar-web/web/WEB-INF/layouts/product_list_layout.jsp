@@ -16,8 +16,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet"  href="../../resources/css/main.css">
-    <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
     <link href="${contextPath}/resources/css/catalog.css" rel="stylesheet">
 
 </head>
@@ -30,13 +28,11 @@
 
 <div class="container content">
 
-    <div class="col-lg-12">
+    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
+        <label>${result_message}</label>
+    </div>
 
-        <%--<c:if test="${number == 0}">
-            <p class="text-info">
-                <spring:message code="favorites_text_info"/>
-            </p>
-        </c:if>--%>
+    <div class="col-lg-12">
 
         <div class="products">
 

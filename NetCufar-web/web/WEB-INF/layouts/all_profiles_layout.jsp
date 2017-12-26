@@ -15,9 +15,7 @@
 
 <body>
 
-<link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${contextPath}/resources/css/account.css"/>
-<link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
 
 <script type="text/JavaScript"
         src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js">

@@ -17,8 +17,6 @@
 
     <title>Log in with your account</title>
 
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 
 <body>

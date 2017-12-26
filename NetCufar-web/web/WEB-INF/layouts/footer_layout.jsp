@@ -8,9 +8,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet"  href="../../resources/css/main.css">
-    <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resources/css/main.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../resources/css/footer.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/catalog.css">
 </head>
 <body>
 <div class="container">

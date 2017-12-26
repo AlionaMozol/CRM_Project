@@ -5,7 +5,6 @@ import com.project.crm.model.enums.ProductStatus;
 import com.project.crm.services.*;
 import com.project.crm.validator.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -129,6 +128,9 @@ public class ProductController {
     @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
     public String getProduct(@PathVariable String id, Model model) {
         Product product = productService.getProductById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.addAttribute("favorite_products", likeService.getFavoriteProductsByUsername(name));
         if (product == null) {
             return "/error_page404";
         } else {
@@ -190,11 +192,27 @@ public class ProductController {
 
 
     @RequestMapping(value = "/not_moderated", method = RequestMethod.GET)
-    public String notModeratedProducts(Model model) {
+    public String notModeratedProducts(Model model, HttpServletRequest request) {
         //почему-то все возвращается в 2 экземплярах - запрос в бд неправильный?
-        model.addAttribute("productCategory", categoryService.getAllTopCategories());
-        model.addAttribute("nmod_products", productService.getProductsByStatus(ProductStatus.MODERATION));
+        //model.addAttribute("productCategory", categoryService.getAllTopCategories());
+        List notModProd = productService.getProductsByStatus(ProductStatus.MODERATION);
+        model.addAttribute("nmod_products", notModProd);
         //model.addAttribute("nmod_products", productService.getAllProducts());
+        String resultMSG;
+        if (notModProd.size() != 0) {
+            if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+                resultMSG = "ПРОДУКТЫ ДЛЯ МОДЕРАЦИИ:";
+            } else {
+                resultMSG = "NOT MODERATED PRODUCTS:";
+            }
+        } else {
+            if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+                resultMSG = "ВСЕ ПРОДУКТЫ ПРОШЛИ МОДЕРАЦИЮ.";
+            } else {
+                resultMSG = "ALL PRODUCTS ARE MODERATED.";
+            }
+        }
+        model.addAttribute("result_message", resultMSG);
         return "/product_moderation";
 
     }

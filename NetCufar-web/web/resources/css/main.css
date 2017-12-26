@@ -2,7 +2,7 @@
 
 /*--Start page--*/
 body {
-    background: #ddd url('../img/bg.jpg');
+    /*background: #ddd url('../img/bg.jpg');*/
     font-weight: 300;
     font-size: 16px;
     color: #555;
@@ -164,11 +164,7 @@ p {
     margin-top: 60px;
 }
 
-
-
-
-
-
+/*
 body {
 	background: #ececec;
 }
@@ -254,7 +250,7 @@ img {
 .product-icons-item {
 	margin-bottom: 10px;
 	white-space: nowrap;
-}
+}*/
 /*--Product By Id--*/
 .wrapper-for-product {
     background-color: white;
