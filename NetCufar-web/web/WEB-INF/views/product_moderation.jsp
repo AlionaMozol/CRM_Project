@@ -63,5 +63,8 @@
     </div>--%>
     <%--<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 --%>
-    <%@include file="../layouts/footer_layout.jsp"%>
+    <div style="margin-top: 20%">
+        <%@include file="../layouts/footer_layout.jsp"%>
+    </div>
+
 </body>
