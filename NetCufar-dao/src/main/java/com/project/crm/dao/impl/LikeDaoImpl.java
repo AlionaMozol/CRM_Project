@@ -30,7 +30,7 @@ public class LikeDaoImpl extends DAO implements LikeDao {
 //        String likeObjectTypeId;
         try {
             PreparedStatement preparedStatement;
-            ResultSet resultSet;
+//            ResultSet resultSet;
 
 //            preparedStatement = connection.prepareStatement(sql.
 //                    getProperty(SqlService.SQL_GET_LIKE_OBJECT_TYPE_ID));
@@ -70,9 +70,9 @@ public class LikeDaoImpl extends DAO implements LikeDao {
     public void removeProductFromFavorites(String productId, String username) {
         Connection connection = poolInst.getConnection();
         try {
-            String likeIdToRemove = null;
+            String likeIdToRemove;
 
-            PreparedStatement statement = connection.prepareStatement(sql
+            /*PreparedStatement statement = connection.prepareStatement(sql
                     .getProperty(SqlService.SQL_GET_LIKES_BY_USERNAME));
             statement.setString(1, username);
             statement.setString(2, likeAttrID.getProperty("USER"));
@@ -88,7 +88,17 @@ public class LikeDaoImpl extends DAO implements LikeDao {
                         likeIdToRemove = likesIds.getString(1);
                     }
                 }
-            }
+            }*/
+
+            PreparedStatement statement = connection.prepareStatement(sql
+                    .getProperty(SqlService.SQL_GET_OBJECT_ID_BY_TWO_ATTR_ID_AND_VALUE));
+            statement.setString(1, likeAttrID.getProperty("USER"));
+            statement.setString(2, username);
+            statement.setString(3, likeAttrID.getProperty("PRODUCT"));
+            statement.setString(4, productId);
+            ResultSet likesId = statement.executeQuery();
+            likesId.next();
+            likeIdToRemove = likesId.getString(1);
 
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_DELETE_VALUES_BY_OBJECT_ID));
@@ -100,8 +110,9 @@ public class LikeDaoImpl extends DAO implements LikeDao {
             statement.setString(1, likeIdToRemove);
             statement.execute();
 
-            resultSet.close();
-            likesIds.close();
+            //resultSet.close();
+            //likesIds.close();
+            likesId.close();
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
