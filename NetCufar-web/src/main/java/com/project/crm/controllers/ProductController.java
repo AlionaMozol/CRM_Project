@@ -105,6 +105,12 @@ public class ProductController {
     @RequestMapping(value = "/catalog/{username}", method = RequestMethod.GET)
     public String getCurrentUserProducts(@PathVariable String username, Model model, HttpServletRequest request) {
         List<Product> products = productService.getProductsByUsername(username);
+        List <Product> approvedProducts = new ArrayList<>();
+        for(Product product : products) {
+            if (product.getProductStatus() == ProductStatus.APPROVED) {
+                approvedProducts.add(product);
+            }
+        }
         String result_msg;
         if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
             result_msg = "ТАКОГО ПОЛЬЗОВАТЕЛЯ НЕ СУЩЕСТВУЕТ";
@@ -114,14 +120,14 @@ public class ProductController {
 
         if (userService.findByUsername(username) != null) {
             if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
-                result_msg = "Товары пользователя: " + username + ". Количество : " + products.size();
+                result_msg = "Товары пользователя: " + username + ". Количество : " + approvedProducts.size();
             }
             if (RequestContextUtils.getLocale(request).toString().equals("en")) {
-                result_msg = "Products of user: " + username + ". Amount : " + products.size();
+                result_msg = "Products of user: " + username + ". Amount : " + approvedProducts.size();
             }
         }
         model.addAttribute("result_message", result_msg);
-        model.addAttribute("products", products);
+        model.addAttribute("products", approvedProducts);
         return "/catalog";
     }
 
