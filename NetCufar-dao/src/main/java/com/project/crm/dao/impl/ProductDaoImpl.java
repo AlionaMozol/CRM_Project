@@ -53,7 +53,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
             String newObjectId = UUID.randomUUID().toString();
             statement.setString(1, newObjectId);
-            statement.setString(2, productAttrID.getProperty("OBJECT_TYPE_ID"));
+            statement.setString(2, productAttrID.getProperty(OBJECT_TYPE_ID));
             statement.execute();
 
             attributesAndValues = product.getAttributesAndValues();
@@ -66,7 +66,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
                 //Получаем подходящий attr_id
                 statement = connection.prepareStatement(sql.
                             getProperty(SqlService.SQL_SELECT_NECESSARY_ATTR_ID));
-                statement.setString(1, productAttrID.getProperty("OBJECT_TYPE_ID"));
+                statement.setString(1, productAttrID.getProperty(OBJECT_TYPE_ID));
                 statement.setString(2, currentAttribute);
                 ResultSet attributesAttrIdSet = statement.executeQuery();
                 while (attributesAttrIdSet.next()) {
@@ -122,31 +122,31 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         }
     }
 
-    @Transactional(propagation = Propagation.MANDATORY,
-                   rollbackFor = Exception.class)
-    @Override
-    public List<Product> getProductsByUsername(String username) {
-        Connection connection = poolInst.getConnection();
-        List<Product> productsOfUser = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql.
-                                          getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1, productAttrID.getProperty("OWNER"));
-            statement.setString(2, username);
-            ResultSet setOfTargetObjectIds = statement.executeQuery();
-            while (setOfTargetObjectIds.next()) {
-                productsOfUser.add(getProductById(setOfTargetObjectIds.getString(1)));
-            }
-
-            setOfTargetObjectIds.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            poolInst.footConnection(connection);
-        }
-        return productsOfUser;
-    }
+//    @Transactional(propagation = Propagation.MANDATORY,
+//                   rollbackFor = Exception.class)
+//    @Override
+//    public List<Product> getProductsByUsername(String username) {
+//        Connection connection = poolInst.getConnection();
+//        List<Product> productsOfUser = new ArrayList<>();
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                                          getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+//            statement.setString(1, productAttrID.getProperty(OWNER));
+//            statement.setString(2, username);
+//            ResultSet setOfTargetObjectIds = statement.executeQuery();
+//            while (setOfTargetObjectIds.next()) {
+//                productsOfUser.add(getProductById(setOfTargetObjectIds.getString(1)));
+//            }
+//
+//            setOfTargetObjectIds.close();
+//            statement.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            poolInst.footConnection(connection);
+//        }
+//        return productsOfUser;
+//    }
 
     @Transactional(propagation = Propagation.MANDATORY,
                    rollbackFor = Exception.class)
@@ -174,7 +174,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
             SimpleDateFormat formatter = new SimpleDateFormat(DATA_FORMAT);
             editProductAttribute(statement, formatter.format(new Date(System.currentTimeMillis())),
-                    product.getId(), productAttrID.getProperty("PRODUCT_LAST_EDIT_DATE_TIME"));
+                    product.getId(), productAttrID.getProperty(PRODUCT_LAST_EDIT_DATE_TIME));
 
             statement.close();
         } catch (SQLException e) {
@@ -199,7 +199,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_GET_PRODUCT_ATTR_VALS_AND_ATTR_IDS));
             statement.setString(1, id);
-            statement.setString(2, productAttrID.getProperty("OBJECT_TYPE_ID"));
+            statement.setString(2, productAttrID.getProperty(OBJECT_TYPE_ID));
             resultSet = statement.executeQuery();
 //            if(!resultSet.next()){
 //                return null;
@@ -243,7 +243,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
             //----
             statement = connection.prepareStatement(sql.
                         getProperty(SqlService.SQL_GET_USER_ATTR_BY_USERNAME));
-            statement.setString(1, userAttrID.getProperty("TELEPHONE"));
+            statement.setString(1, userAttrID.getProperty(TELEPHONE));
             statement.setString(2, owner);
 
             resultSet = statement.executeQuery();
@@ -253,7 +253,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
             statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_GET_USER_ATTR_BY_USERNAME));
-            statement.setString(1, userAttrID.getProperty("STATUS"));
+            statement.setString(1, userAttrID.getProperty(STATUS));
             statement.setString(2, owner);
             resultSet = statement.executeQuery();
             if(resultSet.next()) {
@@ -283,8 +283,8 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 //            statement.setString(1, productAttrID.getProperty("OBJECT_TYPE_ID"));
             PreparedStatement statement = connection.prepareStatement(sql.
                                           getProperty(SqlService.SQL_SELECT_BY_KEY_WORDS));
-            statement.setString(1, productAttrID.getProperty("OBJECT_TYPE_ID"));
-            statement.setString(2, productAttrID.getProperty("TITLE"));
+            statement.setString(1, productAttrID.getProperty(OBJECT_TYPE_ID));
+            statement.setString(2, productAttrID.getProperty(TITLE));
             statement.setString(3, keyWords);
             ResultSet allProducts = statement.executeQuery();
             while (allProducts.next()) {
@@ -320,57 +320,57 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         return matchedProducts;
     }
 
-    @Transactional(propagation = Propagation.MANDATORY,
-                   rollbackFor = Exception.class)
-    @Override
-    public List<Product> getProductsByCategory(String category) {
-        Connection connection = poolInst.getConnection();
-        List<Product> productsOfTargetCategory = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql.
-                                          getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1, productAttrID.getProperty("CATEGORY"));
-            statement.setString(2, category);
-            ResultSet setOfTargetObjectIds = statement.executeQuery();
-            while (setOfTargetObjectIds.next()) {
-                productsOfTargetCategory.add(getProductById(setOfTargetObjectIds.getString(1)));
-            }
+//    @Transactional(propagation = Propagation.MANDATORY,
+//                   rollbackFor = Exception.class)
+//    @Override
+//    public List<Product> getProductsByCategory(String category) {
+//        Connection connection = poolInst.getConnection();
+//        List<Product> productsOfTargetCategory = new ArrayList<>();
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                                          getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+//            statement.setString(1, productAttrID.getProperty(CATEGORY));
+//            statement.setString(2, category);
+//            ResultSet setOfTargetObjectIds = statement.executeQuery();
+//            while (setOfTargetObjectIds.next()) {
+//                productsOfTargetCategory.add(getProductById(setOfTargetObjectIds.getString(1)));
+//            }
+//
+//            setOfTargetObjectIds.close();
+//            statement.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            poolInst.footConnection(connection);
+//        }
+//        return productsOfTargetCategory;
+//    }
 
-            setOfTargetObjectIds.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            poolInst.footConnection(connection);
-        }
-        return productsOfTargetCategory;
-    }
-
-    @Transactional(propagation = Propagation.MANDATORY,
-                   rollbackFor = Exception.class)
-    @Override
-    public List<Product> getProductsByStatus(ProductStatus status) {
-        Connection connection = poolInst.getConnection();
-        List<Product> productsOfCurrentStatus = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1, productAttrID.getProperty("STATUS"));
-            statement.setString(2, status.name());
-            ResultSet setOfTargetObjectIds = statement.executeQuery();
-            while (setOfTargetObjectIds.next()) {
-                productsOfCurrentStatus.add(getProductById(setOfTargetObjectIds.getString(1)));
-            }
-
-            setOfTargetObjectIds.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            poolInst.footConnection(connection);
-        }
-        return productsOfCurrentStatus;
-    }
+//    @Transactional(propagation = Propagation.MANDATORY,
+//                   rollbackFor = Exception.class)
+//    @Override
+//    public List<Product> getProductsByStatus(ProductStatus status) {
+//        Connection connection = poolInst.getConnection();
+//        List<Product> productsOfCurrentStatus = new ArrayList<>();
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+//            statement.setString(1, productAttrID.getProperty(STATUS));
+//            statement.setString(2, status.name());
+//            ResultSet setOfTargetObjectIds = statement.executeQuery();
+//            while (setOfTargetObjectIds.next()) {
+//                productsOfCurrentStatus.add(getProductById(setOfTargetObjectIds.getString(1)));
+//            }
+//
+//            setOfTargetObjectIds.close();
+//            statement.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            poolInst.footConnection(connection);
+//        }
+//        return productsOfCurrentStatus;
+//    }
 
     @Transactional(propagation = Propagation.MANDATORY,
                    rollbackFor = Exception.class)
@@ -381,7 +381,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         try {
             PreparedStatement statement = connection.prepareStatement(sql.
                                           getProperty(SqlService.SQL_OBJECTS_BY_OBJECT_TYPE));
-            statement.setString(1, productAttrID.getProperty("OBJECT_TYPE_ID"));
+            statement.setString(1, productAttrID.getProperty(OBJECT_TYPE_ID));
             ResultSet setOfTargetObjectIds = statement.executeQuery();
             while (setOfTargetObjectIds.next()) {
                 allProducts.add(getProductById(setOfTargetObjectIds.getString(1)));
@@ -468,31 +468,31 @@ public class ProductDaoImpl extends DAO implements ProductDao {
         statement.execute();
     }
 
-    @Transactional(propagation = Propagation.MANDATORY,
-            rollbackFor = Exception.class)
-    @Override
-    public List<Product> getProductsBySuperCategory(String superCategory) {
-        Connection connection = poolInst.getConnection();
-        List<Product> productsOfTargetSuperCategory = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql.
-                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
-            statement.setString(1, productAttrID.getProperty("SUPERCATEGORY"));
-            statement.setString(2, superCategory);
-            ResultSet setOfTargetObjectIds = statement.executeQuery();
-            while (setOfTargetObjectIds.next()) {
-                productsOfTargetSuperCategory.add(getProductById(setOfTargetObjectIds.getString(1)));
-            }
-
-            setOfTargetObjectIds.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            poolInst.footConnection(connection);
-        }
-        return productsOfTargetSuperCategory;
-    }
+//    @Transactional(propagation = Propagation.MANDATORY,
+//            rollbackFor = Exception.class)
+//    @Override
+//    public List<Product> getProductsBySuperCategory(String superCategory) {
+//        Connection connection = poolInst.getConnection();
+//        List<Product> productsOfTargetSuperCategory = new ArrayList<>();
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(sql.
+//                    getProperty(SqlService.SQL_GET_OBJECT_ID_BY_ATTR_ID_AND_VALUE));
+//            statement.setString(1, productAttrID.getProperty(SUPERCATEGORY));
+//            statement.setString(2, superCategory);
+//            ResultSet setOfTargetObjectIds = statement.executeQuery();
+//            while (setOfTargetObjectIds.next()) {
+//                productsOfTargetSuperCategory.add(getProductById(setOfTargetObjectIds.getString(1)));
+//            }
+//
+//            setOfTargetObjectIds.close();
+//            statement.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            poolInst.footConnection(connection);
+//        }
+//        return productsOfTargetSuperCategory;
+//    }
 
     @Transactional(propagation = Propagation.MANDATORY,
             rollbackFor = Exception.class)

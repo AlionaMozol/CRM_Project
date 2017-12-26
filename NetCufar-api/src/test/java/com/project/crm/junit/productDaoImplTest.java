@@ -41,7 +41,8 @@ class productDaoImplTest {
 
         productDao.addProduct(product2);
         List<Product> productList;
-        productList = productDao.getProductsByCategory("MEN_SHOES");
+        //productList = productDao.getProductsByCategory("MEN_SHOES");
+        productList = productDao.getProductsByOneParameter("CATEGORY","MEN_SHOES");
         for (Product eachProduct : productList) {
             assertEquals("MEN_SHOES", eachProduct.getCategory());
         }

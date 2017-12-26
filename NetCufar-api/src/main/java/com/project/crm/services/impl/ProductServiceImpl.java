@@ -80,7 +80,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsByUsername(String username) {
-        return productDao.getProductsByUsername(username);
+        //return productDao.getProductsByUsername(username);
+        return productDao.getProductsByOneParameter("OWNER", username);
     }
 
     @Override
@@ -109,17 +110,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsByCategory(String category) {
-        return productDao.getProductsByCategory(category);
+        //return productDao.getProductsByCategory(category);
+        return productDao.getProductsByOneParameter("CATEGORY", category);
     }
 
     @Override
     public List<Product> getProductsBySuperCategory(String superCategory) {
-        return productDao.getProductsBySuperCategory(superCategory);
+        //return productDao.getProductsBySuperCategory(superCategory);
+        return productDao.getProductsByOneParameter("SUPERCATEGORY", superCategory);
     }
 
     @Override
     public List<Product> getProductsByStatus(ProductStatus status) {
-        return productDao.getProductsByStatus(status);
+        //return productDao.getProductsByStatus(status);
+        return productDao.getProductsByOneParameter("STATUS", status.name());
     }
 
     @Override
