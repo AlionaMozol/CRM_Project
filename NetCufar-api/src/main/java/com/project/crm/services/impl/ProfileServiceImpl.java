@@ -39,7 +39,6 @@ public class ProfileServiceImpl implements ProfileService {
     public User getUserByID(int id) {
         User user = userDao.getUserById(id);
         user.setUsername(userDao.findUserById(user.getId()).getUsername());
-        //user.setUserProductList(productService.getProductsByUsername(user.getUsername()));
         return user;
     }
 
@@ -59,9 +58,6 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void updateUser(User user) {
-        //userDao.deleteUser(user);
-        //userDao.addUser(user);
-
         userDao.updateUser(user);
     }
 

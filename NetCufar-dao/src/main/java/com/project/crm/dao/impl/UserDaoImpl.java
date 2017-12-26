@@ -560,7 +560,12 @@ public class UserDaoImpl extends DAO implements UserDao {
                 statement.setString(3,userAttrID.getProperty("USER_GENDER"));
                 statement.execute();
             }
-            statement.setString(1,user.getPhoto());
+            if(user.getPhoto().equals("-1")){
+                statement.setString(1,oldUser.getPhoto());
+            }
+            else {
+                statement.setString(1,user.getPhoto());
+            }
             statement.setString(2,objectId);
             statement.setString(3,userAttrID.getProperty("PHOTO"));
             statement.execute();

@@ -7,16 +7,12 @@
 <!DOCTYPE html>
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
-
     <title><spring:message code="PAGE_TITLE"/> <spring:message code="profile"/></title>
-
 </head>
 
 <body>
-
 <%@include file="../layouts/preloader.jsp"%>
 <%@include file="../layouts/high_menu_bar.jsp"%>
 <%@include file="../layouts/profile_layout.jsp"%>

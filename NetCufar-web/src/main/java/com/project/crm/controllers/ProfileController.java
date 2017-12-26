@@ -112,6 +112,7 @@ public class ProfileController {
     @RequestMapping(value = "/profiles", method = RequestMethod.POST)
     public String upDateProfile(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request,
                                 @RequestParam("file") MultipartFile multipartFile) throws IOException {
+
         user = profileService.getUserByHttpServletRequestAndPhoto(request, multipartFile);
         profileValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {

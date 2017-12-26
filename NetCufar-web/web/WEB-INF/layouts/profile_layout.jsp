@@ -5,10 +5,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <!DOCTYPE html>
-
-
 <head>
-    <title>Title</title>
     <link rel="stylesheet" href="${contextPath}/resources/css/profile.css"/>
 </head>
 
@@ -87,7 +84,7 @@
 
 <div class="container content">
     <form:form method="post" action="${pageContext.request.contextPath}/profiles?${_csrf.parameterName}=${_csrf.token}" acceptCharset="utf-8" enctype="multipart/form-data">
-        <div class="col-md-5 profile-img row">
+        <div class="col-md-5 profile-img">
             <label class="btn btn-default col-md-10 col-md-offset-1">
                 <div class="wrapper-for-img">
                     <div id="fld">
@@ -97,7 +94,7 @@
                     <output id="list"></output>
                 </div>
                 <spring:message code="profile.addPhoto"/>
-                <input type="file" id="file" name="file"/>
+                <input type="file" id="file" name="file" />
 
 
             </label>
