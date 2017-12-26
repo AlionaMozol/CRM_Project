@@ -71,7 +71,7 @@
 
 <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
 <form class="form-horizontal" id="comment-form">
-    <<p><h3><strong><spring:message code="form.comment"/></strong></h3><Br>
+    <p><h3><strong><spring:message code="form.comment"/></strong></h3><Br>
         <textarea id="textField" name="text" cols="60" rows="5" ></textarea>
         <input id="postId" type="hidden" name="postID" value="${productid.id}"/>
     </p>
