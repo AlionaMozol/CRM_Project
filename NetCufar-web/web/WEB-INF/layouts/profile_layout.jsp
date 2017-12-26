@@ -23,7 +23,7 @@
             success: function (data) {
                 if (data.toString() == "-1") {
                     $('#errEmail').empty();
-                    $('#errEmail').append("This email already exist");
+                    $('#errEmail').append("<spring:message code="EmailError"/>");
                     $('#email').css({'border': '1px solid #ff0000'});
                 }
                 else {
@@ -51,7 +51,7 @@
             success: function (data) {
                 if (data.toString() == "-1") {
                     $('#errTelephone').empty();
-                    $('#errTelephone').append("This telephone already exist");
+                    $('#errTelephone').append("<spring:message code="TelephoneError"/>");
                     $('#telephone').css({'border': '1px solid #ff0000'});
                 }
                 else {
