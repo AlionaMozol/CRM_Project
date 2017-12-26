@@ -124,7 +124,7 @@
                             </form>
                     <div class="dropdown" id="desired_element" style="max-height: 500px;  overflow: auto; position: fixed">
                         <ul id="myUL">
-
+                          <li></li>
                         </ul>
                     </div>
                 </div>
