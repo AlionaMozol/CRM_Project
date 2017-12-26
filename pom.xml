@@ -7,7 +7,7 @@
     <version>1.0</version>
     <modules>
         <module>NetCufar-dao</module>
-        <module>NetCufar-api</module>
+        <module>NetCufar-core</module>
         <module>NetCufar-model</module>
         <module>NetCufar-web</module>
     </modules>

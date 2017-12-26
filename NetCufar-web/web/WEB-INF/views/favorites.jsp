@@ -17,14 +17,14 @@
 
 <body>
 
-<%@include file="../layouts/preloader.jsp"%>
-<%@include file="../layouts/high_menu_bar.jsp"%>
-<div style="margin-bottom: 20%">
-    <%@include file="../layouts/product_list_layout.jsp"%>
-</div>
-<div style="margin-top: 35%">
+    <%@include file="../layouts/preloader.jsp"%>
+    <%@include file="../layouts/high_menu_bar.jsp"%>
+    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
+        <label>${result_message}</label>
+    </div>
+    <div style="margin-bottom: 10%">
+        <%@include file="../layouts/product_list_layout.jsp"%>
+    </div>
     <%@include file="../layouts/footer_layout.jsp"%>
-</div>
-
 
 </body>
