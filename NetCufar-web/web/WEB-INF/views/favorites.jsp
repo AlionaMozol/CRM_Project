@@ -22,6 +22,9 @@
 <div style="margin-bottom: 20%">
     <%@include file="../layouts/product_list_layout.jsp"%>
 </div>
-<%@include file="../layouts/footer_layout.jsp"%>
+<div style="margin-top: 35%">
+    <%@include file="../layouts/footer_layout.jsp"%>
+</div>
+
 
 </body>

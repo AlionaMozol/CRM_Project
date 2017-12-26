@@ -48,7 +48,7 @@
                         "    <div class=\"text-in-user-comment\">\n" +
                         "        <p class=\"comment\">"+key.text+"</p>\n" +
                         "    </div>\n" +
-                        "</div>"
+                        "</div>";
                     $('.wrapper-for-comments').append(comment);
                 })
 
@@ -65,9 +65,9 @@
 <script type="text/javascript"> doAjax() </script>
 
 <div class="block">
-<div class="wrapper-for-comments">
+    <div class="wrapper-for-comments">
 
-</div>
+    </div>
 
 <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')">
 <form class="form-horizontal" id="comment-form">
@@ -77,8 +77,8 @@
     </p>
     <button type="submit" id="btn" class="btn btn-success" value="Отправить"><spring:message code="button.send"/></button>
 
-</form>
-</sec:authorize>
+        </form>
+    </sec:authorize>
 </div>
 </body>
 

@@ -90,11 +90,14 @@
     $(document).ready(function () {
         $('#new-product').submit(function () {
             if ($('#title').val() !== '' &&
-                $('#cost').val() !== '') {
-                var patternTitle = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$/i;
-                var patternCost = /^([1-9]+([0-9]+)?){0,40}$/i;
+                $('#cost').val() !== '' &&
+            $('#description').val() !== ''){
+                var patternTitle = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,20}$/i;
+                var patternCost = /^([1-9]+([0-9]+)?){1,8}$/i;
+                var patternDescription = /^([0-9а-яА-ЯёЁa-zA-Z\s-]|[\W]){0,140}$/i;
                 return patternTitle.test($('#title').val()) &&
-                    patternCost.test($('#cost').val());
+                    patternCost.test($('#cost').val()) &&
+                    patternDescription.test($('#description').val());
             } else {
                 return false;
             }
@@ -103,7 +106,7 @@
 
         $('#title').on("input", function () {
             if ($(this).val() !== '') {
-                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$/i;
+                var pattern = /^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,20}$/i;
                 if (pattern.test($(this).val())) {
                     $(this).css({'border': '1px solid #04f92d'});
                 } else {
@@ -116,7 +119,20 @@
 
         $('#cost').on("input", function () {
             if ($(this).val() != '') {
-                var pattern = /^([1-9]+([0-9]+)?){0,40}$/i;
+                var pattern = /^([1-9]+([0-9]+)?){1,8}$/i;
+                if (pattern.test($(this).val())) {
+                    $(this).css({'border': '1px solid #04f92d'});
+                } else {
+                    $(this).css({'border': '1px solid #ff0000'});
+                }
+            } else {
+                $(this).css({'border': '1px solid #ff0000'});
+            }
+        });
+
+        $('#description').on("input", function () {
+            if ($(this).val() !== '') {
+                var pattern = /^([0-9а-яА-ЯёЁa-zA-Z\s-]|[\W]){0,140}$/i;
                 if (pattern.test($(this).val())) {
                     $(this).css({'border': '1px solid #04f92d'});
                 } else {
@@ -128,6 +144,8 @@
         });
     });
 
+
+
 </script>
 
 
@@ -137,10 +155,10 @@
           acceptCharset="utf-8" enctype="multipart/form-data">
         <div class="row wrapper-for-product" style="margin-bottom: 40px">
             <div class="col-lg-4">
-                <h2><spring:message code="NewProduct"/></h2>
+                <h2 style="margin-left: 18%; color: #122b40; font-family: Impact"><spring:message code="NewProduct"/></h2>
                 <label class="btn btn-default col-md-10 col-md-offset-1">
                         <div id="fld">
-                            <img src="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+                            <img src="${contextPath}/resources/img/placeholder-image.png"/>
                         </div>
                         <output id="list"></output>
                     <spring:message code="profile.addPhoto"/>
@@ -149,13 +167,12 @@
                 <span id="errorPhoto"></span>
             </div>
             <div class="col-lg-6 description-of-the-product">
-                <p class="name-of-product"><spring:message code="product.characteristics"/></p>
+                <p class="name-of-product" style="font-family: Impact"><spring:message code="product.characteristics"/></p>
                 <div class="row" style="margin-bottom: 3%">
                     <div class="col-sm-6">
                         <select style="margin-right: 40px" class="form-control" autofocus name="superCategory" id="select_top_category"
                                 onclick="showSubCategories()"
                                 onfocus="showSubCategories()">
-                            <option disabled>Category</option>
                             <c:forEach items="${topCategories}" var="topCategory">
                                 <option value="${topCategory.title}"><spring:message
                                         code="${topCategory.title}"/></option>
@@ -175,7 +192,7 @@
                     <div class="form-group row has-feedback">
                         <label class="label-attribute"><spring:message code="TITLE"/></label>
                         <input class="form-control" id="title" name="title" pattern="^[0-9а-яА-ЯёЁa-zA-Z\s-]{1,70}$"
-                               placeholder="<spring:message code="TITLE"/>"/>
+                               placeholder="<spring:message code="TitleDescription"/>"/>
                     </div>
                 </div>
 
@@ -185,8 +202,8 @@
                 <div class="row">
                     <div class="col-md-7" style="margin-right: -30px">
                         <label class="label-attribute"><spring:message code="COST"/> </label>
-                        <input id="cost" min="1" class="form-control" type="number" name="cost"
-                               placeholder="<spring:message code="COST"/>"/>
+                        <input id="cost" min="1" max="99999999" class="form-control" type="number" name="cost"
+                               placeholder="<spring:message code="CostDescription"/>"/>
                     </div>
                     <div class="col-md-4" style="margin-top: 19px; margin-bottom: 15px">
                         <select name="COST_TYPE" class="form-control">
@@ -202,8 +219,9 @@
                 <div class="col-md-7">
                     <div class="form-group row has-feedback">
                         <label class="label-attribute"><spring:message code="DESCRIPTION"/></label>
-                        <textarea class="form-control" name="description"
-                                  placeholder="<spring:message code="DESCRIPTION"/>"></textarea>
+                        <textarea id="description" class="form-control"
+                                  name="description" placeholder="<spring:message code="Description.description"/>"
+                        maxlength="140" rows="6"></textarea>
                     </div>
                 </div>
 

@@ -12,9 +12,7 @@
 <html>
     <head>
         <title>Title</title>
-        <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="${contextPath}/resources/css/account.css"/>
-        <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     </head>
     <body>
       <div class="row">

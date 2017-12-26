@@ -18,8 +18,6 @@
 
     <title><spring:message code="PAGE_TITLE"/> <spring:message code="profile"/></title>
 
-    <link rel="stylesheet"  href="../../resources/css/main.css">
-    <link rel="stylesheet"  href="../../resources/css/bootstrap.min.css">
     <link href="${contextPath}/resources/css/profile.css" rel="stylesheet">
 
     <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -250,8 +248,4 @@
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
 </script>
 
-
-
 </body>
-
-

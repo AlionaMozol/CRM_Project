@@ -14,10 +14,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <%--<title>Модерация товаров</title>--%>
-
-    <link rel="stylesheet" href="../../resources/css/main.css">
-    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link href="${contextPath}/resources/css/catalog.css" rel="stylesheet">
 </head>
 
@@ -28,36 +24,45 @@
 </script>
 
 <div class="container content">
-    <div class="col-lg-9 products">
 
-        <c:forEach items="${nmod_products}" var="product">
+    <div class="col-xs-12" style="margin-top: auto; font-size: x-large; text-align: center">
+        <label>${result_message}</label>
+    </div>
 
-            <div class="col-sm-4">
-                <div class="product">
-                    <div class="product-img">
-                        <a href="#">
-                            <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
-                                 onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
-                        </a>
-                    </div>
-                    <p class="product-title-mod">
-                        <a href="${contextPath}/product/${product.id}"><strong>${product.title}</strong></a>
-                    </p>
+    <div class="col-lg-12">
 
-                    <p class="product-desc">${product.description}</p>
-                    <p class="product-category"><spring:message code="${product.category}"/></p>
-                    <p class="product-price-mod">${product.cost}</p>
+        <div class="products">
 
-                    <div class="btn-group">
-                        <button type="button" name="${product.id}"  id="btn_accept" class="btn btn-primary"><spring:message
-                                code="moderationButtonAccept"/></button>
-                        <button type="button" name="${product.id}"  id="btn_deny" class="btn btn-primary"><spring:message
-                                code="moderationButtonDeny"/></button>
+            <c:forEach items="${nmod_products}" var="product">
+
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#">
+                                <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
+                                     onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+                            </a>
+                        </div>
+                        <p class="product-title-mod">
+                            <a href="${contextPath}/product/${product.id}"><strong>${product.title}</strong></a>
+                        </p>
+
+                        <p class="product-desc">${product.description}</p>
+                        <p class="product-category"><spring:message code="${product.category}"/></p>
+                        <p class="product-price-mod">${product.cost}</p>
+
+                        <div class="btn-group">
+                            <button type="button" name="${product.id}"  id="btn_accept" class="btn btn-primary"><spring:message
+                                    code="moderationButtonAccept"/></button>
+                            <button type="button" name="${product.id}"  id="btn_deny" class="btn btn-primary"><spring:message
+                                    code="moderationButtonDeny"/></button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </c:forEach>
+            </c:forEach>
+
+        </div>
 
     </div>
 </div>

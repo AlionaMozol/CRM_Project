@@ -13,7 +13,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
     <title><spring:message code="PAGE_TITLE"/> <spring:message code="productbyid"/></title>
-    <link href="${contextPath}/resources/css/catalog.css" rel="stylesheet">
 </head>
 
 <body>
@@ -22,13 +21,31 @@
 <%@include file="../layouts/high_menu_bar.jsp" %>
 <div class="container content">
     <div class="row wrapper-for-product">
-        <div class="col-lg-4 product-img-1">
+        <div class="col-lg-4">
             <h2><strong>${productid.title}</strong></h2>
 
-            <div class="wrapper-for-img">
+            <div class="product-img-1">
                 <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${productid.photo}"
                      onerror="this.src='${contextPath}/resources/img/placeholder-image.png'">
+
             </div>
+
+            <security:authorize access="(hasRole('ROLE_ADMIN') or hasRole('ROLE_USER'))">
+                <div class="product-icons">
+                    <c:choose>
+                        <c:when test="${favorite_products.contains(productid)}">
+                            <a href="#" id="${productid.id}" class="icon-green">
+                                <img src="${contextPath}/resources/img/heart.png">
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="#" id="${productid.id}" class="icon">
+                                <img src="${contextPath}/resources/img/heart.png">
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </security:authorize>
 
         </div>
         <div class="col-lg-6 description-of-the-product">
@@ -85,6 +102,43 @@
 </body>
 
 <script>
+
+    $(document).on('click','.icon',function(event) {
+        event.preventDefault();
+        var productId = event.currentTarget.id;
+
+        $.ajax({
+            url : "/add-product-to-favorites",
+            type : "GET",
+            dataType : 'json',
+            contentType : "application/json",
+            data : ({
+                productId : productId
+            }),
+            complete: function () {
+                $('#' + productId).addClass('icon-green').removeClass('icon');
+            }
+        });
+    });
+
+    $(document).on('click','.icon-green',function(event) {
+        event.preventDefault();
+        var productId = event.currentTarget.id;
+
+        $.ajax({
+            url : "/remove-product-from-favorites",
+            type : "GET",
+            dataType : 'json',
+            contentType : "application/json",
+            data : ({
+                productId : productId
+            }),
+            complete: function () {
+                $('#' + productId).addClass('icon').removeClass('icon-green');
+            }
+        });
+    });
+
     $(document).on('click','#btn_accept',function(event) {
 
         var btn = document.getElementsByName(event.currentTarget.name)[0].disabled=true;

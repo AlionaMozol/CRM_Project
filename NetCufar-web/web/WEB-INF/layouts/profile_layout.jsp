@@ -18,8 +18,6 @@
     <title>Log in with your account</title>
 
     <link rel="stylesheet" media="screen" href="../../resources/css/profile.css">
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/main.css" rel="stylesheet">
 
 </head>
 

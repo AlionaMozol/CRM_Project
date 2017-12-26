@@ -33,13 +33,17 @@ public class ProductValidator implements Validator {
 
         //superCategory
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "superCategory", "superCategory");
+        if(product.getSuperCategory().length()>20)
+            errors.rejectValue("superCategory", "error.large");
 
         //category
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "category", "category");
+        if(product.getCategory().length()>20)
+            errors.rejectValue("category", "error.large");
 
         //title
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "error.null");
-        if (product.getTitle().length() > 100)
+        if (product.getTitle().length() > 20)
             errors.rejectValue("title", "title.error.large");
 
         //cost
@@ -52,7 +56,9 @@ public class ProductValidator implements Validator {
         }
 
 
-//        //description
+        //description
+        if(product.getDescription().length()>140)
+            errors.rejectValue("description", "error.large");
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "product.description");
     }
 }

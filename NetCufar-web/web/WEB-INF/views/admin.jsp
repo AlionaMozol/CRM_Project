@@ -17,8 +17,6 @@
 
     <title><spring:message code="PAGE_TITLE"/> <spring:message code="admin"/></title>
 
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 
 <body>

@@ -11,9 +11,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content=" width=device-width, initial-scale=1.0">
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${contextPath}/resources/css/account.css"/>
-    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <title><spring:message code="PAGE_TITLE"/> <spring:message code="feedback"/></title>
 
 </head>

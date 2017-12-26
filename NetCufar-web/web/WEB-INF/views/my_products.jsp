@@ -22,39 +22,36 @@
 
 
     <div class="container content" style="margin-bottom: 20%">
-        <a class="btn btn-success" href="${contextPath}/new_product" role="button" style="margin-bottom: 10px"><spring:message code="AddProduct"/></a>
-        <div class="col-lg-12 products">
+        <a class="btn btn-success" href="${contextPath}/new_product" role="button" style="margin-bottom: 1%; margin-left: 90%">
+            <spring:message code="AddProduct"/></a>
 
-            <c:forEach items="${products}" var="product">
+        <div class="col-lg-12">
+            <div class="products">
 
-                <div class="col-sm-4">
-                    <div class="product">
-                        <div class="col-xs-12 text-left">
-                            <a href="${contextPath}/product/edit/${product.id}">
-                                <img src="${contextPath}/resources/img/pencil.png">
-                            </a>
+                <c:forEach items="${products}" var="product">
+                    <div class="col-sm-4">
+                        <div class="product">
+                            <div class="product-img">
+                                <a href="#">
+                                    <img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
+                                         onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
+                                </a>
+
+                            </div>
+
+                            <p class="product-title">
+                                <a class="product-title" href="${contextPath}/product/${product.id}">
+                                    <strong>${product.title}</strong>
+                                </a>
+                            </p>
+
+                            <p class="product-desc">${product.description}</p>
+                            <p class="product-category"><spring:message code="${product.category}"/> </p>
+                            <p class="product-price">${product.cost}</p>
                         </div>
-
-
-                        <div class="product-img">
-                            <img height="200" width="300" src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=${product.photo}"
-                                 onerror="this.src='${contextPath}/resources/img/placeholder-image.png'"/>
-
-                        </div>
-
-                        <p class="product-title">
-                            <a class="product-title" href="${contextPath}/product/${product.id}">
-                                <strong>${product.title}</strong>
-                            </a>
-                        </p>
-
-                        <p class="product-desc">${product.description}</p>
-                        <p class="product-category"><spring:message code="${product.category}"/></p>
-                        <p class="product-price">${product.cost}</p>
                     </div>
-                </div>
-
-            </c:forEach>
+                </c:forEach>
+            </div>
 
         </div>
     </div>

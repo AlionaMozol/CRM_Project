@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -39,19 +42,27 @@ public class LikeController {
     }
 
     @RequestMapping(value = "/favorites", method = RequestMethod.GET)
-    public String favorites(Model model) {
+    public String favorites(Model model, HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.addAttribute("products", likeService.getFavoriteProductsByUsername(name));
         List favoriteProducts = likeService.getFavoriteProductsByUsername(name);
         model.addAttribute("favorite_products", favoriteProducts);
-        /*int number;
-        if (favoriteProducts == null) {
-            number = 0;
+        String resultMSG;
+        if (favoriteProducts.size() != 0) {
+            if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+                resultMSG = "ИЗБРАННЫЕ ПРОДУКТЫ:";
+            } else {
+                resultMSG = "FAVORITE PRODUCTS:";
+            }
         } else {
-            number = 1;
+            if (RequestContextUtils.getLocale(request).toString().equals("ru")) {
+                resultMSG = "У ВАС ПОКА НЕТ ИЗБРАННЫХ ПРОДУКТОВ.";
+            } else {
+                resultMSG = "YOU HAVE NO FAVORITE PRODUCTS YET.";
+            }
         }
-        model.addAttribute("number", number);*/
+        model.addAttribute("result_message", resultMSG);
         return "/favorites";
     }
 
