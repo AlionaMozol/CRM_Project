@@ -159,7 +159,7 @@
                 <div class="col-md-7">
                     <div class="form-group row has-feedback">
                         <label class="label-attribute"><spring:message code="DESCRIPTION"/></label>
-                        <textarea class="form-control"  name="attributesAndValues['DESCRIPTION']"
+                        <textarea class="form-control"  name="description"
                                   placeholder="<spring:message code="DESCRIPTION"/>">${IDProduct.description}</textarea>
                     </div>
                 </div>

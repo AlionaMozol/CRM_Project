@@ -166,6 +166,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
             editProductAttribute(statement, product.getTitle(), product.getId(), productAttrID.getProperty(TITLE));
             editProductAttribute(statement, product.getCost(),  product.getId(), productAttrID.getProperty(COST));
+            editProductAttribute(statement, product.getDescription(), product.getId(), productAttrID.getProperty(DESCRIPTION));
             if(!product.getPhoto().equals("-1")) {
                 editProductAttribute(statement, product.getPhoto(), product.getId(), productAttrID.getProperty(PHOTO));
             }
