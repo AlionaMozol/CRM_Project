@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 @Component
 public class ProductDaoImpl extends DAO implements ProductDao {
 
+    ProductDaoImpl productDao;
     @Transactional(propagation = Propagation.MANDATORY,
                    rollbackFor = Exception.class)
     @Override
@@ -147,6 +148,7 @@ public class ProductDaoImpl extends DAO implements ProductDao {
     public void editProduct(Product product) {
         Connection connection = poolInst.getConnection();
         try {
+            Product oldProduct = productDao.getProductById(product.getId());
             PreparedStatement statement = connection.prepareStatement(sql.
                     getProperty(SqlService.SQL_EDIT_PRODUCT_ATTRIBUTE));
             Map<String, String> attributesAndValues = product.getAttributesAndValues();
@@ -159,7 +161,13 @@ public class ProductDaoImpl extends DAO implements ProductDao {
 
             editProductAttribute(statement, product.getTitle(), product.getId(), productAttrID.getProperty("TITLE"));
             editProductAttribute(statement, product.getCost(),  product.getId(), productAttrID.getProperty("COST" ));
-            if(!product.getPhoto().equals("-1")) {
+            /*if(!product.getPhoto().equals("-1")) {
+                editProductAttribute(statement, product.getPhoto(), product.getId(), productAttrID.getProperty("PHOTO"));
+            }*/
+            if(product.getPhoto().equals("-1")) {
+                editProductAttribute(statement, oldProduct.getPhoto(), product.getId(), productAttrID.getProperty("PHOTO"));
+            }
+            else{
                 editProductAttribute(statement, product.getPhoto(), product.getId(), productAttrID.getProperty("PHOTO"));
             }
 
